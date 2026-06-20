@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORSA V3 Smart Cram Cards</title>
+  <meta name="description" content="Ultra-concise last-minute exam flashcards for ORSA exam prep." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Global Design Tokens ──────────────────────────────────────── */
+    :root {
+      --bg:        #080a10;
+      --surface:   #10131d;
+      --glass:     rgba(255, 255, 255, 0.03);
+      --border:    rgba(255, 255, 255, 0.08);
+      --accent1:   #7c6aff; /* Deep Purple */
+      --accent2:   #00d4aa; /* Emerald Teal */
+      --accent3:   #ff6b6b; /* Rose Red */
+      --accent4:   #ffc107; /* Amber Gold */
+      --text:      #e2e8f0;
+      --text-muted:#8a93b2;
+      --radius:    16px;
+      --transition:0.25s cubic-bezier(.4,0,.2,1);
+    }
+    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ─── Mesh Background ───────────────────────────────────────────── */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 15%, rgba(124,106,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 85% 80%, rgba(0,212,170,0.06) 0%, transparent 60%);
+    }
+
+    /* ─── Top Header ────────────────────────────────────────────────── */
+    header {
+      position: relative; z-index: 10;
+      background: rgba(8, 10, 16, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.1rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .back-btn {
+      padding: 0.45rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted); text-decoration: none; border: 1px solid var(--border);
+      background: var(--glass); transition: var(--transition);
+    }
+    .back-btn:hover { border-color: var(--accent1); color: var(--text); }
+
+    /* ─── Layout Container ──────────────────────────────────────────── */
+    .container {
+      position: relative; z-index: 10;
+      max-width: 720px; width: 100%; margin: auto;
+      padding: 2rem 1.5rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+
+    /* ─── Sub-header ────────────────────────────────────────────────── */
+    .deck-info {
+      text-align: center;
+    }
+    .deck-info h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.25rem; }
+    .deck-info h1 span { color: var(--accent1); }
+    .deck-info p { color: var(--text-muted); font-size: 0.88rem; }
+
+    /* ─── Deck Selector Tabs ────────────────────────────────────────── */
+    .deck-tabs {
+      display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .deck-tab {
+      background: var(--glass); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+    }
+    .deck-tab:hover { border-color: rgba(124,106,255,0.4); color: var(--text); }
+    .deck-tab.active {
+      background: rgba(124,106,255,0.12); border-color: var(--accent1); color: #fff;
+    }
+
+    /* ─── Stats and Progress Bar ────────────────────────────────────── */
+    .stats-row {
+      display: flex; gap: 0.8rem;
+    }
+    .stat-box {
+      flex: 1; background: var(--glass); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.6rem; text-align: center;
+    }
+    .stat-num { font-size: 1.3rem; font-weight: 800; }
+    .stat-lbl { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 0.1rem; }
+    .stat-box.green .stat-num { color: var(--accent2); }
+    .stat-box.red .stat-num { color: var(--accent3); }
+    .stat-box.purple .stat-num { color: var(--accent1); }
+
+    .progress-container {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .progress-bar-bg {
+      height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      border-radius: 3px; transition: width 0.3s ease;
+    }
+    .progress-labels {
+      display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--text-muted);
+    }
+
+    /* ─── 3D Flashcard Flipping ─────────────────────────────────────── */
+    .card-scene {
+      perspective: 1200px;
+      height: 280px; width: 100%;
+    }
+    .card-wrap {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+      cursor: pointer;
+    }
+    .card-wrap.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .card-front {
+      background: linear-gradient(145deg, rgba(124,106,255,0.1), rgba(124,106,255,0.03));
+      border-color: rgba(124,106,255,0.2);
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, rgba(0,212,170,0.08), rgba(0,212,170,0.02));
+      border-color: rgba(0,212,170,0.2);
+    }
+
+    .card-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      padding: 0.2rem 0.5rem; border-radius: 4px; letter-spacing: 0.5px;
+    }
+    .card-front .card-badge { background: rgba(124,106,255,0.15); color: #a89fff; }
+    .card-back .card-badge { background: rgba(0,212,170,0.15); color: var(--accent2); }
+
+    .card-indicator {
+      font-size: 0.68rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;
+    }
+    .card-content {
+      font-size: 1.25rem; font-weight: 700; line-height: 1.4; color: #fff;
+    }
+    .card-desc {
+      font-size: 0.95rem; font-weight: 400; line-height: 1.6; color: var(--text);
+    }
+    .card-desc strong { color: var(--accent2); }
+    .card-desc code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0,212,170,0.12); padding: 0.1em 0.4em;
+      border-radius: 4px; font-size: 0.85em; color: var(--accent2);
+    }
+
+    .card-hint {
+      position: absolute; bottom: 1rem; font-size: 0.72rem; color: var(--text-muted);
+      animation: pulse 2s infinite;
+    }
+
+    /* ─── Control Buttons ───────────────────────────────────────────── */
+    .controls-row {
+      display: flex; justify-content: center; gap: 0.75rem; align-items: center;
+    }
+    .nav-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--glass); color: var(--text-muted); font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+    }
+    .nav-btn:hover { border-color: var(--accent1); color: #fff; }
+    
+    .rating-container {
+      display: flex; gap: 0.75rem; flex: 1; max-width: 320px;
+    }
+    .rate-btn {
+      flex: 1; padding: 0.7rem; border-radius: 8px; border: none;
+      font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+    }
+    .rate-btn.btn-review {
+      background: rgba(255,107,107,0.12); color: var(--accent3); border: 1px solid rgba(255,107,107,0.3);
+    }
+    .rate-btn.btn-review:hover { background: rgba(255,107,107,0.22); }
+    .rate-btn.btn-know {
+      background: rgba(0,212,170,0.12); color: var(--accent2); border: 1px solid rgba(0,212,170,0.3);
+    }
+    .rate-btn.btn-know:hover { background: rgba(0,212,170,0.22); }
+    
+    .flip-btn {
+      padding: 0.7rem 2rem; border-radius: 8px; border: none;
+      background: linear-gradient(135deg, var(--accent1), #5e4fd4);
+      color: #fff; font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+    }
+    .flip-btn:hover { opacity: 0.9; }
+
+    /* ─── Keyboard Guide ────────────────────────────────────────────── */
+    .keyboard-guide {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.6rem; text-align: center; display: flex; justify-content: center; gap: 1rem;
+      font-size: 0.72rem; color: var(--text-muted); flex-wrap: wrap;
+    }
+    .kbd-item { display: flex; align-items: center; gap: 0.25rem; }
+    kbd {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.1rem 0.35rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75em; color: #fff;
+    }
+
+    /* ─── Deck Complete Screen ──────────────────────────────────────── */
+    .complete-screen {
+      display: none; flex-direction: column; align-items: center; text-align: center;
+      padding: 2.5rem 1.5rem; background: var(--glass); border: 1px solid var(--border);
+      border-radius: var(--radius); animation: fadeIn 0.3s ease;
+    }
+    .complete-screen.show { display: flex; }
+    .complete-emoji { font-size: 3.5rem; margin-bottom: 0.5rem; }
+    .complete-screen h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .complete-screen h2 span { color: var(--accent2); }
+    .complete-screen p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; max-width: 400px; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── Footer ────────────────────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.75rem;
+      border-top: 1px solid var(--border); position: relative; z-index: 10;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <header>
+    <div class="logo">🃏 ORSA Cram Cards</div>
+    <div style="display: flex; gap: 0.5rem;">
+      <a href="v2index.html" class="back-btn">📊 Dashboard</a>
+      <a href="index.html" class="back-btn">⚡ Cram Sheet</a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Deck Info Header -->
+    <div class="deck-info" id="deck-info-box">
+      <h1>Smart <span>Cram Cards</span></h1>
+      <p>Last-minute prep deck containing exactly 49 high-yield exam cards.</p>
+    </div>
+
+    <!-- Deck Tabs -->
+    <div class="deck-tabs" id="deck-tabs-container">
+      <button class="deck-tab active" onclick="switchDeck('all')">⭐ All Cram Cards</button>
+      <button class="deck-tab" onclick="switchDeck('defs')">🎯 Match Definitions</button>
+      <button class="deck-tab" onclick="switchDeck('formulas')">🧮 Formulas</button>
+      <button class="deck-tab" onclick="switchDeck('rules')">⚠️ Vensim Rules</button>
+      <button class="deck-tab" onclick="switchDeck('archetypes')">🔄 Archetypes</button>
+      <button class="deck-tab" onclick="switchDeck('tasks')">🧮 Worked Tasks</button>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-box purple"><div class="stat-num" id="st-total">0</div><div class="stat-lbl">Total</div></div>
+      <div class="stat-box green"><div class="stat-num" id="st-known">0</div><div class="stat-lbl">Known</div></div>
+      <div class="stat-box red"><div class="stat-num" id="st-review">0</div><div class="stat-lbl">Review</div></div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container" id="progress-container">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill"></div></div>
+      <div class="progress-labels">
+        <span id="prog-lbl-deck">Deck Name</span>
+        <span id="prog-lbl-pct">0%</span>
+      </div>
+    </div>
+
+    <!-- 3D Card Scene -->
+    <div class="card-scene" id="card-scene" onclick="flipCard()">
+      <div class="card-wrap" id="card-wrap">
+        
+        <!-- Front Side -->
+        <div class="card-face card-front">
+          <div class="card-badge" id="c-badge-front">Category</div>
+          <div class="card-indicator">Question</div>
+          <div class="card-content" id="c-front-content">Front question content?</div>
+          <div class="card-hint">Click / Space to flip →</div>
+        </div>
+
+        <!-- Back Side -->
+        <div class="card-face card-back">
+          <div class="card-badge" id="c-badge-back">Category</div>
+          <div class="card-indicator">Answer</div>
+          <div class="card-desc" id="c-back-content">Back answer description.</div>
+          <div class="card-hint">Click / Space to flip back</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Action Controls -->
+    <div class="controls-row" id="controls-row">
+      <button class="nav-btn" onclick="prevCard()" title="Previous Card">‹</button>
+      
+      <button class="flip-btn" onclick="flipCard()" id="flip-btn">Flip Card</button>
+      <div class="rating-container" id="rating-btns" style="display: none;">
+        <button class="rate-btn btn-review" onclick="rateCard(false)">✗ Review</button>
+        <button class="rate-btn btn-know" onclick="rateCard(true)">✓ Know it</button>
+      </div>
+
+      <button class="nav-btn" onclick="nextCard()" title="Next Card">›</button>
+    </div>
+
+    <!-- Keyboard Guide -->
+    <div class="keyboard-guide" id="keyboard-guide">
+      <div class="kbd-item"><kbd>Space</kbd> / <kbd>Enter</kbd> Flip Card</div>
+      <div class="kbd-item"><kbd>←</kbd> <kbd>→</kbd> Navigate</div>
+      <div class="kbd-item"><kbd>↓</kbd> / <kbd>1</kbd> Review</div>
+      <div class="kbd-item"><kbd>↑</kbd> / <kbd>2</kbd> Know it</div>
+    </div>
+
+    <!-- Complete Screen -->
+    <div class="complete-screen" id="complete-screen">
+      <div class="complete-emoji">🎉</div>
+      <h2 id="complete-title">Deck <span>Completed!</span></h2>
+      <p>Awesome effort! You've reviewed all cards in this deck. Review your marked cards to finalize preparation.</p>
+      <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+        <button class="flip-btn" onclick="restartDeck()" style="background:linear-gradient(135deg, var(--accent2), #009b7f)">↺ Restart Deck</button>
+        <button class="flip-btn" onclick="studyReviewList()" id="btn-weak-study" style="background:linear-gradient(135deg, var(--accent3), #d9534f)">😵 Review Weak Cards (0)</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    ORSA V3 Smart Cram Cards &nbsp;|&nbsp; PEF ČZU &nbsp;|&nbsp; Back to <a href="v2index.html">Premium Dashboard</a> or <a href="index.html">Cram Sheet</a>
+  </footer>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════════
+       THE 36 HIGH-YIELD CARDS DATA
+       ══════════════════════════════════════════════════════════════════ */
+    const CARDS = [
+      // 1. MATCH DEFINITIONS (10 CARDS)
+      { q: "Emergence", a: "Behavior of the <strong>whole system</strong> that cannot be predicted from the individual behavior of its parts alone.", cat: "defs" },
+      { q: "Absorbing State", a: "A state in a Markov Chain that <strong>cannot be left</strong> once entered. Probability <code>P[i][i] = 1</code>.", cat: "defs" },
+      { q: "Transient State", a: "A state in a Markov Chain that can be left, with a <strong>positive probability</strong> of never returning.", cat: "defs" },
+      { q: "Hard Systems Thinking", a: "Focuses on <strong>optimizing well-structured problems</strong> with clear performance criteria. Uses quantitative models.", cat: "defs" },
+      { q: "Soft Systems Thinking", a: "Addresses <strong>unstructured, messy human situations</strong>. Aims for conceptual improvement via SSM learning, not a single optimum.", cat: "defs" },
+      { q: "Shadow Price", a: "The rate of change in the objective function (profit) per <strong>1-unit increase in the RHS</strong> constraint resource.", cat: "defs" },
+      { q: "CATWOE", a: "SSM criteria for Root Definitions: <strong>C</strong>ustomers, <strong>A</strong>ctors, <strong>T</strong>ransformation, <strong>W</strong>eltanschauung (Worldview), <strong>O</strong>wner, <strong>E</strong>nvironment.", cat: "defs" },
+      { q: "Leontief Inverse", a: "The multiplier matrix <code>(I - A)⁻¹</code>. Maps final consumer demand to the <strong>total direct and indirect outputs</strong> required across all sectors.", cat: "defs" },
+      { q: "Markov Property (Memorylessness)", a: "The next state depends <strong>ONLY on the current state</strong>, not on the sequence of states that preceded it.", cat: "defs" },
+      { q: "Time vs. Probability (Simulation)", a: "<strong>Time</strong> is represented as continuous or discrete intervals. <strong>Probability</strong> quantifies uncertainty, bounded strictly between <code>0</code> and <code>1</code>.", cat: "defs" },
+
+      // 2. FORMULAS (8 CARDS)
+      { q: "Queue Utilization (ρ)", a: "<code>ρ = λ / μ</code>. Shows the fraction of time the server is busy. Must be <strong>&lt; 1</strong> for stable queue.", cat: "formulas" },
+      { q: "P₀ (Idle Queue Probability)", a: "<code>P₀ = 1 - ρ</code>. Probability that the queue is empty and the server is idle.", cat: "formulas" },
+      { q: "Average Queue Length (Lq)", a: "<code>Lq = ρ² / (1 - ρ)</code>. Expected number of customers waiting in the line.", cat: "formulas" },
+      { q: "Average Time in Queue (Wq)", a: "<code>Wq = ρ / (μ - λ)</code>. Expected time a customer spends waiting in line.", cat: "formulas" },
+      { q: "Markov Vector Step Transition", a: "<code>π⁽ᵗ⁾ = π⁽⁰⁾ · Pᵗ</code>. State vector at step t calculated using transition matrix P.", cat: "formulas" },
+      { q: "Stationary Distribution Vector (π)", a: "Solve: <code>π · P = π</code> subject to <code>Σπᵢ = 1</code>. The long-run probability shares of the states.", cat: "formulas" },
+      { q: "Input-Output Core Identity", a: "<code>Total Output: x = (I - A)⁻¹ · y</code>. y = final demand, A = tech coefficients.", cat: "formulas" },
+      { q: "Binomial Probability P(X = k)", a: "<code>P(X = k) = C(n, k) · pᵏ · (1 - p)ⁿ⁻ᵏ</code>. Probability of exactly k successes in n independent Bernoulli trials.", cat: "formulas" },
+
+      // 3. VENSIM RULES (9 CARDS)
+      { q: "Direct Stock-to-Stock Link", a: "<strong>NEVER ALLOWED! (-10 points)</strong> A stock must only connect to another stock through a <strong>Flow rate arrow (with a valve symbol)</strong>.", cat: "rules" },
+      { q: "Stock Equation wrapper", a: "Every Stock equation in the equation editor must be wrapped in <code>INTEG(Inflows - Outflows, Initial Value)</code>.", cat: "rules" },
+      { q: "Even vs. Odd Link Polarity", a: "Count the negative/opposite (o / -) links in a loop:<br/>• <strong>Even count</strong> = Reinforcing (R)<br/>• <strong>Odd count</strong> = Balancing (B)", cat: "rules" },
+      { q: "f(x) Equation Check", a: "Click the <strong>f(x) tool</strong> before exporting. All variables must turn solid black. Hollow variables have missing equations!", cat: "rules" },
+      { q: "SIR Susceptible Stock Eq", a: "<code>Susceptible = INTEG(-Infection Rate, Initial Susceptible)</code>.", cat: "rules" },
+      { q: "SIR Infection Rate Eq", a: "<code>Infection Rate = Susceptible * Contacts * Infectivity * (Infected / Total Population)</code>.", cat: "rules" },
+      { q: "SIR Infection Duration Constant", a: "Recovery Rate and Death Rate divide Infected by <strong>Duration</strong> (usually 7 days).", cat: "rules" },
+      { q: "Without f(x) Instructions", a: "Draw the Stock and Flow structure, links, polarities, and loops only. Do <strong>NOT</strong> enter formulas in Vensim PLE.", cat: "rules" },
+      { q: "Lookup Table (WITH LOOKUP)", a: "Maps an input variable to an output variable using a custom coordinate-based piecewise linear table.", cat: "rules" },
+
+      // 4. ARCHETYPES (9 CARDS)
+      { q: "Limits to Growth (Limits to Success)", a: "A reinforcing growth loop hits a capacity constraint, activating a balancing loop that halts progress.<br/><strong>Loops</strong>: R1 (growth efforts) vs. B2 (limiting constraint).<br/><strong>Fix</strong>: Plan for constraints early.", cat: "archetypes" },
+      { q: "Tragedy of the Commons", a: "Individual growth actions exploit a shared resource. Limits trigger decay. <br/><strong>Loops</strong>: R1 &amp; R2 (User successes) vs. B1 &amp; B2 (depletion).<br/><strong>Fix</strong>: Impose regulation.", cat: "archetypes" },
+      { q: "Shifting the Burden", a: "Quick fix relieves symptoms temporarily, creating dependency. Relies less on fundamental fix.<br/><strong>Loops</strong>: B1 (quick fix) vs. B2 (fundamental). R3 = side effect dependency.", cat: "archetypes" },
+      { q: "Fixes that Fail", a: "Quick fix relieves problem but leads to delayed unintended reinforcing consequence that worsens the problem.<br/><strong>Loops</strong>: B1 (fix) vs. R2 (delay side effect).", cat: "archetypes" },
+      { q: "Escalation", a: "Competitors react to threat by escalating action, resulting in mutual damage.<br/><strong>Loops</strong>: Two Balancing loops form a compounding Reinforcing escalation.", cat: "archetypes" },
+      { q: "Success to the Successful", a: "Initial winner receives more resources, while the loser is starved.<br/><strong>Loops</strong>: Two Reinforcing loops sharing resources.", cat: "archetypes" },
+      { q: "Growth and Underinvestment", a: "Growth demands capacity. Capacity addition is delayed/avoided, degrading performance standards.<br/><strong>Loops</strong>: R1 (growth), B2 (limit), B3 (investment delay).", cat: "archetypes" },
+      { q: "Drifting Goals", a: "Failing performance leads to eroding standards/goals rather than fixing issues.<br/><strong>Loops</strong>: B1 (correction) vs. B2 (goal lowering pressure).", cat: "archetypes" },
+      { q: "Accidental Adversaries", a: "Partners who should cooperate undercut each other's success via local optimizations.<br/><strong>Loops</strong>: R1 &amp; R2 (synergy) vs. R3 &amp; R4 (undercutting delay links).", cat: "archetypes" },
+
+      // 5. WORKED TASKS (13 CARDS)
+      { q: "Mixing a Drink LP task", a: "Maximizing Rum (x) & Juice (y) taste: <strong>Rum = 5 dl, Juice = 5 dl</strong>. Taste = <strong>75 pts</strong>. Rum restriction <code>x ≥ 5</code> is binding.", cat: "tasks" },
+      { q: "Excel Solver constraint LHS grading", a: "LHS cells MUST contain: <code>=SUMPRODUCT(decision_variables, resource_coefficients)</code>. Never hardcode!", cat: "tasks" },
+      { q: "Gluttony Ltd. outputs (Brewery / Butcher / Greengrocer / Restaurant)", a: "Base outputs are: Brewery ($X_B$) = <strong>100</strong>, Butcher ($X_{Bu}$) = <strong>80</strong>, Greengrocer ($X_G$) = <strong>30</strong>, Restaurant ($X_R$) = <strong>200</strong>.", cat: "tasks" },
+      { q: "Gluttony Ltd. demand change (Butcher y_Bu ➔ 35)", a: "If Butcher final demand rises from 18 to 35: Brewery = <strong>101.91</strong>, Butcher = <strong>99.96</strong>, Greengrocer = <strong>30.80</strong>, Restaurant = <strong>201.41</strong>.", cat: "tasks" },
+      { q: "Gluttony Ltd. cost changes (G +10%, R +20%)", a: "Output price indices become: Brewery = <strong>1.00135</strong>, Butcher = <strong>1.00171</strong>, Greengrocer = <strong>1.01347</strong>, Restaurant = <strong>1.01723</strong>.", cat: "tasks" },
+      { q: "Elite EU Officer Queue (λ = 30, μ = 40)", a: "Empty queue probability $P_0 = <strong>0.25 (25\\%)</strong>$ and average queue length $L_q = <strong>2.25</strong>$.", cat: "tasks" },
+      { q: "Elite EU Officer Wait Times (λ = 30, μ = 40)", a: "Average time in system $W = <strong>6\\text{ minutes} (0.1\\text{ hr})</strong>$ and time in queue $W_q = <strong>4.5\\text{ minutes} (0.075\\text{ hr})</strong>$.", cat: "tasks" },
+      { q: "Flower Shop Queue: average service time", a: "Arrival λ=9/hr. For idle $P_0 = 0.5$, average service time must be <strong>3.33 minutes</strong> ($\\mu = 18$).", cat: "tasks" },
+      { q: "Flower Shop Queue: required service rate", a: "Arrival λ=9/hr. For time in system $W = 10$ minutes, service rate $\\mu$ must be <strong>15 customers/hour</strong>.", cat: "tasks" },
+      { q: "Weather Forecast Markov Prob", a: "Rainy today. Probability of Rainy day the day after tomorrow = <strong>0.2450 (24.50%)</strong>.", cat: "tasks" },
+      { q: "Scared Frog Lily transition probability", a: "Frog starts on lily A. Probability frog alive (stork hungry) after 5 hours = <strong>0.03125 (3.125%)</strong>.", cat: "tasks" },
+      { q: "Scared Frog expected survival time", a: "Expected steps (hours) to reach stork lily C starting from lily A or B = <strong>2.00 steps</strong>.", cat: "tasks" },
+      { q: "Markov Chain 3x3 stationary distribution", a: "For matrix with rows [0.6,0.3,0.1], [0.2,0.5,0.3], [0.3,0.3,0.4]: stationary vector is <strong>π = [0.375, 0.375, 0.25]</strong>.", cat: "tasks" }
+    ];
+
+    /* ══════════════════════════════════════════════════════════════════
+       STATE
+       ══════════════════════════════════════════════════════════════════ */
+    let currentDeckKey = 'all';
+    let currentCards = [];
+    let currentIdx = 0;
+    let isFlipped = false;
+    
+    // Ratings map: card.q -> boolean (true: known, false: review again)
+    let ratings = {};
+    let weakList = [];
+    let isReviewingWeak = false;
+
+    /* ══════════════════════════════════════════════════════════════════
+       INIT & DATA LOAD
+       ══════════════════════════════════════════════════════════════════ */
+    function init() {
+      // Load saved ratings
+      ratings = JSON.parse(localStorage.getItem('orsa-v3-ratings') || '{}');
+      switchDeck('all');
+    }
+
+    function saveRatings() {
+      localStorage.setItem('orsa-v3-ratings', JSON.stringify(ratings));
+    }
+
+    function switchDeck(deckKey) {
+      isReviewingWeak = false;
+      currentDeckKey = deckKey;
+      
+      // Update Tab UI
+      document.querySelectorAll('.deck-tabs .deck-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      // Handle the button triggers
+      const tabMap = { all: 0, defs: 1, formulas: 2, rules: 3, archetypes: 4, tasks: 5 };
+      document.querySelectorAll('.deck-tabs .deck-tab')[tabMap[deckKey]].classList.add('active');
+
+      // Filter cards
+      if (deckKey === 'all') {
+        currentCards = [...CARDS];
+      } else {
+        currentCards = CARDS.filter(c => c.cat === deckKey);
+      }
+
+      // Shuffle current deck
+      currentCards.sort(() => Math.random() - 0.5);
+      
+      currentIdx = 0;
+      isFlipped = false;
+      document.getElementById('card-wrap').classList.remove('flipped');
+      
+      document.getElementById('complete-screen').classList.remove('show');
+      document.getElementById('card-scene').style.display = 'block';
+      document.getElementById('controls-row').style.display = 'flex';
+      
+      updateLabelsAndStats();
+      showCard();
+    }
+
+    function showCard() {
+      if (currentCards.length === 0) {
+        document.getElementById('c-front-content').textContent = "No cards available.";
+        return;
+      }
+
+      const card = currentCards[currentIdx];
+      isFlipped = false;
+      document.getElementById('card-wrap').classList.remove('flipped');
+
+      // Front & Back Category badges
+      const catNames = { defs: "Definitions", formulas: "Formulas", rules: "Vensim Rules", archetypes: "Archetypes", tasks: "Worked Tasks" };
+      const catLabel = catNames[card.cat] || card.cat;
+      document.getElementById('c-badge-front').textContent = catLabel;
+      document.getElementById('c-badge-back').textContent = catLabel;
+
+      // Question / Answer
+      document.getElementById('c-front-content').textContent = card.q;
+      document.getElementById('c-back-content').innerHTML = card.a;
+
+      // Reset controls
+      document.getElementById('flip-btn').style.display = 'inline-block';
+      document.getElementById('rating-btns').style.display = 'none';
+
+      updateProgress();
+    }
+
+    function flipCard() {
+      if (currentCards.length === 0) return;
+      isFlipped = !isFlipped;
+      document.getElementById('card-wrap').classList.toggle('flipped', isFlipped);
+      
+      if (isFlipped) {
+        document.getElementById('flip-btn').style.display = 'none';
+        document.getElementById('rating-btns').style.display = 'flex';
+      } else {
+        document.getElementById('flip-btn').style.display = 'inline-block';
+        document.getElementById('rating-btns').style.display = 'none';
+      }
+    }
+
+    function rateCard(known) {
+      const card = currentCards[currentIdx];
+      ratings[card.q] = known;
+      saveRatings();
+
+      currentIdx++;
+      if (currentIdx >= currentCards.length) {
+        showCompleteScreen();
+      } else {
+        showCard();
+      }
+      updateLabelsAndStats();
+    }
+
+    function prevCard() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        showCard();
+      }
+    }
+
+    function nextCard() {
+      if (currentIdx < currentCards.length - 1) {
+        currentIdx++;
+        showCard();
+      }
+    }
+
+    function updateProgress() {
+      const total = currentCards.length;
+      const progress = total > 0 ? ((currentIdx) / total * 100).toFixed(0) : 0;
+      document.getElementById('prog-fill').style.width = progress + '%';
+      document.getElementById('prog-lbl-pct').textContent = progress + '%';
+      
+      let deckTitle = currentDeckKey === 'all' ? 'All Cram Cards' : currentDeckKey.toUpperCase();
+      if (isReviewingWeak) deckTitle = "Reviewing Weak Cards";
+      document.getElementById('prog-lbl-deck').textContent = `${deckTitle} (${currentIdx + 1} of ${total})`;
+    }
+
+    function updateLabelsAndStats() {
+      // Calculate ratings stats of currently selected sub-deck
+      let total = currentCards.length;
+      let known = 0;
+      let review = 0;
+
+      currentCards.forEach(c => {
+        if (ratings[c.q] === true) known++;
+        else if (ratings[c.q] === false) review++;
+      });
+
+      document.getElementById('st-total').textContent = total;
+      document.getElementById('st-known').textContent = known;
+      document.getElementById('st-review').textContent = review;
+
+      // Update global weak count for button
+      weakList = CARDS.filter(c => ratings[c.q] === false);
+      document.getElementById('btn-weak-study').textContent = `😵 Review Weak Cards (${weakList.length})`;
+      if (weakList.length === 0) {
+        document.getElementById('btn-weak-study').style.opacity = 0.5;
+        document.getElementById('btn-weak-study').style.pointerEvents = 'none';
+      } else {
+        document.getElementById('btn-weak-study').style.opacity = 1;
+        document.getElementById('btn-weak-study').style.pointerEvents = 'auto';
+      }
+    }
+
+    function showCompleteScreen() {
+      document.getElementById('card-scene').style.display = 'none';
+      document.getElementById('controls-row').style.display = 'none';
+      document.getElementById('complete-screen').classList.add('show');
+    }
+
+    function restartDeck() {
+      switchDeck(currentDeckKey);
+    }
+
+    function studyReviewList() {
+      if (weakList.length === 0) return;
+      isReviewingWeak = true;
+      currentCards = [...weakList].sort(() => Math.random() - 0.5);
+      
+      currentIdx = 0;
+      isFlipped = false;
+      document.getElementById('card-wrap').classList.remove('flipped');
+      
+      document.getElementById('complete-screen').classList.remove('show');
+      document.getElementById('card-scene').style.display = 'block';
+      document.getElementById('controls-row').style.display = 'flex';
+
+      updateLabelsAndStats();
+      showCard();
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       KEYBOARD SHORTCUTS
+       ══════════════════════════════════════════════════════════════════ */
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('complete-screen').classList.contains('show')) return;
+      
+      switch (e.key) {
+        case ' ':
+        case 'Enter':
+          e.preventDefault();
+          flipCard();
+          break;
+        case 'ArrowLeft':
+          prevCard();
+          break;
+        case 'ArrowRight':
+          nextCard();
+          break;
+        case '1':
+        case 'ArrowDown':
+          if (isFlipped) rateCard(false);
+          break;
+        case '2':
+        case 'ArrowUp':
+          if (isFlipped) rateCard(true);
+          break;
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>STATS Smart Cram Cards — ESE48E | CZU Prague</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07090f;
+    --surface: #0e1120;
+    --surface2: #141830;
+    --surface3: #1a2040;
+    --border: rgba(59,130,246,0.15);
+    --border-bright: rgba(59,130,246,0.35);
+    --accent: #3b82f6;
+    --accent2: #a855f7;
+    --accent-glow: rgba(59,130,246,0.25);
+    --accent2-glow: rgba(168,85,247,0.25);
+    --text: #e8eaf6;
+    --text-dim: #8892b0;
+    --text-muted: #4a5580;
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --font: 'Outfit', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --card-w: 680px;
+    --card-h: 340px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Mesh BG ── */
+  .mesh-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: var(--bg);
+  }
+  .mesh-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 65% 55% at 20% 25%, rgba(59,130,246,0.11) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 55% at 80% 70%, rgba(168,85,247,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 45% at 55% 50%, rgba(59,130,246,0.05) 0%, transparent 70%);
+    animation: meshDrift 20s ease-in-out infinite alternate;
+  }
+  .mesh-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 38% 38% at 75% 15%, rgba(168,85,247,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 45% at 25% 85%, rgba(59,130,246,0.06) 0%, transparent 60%);
+    animation: meshDrift2 25s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift  { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(25px,-18px) scale(1.04)} 100%{transform:translate(-18px,12px) scale(0.97)} }
+  @keyframes meshDrift2 { 0%{transform:translate(0,0)} 100%{transform:translate(-28px,22px)} }
+
+  /* ── Header ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,9,15,0.82);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  }
+  .logo {
+    font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--text); text-decoration: none;
+  }
+  .logo span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-right {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .kbd-hint {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted);
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 6px;
+  }
+  .home-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 8px 18px; border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-dim); text-decoration: none;
+    font-weight: 600; font-size: 0.85rem;
+    transition: all 0.2s ease;
+    background: var(--surface2);
+  }
+  .home-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Main ── */
+  main {
+    position: relative; z-index: 1;
+    flex: 1;
+    max-width: 1200px; margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    width: 100%;
+  }
+
+  /* ── Stats Row ── */
+  .stats-row {
+    display: flex; gap: 1rem; margin-bottom: 1.75rem; flex-wrap: wrap;
+  }
+  .stat-chip {
+    padding: 10px 20px; border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(14,17,32,0.8);
+    backdrop-filter: blur(12px);
+    font-size: 0.85rem; font-weight: 600; color: var(--text-dim);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .stat-chip .num { color: var(--text); font-size: 1rem; font-weight: 700; }
+  .stat-chip.known-chip .num  { color: var(--success); }
+  .stat-chip.review-chip .num { color: var(--warning); }
+
+  /* ── Progress Bar ── */
+  .progress-wrap {
+    margin-bottom: 1.5rem;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.4rem;
+  }
+  .progress-bar {
+    height: 6px; border-radius: 100px;
+    background: var(--surface2);
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  /* ── Deck Tabs ── */
+  .deck-tabs {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.75rem;
+  }
+  .deck-tab {
+    padding: 9px 18px; border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text-dim);
+    font-family: var(--font); font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .deck-tab:hover { border-color: var(--accent); color: var(--text); }
+  .deck-tab.active {
+    background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(168,85,247,0.2));
+    border-color: var(--border-bright); color: var(--text);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+
+  /* ── Card Area ── */
+  .card-area {
+    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+  }
+
+  /* ── 3D Flip Card ── */
+  .flip-scene {
+    width: var(--card-w); max-width: 100%;
+    height: var(--card-h);
+    perspective: 1200px;
+    cursor: pointer;
+  }
+  .flip-card {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .flip-card.flipped { transform: rotateY(180deg); }
+
+  .flip-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .flip-front {
+    background: rgba(14,17,32,0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-bright);
+    box-shadow: 0 8px 40px rgba(59,130,246,0.1), inset 0 1px 0 rgba(59,130,246,0.15);
+  }
+  .flip-front::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; border-radius: var(--radius) var(--radius) 0 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .flip-back {
+    background: rgba(20,24,48,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(168,85,247,0.35);
+    transform: rotateY(180deg);
+    box-shadow: 0 8px 40px rgba(168,85,247,0.12), inset 0 1px 0 rgba(168,85,247,0.15);
+  }
+  .flip-back::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; border-radius: var(--radius) var(--radius) 0 0;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+  }
+
+  .card-category {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; margin-bottom: 1rem; padding: 4px 12px;
+    border-radius: 100px;
+  }
+  .flip-front .card-category {
+    background: rgba(59,130,246,0.15); color: var(--accent);
+    border: 1px solid rgba(59,130,246,0.25);
+  }
+  .flip-back .card-category {
+    background: rgba(168,85,247,0.15); color: var(--accent2);
+    border: 1px solid rgba(168,85,247,0.25);
+  }
+
+  .card-q {
+    font-size: 1.25rem; font-weight: 700; color: var(--text);
+    line-height: 1.5; max-width: 540px;
+  }
+  .card-a {
+    font-size: 0.92rem; font-weight: 500; color: var(--text-dim);
+    line-height: 1.7; max-width: 540px;
+  }
+  .card-a code, .card-a .mono {
+    font-family: var(--mono); font-size: 0.85em;
+    color: var(--accent); background: rgba(59,130,246,0.1);
+    padding: 1px 6px; border-radius: 4px;
+  }
+
+  .flip-hint {
+    position: absolute; bottom: 1rem;
+    font-size: 0.7rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  /* ── Navigation ── */
+  .card-nav {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+  .nav-btn {
+    padding: 10px 22px; border-radius: 100px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text-dim); font-family: var(--font); font-weight: 600;
+    font-size: 0.875rem; cursor: pointer; transition: all 0.2s ease;
+  }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .card-counter {
+    font-family: var(--mono); font-size: 0.85rem;
+    color: var(--text-dim); min-width: 80px; text-align: center;
+  }
+
+  /* ── Rating Buttons ── */
+  .rating-row {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+  }
+  .rating-btn {
+    padding: 10px 24px; border-radius: 100px;
+    border: 1px solid; font-family: var(--font);
+    font-weight: 700; font-size: 0.875rem; cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .rating-btn.review {
+    border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.1);
+    color: var(--warning);
+  }
+  .rating-btn.review:hover {
+    background: rgba(245,158,11,0.2);
+    box-shadow: 0 4px 16px rgba(245,158,11,0.2);
+    transform: translateY(-2px);
+  }
+  .rating-btn.know {
+    border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.1);
+    color: var(--success);
+  }
+  .rating-btn.know:hover {
+    background: rgba(16,185,129,0.2);
+    box-shadow: 0 4px 16px rgba(16,185,129,0.2);
+    transform: translateY(-2px);
+  }
+
+  /* ── Weak Checklist ── */
+  .weak-section {
+    width: 100%; max-width: var(--card-w);
+    margin-top: 2rem;
+    background: rgba(14,17,32,0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+  .weak-title {
+    font-size: 0.9rem; font-weight: 700; color: var(--warning);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .weak-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .weak-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 8px 12px; border-radius: var(--radius-sm);
+    background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15);
+    font-size: 0.82rem; color: var(--text-dim); line-height: 1.4;
+  }
+  .weak-item input[type="checkbox"] { accent-color: var(--accent); flex-shrink:0; margin-top: 2px; }
+  .weak-empty { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+
+  /* ── Footer ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 1.75rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.8rem;
+    margin-top: auto;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer span { color: var(--text-dim); }
+
+  @media (max-width: 750px) {
+    :root { --card-h: 280px; }
+    .card-q { font-size: 1rem; }
+    .header-right .kbd-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="index.html" class="logo">STATS <span>Exam Prep</span></a>
+  <div class="header-right">
+    <div class="kbd-hint">Space=flip · ←→=nav · 1=review · 2=know</div>
+    <a href="index.html" class="home-link">🏠 Dashboard</a>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-chip">📦 Total <span class="num" id="statTotal">0</span></div>
+    <div class="stat-chip known-chip">✅ Known <span class="num" id="statKnown">0</span></div>
+    <div class="stat-chip review-chip">🔄 Review <span class="num" id="statReview">0</span></div>
+    <div class="stat-chip">📊 Deck <span class="num" id="statDeck">all</span></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Deck Tabs -->
+  <div class="deck-tabs">
+    <button class="deck-tab active" onclick="selectDeck('all')">⭐ All</button>
+    <button class="deck-tab" onclick="selectDeck('descriptive')">📊 Descriptive</button>
+    <button class="deck-tab" onclick="selectDeck('probability')">🎲 Probability</button>
+    <button class="deck-tab" onclick="selectDeck('distributions')">📈 Distributions</button>
+    <button class="deck-tab" onclick="selectDeck('hypothesis')">🧪 Hypothesis</button>
+    <button class="deck-tab" onclick="selectDeck('regression')">📉 Regression</button>
+  </div>
+
+  <!-- Card Area -->
+  <div class="card-area">
+
+    <!-- 3D Flip Card -->
+    <div class="flip-scene" onclick="flipCard()" id="flipScene">
+      <div class="flip-card" id="flipCard">
+        <div class="flip-face flip-front">
+          <div class="card-category" id="frontCat">Category</div>
+          <div class="card-q" id="cardQ">Loading…</div>
+          <div class="flip-hint">🖱 Click to reveal answer</div>
+        </div>
+        <div class="flip-face flip-back">
+          <div class="card-category" id="backCat">Answer</div>
+          <div class="card-a" id="cardA">…</div>
+          <div class="flip-hint">🖱 Click to go back to question</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="card-nav">
+      <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">← Prev</button>
+      <span class="card-counter" id="cardCounter">1 / 55</span>
+      <button class="nav-btn" id="btnNext" onclick="navigate(1)">Next →</button>
+      <button class="nav-btn" onclick="shuffleDeck()" style="border-color:rgba(168,85,247,0.3);color:var(--accent2)">🔀 Shuffle</button>
+    </div>
+
+    <!-- Rating -->
+    <div class="rating-row">
+      <button class="rating-btn review" onclick="rateCard('review')">🔄 1 · Still Learning</button>
+      <button class="rating-btn know"   onclick="rateCard('know')">✅ 2 · Know It!</button>
+    </div>
+
+    <!-- Weak Checklist -->
+    <div class="weak-section">
+      <div class="weak-title">⚠️ Review List — Cards to revisit</div>
+      <div class="weak-list" id="weakList">
+        <div class="weak-empty">No cards marked for review yet. Use "Still Learning" to add cards here.</div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div><span>STATS Exam Prep</span> · ESE48E · CZU Prague · 55 High-Yield Cards</div>
+  <div style="margin-top:0.5rem;"><a href="index.html">📊 Dashboard</a> · Keyboard: Space=flip, ←→=nav, 1=review, 2=know</div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════
+   FLASHCARD DATA — 55 cards
+══════════════════════════════════════ */
+const CARDS_RAW = [
+  {
+    cat:'descriptive',
+    q:'Best Graph for Group Comparisons',
+    a:'<strong>Boxplot</strong>. Highly useful for comparing the distribution of a numerical variable across different categorical groups.'
+  },
+  {
+    cat:'descriptive',
+    q:'Range Calculation & Limitation',
+    a:'Formula: <code>Range = Max - Min</code>. Disadvantage: It is <strong>easily influenced by outliers</strong> (not robust) and ignores all middle data points.'
+  },
+  {
+    cat:'descriptive',
+    q:'Quartile Definitions',
+    a:'• <strong>Q1</strong>: The median of the lower half of the sorted data (25th percentile).<br>• <strong>Q3</strong>: The median of the upper half of the sorted data (75th percentile).<br>• <strong>IQR</strong>: Interquartile Range = <code>Q3 - Q1</code>.'
+  },
+  {
+    cat:'descriptive',
+    q:'Linear Parameter Scale Changes',
+    a:'If each data point in a dataset is multiplied by a constant C, the new mean is <code>C × Old Mean</code>, and the new Standard Deviation is <code>C × Old SD</code>. Example: multiply by 3 gives Mean = 150, SD = 30.'
+  },
+  {
+    cat:'descriptive',
+    q:'Qualitative vs Quantitative Data',
+    a:'• <strong>Qualitative (Categorical)</strong>: Colors, names, yes/no responses.<br>• <strong>Quantitative (Numerical)</strong>: Heights, temperatures, salaries.'
+  },
+  {
+    cat:'descriptive',
+    q:'Continuous vs Discrete Variables',
+    a:'• <strong>Continuous</strong>: Can take any real value in an interval (e.g., Temperature, Height).<br>• <strong>Discrete</strong>: Countable values only (e.g., number of applicants, population of a state).'
+  },
+  {
+    cat:'descriptive',
+    q:'Variable Skewness',
+    a:'• <strong>Right-skewed</strong>: Tail extends to the right (Mean > Median). Common in housing prices, incomes.<br>• <strong>Left-skewed</strong>: Tail extends to the left (Mean < Median).<br>• <strong>Symmetric</strong>: Tail is balanced (Mean ≈ Median).'
+  },
+  {
+    cat:'descriptive',
+    q:'Symmetric Z-score of Median',
+    a:'For a symmetric distribution, the Z-score for the median is approximately <strong>0</strong>. For left-skewed, it is typically negative.'
+  },
+  {
+    cat:'descriptive',
+    q:'Mode definition',
+    a:'The **most common value** in a variable. It is appropriate for all scales of measurement (nominal, ordinal, interval, ratio).'
+  },
+  {
+    cat:'descriptive',
+    q:'Relative Frequency calculation',
+    a:'To convert frequency to relative frequency, <strong>divide the frequency by the total sample size (n)</strong>.'
+  },
+  {
+    cat:'probability',
+    q:'Law of Large Numbers (LLN)',
+    a:'As the number of trials increases, the sample proportion of an outcome converges to the **theoretical probability** (e.g. coin flips).'
+  },
+  {
+    cat:'probability',
+    q:'Sample Space',
+    a:'The set of <strong>all possible outcomes</strong> of a probability experiment.'
+  },
+  {
+    cat:'probability',
+    q:'At least one success formula',
+    a:'To find probability of at least one success in n independent trials: <code>P(at least one) = 1 - P(no successes) = 1 - (1 - p)ⁿ</code>. Example: 3 coin flips gives 7/8.'
+  },
+  {
+    cat:'probability',
+    q:'Mutually Exclusive vs Independent',
+    a:'If two events are mutually exclusive (cannot happen together), they **cannot be independent** (if A happens, P(B) becomes 0).'
+  },
+  {
+    cat:'distributions',
+    q:'Standard Normal Percentile Z = 0.675',
+    a:'The Z-score corresponding to the <strong>75th percentile</strong> of the Standard Normal variable is <code>0.675</code>.'
+  },
+  {
+    cat:'distributions',
+    q:'Normal Probability Plot',
+    a:'A normal probability plot of a nearly normal sample should show a <strong>fairly straight line</strong>. Curved lines indicate skewness.'
+  },
+  {
+    cat:'distributions',
+    q:'Unusual Data Z-score rule',
+    a:'An observation is considered unusual if its Z-score is <strong>beyond ±3 standard deviations</strong> from the mean (Z-score calculation: <code>Z = (x - μ)/σ</code>).'
+  },
+  {
+    cat:'distributions',
+    q:'Binomial Distribution criteria',
+    a:'Requires: 1. Fixed number of trials (n).<br>2. Independent trials.<br>3. Only two outcomes (success/failure).<br>4. Constant success probability (p).'
+  },
+  {
+    cat:'distributions',
+    q:'Standard Z Critical values',
+    a:'• 90% Confidence: **1.645**<br>• 95% Confidence: **1.96**<br>• 98% Confidence: **2.33**<br>• 99% Confidence: **2.576**'
+  },
+  {
+    cat:'hypothesis',
+    q:'p-value interpretation',
+    a:'A p-value measures the probability of obtaining data as extreme as observed assuming H₀ is true. A small p-value (e.g., 0.003) means **the data are inconsistent with H₀** (reject H₀).'
+  },
+  {
+    cat:'hypothesis',
+    q:'Type I vs Type II errors',
+    a:'• <strong>Type I</strong>: Rejecting a true H₀ (False Positive, alpha).<br>• <strong>Type II</strong>: Failing to reject a false H₀ (False Negative, beta).'
+  },
+  {
+    cat:'hypothesis',
+    q:'One-tailed vs Two-tailed tests',
+    a:'Use **one-tailed** when you have a specific directional hypothesis in advance. Use **two-tailed** when you test for any difference.'
+  },
+  {
+    cat:'hypothesis',
+    q:'Independent vs Paired t-test',
+    a:'• <strong>Independent</strong>: Compares two unrelated groups (e.g., employees of Branch A vs Branch B).<br>• <strong>Paired</strong>: Compares related measurements on same subjects (e.g., pre- and post-training).'
+  },
+  {
+    cat:'hypothesis',
+    q:'One-way ANOVA purpose',
+    a:'Used to <strong>compare the means of three or more independent groups</strong> to see if at least one differs.'
+  },
+  {
+    cat:'hypothesis',
+    q:'ANOVA eta-squared (η²)',
+    a:'Represents the **proportion of variation in the dependent variable** explained by the categorical independent variable (ranges from 0 to 1).'
+  },
+  {
+    cat:'hypothesis',
+    q:'Within-groups variation (W)',
+    a:'Represents the variation in the dependent variable due to **chance or random fluctuations** (residual variance).'
+  },
+  {
+    cat:'hypothesis',
+    q:'Between-groups variation (B)',
+    a:'Represents the variation in the dependent variable due to the **factor/group differences**. If B is much larger than W, reject H₀.'
+  },
+  {
+    cat:'hypothesis',
+    q:'ANOVA required conditions',
+    a:'1. Normality within groups.<br>2. Independence of observations.<br>3. Homoscedasticity (equal variances). (Note: equal group means is NOT an assumption!).'
+  },
+  {
+    cat:'hypothesis',
+    q:'t-test and ANOVA equivalence',
+    a:'For two independent groups, a one-way ANOVA F-test and a two-sample t-test yield the <strong>exact same p-value</strong>, with <code>F = t²</code>.'
+  },
+  {
+    cat:'regression',
+    q:'Confidence Interval Width',
+    a:'Increasing the confidence level **increases the width** of the interval. Increasing sample size **decreases the width**.'
+  },
+  {
+    cat:'descriptive',
+    q:'Standard Deviation Approximation',
+    a:'A standard rule of thumb for standard deviation approximation: <strong>Approximate SD ≈ Range / 6</strong>. Example: range = 90 gives SD ≈ 15.'
+  }
+];
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+const LS_KEY = 'stats_cram_ratings';
+let ratings = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+
+let currentDeck = 'all';
+let deck = [];
+let idx = 0;
+let isFlipped = false;
+
+const catLabels = {
+  descriptive:   '📊 Descriptive Stats',
+  probability:   '🎲 Probability',
+  distributions: '📈 Distributions',
+  hypothesis:    '🧪 Hypothesis Testing',
+  regression:    '📉 Regression',
+};
+
+function saveRatings() { localStorage.setItem(LS_KEY, JSON.stringify(ratings)); }
+
+function buildDeck(cat) {
+  deck = cat === 'all' ? [...CARDS_RAW] : CARDS_RAW.filter(c => c.cat === cat);
+  idx = 0;
+  isFlipped = false;
+  document.getElementById('flipCard').classList.remove('flipped');
+  render();
+}
+
+function selectDeck(cat) {
+  currentDeck = cat;
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('statDeck').textContent = cat === 'all' ? 'all' : catLabels[cat].replace(/^[^ ]+ /,'');
+  buildDeck(cat);
+}
+
+function render() {
+  if (deck.length === 0) return;
+  const card = deck[idx];
+  document.getElementById('frontCat').textContent = catLabels[card.cat] || card.cat;
+  document.getElementById('backCat').textContent  = '💡 Answer';
+  document.getElementById('cardQ').textContent    = card.q;
+  document.getElementById('cardA').innerHTML      = card.a.replace(/([A-Z_]=[^\.,]+)/g, s => `<span class="mono">${s}</span>`);
+  document.getElementById('cardCounter').textContent = `${idx+1} / ${deck.length}`;
+  document.getElementById('btnPrev').disabled = idx === 0;
+  document.getElementById('btnNext').disabled = idx === deck.length - 1;
+  isFlipped = false;
+  document.getElementById('flipCard').classList.remove('flipped');
+  updateStats();
+  updateWeak();
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flipCard').classList.toggle('flipped', isFlipped);
+}
+
+function navigate(dir) {
+  idx = Math.max(0, Math.min(deck.length - 1, idx + dir));
+  render();
+}
+
+function rateCard(rating) {
+  const card = deck[idx];
+  ratings[card.q] = rating;
+  saveRatings();
+  updateStats();
+  updateWeak();
+  // Auto advance
+  if (idx < deck.length - 1) navigate(1);
+}
+
+function shuffleDeck() {
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  idx = 0;
+  render();
+}
+
+function updateStats() {
+  const total = CARDS_RAW.length;
+  const known  = Object.values(ratings).filter(r => r === 'know').length;
+  const review = Object.values(ratings).filter(r => r === 'review').length;
+  document.getElementById('statTotal').textContent  = total;
+  document.getElementById('statKnown').textContent  = known;
+  document.getElementById('statReview').textContent = review;
+  const pct = total > 0 ? Math.round((known / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent  = pct + '%';
+}
+
+function updateWeak() {
+  const reviewCards = CARDS_RAW.filter(c => ratings[c.q] === 'review');
+  const list = document.getElementById('weakList');
+  if (reviewCards.length === 0) {
+    list.innerHTML = '<div class="weak-empty">No cards marked for review yet. Use "Still Learning" to add cards here.</div>';
+    return;
+  }
+  list.innerHTML = reviewCards.map(c => `
+    <div class="weak-item">
+      <input type="checkbox" onchange="this.parentElement.style.opacity=this.checked?'0.4':'1'"/>
+      <span><strong>${c.q}</strong> — ${c.a.substring(0,80)}…</span>
+    </div>
+  `).join('');
+}
+
+/* ══════════════════════════════════════
+   KEYBOARD SHORTCUTS
+══════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch(e.key) {
+    case ' ':          e.preventDefault(); flipCard(); break;
+    case 'ArrowRight': navigate(1); break;
+    case 'ArrowLeft':  navigate(-1); break;
+    case '1':          rateCard('review'); break;
+    case '2':          rateCard('know');   break;
+  }
+});
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+buildDeck('all');
+updateStats();
+updateWeak();
+</script>
+
+</body>
+</html>

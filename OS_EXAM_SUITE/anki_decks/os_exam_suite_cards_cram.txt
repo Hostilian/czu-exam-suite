@@ -1,0 +1,50 @@
+# ============================================================
+# Operating Systems & Networks — CZU Prague — CRAM Deck (Quick Review Mode)
+# Multitasking | Virtual Memory | Networking | CLI | Cloud | Wireless | IP Law — 55 cards
+# Use this for last-minute revision — same cards, cram tags
+# ============================================================
+
+OS — what system resources does it control?	The OS controls: <b>CPU time</b> and <b>Operating memory (RAM)</b> — the core resources.	cram_os_basics
+What function is NOT performed by the OS?	<b>Defragmentation</b> — this is a disk utility, NOT a core OS function. (Common exam trap!)	cram_os_basics
+What programming languages are used to build an OS?	<b>C, C++, C#</b>, and <b>assembly language</b>	cram_os_basics
+Linux — what is it technically?	An open-source <b>OS kernel</b> written from scratch by Linus Torvalds in 1991. NOT derived from Unix code.	cram_os_basics
+BIOS — where is it stored?	In <b>EEPROM or NAND flash memory</b> on the motherboard — non-volatile, survives power-off.	cram_os_basics
+FAT16 file system — max size	<b>4 GB</b> — mathematically limited by 16-bit cluster addressing.	cram_os_basics
+PC core components (when PCs were introduced)	Each PC gave users their own: <b>CPU power</b>, <b>operating memory (RAM)</b>, and <b>local storage (HDD)</b>.	cram_os_basics
+Host-terminal computational model	A central <b>mainframe (host)</b> held all data and processing. The network only carried raw inputs/outputs (keystrokes and screen redraws) to dumb terminals.	cram_os_basics
+Batch processing model	Jobs grouped into batches and executed one-by-one by mainframe. Key feature: <b>offline processing</b> (no user interaction during execution).	cram_os_basics
+Cooperative vs Pre-emptive multitasking — key difference	<b>Cooperative</b>: apps manage their own resources, voluntarily yield CPU.<br><b>Pre-emptive</b>: the OS forcibly manages CPU allocation; can kill misbehaving apps.	cram_multitask
+Cooperative multitasking — problem	Apps allocated resources themselves. A <b>badly written app could crash the whole system</b> by not releasing resources.	cram_multitask
+Pre-emptive multitasking — how it works	The <b>OS assigns CPU time</b> to processes. If an app misbehaves, the OS can forcibly <b>shut it down and reallocate resources</b>.	cram_multitask
+Modern OS multitasking type	<b>Pre-emptive multitasking</b> — the OS is in full control of resource allocation.	cram_multitask
+Pre-emptive multitasking — when did each OS adopt it?	<b>Unix</b>: always had it from the beginning.<br><b>Windows</b>: started with Windows NT and Windows 95.<br><b>Mac</b>: started with Mac OS X.	cram_multitask
+Virtual memory — definition	A memory management technique where the OS uses <b>HDD/SSD disk space to simulate additional RAM</b>. Allows running programs larger than physical RAM.	cram_vmem
+Virtual memory — how does it work?	OS divides memory into <b>page files (Windows) or swap files (Linux)</b>. Inactive pages are moved to disk; needed pages are loaded to RAM.	cram_vmem
+Key term for moving memory pages between RAM and disk	<b>Swapping</b> (also called paging) — the act of moving memory pages between RAM and secondary storage.	cram_vmem
+Which software manages virtual memory?	The <b>Operating System kernel</b> manages virtual memory, translating virtual addresses into physical addresses.	cram_vmem
+Swapping vs Paging difference	<b>Swapping</b>: moving entire process to disk.<br><b>Paging</b>: moving fixed-size blocks (pages) between RAM and disk. Recommended ratio: <b>3:1</b> (swap:RAM).	cram_vmem
+Public IP address — what is it?	Assigned by your <b>ISP</b>, visible on the internet. Describes approximate connection location. Limited supply (IPv4).	cram_net
+Private IP address — what is it?	Can be used by <b>multiple devices</b> but only within the <b>same isolated local network</b>. Not accessible from the public internet.	cram_net
+Private IP — communication beyond local network	Requires <b>NAT (Network Address Translation)</b> — converts private IP → public IP to communicate outside the local network.	cram_net
+NAT — definition	<b>Network Address Translation</b> — converts a <b>private IP address → public IP address</b> for internet communication.	cram_net
+DNS — what kind of system?	DNS is a <b>distributed database</b> that resolves domain names to IP addresses. DNS resolvers read domain names from the end (root domain first).	cram_net
+SSH vs plain terminal connection	SSH (<b>Secure Shell</b>) uses an <b>encrypted channel</b> (port 22). A plain terminal/telnet connection is unencrypted.	cram_net
+Windows and GNU/Linux default diagnostic tools	<b>ping</b> and <b>traceroute</b> (tracert on Windows) — included by default in both operating systems.	cram_net
+Ping tool — what does it do?	Uses <b>ICMP Echo Request</b> packets to verify host connectivity and measure round-trip time.	cram_net
+Traceroute (tracert) — what does it do?	Traces the <b>path packets take to a destination host</b>. Linux: <code>traceroute</code> (UDP/ICMP). Windows: <code>tracert</code> (ICMP).	cram_net
+CLI/TUI — what is it?	<b>Command Line Interface</b> (also Text User Interface / Shell) — accepts typed text commands as input.	cram_cli
+CLI advantages — exam-critical facts	✓ Remote access requires <b>very low bandwidth</b><br>✓ User can perform <b>any action</b> via commands<br>✓ Low RAM and CPU usage<br>✓ Runs on low-resolution screens<br>✓ Faster for experts	cram_cli
+CLI disadvantages — exam-critical facts	✗ Must memorize command sequences<br>✗ Difficult for novices<br>✗ No autocomplete or suggestions<br>✗ Spelling errors restart the process<br>✗ High learning curve	cram_cli
+Where is CLI used today?	Networking setup, server administration, DevOps, scripting, remote server management.	cram_cli
+CLI — two tested correct statements	'Remote access requires <b>low bandwidth</b>' and 'user can perform <b>any action</b> that has a command'.	cram_cli
+Cloud: 3 deployment types	<b>Private cloud</b> (dedicated/sensitive data), <b>Hybrid cloud</b> (mix), <b>Public cloud</b> (shared/scalable, e.g. AWS)	cram_cloud
+Cloud: 3 service models	<b>IaaS</b> = Infrastructure (hardware, VMs)<br><b>PaaS</b> = Platform (OS + runtime)<br><b>SaaS</b> = Software (ready-to-use apps)	cram_cloud
+When to use Private vs Public cloud?	<b>Private</b>: GDPR-protected or sensitive data<br><b>Public</b>: web apps, cost efficiency, scalability	cram_cloud
+Wireless networking advantages	✓ Mobility (portable devices)<br>✓ No cables (cheaper installation, faster setup)<br>✓ Works where cables cannot reach<br>✓ Cost-effective long-term	cram_wireless
+Wireless networking disadvantages	✗ Security risks (encryption issues)<br>✗ <b>Slower</b> data transfer than wired<br>✗ Signal degrades with distance from origin<br>✗ Prone to interference (shared bands)<br>✗ Limited bandwidth — <b>cannot support VTC</b>	cram_wireless
+Wireless: true statement about shared frequency bands	Shared/unlicensed bands (2.4 GHz, 5 GHz) are free to use but prone to <b>congestion and interference</b> because many devices share them.	cram_wireless
+Arguments FOR intellectual property rights	✓ Provides incentive to invest in innovation<br>✓ Rewards creativity and effort<br>✓ Protects ideas from being stolen<br>✓ Without it, motivation to innovate is reduced	cram_ip
+Arguments AGAINST intellectual property rights	✗ Can create <b>monopolies</b> and stifle competition<br>✗ Higher prices for consumers<br>✗ Large companies can block smaller competitors<br>✗ Reduced access to products/services	cram_ip
+Historical documents recognizing property rights	Magna Carta (1215), US Declaration of Independence (1776), French Declaration of Rights (1789), UN Declaration of Human Rights (1948)	cram_ip
+IP rights — societal balance	Each society must strike a balance between: <b>incentives for creators</b> vs. <b>public access</b> to knowledge and products.	cram_ip
+5 process states	<b>New</b> → <b>Ready</b> (waiting for CPU) → <b>Running</b> (executing) → <b>Waiting/Blocked</b> (I/O) → <b>Terminated</b>	cram_processes

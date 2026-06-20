@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OS & Networks Cram Cards | CZU Prague</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080e;
+      --surface: #0f0f1a;
+      --surface2: #151525;
+      --border: rgba(52,211,153,0.15);
+      --accent: #34d399;
+      --accent2: #60a5fa;
+      --accent-glow: rgba(52,211,153,0.25);
+      --accent2-glow: rgba(96,165,250,0.25);
+      --text: #f0f0ff;
+      --text-muted: #9090b0;
+      --font: 'Outfit', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mesh-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .mesh-bg::before {
+      content:''; position:absolute; width:800px; height:800px; top:-150px; left:-150px;
+      background: radial-gradient(circle, color-mix(in srgb, #34d399 12%, transparent) 0%, transparent 70%);
+      animation: drift1 16s ease-in-out infinite alternate;
+    }
+    .mesh-bg::after {
+      content:''; position:absolute; width:600px; height:600px; bottom:-100px; right:-100px;
+      background: radial-gradient(circle, color-mix(in srgb, #60a5fa 10%, transparent) 0%, transparent 70%);
+      animation: drift2 12s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { 0%{transform:translate(0,0)} 100%{transform:translate(70px,50px)} }
+    @keyframes drift2 { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,-70px)} }
+
+    header {
+      position:sticky; top:0; z-index:100;
+      background:rgba(8,8,14,0.92);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 2rem;
+    }
+    .header-inner {
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; gap:1.25rem; height:64px;
+    }
+    .logo { font-size:1.2rem; font-weight:800; text-decoration:none; color:var(--text); white-space:nowrap; }
+    .logo span { color:var(--accent); }
+    .badge { background:color-mix(in srgb, #34d399 15%, transparent); border:1px solid color-mix(in srgb, #34d399 35%, transparent); color:var(--accent); font-size:0.72rem; font-weight:600; letter-spacing:.05em; padding:3px 10px; border-radius:999px; }
+    .header-spacer { flex:1; }
+    .card-count-badge { font-size:.75rem; color:var(--text-muted); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:3px 12px; border-radius:999px; }
+    .shortcuts-pill {
+      background:rgba(15,15,26,0.9); border:1px solid var(--border);
+      border-radius:999px; padding:5px 16px; font-size:.72rem; color:var(--text-muted);
+      display:flex; align-items:center; gap:.75rem;
+    }
+    .sc-key { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:5px; padding:1px 7px; font-family:var(--mono); color:var(--text); }
+    .back-link { display:flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--text-muted); font-size:.82rem; font-weight:600; padding:6px 14px; border:1px solid var(--border); border-radius:999px; transition:all .2s; }
+    .back-link:hover { color:var(--text); border-color:var(--accent); }
+
+    main { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:2rem 2rem 4rem; }
+
+    .stats-row {
+      display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+      margin-bottom:1.5rem;
+    }
+    .stat-box {
+      background:rgba(15,15,26,0.7); border:1px solid var(--border);
+      border-radius:14px; padding:.7rem 1.5rem; text-align:center; min-width:90px;
+    }
+    .stat-num { font-size:1.5rem; font-weight:800; }
+    .stat-label { font-size:.7rem; color:var(--text-muted); margin-top:2px; }
+    .stat-total .stat-num { color:var(--text); }
+    .stat-known .stat-num { color:var(--accent2); }
+    .stat-review .stat-num { color:var(--accent); }
+    .progress-bar-wrap { flex:1; min-width:180px; }
+    .progress-bar-label { font-size:.72rem; color:var(--text-muted); margin-bottom:.35rem; }
+    .progress-bar { height:8px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .4s ease; }
+
+    .deck-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .deck-tab {
+      padding:8px 20px; border-radius:999px; cursor:pointer;
+      font-family:var(--font); font-size:.84rem; font-weight:600;
+      border:1.5px solid var(--border); background:transparent; color:var(--text-muted);
+      transition:all .2s;
+    }
+    .deck-tab.active {
+      background:color-mix(in srgb, #34d399 18%, transparent);
+      border-color:var(--accent); color:var(--accent);
+      box-shadow:0 0 16px var(--accent-glow);
+    }
+    .deck-tab:hover:not(.active) { border-color:color-mix(in srgb, #34d399 40%, transparent); color:var(--text); }
+
+    .card-stage { perspective:1200px; width:100%; max-width:760px; margin:0 auto 2rem; min-height:340px; }
+    .flash-card {
+      position:relative; width:100%; min-height:340px;
+      cursor:pointer; transform-style:preserve-3d;
+      transition:transform .55s cubic-bezier(.4,0,.2,1);
+    }
+    .flash-card.flipped { transform:rotateY(180deg); }
+    .card-face {
+      position:absolute; inset:0;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      border-radius:24px; padding:2.5rem;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; overflow:hidden;
+    }
+    .card-front {
+      background:rgba(15,15,26,0.97);
+      border:1.5px solid var(--border);
+      box-shadow:0 8px 40px rgba(0,0,0,.4), 0 0 0 1px color-mix(in srgb, #34d399 6%, transparent);
+    }
+    .card-back {
+      background:linear-gradient(135deg, color-mix(in srgb, #34d399 10%, transparent) 0%, color-mix(in srgb, #60a5fa 7%, transparent) 100%);
+      border:1.5px solid color-mix(in srgb, #34d399 35%, transparent);
+      transform:rotateY(180deg);
+      box-shadow:0 8px 40px color-mix(in srgb, #34d399 14%, transparent);
+    }
+    .card-category {
+      font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      padding:3px 12px; border-radius:999px; margin-bottom:1.25rem;
+    }
+    .cat-os_basics { background:rgba(52,211,153,.12); border:1px solid rgba(52,211,153,.25); color:#34d399; }
+    .cat-multitask { background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.25); color:#f59e0b; }
+    .cat-vmem { background:rgba(232,121,249,.12); border:1px solid rgba(232,121,249,.25); color:#e879f9; }
+    .cat-net { background:rgba(96,165,250,.12); border:1px solid rgba(96,165,250,.25); color:#60a5fa; }
+    .cat-cli { background:rgba(251,146,60,.12); border:1px solid rgba(251,146,60,.25); color:#fb923c; }
+    .cat-cloud { background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.25); color:#a78bfa; }
+    .cat-wireless { background:rgba(45,212,191,.12); border:1px solid rgba(45,212,191,.25); color:#2dd4bf; }
+    .cat-ip { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.25); color:#f87171; }
+    .cat-processes { background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.25); color:#a78bfa; }
+
+    .card-q { font-size:1.4rem; font-weight:700; line-height:1.45; max-width:620px; }
+    .card-q code { font-family:var(--mono); font-size:1.05rem; color:var(--accent); background:color-mix(in srgb, #34d399 12%, transparent); padding:2px 8px; border-radius:6px; }
+    .card-a { font-size:.975rem; line-height:1.7; max-width:640px; color:var(--text); text-align:left; }
+    .card-a code { font-family:var(--mono); font-size:.88rem; color:var(--accent2); background:color-mix(in srgb, #60a5fa 12%, transparent); padding:1px 6px; border-radius:4px; }
+    .card-a strong { color:var(--accent); }
+    .card-hint { position:absolute; bottom:1.1rem; font-size:.72rem; color:rgba(255,255,255,.22); }
+    .card-num { position:absolute; top:1.1rem; right:1.25rem; font-size:.72rem; color:var(--text-muted); font-family:var(--mono); }
+    .flip-indicator { font-size:.75rem; color:var(--text-muted); text-align:center; margin-bottom:.75rem; transition:opacity .3s; }
+
+    .rating-row { display:flex; gap:1rem; justify-content:center; margin-bottom:2rem; }
+    .rate-btn {
+      padding:.75rem 2rem; border-radius:14px; cursor:pointer;
+      font-family:var(--font); font-size:.9rem; font-weight:700;
+      border:none; transition:all .25s;
+    }
+    .rate-review { background:color-mix(in srgb, #34d399 12%, transparent); border:1.5px solid color-mix(in srgb, #34d399 35%, transparent); color:var(--accent); }
+    .rate-review:hover { background:color-mix(in srgb, #34d399 25%, transparent); box-shadow:0 0 20px var(--accent-glow); }
+    .rate-know { background:color-mix(in srgb, #60a5fa 12%, transparent); border:1.5px solid color-mix(in srgb, #60a5fa 35%, transparent); color:var(--accent2); }
+    .rate-know:hover { background:color-mix(in srgb, #60a5fa 25%, transparent); box-shadow:0 0 20px var(--accent2-glow); }
+
+    .nav-row { display:flex; align-items:center; justify-content:center; gap:1.25rem; margin-bottom:2rem; }
+    .nav-btn {
+      width:44px; height:44px; border-radius:12px;
+      background:rgba(15,15,26,.8); border:1.5px solid var(--border);
+      color:var(--text); font-size:1.2rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s; font-family:var(--font);
+    }
+    .nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .card-counter { font-size:.9rem; font-weight:700; color:var(--text-muted); min-width:80px; text-align:center; }
+
+    .weak-panel { background:rgba(15,15,26,.8); border:1px solid var(--border); border-radius:20px; padding:1.5rem; margin-top:1rem; }
+    .weak-panel-title { font-size:1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+    .weak-count { font-size:.75rem; background:color-mix(in srgb, #34d399 15%, transparent); border:1px solid color-mix(in srgb, #34d399 28%, transparent); color:var(--accent); padding:2px 10px; border-radius:999px; }
+    .weak-list { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .weak-chip { background:color-mix(in srgb, #34d399 7%, transparent); border:1px solid color-mix(in srgb, #34d399 20%, transparent); color:var(--text-muted); font-size:.75rem; padding:4px 12px; border-radius:8px; cursor:pointer; transition:all .2s; }
+    .weak-chip:hover { border-color:var(--accent); color:var(--accent); }
+    .no-weak { color:var(--text-muted); font-size:.85rem; }
+
+    footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:1.5rem 2rem; text-align:center; color:var(--text-muted); font-size:.8rem; }
+    footer span { color:var(--accent); }
+    footer a { color:var(--accent2); text-decoration:none; }
+
+    .toast {
+      position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+      background:rgba(15,15,26,.98); border:1px solid var(--border);
+      padding:.65rem 1.5rem; border-radius:999px; font-size:.82rem; font-weight:600;
+      z-index:999; opacity:0; transition:opacity .3s;
+      pointer-events:none; white-space:nowrap;
+    }
+    .toast.show { opacity:1; }
+
+    @media (max-width:600px) {
+      .card-q { font-size:1.1rem; }
+      .card-a { font-size:.88rem; }
+      .card-face { padding:1.75rem; }
+      .shortcuts-pill { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">OS & Networks <span>Exam Prep</span></a>
+    <span class="badge">OS Exam</span>
+    <div class="header-spacer"></div>
+    <span class="card-count-badge">44 Cards</span>
+    <div class="shortcuts-pill">
+      <span><span class="sc-key">Space</span> flip</span>
+      <span><span class="sc-key">←→</span> navigate</span>
+      <span><span class="sc-key">1</span> review</span>
+      <span><span class="sc-key">2</span> know it</span>
+    </div>
+    <a class="back-link" href="index.html">← Dashboard</a>
+  </div>
+</header>
+
+<main>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box stat-total"><div class="stat-num" id="stat-total">44</div><div class="stat-label">Total Cards</div></div>
+    <div class="stat-box stat-known"><div class="stat-num" id="stat-known">0</div><div class="stat-label">Known ✓</div></div>
+    <div class="stat-box stat-review"><div class="stat-num" id="stat-review">0</div><div class="stat-label">Review ↻</div></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label" id="progress-label">Progress: 0%</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <button onclick="resetAll()" style="padding:6px 18px;border-radius:999px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171;cursor:pointer;font-family:var(--font);font-size:.78rem;font-weight:600;transition:all .2s;">Reset All</button>
+  </div>
+
+  <!-- DECK TABS -->
+  <div class="deck-tabs">
+    <button class="deck-tab active" onclick="setDeck('all',this)">⭐ All</button>
+    <button class="deck-tab" onclick="setDeck('os_basics',this)">🖥️ OS Basics</button>
+    <button class="deck-tab" onclick="setDeck('multitask',this)">⚡ Multitasking</button>
+    <button class="deck-tab" onclick="setDeck('vmem',this)">💾 Virtual Memory</button>
+    <button class="deck-tab" onclick="setDeck('net',this)">🌐 Networking</button>
+    <button class="deck-tab" onclick="setDeck('cli',this)">💻 Command Line</button>
+    <button class="deck-tab" onclick="setDeck('cloud',this)">☁️ Cloud Computing</button>
+    <button class="deck-tab" onclick="setDeck('wireless',this)">📶 Wireless & Security</button>
+    <button class="deck-tab" onclick="setDeck('ip',this)">⚖️ Intellectual Property</button>
+    <button class="deck-tab" onclick="setDeck('processes',this)">⚙️ Processes & Threads</button>
+  </div>
+
+  <!-- FLIP INDICATOR -->
+  <div class="flip-indicator" id="flip-indicator">👆 Click card or press <strong>Space</strong> to reveal answer</div>
+
+  <!-- CARD STAGE -->
+  <div class="card-stage">
+    <div class="flash-card" id="flash-card" onclick="flipCard()">
+      <div class="card-face card-front" id="card-front">
+        <span class="card-num" id="card-num-front">1 / 44</span>
+        <span class="card-category" id="card-cat-front"></span>
+        <div class="card-q" id="card-q"></div>
+        <span class="card-hint">Click to flip</span>
+      </div>
+      <div class="card-face card-back" id="card-back">
+        <span class="card-num" id="card-num-back">1 / 44</span>
+        <span class="card-category" id="card-cat-back"></span>
+        <div class="card-a" id="card-a"></div>
+        <span class="card-hint">Rate below</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RATING -->
+  <div class="rating-row">
+    <button class="rate-btn rate-review" onclick="rateCard(1)">↻ Review Again (1)</button>
+    <button class="rate-btn rate-know" onclick="rateCard(2)">✓ Got It! (2)</button>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-row">
+    <button class="nav-btn" onclick="prevCard()" title="Previous (←)">←</button>
+    <span class="card-counter" id="card-counter">1 / 44</span>
+    <button class="nav-btn" onclick="nextCard()" title="Next (→)">→</button>
+  </div>
+
+  <!-- WEAK PANEL -->
+  <div class="weak-panel">
+    <div class="weak-panel-title">
+      📌 Cards Marked for Review
+      <span class="weak-count" id="weak-count">0</span>
+    </div>
+    <div class="weak-list" id="weak-list">
+      <span class="no-weak">No cards marked yet — start studying!</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>OS & Networks Exam Prep · <span>44 High-Yield Cards</span> · <a href="index.html">← Back to Dashboard</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CARD DATA — 44 exam-targeted cards
+// ═══════════════════════════════════════════════════════
+const CARDS = [
+  {cat:'os_basics',q:'OS — what system resources does it control?',a:'The OS controls: <b>CPU time</b> and <b>Operating memory (RAM)</b> — the core resources.'},
+  {cat:'os_basics',q:'What function is NOT performed by the OS?',a:'<b>Defragmentation</b> — this is a disk utility, NOT a core OS function. (Common exam trap!)'},
+  {cat:'os_basics',q:'What programming languages are used to build an OS?',a:'<b>C, C++, C#</b>, and <b>assembly language</b>'},
+  {cat:'os_basics',q:'Linux — what is it technically?',a:'An open-source <b>OS kernel</b> written from scratch by Linus Torvalds in 1991. NOT derived from Unix code.'},
+  {cat:'os_basics',q:'BIOS — where is it stored?',a:'In <b>EEPROM or NAND flash memory</b> on the motherboard — non-volatile, survives power-off.'},
+  {cat:'os_basics',q:'FAT16 file system — max size',a:'<b>4 GB</b> — mathematically limited by 16-bit cluster addressing.'},
+  {cat:'os_basics',q:'PC core components (when PCs were introduced)',a:'Each PC gave users their own: <b>CPU power</b>, <b>operating memory (RAM)</b>, and <b>local storage (HDD)</b>.'},
+  {cat:'os_basics',q:'Host-terminal computational model',a:'A central <b>mainframe (host)</b> held all data and processing. The network only carried raw inputs/outputs (keystrokes and screen redraws) to dumb terminals.'},
+  {cat:'os_basics',q:'Batch processing model',a:'Jobs grouped into batches and executed one-by-one by mainframe. Key feature: <b>offline processing</b> (no user interaction during execution).'},
+  {cat:'multitask',q:'Cooperative vs Pre-emptive multitasking — key difference',a:'<b>Cooperative</b>: apps manage their own resources, voluntarily yield CPU.<br><b>Pre-emptive</b>: the OS forcibly manages CPU allocation; can kill misbehaving apps.'},
+  {cat:'multitask',q:'Cooperative multitasking — problem',a:'Apps allocated resources themselves. A <b>badly written app could crash the whole system</b> by not releasing resources.'},
+  {cat:'multitask',q:'Pre-emptive multitasking — how it works',a:'The <b>OS assigns CPU time</b> to processes. If an app misbehaves, the OS can forcibly <b>shut it down and reallocate resources</b>.'},
+  {cat:'multitask',q:'Modern OS multitasking type',a:'<b>Pre-emptive multitasking</b> — the OS is in full control of resource allocation.'},
+  {cat:'multitask',q:'Pre-emptive multitasking — when did each OS adopt it?',a:'<b>Unix</b>: always had it from the beginning.<br><b>Windows</b>: started with Windows NT and Windows 95.<br><b>Mac</b>: started with Mac OS X.'},
+  {cat:'vmem',q:'Virtual memory — definition',a:'A memory management technique where the OS uses <b>HDD/SSD disk space to simulate additional RAM</b>. Allows running programs larger than physical RAM.'},
+  {cat:'vmem',q:'Virtual memory — how does it work?',a:'OS divides memory into <b>page files (Windows) or swap files (Linux)</b>. Inactive pages are moved to disk; needed pages are loaded to RAM.'},
+  {cat:'vmem',q:'Key term for moving memory pages between RAM and disk',a:'<b>Swapping</b> (also called paging) — the act of moving memory pages between RAM and secondary storage.'},
+  {cat:'vmem',q:'Which software manages virtual memory?',a:'The <b>Operating System kernel</b> manages virtual memory, translating virtual addresses into physical addresses.'},
+  {cat:'vmem',q:'Swapping vs Paging difference',a:'<b>Swapping</b>: moving entire process to disk.<br><b>Paging</b>: moving fixed-size blocks (pages) between RAM and disk. Recommended ratio: <b>3:1</b> (swap:RAM).'},
+  {cat:'net',q:'Public IP address — what is it?',a:'Assigned by your <b>ISP</b>, visible on the internet. Describes approximate connection location. Limited supply (IPv4).'},
+  {cat:'net',q:'Private IP address — what is it?',a:'Can be used by <b>multiple devices</b> but only within the <b>same isolated local network</b>. Not accessible from the public internet.'},
+  {cat:'net',q:'Private IP — communication beyond local network',a:'Requires <b>NAT (Network Address Translation)</b> — converts private IP → public IP to communicate outside the local network.'},
+  {cat:'net',q:'NAT — definition',a:'<b>Network Address Translation</b> — converts a <b>private IP address → public IP address</b> for internet communication.'},
+  {cat:'net',q:'DNS — what kind of system?',a:'DNS is a <b>distributed database</b> that resolves domain names to IP addresses. DNS resolvers read domain names from the end (root domain first).'},
+  {cat:'net',q:'SSH vs plain terminal connection',a:'SSH (<b>Secure Shell</b>) uses an <b>encrypted channel</b> (port 22). A plain terminal/telnet connection is unencrypted.'},
+  {cat:'net',q:'Windows and GNU/Linux default diagnostic tools',a:'<b>ping</b> and <b>traceroute</b> (tracert on Windows) — included by default in both operating systems.'},
+  {cat:'net',q:'Ping tool — what does it do?',a:'Uses <b>ICMP Echo Request</b> packets to verify host connectivity and measure round-trip time.'},
+  {cat:'net',q:'Traceroute (tracert) — what does it do?',a:'Traces the <b>path packets take to a destination host</b>. Linux: <code>traceroute</code> (UDP/ICMP). Windows: <code>tracert</code> (ICMP).'},
+  {cat:'cli',q:'CLI/TUI — what is it?',a:'<b>Command Line Interface</b> (also Text User Interface / Shell) — accepts typed text commands as input.'},
+  {cat:'cli',q:'CLI advantages — exam-critical facts',a:'✓ Remote access requires <b>very low bandwidth</b><br>✓ User can perform <b>any action</b> via commands<br>✓ Low RAM and CPU usage<br>✓ Runs on low-resolution screens<br>✓ Faster for experts'},
+  {cat:'cli',q:'CLI disadvantages — exam-critical facts',a:'✗ Must memorize command sequences<br>✗ Difficult for novices<br>✗ No autocomplete or suggestions<br>✗ Spelling errors restart the process<br>✗ High learning curve'},
+  {cat:'cli',q:'Where is CLI used today?',a:'Networking setup, server administration, DevOps, scripting, remote server management.'},
+  {cat:'cli',q:'CLI — two tested correct statements',a:'\'Remote access requires <b>low bandwidth</b>\' and \'user can perform <b>any action</b> that has a command\'.'},
+  {cat:'cloud',q:'Cloud: 3 deployment types',a:'<b>Private cloud</b> (dedicated/sensitive data), <b>Hybrid cloud</b> (mix), <b>Public cloud</b> (shared/scalable, e.g. AWS)'},
+  {cat:'cloud',q:'Cloud: 3 service models',a:'<b>IaaS</b> = Infrastructure (hardware, VMs)<br><b>PaaS</b> = Platform (OS + runtime)<br><b>SaaS</b> = Software (ready-to-use apps)'},
+  {cat:'cloud',q:'When to use Private vs Public cloud?',a:'<b>Private</b>: GDPR-protected or sensitive data<br><b>Public</b>: web apps, cost efficiency, scalability'},
+  {cat:'wireless',q:'Wireless networking advantages',a:'✓ Mobility (portable devices)<br>✓ No cables (cheaper installation, faster setup)<br>✓ Works where cables cannot reach<br>✓ Cost-effective long-term'},
+  {cat:'wireless',q:'Wireless networking disadvantages',a:'✗ Security risks (encryption issues)<br>✗ <b>Slower</b> data transfer than wired<br>✗ Signal degrades with distance from origin<br>✗ Prone to interference (shared bands)<br>✗ Limited bandwidth — <b>cannot support VTC</b>'},
+  {cat:'wireless',q:'Wireless: true statement about shared frequency bands',a:'Shared/unlicensed bands (2.4 GHz, 5 GHz) are free to use but prone to <b>congestion and interference</b> because many devices share them.'},
+  {cat:'ip',q:'Arguments FOR intellectual property rights',a:'✓ Provides incentive to invest in innovation<br>✓ Rewards creativity and effort<br>✓ Protects ideas from being stolen<br>✓ Without it, motivation to innovate is reduced'},
+  {cat:'ip',q:'Arguments AGAINST intellectual property rights',a:'✗ Can create <b>monopolies</b> and stifle competition<br>✗ Higher prices for consumers<br>✗ Large companies can block smaller competitors<br>✗ Reduced access to products/services'},
+  {cat:'ip',q:'Historical documents recognizing property rights',a:'Magna Carta (1215), US Declaration of Independence (1776), French Declaration of Rights (1789), UN Declaration of Human Rights (1948)'},
+  {cat:'ip',q:'IP rights — societal balance',a:'Each society must strike a balance between: <b>incentives for creators</b> vs. <b>public access</b> to knowledge and products.'},
+  {cat:'processes',q:'5 process states',a:'<b>New</b> → <b>Ready</b> (waiting for CPU) → <b>Running</b> (executing) → <b>Waiting/Blocked</b> (I/O) → <b>Terminated</b>'}
+];
+
+// ═══════════════════════════════════════════════════════
+// CATEGORY META
+// ═══════════════════════════════════════════════════════
+const catLabel = {'os_basics':'OS Basics','multitask':'Multitasking','vmem':'Virtual Memory','net':'Networking','cli':'Command Line','cloud':'Cloud Computing','wireless':'Wireless & Security','ip':'Intellectual Property','processes':'Processes & Threads'};
+const catEmoji = {'os_basics':'🖥️','multitask':'⚡','vmem':'💾','net':'🌐','cli':'💻','cloud':'☁️','wireless':'📶','ip':'⚖️','processes':'⚙️'};
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let deck = [...CARDS];
+let idx = 0;
+let isFlipped = false;
+let ratings = JSON.parse(localStorage.getItem('os_ratings') || '{}');
+let currentDeck = 'all';
+
+function saveDeckIdx() { localStorage.setItem('os_ratings_idx', JSON.stringify({deck:currentDeck,idx})); }
+function loadDeckIdx() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('os_ratings_idx') || '{}');
+    if (saved.deck === currentDeck) { idx = Math.min(saved.idx || 0, deck.length - 1); }
+  } catch(e){}
+}
+
+// ═══════════════════════════════════════════════════════
+// DECK SELECTION
+// ═══════════════════════════════════════════════════════
+function setDeck(cat, btn) {
+  currentDeck = cat;
+  deck = cat === 'all' ? [...CARDS] : CARDS.filter(c => c.cat === cat);
+  idx = 0; isFlipped = false;
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCard();
+  updateStats();
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER CARD
+// ═══════════════════════════════════════════════════════
+function renderCard() {
+  if (deck.length === 0) {
+    document.getElementById('card-q').textContent = 'No cards in this deck.';
+    document.getElementById('card-a').textContent = '';
+    document.getElementById('card-counter').textContent = '0 / 0';
+    return;
+  }
+  const card = deck[idx];
+  const num = `${idx+1} / ${deck.length}`;
+  const catClass = `cat-${card.cat}`;
+  const catText = `${catEmoji[card.cat] || '📝'} ${catLabel[card.cat] || card.cat}`;
+
+  document.getElementById('card-q').innerHTML = card.q;
+  document.getElementById('card-a').innerHTML = card.a;
+  document.getElementById('card-num-front').textContent = num;
+  document.getElementById('card-num-back').textContent = num;
+  document.getElementById('card-counter').textContent = num;
+
+  ['card-cat-front','card-cat-back'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = `card-category ${catClass}`;
+    el.textContent = catText;
+  });
+
+  if (isFlipped) {
+    document.getElementById('flash-card').classList.remove('flipped');
+    isFlipped = false;
+  }
+  document.getElementById('flip-indicator').style.opacity = '1';
+  saveDeckIdx();
+}
+
+// ═══════════════════════════════════════════════════════
+// FLIP
+// ═══════════════════════════════════════════════════════
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flash-card').classList.toggle('flipped', isFlipped);
+  document.getElementById('flip-indicator').style.opacity = isFlipped ? '0' : '1';
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATE
+// ═══════════════════════════════════════════════════════
+function nextCard() {
+  if (deck.length === 0) return;
+  idx = (idx + 1) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+function prevCard() {
+  if (deck.length === 0) return;
+  idx = (idx - 1 + deck.length) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RATING
+// ═══════════════════════════════════════════════════════
+function rateCard(rating) {
+  if (deck.length === 0) return;
+  const card = deck[idx];
+  const key = `${card.cat}::${card.q.substring(0,40)}`;
+  ratings[key] = rating;
+  localStorage.setItem('os_ratings', JSON.stringify(ratings));
+  showToast(rating === 2 ? '✅ Got it!' : '↻ Marked for review');
+  updateStats();
+  updateWeakPanel();
+  nextCard();
+}
+
+function getRatingKey(card) {
+  return `${card.cat}::${card.q.substring(0,40)}`;
+}
+
+// ═══════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════
+function updateStats() {
+  let known = 0, review = 0;
+  CARDS.forEach(c => {
+    const k = getRatingKey(c);
+    if (ratings[k] === 2) known++;
+    else if (ratings[k] === 1) review++;
+  });
+  document.getElementById('stat-total').textContent = CARDS.length;
+  document.getElementById('stat-known').textContent = known;
+  document.getElementById('stat-review').textContent = review;
+  const pct = Math.round((known / CARDS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Progress: ${pct}% (${known}/${CARDS.length} known)`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WEAK PANEL
+// ═══════════════════════════════════════════════════════
+function updateWeakPanel() {
+  const weakCards = CARDS.filter(c => ratings[getRatingKey(c)] === 1);
+  document.getElementById('weak-count').textContent = weakCards.length;
+  const wl = document.getElementById('weak-list');
+  if (weakCards.length === 0) {
+    wl.innerHTML = '<span class="no-weak">No cards marked for review. Keep going!</span>';
+    return;
+  }
+  wl.innerHTML = '';
+  weakCards.forEach(c => {
+    const chip = document.createElement('span');
+    chip.className = 'weak-chip';
+    const stripped = c.q.replace(/<[^>]+>/g,'');
+    chip.textContent = stripped.length > 32 ? stripped.substring(0,32) + '…' : stripped;
+    chip.title = stripped;
+    chip.onclick = () => jumpToCard(c);
+    wl.appendChild(chip);
+  });
+}
+
+function jumpToCard(card) {
+  currentDeck = 'all';
+  deck = [...CARDS];
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('.deck-tab').classList.add('active');
+  idx = CARDS.indexOf(card);
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════════
+function resetAll() {
+  if (!confirm('Reset all ratings? Your progress will be lost.')) return;
+  ratings = {};
+  localStorage.removeItem('os_ratings');
+  updateStats();
+  updateWeakPanel();
+  showToast('🗑️ All ratings reset');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ═══════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch(e.key) {
+    case ' ': e.preventDefault(); flipCard(); break;
+    case 'ArrowRight': nextCard(); break;
+    case 'ArrowLeft': prevCard(); break;
+    case '1': rateCard(1); break;
+    case '2': rateCard(2); break;
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+loadDeckIdx();
+renderCard();
+updateStats();
+updateWeakPanel();
+</script>
+</body>
+</html>

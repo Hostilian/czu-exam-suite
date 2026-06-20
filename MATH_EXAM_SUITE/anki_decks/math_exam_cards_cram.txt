@@ -1,0 +1,59 @@
+∫ xⁿ dx  (n ≠ -1)	xⁿ⁺¹/(n+1) + C	integrals
+∫ eˣ dx	eˣ + C	integrals
+∫ sin(x) dx	-cos(x) + C	integrals
+∫ cos(x) dx	sin(x) + C	integrals
+∫ 1/x dx	ln|x| + C	integrals
+∫ tan(x) dx	-ln|cos(x)| + C  =  ln|sec(x)| + C	integrals
+∫ sec²(x) dx	tan(x) + C	integrals
+Integration by Parts (IBP) formula	∫ u dv = uv − ∫ v du	integrals
+∫ x·eˣ dx  (IBP example)	u = x,  dv = eˣ dx	integrals
+Partial fractions: (2x+1) / [(x+1)(x-2)]	Write: A/(x+1) + B/(x-2)	integrals
+Substitution: ∫ 2x·cos(x²) dx	Let u = x²,  du = 2x dx	integrals
+∫ 1/(1+x²) dx	arctan(x) + C	integrals
+∫ 1/√(1-x²) dx	arcsin(x) + C	integrals
+Fundamental Theorem of Calculus	∫ₐᵇ f(x) dx = F(b) − F(a)	integrals
+Separation of Variables method	Rewrite dy/dx = f(x)·g(y) as:	odes
+Solve: dy/dx = 3y	Separate: dy/y = 3 dx	odes
+Solve: dy/dx = x/y	Separate: y dy = x dx	odes
+1st order linear ODE — standard form	dy/dx + P(x)·y = Q(x)	odes
+Integrating factor μ(x)	μ(x) = e^(∫P(x) dx)	odes
+Characteristic equation for y'' + py' + qy = 0	r² + pr + q = 0	odes
+Two distinct real roots r₁, r₂	y = C₁e^(r₁x) + C₂e^(r₂x)	odes
+Repeated root r (multiplicity 2)	y = (C₁ + C₂x)·e^(rx)	odes
+Complex roots r = α ± βi	y = e^(αx)[C₁·cos(βx) + C₂·sin(βx)]	odes
+Variation of Parameters formula (y_p)	y_p = y₁·∫(−y₂·g / W) dx  +  y₂·∫(y₁·g / W) dx	odes
+Wronskian W(y₁, y₂)	W = y₁y₂' − y₂y₁'	odes
+Non-homogeneous ODE — general solution	y = y_h + y_p	odes
+Partial derivative ∂f/∂x	Differentiate f(x,y,...) with respect to x,	multivariable
+Gradient ∇f  (2 variables)	∇f = (∂f/∂x,  ∂f/∂y)	multivariable
+Critical point conditions	∂f/∂x = 0  AND  ∂f/∂y = 0  simultaneously.	multivariable
+Hessian determinant D	D = f_xx·f_yy − (f_xy)²	multivariable
+Chain rule for z=f(x,y), x=x(t), y=y(t)	dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt)	multivariable
+Clairaut's Theorem (mixed partials)	If f_xy and f_yx are continuous at (a,b), then:	multivariable
+Find critical points of f(x,y) = x² + y² − 2x	f_x = 2x − 2 = 0  →  x = 1	multivariable
+Directional derivative formula	D_u f = ∇f · u	multivariable
+Level curves of f(x,y)	Curves f(x,y) = c (constant) in xy-plane.	multivariable
+Second-order test: D > 0 and f_xx < 0	LOCAL MAXIMUM at that critical point.	multivariable
+Taylor series formula (centered at a)	f(x) = Σ_{n=0}^∞  f⁽ⁿ⁾(a)/n! · (x−a)ⁿ	series
+Maclaurin series for eˣ	eˣ = Σ_{n=0}^∞  xⁿ/n!	series
+Maclaurin series for sin(x)	sin(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n+1)/(2n+1)!	series
+Maclaurin series for cos(x)	cos(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n)/(2n)!	series
+Maclaurin series for ln(1+x)	ln(1+x) = Σ_{n=1}^∞  (-1)^(n+1)·xⁿ/n	series
+Ratio Test for series Σaₙ	L = lim_{n→∞} |a_{n+1}/a_n|	series
+Root Test for series Σaₙ	L = lim_{n→∞} (|aₙ|)^(1/n)	series
+Geometric series Σ arⁿ  (n=0 to ∞)	Converges to  a/(1−r)  if |r| < 1	series
+Comparison Test	If 0 ≤ aₙ ≤ bₙ for all n:	series
+Alternating Series Test (Leibniz)	Σ(-1)ⁿ·aₙ converges if:	series
+p-series:  Σ 1/nᵖ  (n=1 to ∞)	Converges if p > 1	series
+Radius of convergence R	R = 1 / limsup_{n→∞} |aₙ|^(1/n)	series
+Area between two curves y=f(x) and y=g(x)	A = ∫_a^b |f(x) − g(x)| dx	applications
+Volume by disk method (rotation about x-axis)	V = π ∫_a^b [f(x)]² dx	applications
+Volume by washer method (hollow solid)	V = π ∫_a^b ([R(x)]² − [r(x)]²) dx	applications
+Volume by shell method (rotation about y-axis)	V = 2π ∫_a^b x·f(x) dx	applications
+Arc length formula	L = ∫_a^b √(1 + [f'(x)]²) dx	applications
+Surface area of revolution (about x-axis)	S = 2π ∫_a^b f(x)·√(1 + [f'(x)]²) dx	applications
+Average value of f on [a, b]	f_avg = 1/(b−a) · ∫_a^b f(x) dx	applications
+Work done by variable force F(x)	W = ∫_a^b F(x) dx	applications
+Improper integral  ∫₁^∞ 1/xᵖ dx	= lim_{t→∞} ∫₁^t x^{-p} dx	applications
+Evaluate  ∫₀² x² dx	Antiderivative: F(x) = x³/3	applications
+∫ aˣ dx  (a > 0, a ≠ 1)	aˣ / ln(a) + C	integrals

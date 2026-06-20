@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INFO SYS Exam Prep — ETEA7E | CZU Prague</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #060a0f;
+    --surface: #0d1520;
+    --surface2: #111d2e;
+    --border: rgba(14,165,233,0.15);
+    --border2: rgba(245,158,11,0.12);
+    --accent: #0ea5e9;
+    --accent2: #f59e0b;
+    --accent-dim: rgba(14,165,233,0.18);
+    --accent2-dim: rgba(245,158,11,0.15);
+    --text: #e2eaf4;
+    --text-muted: #7a9bb5;
+    --text-dim: #3d5a73;
+    --green: #22c55e;
+    --red: #ef4444;
+    --font: 'Outfit', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow-accent: 0 0 30px rgba(14,165,233,0.2);
+    --shadow-amber: 0 0 30px rgba(245,158,11,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== ANIMATED MESH BACKGROUND ===== */
+  .mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .mesh-bg::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(14,165,233,0.12) 0%, transparent 70%);
+    animation: meshFloat1 18s ease-in-out infinite;
+  }
+  .mesh-bg::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -15%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(245,158,11,0.10) 0%, transparent 70%);
+    animation: meshFloat2 22s ease-in-out infinite;
+  }
+  .mesh-blob3 {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 40%;
+    background: radial-gradient(ellipse, rgba(14,165,233,0.06) 0%, transparent 70%);
+    animation: meshFloat3 26s ease-in-out infinite;
+  }
+  @keyframes meshFloat1 { 0%,100%{transform:translate(0,0)} 33%{transform:translate(4%,6%)} 66%{transform:translate(-3%,3%)} }
+  @keyframes meshFloat2 { 0%,100%{transform:translate(0,0)} 40%{transform:translate(-5%,-4%)} 70%{transform:translate(3%,-6%)} }
+  @keyframes meshFloat3 { 0%,100%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(1.15)} }
+
+  /* ===== HEADER ===== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(6,10,15,0.82);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .logo span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 4px;
+    cursor: pointer;
+  }
+  .mode-btn {
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: transparent;
+    color: var(--text-muted);
+  }
+  .mode-btn.active {
+    background: linear-gradient(135deg, var(--accent), #38bdf8);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(14,165,233,0.4);
+  }
+  .cram-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent2);
+    text-decoration: none;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 8px;
+    padding: 6px 14px;
+    transition: all 0.25s;
+  }
+  .cram-link:hover {
+    background: rgba(245,158,11,0.2);
+    box-shadow: 0 0 16px rgba(245,158,11,0.25);
+    transform: translateY(-1px);
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ===== BANNER ===== */
+  .banner {
+    background: linear-gradient(135deg, rgba(14,165,233,0.12) 0%, rgba(245,158,11,0.08) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .banner-text h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--text) 50%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .banner-text p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .banner-badge {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.08));
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    text-align: center;
+  }
+  .banner-badge .exam-label { font-size: 0.7rem; font-weight: 600; color: var(--accent2); letter-spacing: 1.5px; text-transform: uppercase; }
+  .banner-badge .exam-code { font-size: 1.6rem; font-weight: 800; color: var(--text); font-family: var(--mono); }
+  .banner-badge .exam-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ===== GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== GLASS CARD ===== */
+  .glass-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(14,165,233,0.3);
+    box-shadow: var(--shadow-accent);
+  }
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(14,165,233,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .glass-card:hover::before { opacity: 1; }
+  .card-12 { grid-column: span 12; }
+  .card-7 { grid-column: span 7; }
+  .card-5 { grid-column: span 5; }
+  .card-6 { grid-column: span 6; }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background: var(--accent-dim);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .card-icon.amber { background: var(--accent2-dim); border-color: var(--border2); }
+  .card-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+  .card-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* ===== DEFINITIONS MATCHER ===== */
+  .matcher-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .matcher-col { display: flex; flex-direction: column; gap: 8px; }
+  .matcher-col-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .match-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.4;
+    user-select: none;
+  }
+  .match-item:hover { border-color: var(--accent); background: rgba(14,165,233,0.07); }
+  .match-item.selected { border-color: var(--accent); background: rgba(14,165,233,0.15); box-shadow: 0 0 12px rgba(14,165,233,0.25); }
+  .match-item.matched { border-color: var(--green); background: rgba(34,197,94,0.12); color: var(--green); cursor: default; }
+  .match-item.wrong { animation: shake 0.4s ease-in-out; border-color: var(--red); background: rgba(239,68,68,0.12); }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+  }
+  .matcher-score {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .matcher-score span { font-size: 0.82rem; color: var(--text-muted); }
+  .matcher-score strong { color: var(--accent); font-family: var(--mono); }
+  .matcher-reset-btn {
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--accent-dim);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .matcher-reset-btn:hover { background: rgba(14,165,233,0.25); }
+
+  /* ===== SAP MODULES ===== */
+  .sap-modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .sap-module {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .sap-module:hover {
+    border-color: rgba(245,158,11,0.3);
+    box-shadow: 0 0 16px rgba(245,158,11,0.12);
+    transform: translateY(-2px);
+  }
+  .sap-module-code {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 2px;
+  }
+  .sap-module-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .sap-module-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .sap-module-tags {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    font-family: var(--mono);
+    background: rgba(14,165,233,0.1);
+    border: 1px solid rgba(14,165,233,0.2);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+  .tag.amber {
+    background: rgba(245,158,11,0.1);
+    border-color: rgba(245,158,11,0.2);
+    color: var(--accent2);
+  }
+
+  /* ===== TABS ===== */
+  .cram-hidden { display: none !important; }
+  .tabs-wrapper { margin-bottom: 20px; }
+  .tab-nav {
+    display: flex;
+    gap: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--accent), #38bdf8);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(14,165,233,0.35);
+  }
+  .tab-btn:hover:not(.active) { color: var(--text); background: rgba(14,165,233,0.08); }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* ===== IS TYPE CLASSIFIER ===== */
+  .classifier-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 16px; }
+  .scenario-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-family: var(--font);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    line-height: 1.45;
+  }
+  .scenario-btn:hover { border-color: var(--accent); background: rgba(14,165,233,0.08); }
+  .scenario-btn.active { border-color: var(--accent); background: rgba(14,165,233,0.15); }
+  .classifier-result {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    display: none;
+  }
+  .classifier-result.visible { display: block; }
+  .result-type {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: var(--mono);
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .result-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ===== P2P FLOWCHART ===== */
+  .p2p-flow { display: flex; flex-direction: column; gap: 4px; }
+  .p2p-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .p2p-step:hover { border-color: var(--accent2); box-shadow: 0 0 12px rgba(245,158,11,0.12); }
+  .p2p-step.expanded { border-color: var(--accent); }
+  .p2p-num {
+    background: rgba(14,165,233,0.12);
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+  .p2p-main { padding: 12px 16px; flex: 1; }
+  .p2p-title { font-size: 0.85rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .p2p-tcode { font-family: var(--mono); font-size: 0.75rem; color: var(--accent2); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); border-radius: 4px; padding: 1px 6px; }
+  .p2p-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5; display: none; }
+  .p2p-step.expanded .p2p-desc { display: block; }
+  .p2p-arrow { display: flex; justify-content: center; color: var(--accent); font-size: 0.9rem; padding: 2px 0; opacity: 0.5; }
+
+  /* ===== SDLC MATCHER ===== */
+  .sdlc-container { }
+  .sdlc-phases { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .sdlc-phase-btn {
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sdlc-phase-btn.sel { background: rgba(14,165,233,0.15); border-color: var(--accent); color: var(--accent); }
+  .sdlc-activities { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
+  .activity-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .activity-chip:hover { border-color: var(--accent); background: rgba(14,165,233,0.08); }
+  .activity-chip.correct { border-color: var(--green); background: rgba(34,197,94,0.12); color: var(--green); cursor: default; }
+  .activity-chip.wrong-ans { animation: shake 0.4s ease-in-out; border-color: var(--red); background: rgba(239,68,68,0.1); }
+  .sdlc-feedback { font-size: 0.82rem; color: var(--text-muted); min-height: 20px; }
+
+  /* ===== CLOUD TABLE ===== */
+  .cloud-table { width: 100%; border-collapse: collapse; }
+  .cloud-table th, .cloud-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+  .cloud-table th { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+  .cloud-table tr:hover td { background: rgba(14,165,233,0.04); }
+  .cloud-table td:first-child { font-family: var(--mono); font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+  .cloud-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-family: var(--mono);
+    border-radius: 4px;
+    padding: 2px 7px;
+    background: rgba(14,165,233,0.1);
+    border: 1px solid rgba(14,165,233,0.2);
+    color: var(--accent);
+  }
+  .cloud-badge.amber { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.2); color: var(--accent2); }
+  .cloud-badge.green { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.2); color: var(--green); }
+
+  /* ===== SECURITY QUIZ ===== */
+  .quiz-question {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .quiz-q-text { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
+  .quiz-options { display: flex; flex-direction: column; gap: 6px; }
+  .quiz-opt {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: var(--font);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .quiz-opt:hover { border-color: var(--accent); background: rgba(14,165,233,0.08); }
+  .quiz-opt.correct-ans { border-color: var(--green); background: rgba(34,197,94,0.12); color: var(--green); cursor: default; }
+  .quiz-opt.wrong-opt { border-color: var(--red); background: rgba(239,68,68,0.1); color: var(--red); cursor: default; }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-feedback { font-size: 0.78rem; margin-top: 8px; color: var(--text-muted); min-height: 18px; }
+  .quiz-score-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface2); border-radius: var(--radius-sm); border: 1px solid var(--border); margin-top: 12px; }
+  .quiz-score-bar span { font-size: 0.82rem; color: var(--text-muted); }
+  .quiz-score-bar strong { font-family: var(--mono); color: var(--accent); font-size: 1rem; }
+  .quiz-reset-btn {
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--accent-dim);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    border-radius: 8px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz-reset-btn:hover { background: rgba(14,165,233,0.25); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    background: rgba(6,10,15,0.7);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+  }
+  footer p { font-size: 0.78rem; color: var(--text-dim); }
+  footer a { color: var(--accent); text-decoration: none; }
+  .footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .footer-tag { font-size: 0.68rem; font-weight: 600; font-family: var(--mono); background: var(--surface); border: 1px solid var(--border); color: var(--text-dim); border-radius: 4px; padding: 3px 8px; }
+
+  @media (max-width: 900px) {
+    .card-7, .card-5, .card-6 { grid-column: span 12; }
+    .matcher-grid { grid-template-columns: 1fr; }
+    .sap-modules-grid { grid-template-columns: 1fr; }
+    .banner { flex-direction: column; align-items: flex-start; }
+    .tab-nav { gap: 2px; }
+    .tab-btn { padding: 6px 10px; font-size: 0.72rem; }
+    .sdlc-activities { grid-template-columns: repeat(2,1fr); }
+    .classifier-grid { grid-template-columns: 1fr; }
+  }
+
+/* ─── 2-HOUR AUDIO CRAM STYLES ─── */
+.cram-container { display: flex; flex-direction: column; gap: 1.5rem; padding: 0.5rem 0; }
+.player-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 32px rgba(6, 8, 16, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 1.25rem; }
+.player-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.player-title { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
+.player-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.play-btn-main { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); border: none; color: #000; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 0 15px var(--glow-cyan); }
+.play-btn-main:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan); }
+.play-btn-main.paused { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); box-shadow: 0 0 15px var(--glow-orange); }
+.ctrl-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
+.ctrl-btn:hover { background: var(--border); color: var(--cyan); transform: translateY(-2px); }
+.player-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.04); }
+.setting-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.setting-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; }
+.setting-select, .setting-slider { background: var(--surface3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 0.85rem; outline: none; cursor: pointer; }
+.setting-slider { -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--surface3); padding: 0; }
+.setting-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 10px var(--glow-cyan); }
+.player-progress-bar { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; position: relative; }
+.player-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--orange)); transition: width 0.3s; }
+.anki-deck-btn { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); border: none; color: #fff; padding: 10px 20px; border-radius: 50px; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none; }
+.anki-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-orange); }
+.cram-list-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 768px) { .cram-list-grid { grid-template-columns: repeat(2, 1fr); } }
+.cram-card-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer; }
+.cram-card-item:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.3); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05); }
+.cram-card-item.active-speaking { border-color: var(--cyan); box-shadow: 0 0 20px var(--glow-cyan); background: var(--surface2); }
+.card-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+.card-cat-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
+.card-cat-dw { color: var(--cyan); border-color: rgba(34, 211, 238, 0.2); }
+.card-cat-sys { color: #a78bfa; border-color: rgba(167, 139, 250, 0.2); }
+.card-cat-cloud { color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
+.card-cat-erp { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
+.card-cat-sdlc { color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
+.card-cat-sec { color: #fbbf24; border-color: rgba(251, 191, 36, 0.2); }
+.card-play-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text-dim); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.card-play-btn:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
+.card-question-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.card-desc-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.4; }
+.card-answer-box { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.75rem; margin-top: auto; font-size: 0.88rem; line-height: 1.5; color: #86efac; display: none; }
+.cram-card-item.show-ans .card-answer-box { display: block; }
+.search-filter-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
+.search-input:focus { border-color: var(--cyan); }
+.filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
+
+/* ─── 2-HOUR AUDIO CRAM STYLES ─── */
+.cram-container { display: flex; flex-direction: column; gap: 1.5rem; padding: 0.5rem 0; }
+.player-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 32px rgba(6, 8, 16, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 1.25rem; }
+.player-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.player-title { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
+.player-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.play-btn-main { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); border: none; color: #000; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 0 15px var(--glow-cyan); }
+.play-btn-main:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan); }
+.play-btn-main.paused { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); box-shadow: 0 0 15px var(--glow-orange); }
+.ctrl-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
+.ctrl-btn:hover { background: var(--border); color: var(--cyan); transform: translateY(-2px); }
+.player-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.04); }
+.setting-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.setting-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; }
+.setting-select, .setting-slider { background: var(--surface3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 0.85rem; outline: none; cursor: pointer; }
+.setting-slider { -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--surface3); padding: 0; }
+.setting-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 10px var(--glow-cyan); }
+.player-progress-bar { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; position: relative; }
+.player-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--orange)); transition: width 0.3s; }
+.anki-deck-btn { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); border: none; color: #fff; padding: 10px 20px; border-radius: 50px; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none; }
+.anki-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-orange); }
+.cram-list-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 768px) { .cram-list-grid { grid-template-columns: repeat(2, 1fr); } }
+.cram-card-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer; }
+.cram-card-item:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.3); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05); }
+.cram-card-item.active-speaking { border-color: var(--cyan); box-shadow: 0 0 20px var(--glow-cyan); background: var(--surface2); }
+.card-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+.card-cat-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
+.card-cat-dw { color: var(--cyan); border-color: rgba(34, 211, 238, 0.2); }
+.card-cat-sys { color: #a78bfa; border-color: rgba(167, 139, 250, 0.2); }
+.card-cat-cloud { color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
+.card-cat-erp { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
+.card-cat-sdlc { color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
+.card-cat-sec { color: #fbbf24; border-color: rgba(251, 191, 36, 0.2); }
+.card-play-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text-dim); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.card-play-btn:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
+.card-question-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.card-desc-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.4; }
+.card-answer-box { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.75rem; margin-top: auto; font-size: 0.88rem; line-height: 1.5; color: #86efac; display: none; }
+.cram-card-item.show-ans .card-answer-box { display: block; }
+.search-filter-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
+.search-input:focus { border-color: var(--cyan); }
+.filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="mesh-bg"><div class="mesh-blob3"></div></div>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo">INFO SYS <span>Exam Prep</span></div>
+  <div class="header-right">
+    <div class="mode-toggle" id="modeToggle">
+      <button class="mode-btn active" id="btnNormal" onclick="setMode('normal')">📚 Normal</button>
+      <button class="mode-btn" id="btnCram" onclick="setMode('cram')">⚡ Cram</button>
+    </div>
+    <a href="smart_cram_cards.html" class="cram-link">🃏 Cram Cards</a>
+  </div>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main>
+  <!-- BANNER -->
+  <div class="banner">
+    <div class="banner-text">
+      <h1>Information Systems — ETEA7E</h1>
+      <p>SAP ERP · IS Theory · Databases · Security · Cloud Architecture<br>
+      <span style="color:var(--accent2); font-weight:600;">CZU Prague</span> · Use the interactive tools below to master each topic area.</p>
+    </div>
+    <div class="banner-badge">
+      <div class="exam-label">Course Code</div>
+      <div class="exam-code">ETEA7E</div>
+      <div class="exam-sub">INFOA5 · CZU Prague</div>
+    </div>
+  </div>
+
+  <!-- ROW 1: Matcher + SAP Modules -->
+  <div class="section-title">Interactive Tools</div>
+  <div class="grid">
+
+    <!-- CARD 1: Definitions Matcher -->
+    <div class="glass-card card-7" id="matcherCard">
+      <div class="card-header">
+        <div class="card-icon">🎯</div>
+        <div>
+          <div class="card-title">Definitions Matcher</div>
+          <div class="card-subtitle">Click a term, then its definition — test your knowledge</div>
+        </div>
+      </div>
+      <div class="matcher-grid">
+        <div class="matcher-col">
+          <div class="matcher-col-label">Terms</div>
+          <div id="termsList"></div>
+        </div>
+        <div class="matcher-col">
+          <div class="matcher-col-label">Definitions</div>
+          <div id="defsList"></div>
+        </div>
+      </div>
+      <div class="matcher-score">
+        <span>Score: <strong id="matchScore">0</strong> / 8</span>
+        <button class="matcher-reset-btn" onclick="resetMatcher()">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- CARD 2: SAP Modules Reference -->
+    <div class="glass-card card-5">
+      <div class="card-header">
+        <div class="card-icon amber">🔷</div>
+        <div>
+          <div class="card-title">SAP Module Quick Reference</div>
+          <div class="card-subtitle">Core modules, functions & key T-codes</div>
+        </div>
+      </div>
+      <div class="sap-modules-grid">
+        <div class="sap-module">
+          <div class="sap-module-code">FI</div>
+          <div class="sap-module-name">Financial Accounting</div>
+          <div class="sap-module-desc">G/L, Accounts Payable, Accounts Receivable, Asset Accounting</div>
+          <div class="sap-module-tags"><span class="tag">FB01</span><span class="tag">FK01</span><span class="tag">F110</span></div>
+        </div>
+        <div class="sap-module">
+          <div class="sap-module-code">CO</div>
+          <div class="sap-module-name">Controlling</div>
+          <div class="sap-module-desc">Cost centers, profit centers, internal orders, variance analysis</div>
+          <div class="sap-module-tags"><span class="tag">KS01</span><span class="tag">KE51</span></div>
+        </div>
+        <div class="sap-module">
+          <div class="sap-module-code">MM</div>
+          <div class="sap-module-name">Materials Management</div>
+          <div class="sap-module-desc">Procurement, inventory management, invoice verification</div>
+          <div class="sap-module-tags"><span class="tag">ME21N</span><span class="tag">MIGO</span><span class="tag">MIRO</span></div>
+        </div>
+        <div class="sap-module">
+          <div class="sap-module-code">SD</div>
+          <div class="sap-module-name">Sales & Distribution</div>
+          <div class="sap-module-desc">Sales orders, delivery, billing, pricing conditions</div>
+          <div class="sap-module-tags"><span class="tag amber">VA01</span><span class="tag amber">VL01N</span><span class="tag amber">VF01</span></div>
+        </div>
+        <div class="sap-module">
+          <div class="sap-module-code">HR</div>
+          <div class="sap-module-name">Human Capital Mgmt</div>
+          <div class="sap-module-desc">Payroll, personnel admin, time management, organizational mgmt</div>
+          <div class="sap-module-tags"><span class="tag">PA40</span><span class="tag">PT61</span></div>
+        </div>
+        <div class="sap-module">
+          <div class="sap-module-code">PP</div>
+          <div class="sap-module-name">Production Planning</div>
+          <div class="sap-module-desc">MRP, work orders, Bill of Materials, capacity planning</div>
+          <div class="sap-module-tags"><span class="tag amber">CO01</span><span class="tag amber">MD01</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end grid row 1 -->
+
+  <!-- ROW 2: Tabbed Solvers (Normal mode only) -->
+  <div id="tabbedCard" class="glass-card card-12 cram-hidden" style="grid-column: span 12; margin-bottom: 24px;">
+    <div class="card-header">
+      <div class="card-icon">🛠️</div>
+      <div>
+        <div class="card-title">Interactive Study Tools</div>
+        <div class="card-subtitle">Five interactive tools covering IS theory, SAP processes, SDLC, cloud services, and security</div>
+      </div>
+    </div>
+
+    <div class="tabs-wrapper">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(0)">🧠 IS Type Classifier</button>
+        <button class="tab-btn" onclick="switchTab(1)">🔄 P2P Process Flow</button>
+        <button class="tab-btn" onclick="switchTab(2)">📐 SDLC Phase Matcher</button>
+        <button class="tab-btn" onclick="switchTab(3)">☁️ Cloud Comparison</button>
+        <button class="tab-btn" onclick="switchTab(4)">🔒 Security Quiz</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: IS Type Classifier -->
+        <!-- TAB 0: 2-Hour Audio Cram -->
+        <!-- TAB 0: 2-Hour Audio Cram -->
+    <div class="tab-pane active">
+      <div class="cram-container">
+        
+        <!-- PLAYER PANEL -->
+        <div class="player-panel">
+          <div class="player-title-row">
+            <div class="player-title">
+              <span>🧠</span> IS 2-Hour Audio Cram Narrator
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <button class="anki-deck-btn" onclick="copyAnkiImportText()">
+                📦 Copy Anki Import TSV
+              </button>
+              <a href="anki_decks/IS_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3);border:1px solid var(--border);">
+                💾 Download Anki File
+              </a>
+            </div>
+          </div>
+          
+          <div class="player-controls">
+            <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
+            <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
+            <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
+            <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio" style="margin-left:0.5rem;">⏹</button>
+            
+            <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <span id="player-status-text" style="font-size:0.82rem; color:var(--text-dim);">Ready to cram! Click play to listen.</span>
+              <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan);">0 / 50</span>
+            </div>
+          </div>
+          
+          <div class="player-progress-bar">
+            <div class="player-progress-fill" id="player-progress-fill"></div>
+          </div>
+          
+          <div class="player-settings">
+            <div class="setting-item">
+              <label class="setting-label">Voice Narrator</label>
+              <select class="setting-select" id="tts-voice" onchange="voicesChanged()"></select>
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Cram Speed (<span id="speed-val">1.25x</span>)</label>
+              <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Reading Mode</label>
+              <select class="setting-select" id="tts-mode">
+                <option value="qa">Read Question & Answer</option>
+                <option value="q">Read Question Only</option>
+                <option value="a">Read Answer Only</option>
+              </select>
+            </div>
+            
+            <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
+              <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:16px; height:16px;">
+              <label for="auto-advance-chk" class="setting-label" style="cursor:pointer;">Auto-Advance Playlist</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SEARCH & FILTERS -->
+        <div class="search-filter-row">
+          <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
+          <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
+            <option value="all">All Categories</option>
+            <option value="Data Warehousing & BI">Data Warehousing & BI</option>
+            <option value="Systems Theory & Evolution">Systems Theory & Evolution</option>
+            <option value="Cloud Computing Services">Cloud Computing Services</option>
+            <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
+            <option value="Systems Development Lifecycle">Systems Development Lifecycle</option>
+            <option value="Information Security">Information Security</option>
+            <option value="Decision Making & Systems">Decision Making & Systems</option>
+          </select>
+          <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
+            👁️ Show All Answers
+          </button>
+        </div>
+        
+        <!-- CARDS GRID -->
+        <div class="cram-list-grid" id="cram-cards-list">
+          <!-- Populated by JavaScript -->
+        </div>
+        
+      </div>
+    </div>
+
+
+<div class="tab-pane">
+      <div class="cram-container">
+        
+        <!-- PLAYER PANEL -->
+        <div class="player-panel">
+          <div class="player-title-row">
+            <div class="player-title">
+              <span>🧠</span> IS 2-Hour Audio Cram Narrator
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <button class="anki-deck-btn" onclick="copyAnkiImportText()">
+                📦 Copy Anki Import TSV
+              </button>
+              <a href="anki_decks/IS_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3);border:1px solid var(--border);">
+                💾 Download Anki File
+              </a>
+            </div>
+          </div>
+          
+          <div class="player-controls">
+            <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
+            <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
+            <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
+            <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio" style="margin-left:0.5rem;">⏹</button>
+            
+            <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <span id="player-status-text" style="font-size:0.82rem; color:var(--text-dim);">Ready to cram! Click play to listen.</span>
+              <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan);">0 / 0</span>
+            </div>
+          </div>
+          
+          <div class="player-progress-bar">
+            <div class="player-progress-fill" id="player-progress-fill"></div>
+          </div>
+          
+          <div class="player-settings">
+            <div class="setting-item">
+              <label class="setting-label">Voice Narrator</label>
+              <select class="setting-select" id="tts-voice" onchange="voicesChanged()"></select>
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Cram Speed (<span id="speed-val">1.25x</span>)</label>
+              <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Reading Mode</label>
+              <select class="setting-select" id="tts-mode">
+                <option value="qa">Read Question & Answer</option>
+                <option value="q">Read Question Only</option>
+                <option value="a">Read Answer Only</option>
+              </select>
+            </div>
+            
+            <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
+              <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:16px; height:16px;">
+              <label for="auto-advance-chk" class="setting-label" style="cursor:pointer;">Auto-Advance Playlist</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SEARCH & FILTERS -->
+        <div class="search-filter-row">
+          <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
+          <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
+            <option value="all">All Categories</option>
+            <option value="Data Warehousing & BI">Data Warehousing & BI</option>
+            <option value="Systems Theory & Evolution">Systems Theory & Evolution</option>
+            <option value="Cloud Computing Services">Cloud Computing Services</option>
+            <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
+            <option value="Systems Development Lifecycle">Systems Development Lifecycle</option>
+            <option value="Information Security">Information Security</option>
+            <option value="Decision Making & Systems">Decision Making & Systems</option>
+          </select>
+          <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
+            👁️ Show All Answers
+          </button>
+        </div>
+        
+        <!-- CARDS GRID -->
+        <div class="cram-list-grid" id="cram-cards-list">
+          <!-- Populated by JavaScript -->
+        </div>
+        
+      </div>
+    </div>
+
+
+<div class="tab-pane" id="tab0">
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Click a business scenario to identify which type of IS it represents.</p>
+      <div class="classifier-grid">
+        <button class="scenario-btn" onclick="classify(this, 'TPS', 'Transaction Processing System — handles routine, high-volume business transactions. Real-time operational data. Very structured.')">
+          🛒 A cashier scans items at a supermarket checkout and the sale is recorded instantly in the system.
+        </button>
+        <button class="scenario-btn" onclick="classify(this, 'MIS', 'Management Information System — produces regular structured reports from TPS data. Helps middle managers monitor performance.')">
+          📊 A regional sales manager receives a weekly report showing total units sold by product category.
+        </button>
+        <button class="scenario-btn" onclick="classify(this, 'DSS', 'Decision Support System — supports semi-structured decisions using models, simulations, and what-if analysis.')">
+          📈 A logistics director uses a system to run "what-if" scenarios for different delivery route combinations.
+        </button>
+        <button class="scenario-btn" onclick="classify(this, 'EIS/ESS', 'Executive Information System / Executive Support System — strategic-level, highly aggregated KPIs and dashboards for C-level executives.')">
+          🏢 The CEO views a real-time global dashboard showing company-wide revenue, market share, and growth trends.
+        </button>
+        <button class="scenario-btn" onclick="classify(this, 'TPS', 'Transaction Processing System — ATM cash withdrawals are classic real-time transaction processing with immediate account updates.')">
+          🏦 A customer withdraws €200 from an ATM; the account balance updates immediately across all systems.
+        </button>
+        <button class="scenario-btn" onclick="classify(this, 'DSS', 'Decision Support System — pricing optimization using models and analytics is semi-structured decision support.')">
+          💡 A pricing analyst runs multiple pricing models to determine the optimal product launch price.
+        </button>
+      </div>
+      <div class="classifier-result" id="classifierResult">
+        <div class="result-type" id="resultType"></div>
+        <div class="result-desc" id="resultDesc"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: P2P Flow -->
+    <div class="tab-pane" id="tab1">
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Click each step to expand details about the Procure-to-Pay process in SAP.</p>
+      <div class="p2p-flow" id="p2pFlow">
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">01</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Purchase Requisition (PR) <span class="p2p-tcode">ME51N</span></div>
+            <div class="p2p-desc">Internal request to purchase goods/services. Created by the department needing the material. Triggers the purchasing process. Can be created automatically by MRP in PP module. Contains: material, quantity, required date, cost center.</div>
+          </div>
+        </div>
+        <div class="p2p-arrow">↓</div>
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">02</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Request for Quotation / Vendor Selection <span class="p2p-tcode">ME41</span></div>
+            <div class="p2p-desc">Purchasing sends RFQ to potential vendors. Vendor quotations are entered and compared. Best vendor selected based on price, delivery, quality. Vendor master must exist (FK01/XK01).</div>
+          </div>
+        </div>
+        <div class="p2p-arrow">↓</div>
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">03</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Purchase Order (PO) <span class="p2p-tcode">ME21N</span></div>
+            <div class="p2p-desc">Legal document sent to vendor committing to purchase. Contains: vendor, material, quantity, price, delivery date, plant. PO references PR. Purchasing organization and purchasing group must be configured.</div>
+          </div>
+        </div>
+        <div class="p2p-arrow">↓</div>
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">04</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Goods Receipt (GR) <span class="p2p-tcode">MIGO</span></div>
+            <div class="p2p-desc">Physical receipt of goods into the warehouse. References the PO. Updates inventory (stock increases). Creates accounting document (debit: stock/GR/IR account). Material document and accounting document created simultaneously.</div>
+          </div>
+        </div>
+        <div class="p2p-arrow">↓</div>
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">05</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Invoice Verification <span class="p2p-tcode">MIRO</span></div>
+            <div class="p2p-desc">Vendor invoice is entered and matched against PO and GR (3-way match). If quantities and prices match, invoice is posted. Creates accounting document. Discrepancies trigger tolerance checks. AP liability is created.</div>
+          </div>
+        </div>
+        <div class="p2p-arrow">↓</div>
+        <div class="p2p-step" onclick="toggleP2P(this)">
+          <div class="p2p-num">06</div>
+          <div class="p2p-main">
+            <div class="p2p-title">Payment Run <span class="p2p-tcode">F110</span></div>
+            <div class="p2p-desc">Automatic payment program in SAP FI. Selects open invoices due for payment. Considers payment terms, discount deadlines, bank details. Generates payment file for bank. Clears open items in vendor account. Sends remittance advice.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SDLC Phase Matcher -->
+    <div class="tab-pane" id="tab2">
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">
+        Select an SDLC phase, then click the activities that belong to it.
+      </p>
+      <div class="sdlc-phases">
+        <button class="sdlc-phase-btn" onclick="selectPhase(this,'Planning')">1. Planning</button>
+        <button class="sdlc-phase-btn" onclick="selectPhase(this,'Analysis')">2. Analysis</button>
+        <button class="sdlc-phase-btn" onclick="selectPhase(this,'Design')">3. Design</button>
+        <button class="sdlc-phase-btn" onclick="selectPhase(this,'Implementation')">4. Implementation</button>
+        <button class="sdlc-phase-btn" onclick="selectPhase(this,'Maintenance')">5. Maintenance</button>
+      </div>
+      <div class="sdlc-activities" id="sdlcActivities">
+        <div class="activity-chip" data-phase="Planning" onclick="checkActivity(this)">Define project scope</div>
+        <div class="activity-chip" data-phase="Analysis" onclick="checkActivity(this)">Gather user requirements</div>
+        <div class="activity-chip" data-phase="Design" onclick="checkActivity(this)">Create database schema</div>
+        <div class="activity-chip" data-phase="Implementation" onclick="checkActivity(this)">Write & test code</div>
+        <div class="activity-chip" data-phase="Maintenance" onclick="checkActivity(this)">Apply security patches</div>
+        <div class="activity-chip" data-phase="Planning" onclick="checkActivity(this)">Feasibility study</div>
+        <div class="activity-chip" data-phase="Analysis" onclick="checkActivity(this)">Document AS-IS process</div>
+        <div class="activity-chip" data-phase="Design" onclick="checkActivity(this)">Design UI wireframes</div>
+        <div class="activity-chip" data-phase="Implementation" onclick="checkActivity(this)">User acceptance testing</div>
+        <div class="activity-chip" data-phase="Maintenance" onclick="checkActivity(this)">Add new feature requests</div>
+        <div class="activity-chip" data-phase="Planning" onclick="checkActivity(this)">Cost-benefit analysis</div>
+        <div class="activity-chip" data-phase="Analysis" onclick="checkActivity(this)">Model TO-BE process</div>
+      </div>
+      <div class="sdlc-feedback" id="sdlcFeedback">← Select a phase above, then click matching activities</div>
+    </div>
+
+    <!-- TAB 4: Cloud Comparison -->
+    <div class="tab-pane" id="tab3">
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px;">Comparison of cloud service models — a common exam topic.</p>
+      <table class="cloud-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>You Manage</th>
+            <th>Provider Manages</th>
+            <th>Examples</th>
+            <th>Responsibility</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IaaS</td>
+            <td>OS, runtime, middleware, apps, data</td>
+            <td>Virtualization, servers, storage, networking</td>
+            <td>AWS EC2, Azure VMs, GCP Compute</td>
+            <td><span class="cloud-badge">Most Control</span></td>
+          </tr>
+          <tr>
+            <td>PaaS</td>
+            <td>Applications, data</td>
+            <td>OS, runtime, middleware, infrastructure</td>
+            <td>Heroku, Google App Engine, Azure App Service</td>
+            <td><span class="cloud-badge amber">Balanced</span></td>
+          </tr>
+          <tr>
+            <td>SaaS</td>
+            <td>Only configuration & data input</td>
+            <td>Everything — app, OS, infrastructure</td>
+            <td>Salesforce, Office 365, SAP S/4HANA Cloud</td>
+            <td><span class="cloud-badge green">Least Effort</span></td>
+          </tr>
+          <tr>
+            <td>On-Premises</td>
+            <td>Everything — hardware to application</td>
+            <td>Nothing</td>
+            <td>Self-hosted SAP R/3, legacy systems</td>
+            <td><span class="cloud-badge" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);color:var(--red)">Full Burden</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:16px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px;">
+          <div style="font-size:0.7rem; font-weight:700; letter-spacing:1px; color:var(--accent); text-transform:uppercase; margin-bottom:6px;">SAP Cloud Variants</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.6;">SAP S/4HANA Cloud (SaaS) · SAP BTP (PaaS) · SAP Private Cloud Edition (IaaS/managed)</div>
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px;">
+          <div style="font-size:0.7rem; font-weight:700; letter-spacing:1px; color:var(--accent2); text-transform:uppercase; margin-bottom:6px;">Key Differentiator</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.6;">Pizza analogy: Made at home (on-prem), delivered (IaaS/PaaS) or dine-in (SaaS) — who does the work?</div>
+        </div>
+        <div style="background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px;">
+          <div style="font-size:0.7rem; font-weight:700; letter-spacing:1px; color:var(--green); text-transform:uppercase; margin-bottom:6px;">Exam Tip</div>
+          <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.6;">Know who is responsible for what layer in each model. CAPEX (on-prem) vs OPEX (cloud) trade-offs.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Security Quiz -->
+    <div class="tab-pane" id="tab4">
+      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Test your IS security knowledge — select the best answer for each question.</p>
+      <div id="quizContainer"></div>
+      <div class="quiz-score-bar">
+        <span>Score: <strong id="quizScore">0</strong> / <span id="quizTotal">0</span></span>
+        <button class="quiz-reset-btn" onclick="resetQuiz()">↺ Reset Quiz</button>
+      </div>
+    </div>
+
+  </div><!-- end tabbed card -->
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>INFO SYS Exam Prep · <a href="#">ETEA7E</a> · CZU Prague · Built for exam success</p>
+  <div class="footer-tags">
+    <span class="footer-tag">SAP ERP</span>
+    <span class="footer-tag">IS Theory</span>
+    <span class="footer-tag">Databases</span>
+    <span class="footer-tag">Security</span>
+    <span class="footer-tag">Cloud</span>
+    <span class="footer-tag">SDLC</span>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  MODE TOGGLE
+// ============================================================
+let currentMode = 'normal';
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btnNormal').classList.toggle('active', mode === 'normal');
+  document.getElementById('btnCram').classList.toggle('active', mode === 'cram');
+  const cramHidden = document.querySelectorAll('.cram-hidden');
+  cramHidden.forEach(el => {
+    if (mode === 'cram') el.style.display = 'none';
+    else el.style.display = '';
+  });
+}
+// On load — tabbed card visible by default
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('tabbedCard').style.display = '';
+  initMatcher();
+  initQuiz();
+});
+
+// ============================================================
+//  TABS
+// ============================================================
+function switchTab(idx) {
+  document.querySelectorAll('.tab-pane').forEach((p,i) => {
+    p.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
+// ============================================================
+//  DEFINITIONS MATCHER
+// ============================================================
+let matchPairs = [];
+const ALL_IS_PAIRS = [
+  { term: "Data Warehouse", def: "Subject-oriented, integrated, non-volatile, time-variant database optimized for strategic analysis." },
+  { term: "Non-volatile", def: "Data Warehouse property: data is stable, never deleted or changed. Stores historical records permanently." },
+  { term: "Time-variant", def: "Data Warehouse property: data tracks changes over time and maintains historical snapshots." },
+  { term: "OLTP", def: "Online Transaction Processing. Manages daily operations and high-volume transaction processing (TPS)." },
+  { term: "OLAP", def: "Online Analytical Processing. Optimizes historical data queries for strategic analysis and business intelligence." },
+  { term: "TPS", def: "Transaction Processing System. Handles routine operational tasks like sales, orders, and payments (OLTP)." },
+  { term: "ERP", def: "Enterprise Resource Planning. Integrated software managing core business departments (SAP, Oracle, Microsoft)." },
+  { term: "Vendor Lock-in", def: "Business risk where a company becomes dependent on a single vendor's technology stack." },
+  { term: "SAP HANA", def: "SAP next-gen ERP platform using a high-performance in-memory database to process data in RAM." },
+  { term: "In-memory Database", def: "Database processing data in high-speed RAM instead of disk to enable real-time analytics." },
+  { term: "DSS", def: "Decision Support System. Interactive system supporting managers by transforming raw data into useful insights." },
+  { term: "Structured Decision", def: "Repetitive, routine decision where the procedure can be fully specified in advance (e.g. payroll)." },
+  { term: "Unstructured Decision", def: "Novel, non-routine decision requiring human judgment, intuition, and evaluation (e.g. strategy)." },
+  { term: "Semi-structured Decision", def: "Decision where only some procedures can be specified, requiring partial human judgment." },
+  { term: "Business Intelligence (BI)", def: "Technologies and practices for analyzing data to help companies gain business insights." },
+  { term: "BPM", def: "Business Performance Management. KPI monitoring cycle to improve performance, defined as BI + Planning." },
+  { term: "KPI", def: "Key Performance Indicator. Measurable value showing how effectively an organization achieves key business goals." },
+  { term: "Natural Language Processing", def: "AI field focused on human language processing, text/speech understanding, and generation." },
+  { term: "Machine Learning", def: "AI field involving learning patterns from data without being explicitly programmed for each task." },
+  { term: "Deep Learning", def: "Subfield of ML using multi-layer artificial neural networks inspired by human brain structure." },
+  { term: "Computer Vision", def: "AI field focused on enabling machines to interpret, see, and understand visual/image data." },
+  { term: "Cloud Computing", def: "On-demand provision of IT services via the internet using a pay-per-use billing model." },
+  { term: "SaaS", def: "Software as a Service. Cloud model delivering software applications over the internet (e.g. Gmail)." },
+  { term: "Competitive Intelligence", def: "Legal and ethical gathering of public competitor information to support strategic decisions." }
+];
+
+
+let selectedTerm = null;
+let selectedDef = null;
+let matchScore = 0;
+let matchedPairs = new Set();
+
+function initMatcher() {
+  const pool = [...ALL_IS_PAIRS];
+  shuffleArray(pool);
+  matchPairs = pool.slice(0, 8);
+
+  matchScore = 0;
+  matchedPairs.clear();
+  selectedTerm = null;
+  selectedDef = null;
+  document.getElementById('matchScore').textContent = '0';
+
+  const terms = [...matchPairs];
+  shuffleArray(terms);
+  const defs = [...matchPairs];
+  shuffleArray(defs);
+
+  const termsList = document.getElementById('termsList');
+  const defsList = document.getElementById('defsList');
+  termsList.innerHTML = '';
+  defsList.innerHTML = '';
+
+  terms.forEach(pair => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = pair.term;
+    el.dataset.id = pair.term;
+    el.addEventListener('click', () => handleTermClick(el));
+    termsList.appendChild(el);
+  });
+
+  defs.forEach(pair => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = pair.def;
+    el.dataset.id = pair.term;
+    el.addEventListener('click', () => handleDefClick(el));
+    defsList.appendChild(el);
+  });
+}
+
+function handleTermClick(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('#termsList .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTerm = el;
+  if (selectedDef) tryMatch();
+}
+
+function handleDefClick(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('#defsList .match-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedDef = el;
+  if (selectedTerm) tryMatch();
+}
+
+function tryMatch() {
+  const termId = selectedTerm.dataset.id;
+  const defId = selectedDef.dataset.id;
+  if (termId === defId) {
+    selectedTerm.classList.remove('selected');
+    selectedDef.classList.remove('selected');
+    selectedTerm.classList.add('matched');
+    selectedDef.classList.add('matched');
+    matchScore++;
+    document.getElementById('matchScore').textContent = matchScore;
+  } else {
+    const t = selectedTerm, d = selectedDef;
+    t.classList.add('wrong');
+    d.classList.add('wrong');
+    setTimeout(() => {
+      t.classList.remove('wrong','selected');
+      d.classList.remove('wrong','selected');
+    }, 600);
+  }
+  selectedTerm = null;
+  selectedDef = null;
+}
+
+function resetMatcher() { initMatcher(); }
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+// ============================================================
+//  IS TYPE CLASSIFIER
+// ============================================================
+let activeScenario = null;
+function classify(btn, type, desc) {
+  if (activeScenario) activeScenario.classList.remove('active');
+  btn.classList.add('active');
+  activeScenario = btn;
+  document.getElementById('resultType').textContent = '→ ' + type;
+  document.getElementById('resultDesc').textContent = desc;
+  document.getElementById('classifierResult').classList.add('visible');
+}
+
+// ============================================================
+//  P2P FLOWCHART
+// ============================================================
+function toggleP2P(el) {
+  const isExpanded = el.classList.contains('expanded');
+  document.querySelectorAll('.p2p-step').forEach(s => s.classList.remove('expanded'));
+  if (!isExpanded) el.classList.add('expanded');
+}
+
+// ============================================================
+//  SDLC PHASE MATCHER
+// ============================================================
+let selectedSDLCPhase = null;
+function selectPhase(btn, phase) {
+  selectedSDLCPhase = phase;
+  document.querySelectorAll('.sdlc-phase-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('sdlcFeedback').textContent = `Selected: "${phase}" — now click activities that belong to this phase.`;
+  // Reset any wrong-ans styling (not correct ones)
+  document.querySelectorAll('.activity-chip').forEach(c => {
+    if (!c.classList.contains('correct')) c.classList.remove('wrong-ans');
+  });
+}
+
+function checkActivity(chip) {
+  if (!selectedSDLCPhase) {
+    document.getElementById('sdlcFeedback').textContent = '⚠ Please select a phase first!';
+    return;
+  }
+  if (chip.classList.contains('correct')) return;
+  const correctPhase = chip.dataset.phase;
+  if (correctPhase === selectedSDLCPhase) {
+    chip.classList.add('correct');
+    chip.removeEventListener('click', arguments.callee);
+    document.getElementById('sdlcFeedback').textContent = `✅ Correct! "${chip.textContent.trim()}" belongs to ${correctPhase}.`;
+  } else {
+    chip.classList.add('wrong-ans');
+    setTimeout(() => chip.classList.remove('wrong-ans'), 600);
+    document.getElementById('sdlcFeedback').textContent = `❌ "${chip.textContent.trim()}" belongs to ${correctPhase}, not ${selectedSDLCPhase}.`;
+  }
+}
+
+// ============================================================
+//  SECURITY QUIZ
+// ============================================================
+const quizQuestions = [
+  {
+    q: "What does the 'A' in CIA Triad stand for?",
+    opts: ["Authentication", "Authorization", "Availability", "Accountability"],
+    correct: 2,
+    explain: "Availability means the system must be accessible and functional when authorized users need it."
+  },
+  {
+    q: "Which of the following is an example of authentication?",
+    opts: ["Assigning a user to the 'Manager' role in SAP", "A user entering their username and password to log in", "Restricting a file to read-only access", "Encrypting a database backup"],
+    correct: 1,
+    explain: "Authentication = verifying identity. Authorization = what you can do after identity is proven."
+  },
+  {
+    q: "A bank transaction either completes fully or not at all. This is the _____ ACID property.",
+    opts: ["Consistency", "Isolation", "Durability", "Atomicity"],
+    correct: 3,
+    explain: "Atomicity means all-or-nothing. Either all operations in a transaction succeed, or none of them are applied."
+  },
+  {
+    q: "In SAP authorization, the correct hierarchy is:",
+    opts: ["User → Authorization Objects → Profiles → Roles", "User → Roles → Profiles → Authorization Objects", "Roles → Users → Profiles → Authorization Objects", "Profiles → Users → Roles → Authorization Objects"],
+    correct: 1,
+    explain: "User is assigned Role(s) → Roles contain Profile(s) → Profiles contain Authorization Objects with field values."
+  },
+  {
+    q: "An attacker tricks an employee into revealing their password over the phone. This is called:",
+    opts: ["SQL Injection", "Phishing", "Social Engineering (Pretexting)", "Brute Force Attack"],
+    correct: 2,
+    explain: "Social engineering manipulates people rather than systems. Pretexting involves fabricating a scenario to gain trust."
+  },
+  {
+    q: "Which backup type only saves changes since the last FULL backup?",
+    opts: ["Incremental", "Differential", "Mirror", "Full"],
+    correct: 1,
+    explain: "Differential = changes since last FULL backup. Incremental = changes since last backup of ANY type."
+  },
+];
+
+let quizAnswers = {};
+function initQuiz() {
+  quizAnswers = {};
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  document.getElementById('quizScore').textContent = '0';
+  document.getElementById('quizTotal').textContent = quizQuestions.length;
+
+  quizQuestions.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = `
+      <div class="quiz-q-text">Q${qi+1}. ${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((opt, oi) => `
+          <button class="quiz-opt" onclick="answerQuiz(${qi},${oi},this)">${opt}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="qfb${qi}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function answerQuiz(qi, oi, btn) {
+  if (quizAnswers[qi] !== undefined) return;
+  quizAnswers[qi] = oi;
+  const q = quizQuestions[qi];
+  const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  if (oi === q.correct) {
+    btn.classList.add('correct-ans');
+    document.getElementById('qfb'+qi).textContent = '✅ ' + q.explain;
+  } else {
+    btn.classList.add('wrong-opt');
+    opts[q.correct].classList.add('correct-ans');
+    document.getElementById('qfb'+qi).textContent = '❌ ' + q.explain;
+  }
+  const score = Object.entries(quizAnswers).filter(([k,v]) => quizQuestions[k].correct === v).length;
+  document.getElementById('quizScore').textContent = score;
+}
+
+function resetQuiz() { initQuiz(); }
+
+// ══════════════════════════════════════════
+// 2-HOUR AUDIO CRAM & TTS ENGINE
+// ══════════════════════════════════════════
+const cramCardsData = [];
+
+let synth = window.speechSynthesis;
+let utterance = null;
+let currentCramIndex = -1;
+let isCramPlaying = false;
+let isCramPaused = false;
+let voices = [];
+let allAnswersVisible = false;
+
+function initTTS() {
+  if (typeof speechSynthesis === 'undefined') return;
+  populateCramVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateCramVoices;
+  }
+  renderCramCards();
+}
+
+function populateCramVoices() {
+  voices = speechSynthesis.getVoices();
+  const select = document.getElementById('tts-voice');
+  if (!select) return;
+  const currentVal = select.value;
+  select.innerHTML = '';
+  let filtered = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+  if (filtered.length === 0) filtered = voices;
+  filtered.forEach(voice => {
+    const opt = document.createElement('option');
+    opt.value = voice.name;
+    opt.textContent = `${voice.name} (${voice.lang})`;
+    if (voice.name === currentVal) {
+      opt.selected = true;
+    } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
+      opt.selected = true;
+    }
+    select.appendChild(opt);
+  });
+}
+
+function voicesChanged() {
+  if (isCramPlaying) {
+    playCramCard(currentCramIndex);
+  }
+}
+
+function renderCramCards() {
+  const grid = document.getElementById('cram-cards-list');
+  if (!grid) return;
+  grid.innerHTML = '';
+  cramCardsData.forEach((card, idx) => {
+    let catClass = 'card-cat-dw';
+    if (card.category.includes('Systems Theory')) catClass = 'card-cat-sys';
+    else if (card.category.includes('Cloud')) catClass = 'card-cat-cloud';
+    else if (card.category.includes('Enterprise')) catClass = 'card-cat-erp';
+    else if (card.category.includes('Development')) catClass = 'card-cat-sdlc';
+    else if (card.category.includes('Security')) catClass = 'card-cat-sec';
+    
+    const cardEl = document.createElement('div');
+    cardEl.className = 'cram-card-item';
+    cardEl.id = `cram-card-${card.id}`;
+    cardEl.onclick = (e) => {
+      if (e.target.closest('.card-play-btn')) return;
+      cardEl.classList.toggle('show-ans');
+    };
+    cardEl.innerHTML = `
+      <div class="card-header-row">
+        <span class="card-cat-badge ${catClass}">${card.category}</span>
+        <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
+      </div>
+      <div class="card-question-title">${card.q}</div>
+      <div class="card-desc-text">${card.desc}</div>
+      <div class="card-answer-box">${card.ans}</div>
+    `;
+    grid.appendChild(cardEl);
+  });
+}
+
+function filterCramCards() {
+  const query = document.getElementById('cram-search').value.toLowerCase();
+  const catFilter = document.getElementById('cram-filter-cat').value;
+  cramCardsData.forEach(card => {
+    const el = document.getElementById(`cram-card-${card.id}`);
+    if (!el) return;
+    const matchesQuery = card.q.toLowerCase().includes(query) || card.desc.toLowerCase().includes(query) || card.ans.toLowerCase().includes(query) || card.category.toLowerCase().includes(query);
+    const matchesCat = catFilter === 'all' || card.category === catFilter;
+    el.style.display = (matchesQuery && matchesCat) ? 'flex' : 'none';
+  });
+}
+
+function toggleAllAnswers() {
+  allAnswersVisible = !allAnswersVisible;
+  const btn = document.getElementById('toggle-all-answers-btn');
+  btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
+  document.querySelectorAll('.cram-card-item').forEach(el => {
+    if (allAnswersVisible) el.classList.add('show-ans');
+    else el.classList.remove('show-ans');
+  });
+}
+
+function speakCramText(text, callback) {
+  if (!synth) return;
+  synth.cancel();
+  utterance = new SpeechSynthesisUtterance(text);
+  const voiceSelect = document.getElementById('tts-voice');
+  if (voiceSelect && voiceSelect.value) {
+    const voice = voices.find(v => v.name === voiceSelect.value);
+    if (voice) utterance.voice = voice;
+  }
+  const rateInput = document.getElementById('tts-speed');
+  if (rateInput) utterance.rate = parseFloat(rateInput.value);
+  utterance.onend = () => { if (callback) callback(); };
+  utterance.onerror = (e) => { console.error("TTS error:", e); if (callback) callback(); };
+  synth.speak(utterance);
+}
+
+function playCramCard(idx) {
+  if (idx < 0 || idx >= cramCardsData.length) {
+    stopTTS();
+    return;
+  }
+  currentCramIndex = idx;
+  isCramPlaying = true;
+  isCramPaused = false;
+  const card = cramCardsData[idx];
+  document.getElementById('main-play-btn').innerHTML = '⏸';
+  document.getElementById('main-play-btn').classList.add('paused');
+  document.getElementById('player-status-text').textContent = `Reading: "${card.q}"`;
+  document.getElementById('player-progress-counter').textContent = `${idx + 1} / ${cramCardsData.length}`;
+  document.getElementById('player-progress-fill').style.width = `${((idx + 1) / cramCardsData.length) * 100}%`;
+  highlightCramCard(card.id);
+  
+  const cleanHTML = (str) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
+  const cleanQ = cleanHTML(card.q) + ". " + cleanHTML(card.desc);
+  const cleanA = cleanHTML(card.ans);
+  const mode = document.getElementById('tts-mode').value;
+  let text = "";
+  if (mode === 'qa') text = `Question: ${cleanQ}... Answer: ${cleanA}`;
+  else if (mode === 'q') text = `Question: ${cleanQ}`;
+  else if (mode === 'a') text = `Answer: ${cleanA}`;
+  
+  const cardEl = document.getElementById(`cram-card-${card.id}`);
+  if (cardEl && mode !== 'q') cardEl.classList.add('show-ans');
+  
+  speakCramText(text, () => {
+    const autoAdvance = document.getElementById('auto-advance-chk').checked;
+    if (isCramPlaying && autoAdvance) {
+      setTimeout(() => { playCramCard(currentCramIndex + 1); }, 800);
+    } else if (isCramPlaying && !autoAdvance) {
+      stopTTS();
+    }
+  });
+}
+
+function playCramCardSingle(idx) {
+  isCramPlaying = false;
+  playCramCard(idx);
+  document.getElementById('auto-advance-chk').checked = false;
+}
+
+function togglePlayPlaylist() {
+  if (!synth) return;
+  if (isCramPlaying) {
+    if (isCramPaused) {
+      synth.resume();
+      isCramPaused = false;
+      document.getElementById('main-play-btn').innerHTML = '⏸';
+      document.getElementById('player-status-text').textContent = `Resumed: "${cramCardsData[currentCramIndex].q}"`;
+    } else {
+      synth.pause();
+      isCramPaused = true;
+      document.getElementById('main-play-btn').innerHTML = '▶';
+      document.getElementById('player-status-text').textContent = "Audio paused.";
+    }
+  } else {
+    document.getElementById('auto-advance-chk').checked = true;
+    if (currentCramIndex === -1) currentCramIndex = 0;
+    playCramCard(currentCramIndex);
+  }
+}
+
+function nextTTSCard() {
+  if (currentCramIndex < cramCardsData.length - 1) playCramCard(currentCramIndex + 1);
+}
+
+// Add simple lower function helper to bypass JS object error
+function prevTTSCard() {
+  if (currentCramIndex > 0) playCramCard(currentCramIndex - 1);
+}
+
+function stopTTS() {
+  if (synth) synth.cancel();
+  isCramPlaying = false;
+  isCramPaused = false;
+  const playBtn = document.getElementById('main-play-btn');
+  if (playBtn) { playBtn.innerHTML = '▶'; playBtn.classList.remove('paused'); }
+  const status = document.getElementById('player-status-text');
+  if (status) status.textContent = "Audio stopped.";
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+}
+
+function highlightCramCard(id) {
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+  const activeEl = document.getElementById(`cram-card-${id}`);
+  if (activeEl) {
+    activeEl.classList.add('active-speaking');
+    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function copyAnkiImportText() {
+  let tsvText = "#separator:tab\n#html:true\n#tags column:3\n";
+  cramCardsData.forEach(card => {
+    const cleanT = (s) => s.replace(/\t/g, ' ').replace(/\n/g, ' ').replace(/\r/g, ' ');
+    const front = `<div class="anki-card"><div class="anki-category">${card.category}</div><div class="anki-q-title">${card.q}</div><div class="anki-desc">${card.desc}</div></div>`;
+    const back = `<div class="anki-card-back"><div class="anki-ans">${card.ans}</div></div>`;
+    const tag = `IS_Exam ${card.category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '_')}`;
+    tsvText += `${front}\t${back}\t${tag}\n`;
+  });
+  navigator.clipboard.writeText(tsvText).then(() => {
+    alert("Anki import text copied!");
+  }).catch(err => {
+    alert("Copy failed. Use download button instead.");
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initTTS();
+});
+
+// ══════════════════════════════════════════
+// 2-HOUR AUDIO CRAM & TTS ENGINE
+// ══════════════════════════════════════════
+const cramCardsData = [{"id": 1, "category": "Data Warehousing & BI", "q": "Data Warehouse", "desc": "4 characteristics (acronym SINV)", "ans": "<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time"}, {"id": 2, "category": "Data Warehousing & BI", "q": "What does 'Non-volatile' mean in a Data Warehouse?", "desc": "Explain or define the following concept.", "ans": "Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly."}, {"id": 3, "category": "Data Warehousing & BI", "q": "What does 'Time-variant' mean in a Data Warehouse?", "desc": "Explain or define the following concept.", "ans": "Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state)."}, {"id": 4, "category": "Data Warehousing & BI", "q": "Main purpose of a Data Warehouse", "desc": "Explain or define the following concept.", "ans": "To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions."}, {"id": 5, "category": "Data Warehousing & BI", "q": "Which system is for DAILY TRANSACTIONS?", "desc": "Explain or define the following concept.", "ans": "<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP."}, {"id": 6, "category": "Data Warehousing & BI", "q": "Which system is for STRATEGIC ANALYSIS?", "desc": "Explain or define the following concept.", "ans": "<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP."}, {"id": 7, "category": "Data Warehousing & BI", "q": "OLTP vs OLAP", "desc": "Explain or define the following concept.", "ans": "<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse"}, {"id": 8, "category": "Enterprise Resource Planning", "q": "ERP stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Enterprise Resource Planning</b>"}, {"id": 9, "category": "Enterprise Resource Planning", "q": "ERPS stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Enterprise Resource Planning System</b>"}, {"id": 10, "category": "Enterprise Resource Planning", "q": "IS vs ERP", "desc": "which is more general?", "ans": "<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS."}, {"id": 11, "category": "Enterprise Resource Planning", "q": "ERP main goal", "desc": "Explain or define the following concept.", "ans": "<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments."}, {"id": 12, "category": "Enterprise Resource Planning", "q": "ERP advantage", "desc": "Explain or define the following concept.", "ans": "<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos."}, {"id": 13, "category": "Enterprise Resource Planning", "q": "ERP disadvantage", "desc": "Explain or define the following concept.", "ans": "<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>."}, {"id": 14, "category": "Enterprise Resource Planning", "q": "Vendor lock-in", "desc": "definition", "ans": "A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch."}, {"id": 15, "category": "Enterprise Resource Planning", "q": "Leading ERP vendors", "desc": "3 examples", "ans": "<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders."}, {"id": 16, "category": "Enterprise Resource Planning", "q": "SAP HANA", "desc": "what is it?", "ans": "SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk."}, {"id": 17, "category": "Enterprise Resource Planning", "q": "In-memory database", "desc": "meaning", "ans": "Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics."}, {"id": 18, "category": "DSS", "q": "DSS stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Decision Support System</b>"}, {"id": 19, "category": "DSS", "q": "What is a DSS?", "desc": "Explain or define the following concept.", "ans": "An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information."}, {"id": 20, "category": "DSS", "q": "DSS transforms what into what?", "desc": "Explain or define the following concept.", "ans": "<b>Raw data → useful information</b> for decision-making."}, {"id": 21, "category": "DSS", "q": "What decisions does DSS support?", "desc": "Explain or define the following concept.", "ans": "<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS)."}, {"id": 22, "category": "DSS", "q": "DSS role", "desc": "should it replace managers?", "ans": "NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential."}, {"id": 23, "category": "DSS", "q": "STRUCTURED decision", "desc": "definition", "ans": "A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level."}, {"id": 24, "category": "DSS", "q": "UNSTRUCTURED decision", "desc": "definition", "ans": "A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation."}, {"id": 25, "category": "DSS", "q": "SEMI-STRUCTURED decision", "desc": "definition", "ans": "<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed."}, {"id": 26, "category": "DSS", "q": "Computers vs humans in decision-making", "desc": "Explain or define the following concept.", "ans": "<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment."}, {"id": 27, "category": "BI", "q": "BI", "desc": "what does it stand for and do?", "ans": "<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>."}, {"id": 28, "category": "BI", "q": "BPM", "desc": "definition and formula", "ans": "<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance."}, {"id": 29, "category": "BI", "q": "KPI stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives."}, {"id": 30, "category": "BI", "q": "Dashboard", "desc": "what is it used for?", "ans": "Visualizes <b>important business information and KPIs</b> in real-time for decision-makers."}, {"id": 31, "category": "AI", "q": "4 main AI areas tested on exam", "desc": "Explain or define the following concept.", "ans": "1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks"}, {"id": 32, "category": "AI", "q": "Machine Learning", "desc": "definition", "ans": "AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task."}, {"id": 33, "category": "AI", "q": "Neural network", "desc": "what inspired it?", "ans": "Inspired by the structure of the <b>human brain</b> — neurons connected in layers."}, {"id": 34, "category": "AI", "q": "Deep Learning", "desc": "what is it connected to?", "ans": "<b>Multi-layer neural networks</b> — 'deep' = many hidden layers of neurons."}, {"id": 35, "category": "AI", "q": "Computer Vision", "desc": "definition", "ans": "AI field focused on <b>interpreting visual/image data</b> — enabling machines to 'see' and understand images and video."}, {"id": 36, "category": "AI", "q": "NLP", "desc": "definition", "ans": "<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation)."}, {"id": 37, "category": "AI", "q": "Modern IS phenomena (current trends)", "desc": "Explain or define the following concept.", "ans": "<b>Cloud computing, virtualization, big data, AI, security</b>"}, {"id": 38, "category": "Cloud Computing Services", "q": "Cloud computing", "desc": "definition", "ans": "Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable)."}, {"id": 39, "category": "Cloud Computing Services", "q": "SaaS", "desc": "definition and example", "ans": "<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365)."}, {"id": 40, "category": "Cloud Computing Services", "q": "IaaS", "desc": "definition and example", "ans": "<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2)."}, {"id": 41, "category": "Cloud Computing Services", "q": "PaaS", "desc": "definition", "ans": "<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku)."}, {"id": 42, "category": "Cloud Computing Services", "q": "Cloud core idea / model", "desc": "Explain or define the following concept.", "ans": "<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware."}, {"id": 43, "category": "Cloud Computing Services", "q": "Application architecture evolution", "desc": "Explain or define the following concept.", "ans": "Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services."}, {"id": 44, "category": "CI", "q": "Competitive Intelligence (CI)", "desc": "definition", "ans": "<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage."}, {"id": 45, "category": "CI", "q": "CI helps decision-makers by?", "desc": "Explain or define the following concept.", "ans": "Improving understanding of the <b>competitive environment</b> to support strategic planning."}, {"id": 46, "category": "CI", "q": "CI sources", "desc": "what kind?", "ans": "<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking."}, {"id": 47, "category": "IS_BASICS", "q": "IS and management", "desc": "how do they relate?", "ans": "Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters."}, {"id": 48, "category": "IS_BASICS", "q": "Who sets the rules in an IS?", "desc": "Explain or define the following concept.", "ans": "<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules."}, {"id": 49, "category": "IS_BASICS", "q": "Goal of IS in management", "desc": "Explain or define the following concept.", "ans": "To <b>support management</b> — never to replace decision makers."}, {"id": 50, "category": "IS_BASICS", "q": "Example of automatic IS tool", "desc": "Explain or define the following concept.", "ans": "<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold."}];
+
+let synth = window.speechSynthesis;
+let utterance = null;
+let currentCramIndex = -1;
+let isCramPlaying = false;
+let isCramPaused = false;
+let voices = [];
+let allAnswersVisible = false;
+
+function initTTS() {
+  if (typeof speechSynthesis === 'undefined') return;
+  populateCramVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateCramVoices;
+  }
+  renderCramCards();
+}
+
+function populateCramVoices() {
+  voices = speechSynthesis.getVoices();
+  const select = document.getElementById('tts-voice');
+  if (!select) return;
+  const currentVal = select.value;
+  select.innerHTML = '';
+  let filtered = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+  if (filtered.length === 0) filtered = voices;
+  filtered.forEach(voice => {
+    const opt = document.createElement('option');
+    opt.value = voice.name;
+    opt.textContent = `${voice.name} (${voice.lang})`;
+    if (voice.name === currentVal) {
+      opt.selected = true;
+    } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
+      opt.selected = true;
+    }
+    select.appendChild(opt);
+  });
+}
+
+function voicesChanged() {
+  if (isCramPlaying) {
+    playCramCard(currentCramIndex);
+  }
+}
+
+function renderCramCards() {
+  const grid = document.getElementById('cram-cards-list');
+  if (!grid) return;
+  grid.innerHTML = '';
+  cramCardsData.forEach((card, idx) => {
+    let catClass = 'card-cat-dw';
+    if (card.category.includes('Systems Theory')) catClass = 'card-cat-sys';
+    else if (card.category.includes('Cloud')) catClass = 'card-cat-cloud';
+    else if (card.category.includes('Enterprise')) catClass = 'card-cat-erp';
+    else if (card.category.includes('Development')) catClass = 'card-cat-sdlc';
+    else if (card.category.includes('Security')) catClass = 'card-cat-sec';
+    
+    const cardEl = document.createElement('div');
+    cardEl.className = 'cram-card-item';
+    cardEl.id = `cram-card-${card.id}`;
+    cardEl.onclick = (e) => {
+      if (e.target.closest('.card-play-btn')) return;
+      cardEl.classList.toggle('show-ans');
+    };
+    cardEl.innerHTML = `
+      <div class="card-header-row">
+        <span class="card-cat-badge ${catClass}">${card.category}</span>
+        <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
+      </div>
+      <div class="card-question-title">${card.q}</div>
+      <div class="card-desc-text">${card.desc}</div>
+      <div class="card-answer-box">${card.ans}</div>
+    `;
+    grid.appendChild(cardEl);
+  });
+}
+
+function filterCramCards() {
+  const query = document.getElementById('cram-search').value.toLowerCase();
+  const catFilter = document.getElementById('cram-filter-cat').value;
+  cramCardsData.forEach(card => {
+    const el = document.getElementById(`cram-card-${card.id}`);
+    if (!el) return;
+    const matchesQuery = card.q.toLowerCase().includes(query) || card.desc.toLowerCase().includes(query) || card.ans.toLowerCase().includes(query) || card.category.toLowerCase().includes(query);
+    const matchesCat = catFilter === 'all' || card.category === catFilter;
+    el.style.display = (matchesQuery && matchesCat) ? 'flex' : 'none';
+  });
+}
+
+function toggleAllAnswers() {
+  allAnswersVisible = !allAnswersVisible;
+  const btn = document.getElementById('toggle-all-answers-btn');
+  btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
+  document.querySelectorAll('.cram-card-item').forEach(el => {
+    if (allAnswersVisible) el.classList.add('show-ans');
+    else el.classList.remove('show-ans');
+  });
+}
+
+function speakCramText(text, callback) {
+  if (!synth) return;
+  synth.cancel();
+  utterance = new SpeechSynthesisUtterance(text);
+  const voiceSelect = document.getElementById('tts-voice');
+  if (voiceSelect && voiceSelect.value) {
+    const voice = voices.find(v => v.name === voiceSelect.value);
+    if (voice) utterance.voice = voice;
+  }
+  const rateInput = document.getElementById('tts-speed');
+  if (rateInput) utterance.rate = parseFloat(rateInput.value);
+  utterance.onend = () => { if (callback) callback(); };
+  utterance.onerror = (e) => { console.error("TTS error:", e); if (callback) callback(); };
+  synth.speak(utterance);
+}
+
+function playCramCard(idx) {
+  if (idx < 0 || idx >= cramCardsData.length) {
+    stopTTS();
+    return;
+  }
+  currentCramIndex = idx;
+  isCramPlaying = true;
+  isCramPaused = false;
+  const card = cramCardsData[idx];
+  document.getElementById('main-play-btn').innerHTML = '⏸';
+  document.getElementById('main-play-btn').classList.add('paused');
+  document.getElementById('player-status-text').textContent = `Reading: "${card.q}"`;
+  document.getElementById('player-progress-counter').textContent = `${idx + 1} / ${cramCardsData.length}`;
+  document.getElementById('player-progress-fill').style.width = `${((idx + 1) / cramCardsData.length) * 100}%`;
+  highlightCramCard(card.id);
+  
+  const cleanHTML = (str) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
+  const cleanQ = cleanHTML(card.q) + ". " + cleanHTML(card.desc);
+  const cleanA = cleanHTML(card.ans);
+  const mode = document.getElementById('tts-mode').value;
+  let text = "";
+  if (mode === 'qa') text = `Question: ${cleanQ}... Answer: ${cleanA}`;
+  else if (mode === 'q') text = `Question: ${cleanQ}`;
+  else if (mode === 'a') text = `Answer: ${cleanA}`;
+  
+  const cardEl = document.getElementById(`cram-card-${card.id}`);
+  if (cardEl && mode !== 'q') cardEl.classList.add('show-ans');
+  
+  speakCramText(text, () => {
+    const autoAdvance = document.getElementById('auto-advance-chk').checked;
+    if (isCramPlaying && autoAdvance) {
+      setTimeout(() => { playCramCard(currentCramIndex + 1); }, 800);
+    } else if (isCramPlaying && !autoAdvance) {
+      stopTTS();
+    }
+  });
+}
+
+function playCramCardSingle(idx) {
+  isCramPlaying = false;
+  playCramCard(idx);
+  document.getElementById('auto-advance-chk').checked = false;
+}
+
+function togglePlayPlaylist() {
+  if (!synth) return;
+  if (isCramPlaying) {
+    if (isCramPaused) {
+      synth.resume();
+      isCramPaused = false;
+      document.getElementById('main-play-btn').innerHTML = '⏸';
+      document.getElementById('player-status-text').textContent = `Resumed: "${cramCardsData[currentCramIndex].q}"`;
+    } else {
+      synth.pause();
+      isCramPaused = true;
+      document.getElementById('main-play-btn').innerHTML = '▶';
+      document.getElementById('player-status-text').textContent = "Audio paused.";
+    }
+  } else {
+    document.getElementById('auto-advance-chk').checked = true;
+    if (currentCramIndex === -1) currentCramIndex = 0;
+    playCramCard(currentCramIndex);
+  }
+}
+
+function nextTTSCard() {
+  if (currentCramIndex < cramCardsData.length - 1) playCramCard(currentCramIndex + 1);
+}
+
+function prevTTSCard() {
+  if (currentCramIndex > 0) playCramCard(currentCramIndex - 1);
+}
+
+function stopTTS() {
+  if (synth) synth.cancel();
+  isCramPlaying = false;
+  isCramPaused = false;
+  const playBtn = document.getElementById('main-play-btn');
+  if (playBtn) { playBtn.innerHTML = '▶'; playBtn.classList.remove('paused'); }
+  const status = document.getElementById('player-status-text');
+  if (status) status.textContent = "Audio stopped.";
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+}
+
+function highlightCramCard(id) {
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+  const activeEl = document.getElementById(`cram-card-${id}`);
+  if (activeEl) {
+    activeEl.classList.add('active-speaking');
+    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function copyAnkiImportText() {
+  let tsvText = "#separator:tab\n#html:true\n#tags column:3\n";
+  cramCardsData.forEach(card => {
+    const front = `<div class="anki-card"><div class="anki-category">${card.category}</div><div class="anki-q-title">${card.q}</div><div class="anki-desc">${card.desc}</div></div>`;
+    const back = `<div class="anki-card-back"><div class="anki-ans">${card.ans}</div></div>`;
+    const tag = `IS_Exam ${card.category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '_')}`;
+    tsvText += `${front}\t${back}\t${tag}\n`;
+  });
+  navigator.clipboard.writeText(tsvText).then(() => {
+    alert("Anki import text copied!");
+  }).catch(err => {
+    alert("Copy failed. Use download button instead.");
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initTTS();
+});
+</script>
+</body>
+</html>

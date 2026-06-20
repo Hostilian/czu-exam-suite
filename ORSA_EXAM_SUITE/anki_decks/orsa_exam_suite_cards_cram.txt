@@ -1,0 +1,62 @@
+# ============================================================
+# ORSA — Operations Research & Systems Analysis — CZU Prague — CRAM Deck (Quick Review Mode)
+# Leontief I-O | LP/Simplex | Simulation | Markov Chains | Queueing | System Theory | Vensim — 55 cards
+# Use this for last-minute revision — same cards, cram tags
+# ============================================================
+
+Input-Output model — what is it?	A modeling technique analyzing relationships between sectors of an economy. Every sector is both a <b>supplier</b> and <b>consumer</b> of goods. Each sector is represented by a matrix of inputs and outputs.	cram_io
+I-O model: rule about total inputs vs total outputs	<b>Total Inputs = Total Outputs</b> for every sector. Use this rule to find any missing value in the table.	cram_io
+How to build the A matrix (coefficient matrix)	For each column: divide each cell by that column's <b>Total Input</b>.<br>A[i,j] = value[i,j] ÷ TotalInput[j]	cram_io
+Identity matrix I — structure for 3 sectors	Diagonal = 1, all others = 0:<br>[[1,0,0],[0,1,0],[0,0,1]]	cram_io
+How to find new Y when task gives new X	<b>new_Y = (I − A) × new_X</b><br>Multiply the (I-A) matrix by the new total output vector.	cram_io
+How to find new X when task gives new Y	<b>new_X = (I − A)⁻¹ × new_Y</b><br>First invert (I-A), then multiply by the final demand vector.	cram_io
+Leontief core formula	<code>x = (I − A)⁻¹ · y</code><br>x = total output vector, y = final demand vector, A = coefficient matrix	cram_io
+Leontief Inverse — what does (I-A)⁻¹ represent?	The multiplier matrix mapping <b>final consumer demand to total direct + indirect outputs</b> required across all sectors.	cram_io
+Gluttony Ltd. base outputs	Brewery (X_B) = <b>100</b>, Butcher (X_Bu) = <b>80</b>, Greengrocer (X_G) = <b>30</b>, Restaurant (X_R) = <b>200</b>.	cram_io
+Gluttony Ltd. — Butcher final demand rises to 35	New outputs: Brewery = <b>101.91</b>, Butcher = <b>99.96</b>, Greengrocer = <b>30.80</b>, Restaurant = <b>201.41</b>.	cram_io
+Gluttony Ltd. — Greengrocer +10%, Restaurant +20% cost	Output price indices: Brewery = <b>1.00135</b>, Butcher = <b>1.00171</b>, Greengrocer = <b>1.01347</b>, Restaurant = <b>1.01723</b>.	cram_io
+What is Linear Programming?	A mathematical method to <b>maximize or minimize a linear objective function</b> subject to linear constraints (resource limitations).	cram_lp
+LP Sensitivity: change WITHIN allowable range	Objective coefficient change within range → <b>Z value changes but basis stays the same</b>.<br>RHS change within range → solution values change but <b>basis stays the same</b>.	cram_lp
+LP Sensitivity: change OUTSIDE allowable range	If any change exceeds its allowable interval → the <b>BASIS CHANGES</b> (new optimal corner of feasible region).	cram_lp
+LP exam example: coefficient was 220, new value 250, allowable increase = 20	Max allowed = 220 + 20 = 240. Since 250 > 240 → change is OUTSIDE range → <b>The basis WILL CHANGE</b>.	cram_lp
+Shadow Price — definition	Amount by which the optimal Z value increases per <b>1-unit increase in the RHS</b> constraint resource.	cram_lp
+Excel Solver: formula for LHS cells	<code>=SUMPRODUCT(decision_variable_cells, coefficient_range)</code><br>Never hardcode values in LHS cells!	cram_lp
+Mixing a Drink LP task result	Optimal: Rum = <b>5 dl</b>, Juice = <b>5 dl</b>. Taste = <b>75 pts</b>. Rum restriction <code>x ≥ 5</code> is binding.	cram_lp
+What is simulation?	The <b>imitation of a real-world system or process</b> with the goal to evaluate performance and improve it — without risking the real system.	cram_sim
+Static vs Dynamic simulation	<b>Static</b> = models at a <b>single point in time</b>, no change over time<br><b>Dynamic</b> = models <b>changes over time</b>	cram_sim
+Stochastic vs Deterministic simulation	<b>Stochastic</b> = involves <b>randomness</b>; different output each run<br><b>Deterministic</b> = same inputs → <b>same output always</b>	cram_sim
+Discrete-event vs Continuous simulation	<b>Discrete-event</b> = events at specific discrete points in time<br><b>Continuous</b> = changes occur continuously over time	cram_sim
+Monte Carlo simulation — type classification	Monte Carlo = <b>STATIC + STOCHASTIC</b> simulation.<br>Uses large numbers of random values to estimate outcomes.	cram_sim
+What is a Markov Chain?	A mathematical model where a system moves between states, and the <b>next state depends ONLY on the current state</b> (not on past history).	cram_markov
+Markov property — memorylessness	The probability of moving to the next state depends <b>ONLY on the current state</b>. Past history is irrelevant (memoryless).	cram_markov
+Homogeneity property of Markov Chains	Transition probabilities <b>do not change over time</b> as the chain progresses — they stay constant.	cram_markov
+Markov Chain transition matrix rule	Each <b>row</b> of the transition matrix must sum to <b>1.0</b> (all probabilities of leaving each state).	cram_markov
+Markov Chain step transition formula	<code>π⁽ᵗ⁾ = π⁽⁰⁾ · Pᵗ</code><br>State vector at step t = initial state vector × transition matrix to the power t.	cram_markov
+Markov stationary distribution — equation	Solve: <b>π · P = π</b> with constraint <b>Σπᵢ = 1</b><br>π = long-run steady-state probability vector.	cram_markov
+Absorbing State — definition	A state that <b>cannot be left</b> once entered. P[i][i] = 1.	cram_markov
+Transient State — definition	A state that can be left, with positive probability of <b>never returning</b>.	cram_markov
+Elite EU Officer Queue (λ=30, μ=40)	P₀ = <b>0.25 (25%)</b> idle probability, Lq = <b>2.25</b> average queue length.	cram_markov
+Elite EU Officer Wait Times (λ=30, μ=40)	W = <b>6 minutes (0.1 hr)</b> in system, Wq = <b>4.5 minutes (0.075 hr)</b> in queue.	cram_markov
+Weather Forecast Markov probability	Rainy today. Probability of Rainy day after tomorrow = <b>0.2450 (24.50%)</b>.	cram_markov
+Scared Frog survival probability after 5 hours	Starting on lily A (stork hungry). Probability alive after 5 hours = <b>0.03125 (3.125%)</b>.	cram_markov
+Markov Chain 3×3 stationary distribution	Matrix rows [0.6,0.3,0.1], [0.2,0.5,0.3], [0.3,0.3,0.4]:<br>π = <b>[0.375, 0.375, 0.25]</b>	cram_markov
+Queue Utilization ρ formula	<code>ρ = λ / μ</code> — fraction of time server is busy. <b>Must be &lt; 1</b> for stable queue.<br>(λ = arrival rate, μ = service rate)	cram_queue
+P₀ — Idle Queue Probability	<code>P₀ = 1 − ρ</code> — probability the queue is empty and server is idle.	cram_queue
+Average Queue Length Lq	<code>Lq = ρ² / (1 − ρ)</code> — expected number of customers waiting in line.	cram_queue
+Average Time in Queue Wq	<code>Wq = ρ / (μ − λ)</code> — expected time a customer spends waiting in queue.	cram_queue
+Flower Shop Queue: idle probability P₀ = 0.5	λ=9/hr. For P₀=0.5 → ρ=0.5 → μ=18/hr → average service time = <b>3.33 minutes</b>.	cram_queue
+Flower Shop Queue: W = 10 minutes target	λ=9/hr. For W=10 min → service rate μ must be <b>15 customers/hour</b>.	cram_queue
+What is a System?	A <b>group of elements AND the relations between those elements</b>.	cram_sys
+What is a Complex System?	A system of <b>multiple interacting elements</b> where the <b>whole behavior CANNOT be explained</b> by understanding individual parts alone.	cram_sys
+5 components of a Complex System	1. <b>Self-organization</b> — organizes without external control<br>2. <b>Emergence</b> — whole > sum of parts<br>3. <b>Nonlinearity</b> — small change → large effect<br>4. <b>Adaptation</b> — adjusts to changing conditions<br>5. <b>Feedback loops</b>	cram_sys
+Closed vs Open System	<b>Closed</b> = does NOT interact with environment (atoms, molecules)<br><b>Open</b> = MUST interact with environment to survive (people, ecosystems)	cram_sys
+Soft vs Hard Systems Thinking	<b>Soft</b>: oriented to LEARNING; world is complex; models = intellectual constructs; 'issues' + 'accommodations'<br><b>Hard</b>: oriented to GOAL SEEKING; world is engineerable; models = reality; 'problems' + 'solutions'	cram_sys
+Model types: Normative vs Descriptive	<b>Normative</b> = what <b>SHOULD</b> be done (optimal behavior)<br><b>Descriptive</b> = what <b>IS</b> being done (actual behavior)	cram_sys
+Model types: Deterministic vs Stochastic	<b>Deterministic</b> = all variables known; same inputs → same output<br><b>Stochastic</b> = accounts for randomness and uncertainty	cram_sys
+Direct Stock-to-Stock link — allowed?	<b>NEVER ALLOWED! (−10 points)</b><br>A stock must only connect to another stock through a <b>Flow rate arrow (with a valve symbol)</b>.	cram_vensim
+Stock equation wrapper in Vensim	Every Stock equation must be wrapped in:<br><code>INTEG(Inflows − Outflows, Initial Value)</code>	cram_vensim
+CLD link polarity — Reinforcing vs Balancing loop	Count negative/opposite (o / −) links in the loop:<br><b>Even count</b> = Reinforcing (R)<br><b>Odd count</b> = Balancing (B)	cram_vensim
+Limits to Growth archetype	A reinforcing growth loop hits a capacity constraint, activating a balancing loop that halts progress.<br><b>Fix</b>: Plan for constraints early.	cram_archetypes
+Tragedy of the Commons archetype	Individual growth actions exploit a shared resource until depletion.<br><b>Fix</b>: Impose shared resource regulation.	cram_archetypes
+Shifting the Burden archetype	Quick fix relieves symptoms temporarily, creating dependency and reducing pressure to fix the real problem.<br><b>Loops</b>: B1 (quick fix) vs. B2 (fundamental fix). R3 = side effect dependency.	cram_archetypes
+Fixes that Fail archetype	A quick fix relieves the problem but creates a delayed unintended consequence that worsens it.<br><b>Loops</b>: B1 (fix) vs. R2 (delayed reinforcing side effect).	cram_archetypes

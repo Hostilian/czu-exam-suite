@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>STATS Exam Prep — ESE48E | CZU Prague</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07090f;
+    --surface: #0e1120;
+    --surface2: #141830;
+    --surface3: #1a2040;
+    --border: rgba(59,130,246,0.15);
+    --border-bright: rgba(59,130,246,0.35);
+    --accent: #3b82f6;
+    --accent2: #a855f7;
+    --accent-glow: rgba(59,130,246,0.25);
+    --accent2-glow: rgba(168,85,247,0.25);
+    --text: #e8eaf6;
+    --text-dim: #8892b0;
+    --text-muted: #4a5580;
+    --success: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    --font: 'Outfit', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── Mesh Background ── */
+  .mesh-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: var(--bg);
+  }
+  .mesh-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(59,130,246,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 85% 75%, rgba(168,85,247,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%);
+    animation: meshDrift 18s ease-in-out infinite alternate;
+  }
+  .mesh-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 40% 40% at 70% 10%, rgba(168,85,247,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(59,130,246,0.07) 0%, transparent 60%);
+    animation: meshDrift2 22s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(30px,-20px) scale(1.05); }
+    100% { transform: translate(-20px,15px) scale(0.97); }
+  }
+  @keyframes meshDrift2 {
+    0%   { transform: translate(0,0); }
+    100% { transform: translate(-30px,25px); }
+  }
+
+  /* ── Header ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,9,15,0.82);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  }
+  .logo {
+    font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header-actions {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .mode-toggle {
+    display: flex; align-items: center; gap: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+    cursor: pointer;
+  }
+  .mode-btn {
+    padding: 6px 16px; border-radius: 100px; border: none;
+    font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.25s ease;
+    color: var(--text-dim); background: transparent; white-space: nowrap;
+  }
+  .mode-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    box-shadow: 0 2px 12px var(--accent-glow);
+  }
+  .cram-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 8px 20px; border-radius: 100px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; text-decoration: none;
+    font-weight: 600; font-size: 0.875rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 16px var(--accent-glow);
+  }
+  .cram-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px var(--accent-glow);
+  }
+
+  /* ── Main Layout ── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 1400px; margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* ── Banner ── */
+  .banner {
+    background: linear-gradient(135deg,
+      rgba(59,130,246,0.12) 0%,
+      rgba(168,85,247,0.08) 50%,
+      rgba(59,130,246,0.06) 100%);
+    border: 1px solid var(--border-bright);
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+    position: relative; overflow: hidden;
+  }
+  .banner::before {
+    content: '';
+    position: absolute; top: -50%; right: -10%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .banner-title {
+    font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .banner-sub {
+    font-size: 0.9rem; color: var(--text-dim); margin-top: 0.25rem;
+  }
+  .banner-badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; padding: 8px 20px; border-radius: 100px;
+    font-weight: 700; font-size: 0.85rem; white-space: nowrap;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 4px 20px var(--accent-glow); }
+    50%      { box-shadow: 0 4px 32px rgba(59,130,246,0.5); }
+  }
+
+  /* ── Grid ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* ── Glass Card ── */
+  .glass-card {
+    background: rgba(14,17,32,0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .glass-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.5;
+  }
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-bright);
+    box-shadow: 0 12px 40px rgba(59,130,246,0.15);
+  }
+  .card-col-6  { grid-column: span 6; }
+  .card-col-12 { grid-column: span 12; }
+  .card-col-5  { grid-column: span 5; }
+  .card-col-7  { grid-column: span 7; }
+
+  @media (max-width: 1100px) {
+    .card-col-6, .card-col-5, .card-col-7 { grid-column: span 12; }
+  }
+
+  .card-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .card-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(168,85,247,0.2));
+    border: 1px solid var(--border-bright);
+    flex-shrink: 0;
+  }
+  .card-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+  .card-subtitle { font-size: 0.78rem; color: var(--text-dim); margin-top: 1px; }
+
+  /* ── Definitions Matcher ── */
+  .matcher-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .matcher-col-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  .match-items { display: flex; flex-direction: column; gap: 0.5rem; }
+  .match-item {
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer; font-size: 0.82rem; font-weight: 500;
+    transition: all 0.2s ease; color: var(--text); line-height: 1.4;
+    user-select: none;
+  }
+  .match-item:hover   { border-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .match-item.selected { border-color: var(--accent2); background: rgba(168,85,247,0.15); box-shadow: 0 0 12px var(--accent2-glow); }
+  .match-item.correct  { border-color: var(--success); background: rgba(16,185,129,0.12); color: var(--success); cursor: default; }
+  .match-item.wrong    { border-color: var(--error); background: rgba(239,68,68,0.1); animation: shake 0.4s ease; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-6px); }
+    40%     { transform: translateX(6px); }
+    60%     { transform: translateX(-4px); }
+    80%     { transform: translateX(4px); }
+  }
+  .matcher-score {
+    margin-top: 1rem; padding: 10px 14px; border-radius: var(--radius-sm);
+    background: var(--surface2); border: 1px solid var(--border);
+    font-size: 0.85rem; color: var(--text-dim); text-align: center;
+  }
+  .matcher-score span { color: var(--accent); font-weight: 700; }
+  .btn-reset {
+    margin-top: 0.6rem; padding: 8px 20px; border-radius: 100px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text-dim); font-family: var(--font); font-size: 0.8rem;
+    font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+    display: block; margin-left: auto; margin-right: auto;
+  }
+  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Formula Card ── */
+  .formula-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+  .formula-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.2s ease;
+  }
+  .formula-item:hover { border-color: var(--border-bright); background: var(--surface3); }
+  .formula-expr {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--accent);
+    font-weight: 600; min-width: 200px; line-height: 1.5; flex-shrink: 0;
+  }
+  .formula-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+  .copy-btn {
+    margin-left: auto; flex-shrink: 0;
+    padding: 4px 10px; border-radius: 6px;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-muted); font-family: var(--mono); font-size: 0.7rem;
+    cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .copy-btn.copied { color: var(--success); border-color: var(--success); }
+
+  /* ── Tabbed Solvers ── */
+  .normal-only { display: block; }
+  body.cram-mode .normal-only { display: none; }
+
+  .tabs-nav {
+    display: flex; gap: 0.25rem; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem; padding-bottom: 0;
+  }
+  .tab-btn {
+    padding: 8px 16px; border-radius: 8px 8px 0 0;
+    border: 1px solid transparent; border-bottom: none;
+    background: transparent; color: var(--text-dim);
+    font-family: var(--font); font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s ease;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--surface2); }
+  .tab-btn.active {
+    background: var(--surface2); color: var(--accent);
+    border-color: var(--border); border-bottom-color: var(--surface2);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Solver inputs */
+  .solver-form { display: flex; flex-direction: column; gap: 0.75rem; }
+  .form-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .form-group { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 100px; }
+  .form-group label { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); }
+  .form-group input, .form-group textarea {
+    padding: 9px 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface3); color: var(--text);
+    font-family: var(--mono); font-size: 0.82rem;
+    outline: none; transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .btn-compute {
+    padding: 10px 24px; border-radius: 100px;
+    border: none; cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white; font-family: var(--font); font-weight: 700;
+    font-size: 0.875rem; transition: all 0.25s ease; align-self: flex-start;
+    box-shadow: 0 2px 12px var(--accent-glow);
+  }
+  .btn-compute:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
+  .result-box {
+    margin-top: 0.75rem; padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    font-family: var(--mono); font-size: 0.82rem;
+    color: var(--text); line-height: 1.8;
+    display: none;
+  }
+  .result-box.show { display: block; }
+  .result-box .step { color: var(--text-dim); }
+  .result-box .val  { color: var(--accent); font-weight: 600; }
+  .result-box .val2 { color: var(--accent2); font-weight: 600; }
+  .result-box .ok   { color: var(--success); font-weight: 700; }
+  .result-box .bad  { color: var(--error); font-weight: 700; }
+
+  /* ── Cram Mode Banner ── */
+  .cram-banner {
+    display: none;
+    grid-column: span 12;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(59,130,246,0.08));
+    border: 1px solid rgba(168,85,247,0.3);
+    text-align: center; font-size: 0.9rem; color: var(--text-dim);
+  }
+  body.cram-mode .cram-banner { display: block; }
+
+  /* ── Footer ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.8rem; margin-top: 2rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer span { color: var(--text-dim); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    header { padding: 0 1rem; }
+    .cram-link span { display: none; }
+    .banner { flex-direction: column; align-items: flex-start; }
+    main { padding: 1rem 1rem 3rem; }
+    .matcher-layout { grid-template-columns: 1fr; }
+    .formula-expr { min-width: 140px; }
+    .tabs-nav { overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="index.html" class="logo">STATS <span>Exam Prep</span></a>
+  <div class="header-actions">
+    <div class="mode-toggle" id="modeToggle">
+      <button class="mode-btn active" id="btnNormal" onclick="setMode('normal')">📚 Normal</button>
+      <button class="mode-btn" id="btnCram" onclick="setMode('cram')">⚡ Cram</button>
+    </div>
+    <a href="smart_cram_cards.html" class="cram-link">🃏 <span>Flashcards</span></a>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div>
+      <div class="banner-title">Statistics — ESE48E</div>
+      <div class="banner-sub">CZU Prague · Applied Statistics for IT &amp; Economics · Written Test</div>
+    </div>
+    <div class="banner-badge">📊 Exam Mode Active</div>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="cards-grid" id="cardsGrid">
+
+    <!-- ── CRAM MODE banner ── -->
+    <div class="cram-banner">
+      ⚡ Cram Mode: Solver tabs hidden. Use flashcards for rapid review →
+      <a href="smart_cram_cards.html" style="color:var(--accent2);font-weight:700;margin-left:6px;">Open Flashcards</a>
+    </div>
+
+    <!-- ── CARD 1: Definitions Matcher ── -->
+    <div class="glass-card card-col-6" id="matcherCard">
+      <div class="card-header">
+        <div class="card-icon">🔗</div>
+        <div>
+          <div class="card-title">Definitions Matcher</div>
+          <div class="card-subtitle">Click a term, then its definition</div>
+        </div>
+      </div>
+      <div class="matcher-layout">
+        <div>
+          <div class="matcher-col-title">📌 Terms</div>
+          <div class="match-items" id="terms"></div>
+        </div>
+        <div>
+          <div class="matcher-col-title">📖 Definitions</div>
+          <div class="match-items" id="defs"></div>
+        </div>
+      </div>
+      <div class="matcher-score">Matched: <span id="matchScore">0</span> / 8</div>
+      <button class="btn-reset" onclick="resetMatcher()">↺ Reset</button>
+    </div>
+
+    <!-- ── CARD 2: Key Formulas ── -->
+    <div class="glass-card card-col-6">
+      <div class="card-header">
+        <div class="card-icon">📐</div>
+        <div>
+          <div class="card-title">Key Formula Reference</div>
+          <div class="card-subtitle">Click copy to grab any formula</div>
+        </div>
+      </div>
+      <div class="formula-grid" id="formulaGrid"></div>
+    </div>
+
+    <!-- ── CARD 3: Tabbed Solvers (Normal mode only) ── -->
+    <div class="glass-card card-col-12 normal-only">
+      <div class="card-header">
+        <div class="card-icon">🧮</div>
+        <div>
+          <div class="card-title">Step-by-Step Solvers</div>
+          <div class="card-subtitle">Interactive calculators — Normal mode only</div>
+        </div>
+      </div>
+
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(0)">📉 Normal Dist.</button>
+        <button class="tab-btn" onclick="switchTab(1)">🧪 Hypothesis Test</button>
+        <button class="tab-btn" onclick="switchTab(2)">🎲 Binomial</button>
+        <button class="tab-btn" onclick="switchTab(3)">📏 Confidence Interval</button>
+        <button class="tab-btn" onclick="switchTab(4)">📈 Linear Regression</button>
+      </div>
+
+      <!-- Tab 0: Normal Distribution -->
+      <div class="tab-panel active" id="tab0">
+        <div class="solver-form">
+          <div class="form-row">
+            <div class="form-group"><label>μ (mean)</label><input type="number" id="ndMu" value="100" step="any"/></div>
+            <div class="form-group"><label>σ (std dev)</label><input type="number" id="ndSigma" value="15" step="any"/></div>
+            <div class="form-group"><label>x (value)</label><input type="number" id="ndX" value="115" step="any"/></div>
+          </div>
+          <button class="btn-compute" onclick="calcNormal()">Compute Z-score &amp; Percentile</button>
+          <div class="result-box" id="ndResult"></div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Hypothesis Test -->
+      <div class="tab-panel" id="tab1">
+        <div class="solver-form">
+          <div class="form-row">
+            <div class="form-group"><label>p-value</label><input type="number" id="htPval" value="0.032" step="any" min="0" max="1"/></div>
+            <div class="form-group"><label>α (significance level)</label><input type="number" id="htAlpha" value="0.05" step="any" min="0" max="1"/></div>
+            <div class="form-group"><label>Tail</label>
+              <select id="htTail" style="padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-family:var(--mono);font-size:0.82rem;outline:none;width:100%;">
+                <option value="two">Two-tailed</option>
+                <option value="one">One-tailed</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-compute" onclick="calcHypothesis()">Evaluate Hypothesis Test</button>
+          <div class="result-box" id="htResult"></div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Binomial -->
+      <div class="tab-panel" id="tab2">
+        <div class="solver-form">
+          <div class="form-row">
+            <div class="form-group"><label>n (trials)</label><input type="number" id="bnN" value="10" min="0" step="1"/></div>
+            <div class="form-group"><label>p (success prob)</label><input type="number" id="bnP" value="0.3" step="any" min="0" max="1"/></div>
+            <div class="form-group"><label>k (successes)</label><input type="number" id="bnK" value="3" min="0" step="1"/></div>
+          </div>
+          <button class="btn-compute" onclick="calcBinomial()">Compute P(X = k)</button>
+          <div class="result-box" id="bnResult"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Confidence Interval -->
+      <div class="tab-panel" id="tab3">
+        <div class="solver-form">
+          <div class="form-row">
+            <div class="form-group"><label>Sample Mean (x̄)</label><input type="number" id="ciMean" value="50" step="any"/></div>
+            <div class="form-group"><label>Std Dev (s or σ)</label><input type="number" id="ciStd" value="10" step="any"/></div>
+            <div class="form-group"><label>n (sample size)</label><input type="number" id="ciN" value="25" step="1" min="1"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Confidence Level (%)</label>
+              <select id="ciConf" style="padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-family:var(--mono);font-size:0.82rem;outline:none;width:100%;">
+                <option value="90">90%</option>
+                <option value="95" selected>95%</option>
+                <option value="99">99%</option>
+              </select>
+            </div>
+            <div class="form-group"><label>σ known?</label>
+              <select id="ciSigmaKnown" style="padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface3);color:var(--text);font-family:var(--mono);font-size:0.82rem;outline:none;width:100%;">
+                <option value="no" selected>No → use t</option>
+                <option value="yes">Yes → use Z</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-compute" onclick="calcCI()">Compute Confidence Interval</button>
+          <div class="result-box" id="ciResult"></div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Linear Regression -->
+      <div class="tab-panel" id="tab4">
+        <div class="solver-form">
+          <div class="form-group">
+            <label>Data pairs (x,y) — one per line, e.g.: 2,4</label>
+            <textarea id="lrData" rows="6">1,2
+2,4
+3,5
+4,4
+5,5
+6,7
+7,8
+8,9</textarea>
+          </div>
+          <button class="btn-compute" onclick="calcRegression()">Compute Regression</button>
+          <div class="result-box" id="lrResult"></div>
+        </div>
+      </div>
+
+    </div><!-- end card 3 -->
+
+  </div><!-- end grid -->
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div><span>STATS Exam Prep</span> · ESE48E · CZU Prague · 2026</div>
+  <div style="margin-top:0.5rem;">
+    <a href="smart_cram_cards.html">🃏 Smart Cram Cards</a>
+    · Built for exam success
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════
+   MODE TOGGLE
+══════════════════════════════════════ */
+function setMode(mode) {
+  const body = document.body;
+  const btnN = document.getElementById('btnNormal');
+  const btnC = document.getElementById('btnCram');
+  if (mode === 'cram') {
+    body.classList.add('cram-mode');
+    btnN.classList.remove('active');
+    btnC.classList.add('active');
+  } else {
+    body.classList.remove('cram-mode');
+    btnN.classList.add('active');
+    btnC.classList.remove('active');
+  }
+  localStorage.setItem('stats_mode', mode);
+}
+(function() {
+  const saved = localStorage.getItem('stats_mode');
+  if (saved === 'cram') setMode('cram');
+})();
+
+/* ══════════════════════════════════════
+   DEFINITIONS MATCHER
+══════════════════════════════════════ */
+let matchPairs = [];
+const ALL_STATS_PAIRS = [
+  { term: "Standard Deviation σ", def: "Square root of the variance. Measures average spread of data around the mean." },
+  { term: "p-value", def: "Probability of observing the test statistic (or more extreme) if H₀ is true. Reject H₀ if p < α." },
+  { term: "Type I Error (α)", def: "Rejecting a true null hypothesis. False positive. Probability = significance level α." },
+  { term: "Type II Error (β)", def: "Failing to reject a false null hypothesis. False negative. Power = 1 - β." },
+  { term: "Central Limit Theorem", def: "As n→∞, sampling distribution of x̄ approaches Normal(μ, σ²/n) regardless of population distribution." },
+  { term: "Pearson r", def: "Measures linear correlation between -1 and +1. r=0 means no linear relationship." },
+  { term: "Confidence Interval", def: "Range [x̄ ± z·σ/√n] that contains the true parameter with stated confidence (e.g., 95%)." },
+  { term: "Poisson Distribution", def: "Models count of rare events in fixed time/space. P(X=k) = e^(-λ)·λᵏ/k!" },
+  { term: "Null Hypothesis H₀", def: "Statement of no effect or no difference, which we attempt to reject." },
+  { term: "Alternative Hypothesis H₁", def: "Statement we support if we find sufficient evidence to reject H₀." },
+  { term: "Significance Level α", def: "Threshold probability of committing a Type I error, typically set to 0.05." },
+  { term: "Statistical Power", def: "Probability of correctly rejecting a false null hypothesis (1 - β)." },
+  { term: "Z-score", def: "Standardized score indicating how many standard deviations a value is from the mean." },
+  { term: "Binomial Distribution", def: "Models number of successes in n independent trials with constant probability p." },
+  { term: "ANOVA (One-way)", def: "Compares means of three or more independent groups to see if at least one differs." },
+  { term: "Eta-squared (η²)", def: "Effect size in ANOVA representing the proportion of variance explained by the factor." },
+  { term: "Coefficient of Determination R²", def: "Proportion of variance in the dependent variable explained by the regression model." },
+  { term: "Type I & II Error Trade-off", def: "Decreasing α (Type I error rate) increases β (Type II error rate) for a fixed sample size." },
+  { term: "Standard Error (SE)", def: "Standard deviation of the sampling distribution of a statistic, e.g. σ/√n." },
+  { term: "Normal Distribution", def: "Symmetrical bell-shaped probability distribution defined by mean μ and standard deviation σ." },
+  { term: "Degrees of Freedom (df)", def: "Number of independent values that can vary in a statistical calculation." },
+  { term: "Chi-Square Test", def: "Tests association between categorical variables or goodness-of-fit to a distribution." },
+  { term: "Boxplot", def: "Five-number summary visualization: Min, Q1, Median, Q3, Max. Highlights outliers." },
+  { term: "Interquartile Range (IQR)", def: "Difference between third and first quartiles (Q3 - Q1). Represents middle 50% spread." }
+];
+
+
+let selectedTerm = null;
+let selectedDef  = null;
+let matchedCount = 0;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildMatcher() {
+  matchPairs = shuffle(ALL_STATS_PAIRS).slice(0, 8);
+  const termsEl = document.getElementById('terms');
+  const defsEl  = document.getElementById('defs');
+  const shuffledDefs = shuffle(matchPairs);
+  const shuffledTerms = shuffle(matchPairs);
+
+  termsEl.innerHTML = '';
+  defsEl.innerHTML  = '';
+
+  shuffledTerms.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = p.term;
+    el.dataset.key = p.term;
+    el.onclick = () => selectTerm(el);
+    termsEl.appendChild(el);
+  });
+  shuffledDefs.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = p.def;
+    el.dataset.key = p.term;
+    el.onclick = () => selectDef(el);
+    defsEl.appendChild(el);
+  });
+}
+
+function selectTerm(el) {
+  if (el.classList.contains('correct')) return;
+  document.querySelectorAll('#terms .match-item.selected').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTerm = el;
+  tryMatch();
+}
+
+function selectDef(el) {
+  if (el.classList.contains('correct')) return;
+  document.querySelectorAll('#defs .match-item.selected').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedDef = el;
+  tryMatch();
+}
+
+function tryMatch() {
+  if (!selectedTerm || !selectedDef) return;
+  if (selectedTerm.dataset.key === selectedDef.dataset.key) {
+    selectedTerm.classList.remove('selected');
+    selectedDef.classList.remove('selected');
+    selectedTerm.classList.add('correct');
+    selectedDef.classList.add('correct');
+    matchedCount++;
+    document.getElementById('matchScore').textContent = matchedCount;
+  } else {
+    const t = selectedTerm, d = selectedDef;
+    t.classList.add('wrong'); d.classList.add('wrong');
+    setTimeout(() => {
+      t.classList.remove('wrong', 'selected');
+      d.classList.remove('wrong', 'selected');
+    }, 500);
+  }
+  selectedTerm = null;
+  selectedDef  = null;
+}
+
+function resetMatcher() {
+  matchedCount = 0;
+  selectedTerm = null;
+  selectedDef  = null;
+  document.getElementById('matchScore').textContent = 0;
+  buildMatcher();
+}
+
+buildMatcher();
+
+/* ══════════════════════════════════════
+   FORMULAS
+══════════════════════════════════════ */
+const formulas = [
+  { expr: "x̄ = Σxᵢ / n",                         desc: "Sample mean — sum all values, divide by count" },
+  { expr: "s² = Σ(xᵢ−x̄)² / (n−1)",              desc: "Sample variance — Bessel's correction for unbiasedness" },
+  { expr: "Z = (x̄ − μ) / (σ / √n)",              desc: "Z-score for sample mean, σ known" },
+  { expr: "t = (x̄ − μ) / (s / √n)",              desc: "t-statistic, σ unknown, df = n−1" },
+  { expr: "P(A|B) = P(A∩B) / P(B)",              desc: "Conditional probability of A given B" },
+  { expr: "P(B|A) = P(A|B)·P(B) / P(A)",        desc: "Bayes Theorem — update prior with evidence" },
+  { expr: "r = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²]", desc: "Pearson correlation coefficient" },
+  { expr: "b = r·(sᵧ/sₓ),  a = ȳ − b·x̄",        desc: "Regression slope and intercept" },
+];
+
+const fg = document.getElementById('formulaGrid');
+formulas.forEach((f, i) => {
+  const div = document.createElement('div');
+  div.className = 'formula-item';
+  div.innerHTML = `
+    <div class="formula-expr">${f.expr}</div>
+    <div class="formula-desc">${f.desc}</div>
+    <button class="copy-btn" id="cb${i}" onclick="copyFormula(${i})">copy</button>
+  `;
+  fg.appendChild(div);
+});
+
+function copyFormula(i) {
+  navigator.clipboard.writeText(formulas[i].expr).then(() => {
+    const btn = document.getElementById('cb' + i);
+    btn.textContent = '✓ copied'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+/* ══════════════════════════════════════
+   TABS
+══════════════════════════════════════ */
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) =>
+    b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.tab-panel').forEach((p, i) =>
+    p.classList.toggle('active', i === idx));
+}
+
+/* ══════════════════════════════════════
+   TAB 0: Normal Distribution
+══════════════════════════════════════ */
+function erf(x) {
+  const a1=0.254829592, a2=-0.284496736, a3=1.421413741, a4=-1.453152027, a5=1.061405429;
+  const p=0.3275911;
+  const sign = x < 0 ? -1 : 1;
+  x = Math.abs(x);
+  const t = 1 / (1 + p * x);
+  const y = 1 - (((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+  return sign * y;
+}
+function normalCDF(z) { return 0.5 * (1 + erf(z / Math.sqrt(2))); }
+
+function calcNormal() {
+  const mu = parseFloat(document.getElementById('ndMu').value);
+  const sigma = parseFloat(document.getElementById('ndSigma').value);
+  const x = parseFloat(document.getElementById('ndX').value);
+  const box = document.getElementById('ndResult');
+  if (isNaN(mu)||isNaN(sigma)||isNaN(x)||sigma<=0) {
+    box.innerHTML='<span class="bad">⚠ Invalid inputs. σ must be > 0.</span>';
+    box.classList.add('show'); return;
+  }
+  const z = (x - mu) / sigma;
+  const pct = normalCDF(z) * 100;
+  const prob_above = (1 - normalCDF(z)) * 100;
+  box.innerHTML = `
+<span class="step">Step 1 — Compute Z-score:</span>
+  Z = (x − μ) / σ = (${x} − ${mu}) / ${sigma}
+  <span class="val">Z = ${z.toFixed(4)}</span>
+
+<span class="step">Step 2 — Cumulative probability Φ(Z):</span>
+  P(X ≤ ${x}) = Φ(${z.toFixed(4)})
+  <span class="val">≈ ${(pct/100).toFixed(4)} = ${pct.toFixed(2)}th percentile</span>
+
+<span class="step">Step 3 — Probability above:</span>
+  P(X > ${x}) = 1 − ${(pct/100).toFixed(4)}
+  <span class="val2">≈ ${(prob_above/100).toFixed(4)} (${prob_above.toFixed(2)}%)</span>
+
+<span class="step">68-95-99.7 check: μ±σ = [${(mu-sigma).toFixed(2)}, ${(mu+sigma).toFixed(2)}]</span>`;
+  box.classList.add('show');
+}
+
+/* ══════════════════════════════════════
+   TAB 1: Hypothesis Test
+══════════════════════════════════════ */
+function calcHypothesis() {
+  const pval = parseFloat(document.getElementById('htPval').value);
+  const alpha = parseFloat(document.getElementById('htAlpha').value);
+  const tail = document.getElementById('htTail').value;
+  const box = document.getElementById('htResult');
+  if (isNaN(pval)||isNaN(alpha)||pval<0||pval>1||alpha<0||alpha>1) {
+    box.innerHTML='<span class="bad">⚠ p-value and α must be between 0 and 1.</span>';
+    box.classList.add('show'); return;
+  }
+  const effAlpha = tail === 'two' ? alpha : alpha;
+  const reject = pval < effAlpha;
+  const decision = reject
+    ? `<span class="ok">✔ REJECT H₀</span>`
+    : `<span class="bad">✘ FAIL TO REJECT H₀</span>`;
+  box.innerHTML = `
+<span class="step">Inputs:</span>
+  p-value = <span class="val">${pval}</span>
+  α = <span class="val">${alpha}</span>  (${tail}-tailed test)
+
+<span class="step">Decision Rule:</span>
+  Reject H₀ if p-value < α
+  ${pval} ${reject ? '<' : '≥'} ${alpha}  →  ${decision}
+
+<span class="step">Interpretation:</span>
+  ${reject
+    ? `There is sufficient evidence (at ${(alpha*100).toFixed(0)}% level) to reject the null hypothesis. The result is statistically significant.`
+    : `Insufficient evidence to reject H₀. The result is NOT statistically significant at α=${alpha}.`}
+
+<span class="step">Effect size hint:</span>
+  ${pval < 0.001 ? '★★★ Very strong evidence against H₀' :
+    pval < 0.01  ? '★★☆ Strong evidence' :
+    pval < 0.05  ? '★☆☆ Moderate evidence' :
+    pval < 0.10  ? '⚠ Marginal (borderline)' : '— No significant evidence'}`;
+  box.classList.add('show');
+}
+
+/* ══════════════════════════════════════
+   TAB 2: Binomial
+══════════════════════════════════════ */
+function factorial(n) {
+  if (n < 0) return NaN;
+  if (n === 0 || n === 1) return 1;
+  let r = 1;
+  for (let i = 2; i <= n; i++) r *= i;
+  return r;
+}
+function comb(n, k) {
+  if (k < 0 || k > n) return 0;
+  return factorial(n) / (factorial(k) * factorial(n - k));
+}
+
+function calcBinomial() {
+  const n = parseInt(document.getElementById('bnN').value);
+  const p = parseFloat(document.getElementById('bnP').value);
+  const k = parseInt(document.getElementById('bnK').value);
+  const box = document.getElementById('bnResult');
+  if (isNaN(n)||isNaN(p)||isNaN(k)||p<0||p>1||k<0||k>n||n<0) {
+    box.innerHTML='<span class="bad">⚠ Invalid inputs. Ensure 0≤k≤n and 0≤p≤1.</span>';
+    box.classList.add('show'); return;
+  }
+  const C = comb(n, k);
+  const pk = Math.pow(p, k);
+  const qnk = Math.pow(1 - p, n - k);
+  const prob = C * pk * qnk;
+  const mean = n * p;
+  const variance = n * p * (1 - p);
+  const cumul = Array.from({length: k+1}, (_,i) => comb(n,i)*Math.pow(p,i)*Math.pow(1-p,n-i))
+    .reduce((a,b) => a+b, 0);
+  box.innerHTML = `
+<span class="step">Formula: P(X=k) = C(n,k) · pᵏ · (1−p)^(n−k)</span>
+
+<span class="step">Step 1 — Combination C(${n},${k}):</span>
+  C(${n},${k}) = ${n}! / (${k}! · ${n-k}!) = <span class="val">${C.toFixed(0)}</span>
+
+<span class="step">Step 2 — pᵏ = ${p}^${k}:</span>
+  <span class="val">${pk.toFixed(6)}</span>
+
+<span class="step">Step 3 — (1−p)^(n−k) = ${(1-p).toFixed(4)}^${n-k}:</span>
+  <span class="val">${qnk.toFixed(6)}</span>
+
+<span class="step">Step 4 — P(X=${k}):</span>
+  ${C.toFixed(0)} × ${pk.toFixed(6)} × ${qnk.toFixed(6)}
+  <span class="val2">P(X=${k}) = ${prob.toFixed(6)}</span>
+
+<span class="step">Cumulative P(X≤${k}): <span class="val">${cumul.toFixed(6)}</span></span>
+<span class="step">Distribution: E[X] = np = <span class="val">${mean.toFixed(4)}</span>  Var = <span class="val">${variance.toFixed(4)}</span></span>`;
+  box.classList.add('show');
+}
+
+/* ══════════════════════════════════════
+   TAB 3: Confidence Interval
+══════════════════════════════════════ */
+function calcCI() {
+  const mean  = parseFloat(document.getElementById('ciMean').value);
+  const std   = parseFloat(document.getElementById('ciStd').value);
+  const n     = parseInt(document.getElementById('ciN').value);
+  const conf  = parseInt(document.getElementById('ciConf').value);
+  const known = document.getElementById('ciSigmaKnown').value === 'yes';
+  const box   = document.getElementById('ciResult');
+  if (isNaN(mean)||isNaN(std)||isNaN(n)||std<=0||n<1) {
+    box.innerHTML='<span class="bad">⚠ Invalid inputs.</span>';
+    box.classList.add('show'); return;
+  }
+  // Critical values
+  const zVals  = {90: 1.6449, 95: 1.9600, 99: 2.5758};
+  const tVals  = { // df = n-1 approximate for common n
+    90: {10:1.833,15:1.753,20:1.725,25:1.708,30:1.697,40:1.684,60:1.671,120:1.658,999:1.645},
+    95: {10:2.228,15:2.131,20:2.086,25:2.060,30:2.042,40:2.021,60:2.000,120:1.980,999:1.960},
+    99: {10:3.169,15:2.947,20:2.845,25:2.787,30:2.750,40:2.704,60:2.660,120:2.617,999:2.576},
+  };
+  const df = n - 1;
+  let critVal, critLabel;
+  if (known) {
+    critVal = zVals[conf];
+    critLabel = `Z* = ${critVal} (σ known, ${conf}% CI)`;
+  } else {
+    // find nearest t
+    const row = tVals[conf];
+    const keys = Object.keys(row).map(Number).sort((a,b)=>a-b);
+    let nearest = keys[keys.length-1];
+    for (const k of keys) { if (df <= k) { nearest = k; break; } }
+    critVal = row[nearest];
+    critLabel = `t* ≈ ${critVal} (df=${df}, ${conf}% CI, σ unknown)`;
+  }
+  const se = std / Math.sqrt(n);
+  const margin = critVal * se;
+  const lo = mean - margin;
+  const hi = mean + margin;
+  box.innerHTML = `
+<span class="step">Formula: x̄ ± ${known?'Z':'t'}* · (s/√n)</span>
+
+<span class="step">Step 1 — Standard Error SE:</span>
+  SE = ${std} / √${n} = <span class="val">${se.toFixed(4)}</span>
+
+<span class="step">Step 2 — Critical value:</span>
+  ${critLabel}
+
+<span class="step">Step 3 — Margin of Error:</span>
+  ME = ${critVal} × ${se.toFixed(4)} = <span class="val">${margin.toFixed(4)}</span>
+
+<span class="step">Step 4 — Confidence Interval:</span>
+  <span class="val2">[${lo.toFixed(4)}, ${hi.toFixed(4)}]</span>
+
+  We are <span class="val">${conf}%</span> confident the true population mean lies in [${lo.toFixed(3)}, ${hi.toFixed(3)}].`;
+  box.classList.add('show');
+}
+
+/* ══════════════════════════════════════
+   TAB 4: Linear Regression
+══════════════════════════════════════ */
+function calcRegression() {
+  const raw = document.getElementById('lrData').value.trim();
+  const box = document.getElementById('lrResult');
+  const lines = raw.split('\n').filter(l => l.trim());
+  const pairs = [];
+  for (const line of lines) {
+    const parts = line.split(',');
+    if (parts.length < 2) continue;
+    const x = parseFloat(parts[0].trim());
+    const y = parseFloat(parts[1].trim());
+    if (!isNaN(x) && !isNaN(y)) pairs.push({x, y});
+  }
+  if (pairs.length < 2) {
+    box.innerHTML = '<span class="bad">⚠ Need at least 2 valid (x,y) pairs.</span>';
+    box.classList.add('show'); return;
+  }
+  const n = pairs.length;
+  const xs = pairs.map(p => p.x);
+  const ys = pairs.map(p => p.y);
+  const xbar = xs.reduce((a,b)=>a+b,0)/n;
+  const ybar = ys.reduce((a,b)=>a+b,0)/n;
+  const Sxx = xs.reduce((a,x)=>a+(x-xbar)**2,0);
+  const Syy = ys.reduce((a,y)=>a+(y-ybar)**2,0);
+  const Sxy = pairs.reduce((a,p)=>a+(p.x-xbar)*(p.y-ybar),0);
+  const b = Sxy / Sxx;
+  const a = ybar - b * xbar;
+  const r = Sxy / Math.sqrt(Sxx * Syy);
+  const R2 = r * r;
+  const SSE = pairs.reduce((acc,p)=>{ const yhat=a+b*p.x; return acc+(p.y-yhat)**2; },0);
+  const SEE = Math.sqrt(SSE / (n - 2));
+  box.innerHTML = `
+<span class="step">n = ${n} data points</span>
+  x̄ = <span class="val">${xbar.toFixed(4)}</span>   ȳ = <span class="val">${ybar.toFixed(4)}</span>
+
+<span class="step">Sums of Squares:</span>
+  Sxx = Σ(xᵢ−x̄)² = <span class="val">${Sxx.toFixed(4)}</span>
+  Sxy = Σ(xᵢ−x̄)(yᵢ−ȳ) = <span class="val">${Sxy.toFixed(4)}</span>
+  Syy = Σ(yᵢ−ȳ)² = <span class="val">${Syy.toFixed(4)}</span>
+
+<span class="step">Regression Coefficients:</span>
+  b (slope)     = Sxy/Sxx = <span class="val2">${b.toFixed(4)}</span>
+  a (intercept) = ȳ − b·x̄ = <span class="val2">${a.toFixed(4)}</span>
+
+<span class="step">Regression equation:</span>
+  <span class="val">ŷ = ${a.toFixed(4)} + ${b.toFixed(4)}·x</span>
+
+<span class="step">Correlation &amp; Fit:</span>
+  Pearson r   = <span class="val">${r.toFixed(4)}</span>
+  R²          = <span class="val">${R2.toFixed(4)}</span>  (${(R2*100).toFixed(1)}% variance explained)
+  SEE         = <span class="val">${SEE.toFixed(4)}</span>
+
+<span class="step">Strength: ${Math.abs(r)>0.8?'<span class="ok">Strong</span>':Math.abs(r)>0.5?'<span class="val">Moderate</span>':'<span class="bad">Weak</span>'} ${r>0?'positive':'negative'} linear relationship</span>`;
+  box.classList.add('show');
+}
+</script>
+
+</body>
+</html>

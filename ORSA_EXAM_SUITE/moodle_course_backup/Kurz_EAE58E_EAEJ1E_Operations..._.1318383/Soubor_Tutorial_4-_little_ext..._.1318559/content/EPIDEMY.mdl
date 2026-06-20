@@ -1,0 +1,234 @@
+{UTF-8}
+AVERAGE NUMBER OF RISK CONTACTS=
+	10
+	~	
+	~		|
+
+totla number of risk contacts=
+	Susceptible population*AVERAGE NUMBER OF RISK CONTACTS
+	~	
+	~		|
+
+Total deaths= INTEG (
+	death rate,
+		0)
+	~	
+	~		|
+
+AVERAGE DUTATION OF INFECTION=
+	7
+	~	
+	~		|
+
+Imune population= INTEG (
+	recovery with imunity,
+		0)
+	~	
+	~		|
+
+Infected population= INTEG (
+	infection rate-recovery without imunity-recovery with imunity-death rate,
+		10)
+	~	
+	~		|
+
+exit rate=
+	Infected population/AVERAGE DUTATION OF INFECTION
+	~	
+	~		|
+
+infection rate=
+	totla number of risk contacts*share of infected on the total population*INFECTIVITY
+	~	
+	~		|
+
+INFECTIVITY=
+	0.05
+	~	
+	~		|
+
+Susceptible population= INTEG (
+	recovery without imunity-infection rate,
+		49990)
+	~	
+	~		|
+
+share of infected on the total population=
+	Infected population/(Infected population+Susceptible population+Imune population)
+	~	
+	~		|
+
+SHARE OF IMUNE=
+	0.5
+	~	
+	~		|
+
+MORTALITY=
+	0.03
+	~	
+	~		|
+
+recovery rate=
+	exit rate*(1-MORTALITY)
+	~	
+	~		|
+
+recovery without imunity=
+	recovery rate*(1-SHARE OF IMUNE)
+	~	
+	~		|
+
+recovery with imunity=
+	recovery rate*SHARE OF IMUNE
+	~	
+	~		|
+
+death rate=
+	exit rate*MORTALITY
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Day
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Day
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Day [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.03125
+	~	Day [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,82,0
+10,1,Susceptible population,687,438,42,93,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Infected population,925,439,42,94,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Total deaths,1140,518,50,23,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(846,365)|
+1,5,6,1,100,0,0,22,0,0,0,-1--1--1,,1|(763,365)|
+11,6,0,804,365,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,7,infection rate,804,396,52,23,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,8,AVERAGE NUMBER OF RISK CONTACTS,692,158,74,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,9,totla number of risk contacts,700,236,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,10,1,9,1,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(645,312)|
+1,11,8,9,1,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(692,199)|
+1,12,9,6,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(749,259)|
+10,13,INFECTIVITY,818,459,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,14,13,7,1,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(814,417)|
+10,15,share of infected on the total population,923,236,62,25,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,16,2,15,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(958,298)|
+1,17,1,15,1,0,45,0,2,192,0,-1--1--1,|||0-0-0,1|(442,193)|
+1,18,15,6,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(842,276)|
+12,19,0,709,297,20,20,4,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B1
+12,20,0,877,303,20,20,5,7,0,0,-1,0,0,0,0,0,0,0,0,0
+R1
+12,21,0,809,146,20,20,4,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B2
+10,22,Imune population,1305,362,60,26,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,23,25,22,4,0,0,22,0,0,0,-1--1--1,,1|(1181,363)|
+1,24,25,2,100,0,0,22,0,0,0,-1--1--1,,1|(1036,363)|
+11,25,0,1112,363,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,26,recovery with imunity,1112,394,54,23,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,27,AVERAGE DUTATION OF INFECTION,1334,731,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,28,27,50,1,0,45,0,2,192,0,-1--1--1,|||0-0-0,1|(1388,691)|
+1,29,2,50,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(1197,465)|
+1,30,22,15,1,0,45,0,2,192,0,-1--1--1,|||0-0-0,1|(1237,238)|
+1,31,33,3,4,0,0,22,0,0,0,-1--1--1,,1|(1063,515)|
+1,32,33,2,100,0,0,22,0,0,0,-1--1--1,,1|(995,515)|
+11,33,0,1030,515,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,34,death rate,1030,546,43,23,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,35,MORTALITY,1160,583,59,23,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,35,34,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(1077,581)|
+10,37,recovery rate,1281,548,52,23,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,38,50,34,1,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(1096,654)|
+1,39,50,37,0,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(0,0)|
+1,40,35,37,1,0,45,0,2,64,0,-1--1--1,|||0-0-0,1|(1237,578)|
+1,41,37,26,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(1260,458)|
+1,42,37,49,1,0,43,0,2,64,0,-1--1--1,|||0-0-0,1|(1172,709)|
+12,43,0,1006,484,20,20,4,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B6
+12,44,0,1029,405,20,20,5,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B3
+12,45,0,1014,302,20,20,5,7,0,0,-1,0,0,0,0,0,0,0,0,0
+B4
+1,46,48,1,4,0,0,22,0,0,0,-1--1--1,,1|(766,504)|
+1,47,48,2,100,0,0,22,0,0,0,-1--1--1,,1|(849,504)|
+11,48,0,810,504,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,49,recovery without imunity,810,535,61,23,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,50,exit rate,1426,593,61,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,51,SHARE OF IMUNE,1557,672,49,23,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,52,51,26,1,0,43,0,2,192,0,-1--1--1,|||0-0-0,1|(1481,531)|
+1,53,51,49,1,0,45,0,2,192,0,-1--1--1,|||0-0-0,1|(816,586)|
+///---\\\
+:GRAPH graf
+:SCALE
+:VAR Nakažená populace
+:VAR Ohrožená populace
+:VAR Imunní populace
+:VAR Celkový počet zemřelých
+:L<%^E!@
+1:Current.vdf
+4:Time
+5:share of infected on the total population
+9:Current5
+19:82,0
+24:0
+25:100
+26:100
+22:$,Dollar,Dollars,$s
+22:Hour,Hours
+22:Month,Months
+22:Person,People,Persons
+22:Unit,Units
+22:Week,Weeks
+22:Year,Years
+22:Day,Days
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:0
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:4
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

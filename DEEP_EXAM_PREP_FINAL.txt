@@ -1,0 +1,784 @@
+================================================================================
+ DEEP ANALYSIS EXAM PREP — CZUU FINAL EXAMS
+ Goal: Pass all 4 remaining exams (Markup, IS, ORSA, OS)
+ Created from a complete read of all 19 source files
+================================================================================
+
+PASSED: Statistics ✓  Math ✓
+REMAINING: Markup | Information Systems | ORSA | OS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 1 — MARKUP LANGUAGES EXAM
+Source: 136 deduplicated questions from 6 source files
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NOTE: This is the most technical exam with real multiple-select questions.
+Every topic below appeared in the actual question bank. Learn ALL of them.
+
+─────────────────────────────────────────────────────────────────────────────
+1. XML FUNDAMENTALS (Highest frequency — appears 20+ times)
+─────────────────────────────────────────────────────────────────────────────
+• XML was created by simplifying SGML
+• W3C is responsible for specifying XML
+• Well-formed XML MUST have: exactly ONE root element, all tags properly closed,
+  case-sensitive tag names, attribute values in quotes
+• Valid XML = well-formed + complies with a schema (XSD or DTD)
+• A valid document is ALWAYS well-formed; a well-formed is NOT always valid
+• XML element names: CANNOT start with a number, CAN include hyphens/underscores/periods,
+  CAN include colons (when using namespaces)
+• XML attributes: MUST have a value, can use single or double quotes, can be listed in any order
+• XML can be: valid, well-formed (these are the only two states)
+• XML namespaces: prevent naming conflicts between elements and attributes
+• Purposes of XML: define structure of documents, define custom markup languages,
+  transfer data between different applications and systems
+• SVG files: use XML format, represent image data TEXTUALLY, are VECTOR graphics
+
+─────────────────────────────────────────────────────────────────────────────
+2. XSD — XML SCHEMA DEFINITION (Highest frequency — 15+ questions)
+─────────────────────────────────────────────────────────────────────────────
+CRITICAL to memorize all restriction facets:
+
+• xs:simpleType   → defines custom data type based on an EXISTING simple type
+• xs:complexType  → defines elements with nested children OR attributes
+• xs:restriction  → base element for restrictions — used INSIDE simpleType
+• Inside xs:restriction, these elements restrict values:
+    - xs:minLength / xs:maxLength   → restrict string length
+    - xs:minInclusive / xs:maxInclusive → restrict numeric values
+    - xs:enumeration                → restrict to list of allowed values
+    - xs:pattern                    → restrict using regex pattern
+• maxOccurs="unbounded" syntax:
+    <xs:element name="item" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+• DTD = Document Type Definition: set of rules describing elements and content structure
+• DocBook: for writing technical documentation in XML; latest version uses RelaxNG + XSD
+• RelaxNG: schema language for XML, simpler than XSD for defining document structures
+• XSD Design Patterns: goal = creating a consistent and maintainable structure for XML Schema
+
+─────────────────────────────────────────────────────────────────────────────
+3. JSON AND JSON SCHEMA (10+ questions)
+─────────────────────────────────────────────────────────────────────────────
+• JSON data types (MUST KNOW — "date" is NOT a valid JSON type):
+    String | Number | Boolean | Null | Object | Array
+    ❌ date is NOT a native JSON data type
+• Empty array:  []
+• Empty object: {}
+• JSON and XML are BOTH: text-based, used for data storage/transmission,
+  used for app configuration, used for serializing objects
+• Formats that ARE text-based: JSON, CSV, XML
+• JSON Schema keywords:
+    - properties / patternProperties → define object properties
+    - minLength / maxLength          → restrict string length
+    - uniqueItems                    → require unique values in array
+    - maxProperties                  → max number of object properties
+    - required                       → make fields mandatory
+• Purpose of JSON Schema: describing the structure of JSON data + validating JSON data
+• JSON basic structures: Object and Array
+
+─────────────────────────────────────────────────────────────────────────────
+4. XSLT AND XPATH (8+ questions)
+─────────────────────────────────────────────────────────────────────────────
+• XSLT: transforms XML into other formats → HTML, XML, CSS (JSON is questionable)
+• Technologies that use XPath: XPointer, XSLT, XQuery
+• XPath symbols:
+    /   = root (absolute XPath starts here)
+    //  = anywhere in document
+    .   = current node (relative XPath)
+    @   = attribute selector (e.g., //@id)
+• Absolute XPath: starts from root /   (e.g., /bookstore/book)
+• Relative XPath: starts from current node .  (e.g., //book)
+• XSLT conditional elements:
+    <xsl:if>        → simple condition
+    <xsl:choose>    → like switch/case
+    <xsl:otherwise> → the else clause inside xsl:choose
+• XSLT Design Patterns goal: creating consistent/maintainable structure for XML transformations
+
+─────────────────────────────────────────────────────────────────────────────
+5. HTML5 (10+ questions)
+─────────────────────────────────────────────────────────────────────────────
+• DOCTYPE: <!DOCTYPE html>  (this is the correct HTML5 declaration)
+• HTML created by: Tim Berners-Lee at CERN (1989/1991)
+• Current HTML standard: HTML5 (also HTML 4.01 is mentioned as still "current")
+• Tags in <head>: <title>, <meta>, <link>
+• Attribute to define CSS file: href (on the <link> tag)
+• Semantic HTML5 elements: <header>, <footer>, <nav>, <aside>, <section>, <article>, <main>
+    → <section> = part of document (doesn't make standalone sense)
+    → <article> = standalone content (e.g., news article, blog post)
+• <footer> can contain: <p>, <ul>, <li>, <a> and more
+• <header> can contain: div, nav, span, ol, ul, li, p, img, h1–h6
+• Navigation: <nav>
+• Audio: <audio>
+• Video: <video>
+• Link syntax: <a href="url">text</a>
+• Table: <table>
+• Ordered list: <ol>
+• Inside a form: <input>, <form>
+• Microdata attributes: itemscope, itemtype
+• HTML semantics: bring meaning to code, help search engines and accessibility
+• Benefits of structured data: improved search results display, better search engine indexing,
+  improved accessibility for reading devices
+• Google tools for structured data: Google Structured Data Markup Helper + Google Structured Data Testing Tool
+
+─────────────────────────────────────────────────────────────────────────────
+6. HTTP PROTOCOL AND REST API (10+ questions)
+─────────────────────────────────────────────────────────────────────────────
+• HTTP: protocol for transferring data between a client and a server
+• HTTP methods that MANIPULATE data (unsafe): POST, PUT, DELETE (also PATCH)
+• GET is safe (read-only)
+• REST API verbs: POST, GET, PUT, DELETE, PATCH
+• REST = Representational State Transfer
+• REST principles: Cachability, Client-Server interface, Unified Interface, Statelessness
+• HTTP Status Codes — MEMORIZE THESE:
+    200 OK               → success
+    201 Created          → resource created (after POST)
+    204 No Content       → success but no body (after DELETE)
+    500 Internal Server Error → server failure
+• 2xx = success; 5xx = server error
+• WebSockets advantage over HTTP: BIDIRECTIONAL (full-duplex) communication
+  (HTTP is request-response only; WebSockets allow real-time two-way communication)
+
+─────────────────────────────────────────────────────────────────────────────
+7. CSV AND OTHER FORMATS (5+ questions)
+─────────────────────────────────────────────────────────────────────────────
+• CSV = Comma-Separated Values
+• Can be opened with: Notepad, Microsoft Excel, LibreOffice Calc
+• Delimiters: commas AND tabs
+• Values can be enclosed in quotes or not
+• Advantages: universality, space efficiency, simple syntax
+• Common use: data storage/exchange for large datasets (rows and columns)
+• NO standardizing organization for CSV (answer = None)
+• TeX: language for creating professional text documents, used for scientific publications
+  requiring precise layout (LaTeX is built on TeX)
+
+─────────────────────────────────────────────────────────────────────────────
+MARKUP EXAM — PRIORITY VIDEO LIST (Ranked by exam weight)
+─────────────────────────────────────────────────────────────────────────────
+
+🥇 PRIORITY 1 — XML Schema (XSD) [Most tested topic, 15+ questions]
+Search YouTube: "XML Schema Tutorial for Beginners" by Kudvenkat
+  → Covers xs:simpleType, xs:complexType, xs:restriction, minLength/maxLength,
+    xs:enumeration, xs:pattern, minInclusive/maxInclusive. Watch the full playlist.
+  → Link search: youtube.com/results?search_query=kudvenkat+xml+schema
+
+🥇 PRIORITY 1 — XPath in 10 Minutes
+Search YouTube: "XPath Tutorial" by tutorialspoint
+  → Absolute vs relative, @ for attributes, /, //, . — gets you 5+ exam points
+  → Link search: youtube.com/results?search_query=tutorialspoint+xpath+tutorial
+
+🥈 PRIORITY 2 — HTTP Status Codes & REST
+Search YouTube: "HTTP Status Codes Explained" by Fireship
+  → Short (< 10 min), extremely clear explanation of 200/201/204/400/500 codes
+  → Link search: youtube.com/results?search_query=fireship+http+status+codes
+
+Search YouTube: "REST API concepts and examples" by WebConcepts
+  → Covers statelessness, GET/POST/PUT/DELETE, client-server model, cachability
+  → Link search: youtube.com/results?search_query=webconcepts+rest+api
+
+🥈 PRIORITY 2 — JSON Schema
+Search YouTube: "JSON Schema Explained" by Bytes of Code
+  → properties, required, minLength/maxLength, uniqueItems, data types
+  → Link search: youtube.com/results?search_query=json+schema+explained+beginners
+
+🥉 PRIORITY 3 — HTML5 Semantic Elements
+Search YouTube: "HTML5 Semantic Elements" by Kevin Powell
+  → header/footer/nav/aside/section/article explained with use-cases
+  → Link search: youtube.com/results?search_query=kevin+powell+html5+semantic
+
+🥉 PRIORITY 3 — XSLT
+Search YouTube: "XSLT Tutorial" by Derek Banas
+  → Covers xsl:if, xsl:choose, xsl:otherwise, how XSLT transforms XML to HTML
+  → Link search: youtube.com/results?search_query=derek+banas+xslt
+
+🥉 PRIORITY 3 — WebSockets vs HTTP
+Search YouTube: "WebSockets vs HTTP" by Fireship or Hussain Nasser
+  → Shows exactly why WebSockets = bidirectional and HTTP = request-response only
+  → Link search: youtube.com/results?search_query=websocket+vs+http+fireship
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 2 — INFORMATION SYSTEMS (IS) EXAM
+Source: 50-question multiple-choice test — almost all correct answers are A
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT OBSERVATION: In the IS exam file, ALL 50 questions have answer A.
+This is a strongly designed test. The concepts are real but the wrong answers
+are obviously wrong. UNDERSTAND the concepts, don't just memorize "A".
+
+─────────────────────────────────────────────────────────────────────────────
+1. DATA WAREHOUSE (Most heavily tested — 8+ questions)
+─────────────────────────────────────────────────────────────────────────────
+Data Warehouse characteristics — remember "SINV":
+  S = Subject-oriented  (organized around subjects: sales, products, customers)
+  I = Integrated        (combines data from multiple sources consistently)
+  N = Non-volatile      (data is stable, not changed like operational data; historical)
+  V = Time-variant      (connected with time/history; tracks changes over time)
+
+• Data Warehouse is for: STRATEGIC ANALYSIS and decision-making
+• Transaction Processing System (TPS) is for: DAILY TRANSACTIONS (operational)
+• Main purpose of DW: support analysis and decision-making
+• "Non-volatile" = data is stable, not deleted or changed (unlike live OLTP data)
+• "Time-variant" = data has timestamps, tracks historical changes
+
+─────────────────────────────────────────────────────────────────────────────
+2. AI AND MODERN TECHNOLOGY (7 questions)
+─────────────────────────────────────────────────────────────────────────────
+• AI areas: Natural Language Processing (NLP), Machine Learning, Computer Vision, Deep Learning
+• NLP = human language processing
+• Machine Learning = learning patterns from data
+• Computer Vision = interpreting visual/image data
+• Deep Learning = closely connected to multi-layer neural networks
+• Neural network = inspired by human brain structure
+• Modern IS technologies: cloud, virtualization, big data, AI, security
+• Current IS phenomena: cloud, virtualization, big data, AI, security (same list)
+
+─────────────────────────────────────────────────────────────────────────────
+3. ERP SYSTEMS (7 questions)
+─────────────────────────────────────────────────────────────────────────────
+• ERP = Enterprise Resource Planning
+• ERPS = Enterprise Resource Planning System
+• IS is MORE GENERAL than ERP (ERP is a specific type of IS)
+• ERP main goal: support decision-making process
+• ERP advantage: centralized data and visibility
+• ERP disadvantage: HIGH COSTS
+• Vendor lock-in = company becomes dependent on one vendor
+• ERP leaders: SAP, Oracle, Microsoft
+• SAP HANA = high-performance analytic appliance (in-memory database)
+• In-memory database = data processed in high-speed RAM (not disk)
+
+─────────────────────────────────────────────────────────────────────────────
+4. DSS — DECISION SUPPORT SYSTEM (7 questions)
+─────────────────────────────────────────────────────────────────────────────
+• DSS = Decision Support System
+• DSS is: interactive computer-based system supporting decisions
+• DSS transforms: RAW DATA → useful information
+• DSS supports: STRATEGIC and TACTICAL decisions
+• DSS should: SUPPORT (not REPLACE) managers
+• Decision types (CRITICAL — appears multiple times):
+    Structured    = procedure CAN be specified in advance (e.g., payroll calculation)
+    Unstructured  = procedure CANNOT mostly be specified in advance (judgment, intuition)
+    Semi-structured = SOME procedures can be specified but NOT enough for definite decision
+• Computers are good at: processing large amounts of data QUICKLY
+• Humans are: flexible and adaptable (intuition, emotion, context)
+
+─────────────────────────────────────────────────────────────────────────────
+5. BI AND BPM (4 questions)
+─────────────────────────────────────────────────────────────────────────────
+• BI (Business Intelligence): analyzes data and creates business insight
+• BPM (Business Performance Management): BI + Planning
+• KPI = Key Performance Indicator
+• Dashboard: visualizes important business information
+
+─────────────────────────────────────────────────────────────────────────────
+6. CLOUD COMPUTING (5 questions)
+─────────────────────────────────────────────────────────────────────────────
+• Cloud computing: provision of IT services via the Internet; "pay for what you use"
+• SaaS = Software as a Service (application/software)
+• PaaS = Platform as a Service = IaaS + OS + application platform (runtime)
+• IaaS = Infrastructure as a Service (hardware/infrastructure)
+• "Pay for what you use" = core cloud idea
+
+─────────────────────────────────────────────────────────────────────────────
+7. COMPETITIVE INTELLIGENCE (3 questions)
+─────────────────────────────────────────────────────────────────────────────
+• CI = legal and ethical information gathering about competitors
+• CI helps: improving understanding of competitive environment
+• CI mainly uses: PUBLIC sources (press releases, reports, news — NOT hacking)
+• CI ≠ espionage (it's legal!)
+
+─────────────────────────────────────────────────────────────────────────────
+8. INFORMATION SYSTEMS BASICS (6 questions)
+─────────────────────────────────────────────────────────────────────────────
+• Information systems and management: INTERACT with each other
+• Who sets the rules in IS: humans/managers through parameters and settings
+• Automatic tools example: automatic stock ordering
+• Goal of IS in management: SUPPORT management (not replace)
+• Application architecture evolved toward: service-oriented architecture / API
+• IS rules are set by humans, not the system itself
+
+─────────────────────────────────────────────────────────────────────────────
+IS EXAM — PRIORITY VIDEO LIST (Ranked by exam weight)
+─────────────────────────────────────────────────────────────────────────────
+
+🥇 PRIORITY 1 — Data Warehouse SINV Properties [8+ exam questions]
+Search YouTube: "Data Warehouse Tutorial For Beginners" by Edureka
+  → Full explanation of subject-oriented, integrated, non-volatile, time-variant
+  → One of the most complete beginner DW videos available
+  → Link search: youtube.com/results?search_query=edureka+data+warehouse+tutorial
+
+Search YouTube: "OLTP vs OLAP" by PowerCert Animated Videos
+  → Shows the exact contrast between TPS (daily operations) and DW (analytics)
+  → Link search: youtube.com/results?search_query=powercert+oltp+olap
+
+🥇 PRIORITY 1 — Decision Types: Structured/Semi/Unstructured [multiple questions]
+Search YouTube: "Decision Support Systems DSS Explained" by Tutorials Point
+  → Covers structured, semi-structured, unstructured decision types + DSS role
+  → Link search: youtube.com/results?search_query=decision+support+system+structured+unstructured
+
+🥈 PRIORITY 2 — ERP Systems
+Search YouTube: "What is ERP" by SAP
+  → Official SAP video explaining ERP, vendor examples, and business centralization
+  → Link search: youtube.com/results?search_query=what+is+erp+sap+explained
+
+Search YouTube: "What is SAP HANA" by SAP
+  → In-memory database concept, why it's fast, how it differs from disk-based
+  → Link search: youtube.com/results?search_query=what+is+sap+hana+explained
+
+🥈 PRIORITY 2 — Cloud Computing SaaS/PaaS/IaaS
+Search YouTube: "SaaS vs PaaS vs IaaS" by PowerCert Animated Videos
+  → The BEST animated explanation of cloud service layers — visual and memorable
+  → Link search: youtube.com/results?search_query=powercert+saas+paas+iaas
+
+🥉 PRIORITY 3 — AI, ML, Deep Learning overview
+Search YouTube: "AI vs Machine Learning vs Deep Learning" by IBM Technology
+  → Clearly explains differences between ML, DL, NLP, Computer Vision in 10 min
+  → Link search: youtube.com/results?search_query=ibm+technology+ai+machine+learning+deep+learning
+
+🥉 PRIORITY 3 — Business Intelligence & KPIs
+Search YouTube: "What is Business Intelligence" by Tableau
+  → Covers BI, dashboards, KPIs, and how BI supports decisions
+  → Link search: youtube.com/results?search_query=tableau+what+is+business+intelligence
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 3 — OPERATIONS RESEARCH & SYSTEMS ANALYSIS (ORSA) EXAM
+Source: OrsaExam.txt — mostly problem-solving with theory questions
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT: ORSA has both calculation problems AND conceptual questions.
+You need to know the FORMULAS and the THEORY definitions.
+
+─────────────────────────────────────────────────────────────────────────────
+1. LEONTIEF INPUT-OUTPUT MODEL (Confirmed on exam — "complete the table" problem)
+─────────────────────────────────────────────────────────────────────────────
+STEP-BY-STEP PROCEDURE:
+
+Step 1: Complete the table
+  → Total Inputs ALWAYS = Total Outputs for each sector
+  → Find the one missing value per row by using the equation
+
+Step 2: Build the A matrix (coefficient matrix)
+  → For each column: divide each cell by that column's TOTAL INPUT
+  → A[i,j] = value[i,j] / TotalInput[j]
+
+Step 3: Build the I matrix (identity matrix)
+  → Always: diagonal = 1, everything else = 0
+  → For 3 sectors: [[1,0,0],[0,1,0],[0,0,1]]
+
+Step 4: Build (I - A) matrix
+  → Subtract A from I cell by cell
+
+Step 5a: If task gives NEW X (total production), find new Y (final demand):
+  → new_Y = (I - A) * new_X
+
+Step 5b: If task gives NEW Y (final demand), find new X (total production):
+  → new_X = (I - A)^(-1) * new_Y
+  → Must invert the (I-A) matrix first!
+
+KEY FORMULA: x = (I - A)⁻¹ * y
+
+─────────────────────────────────────────────────────────────────────────────
+2. LINEAR PROGRAMMING — SIMPLEX SENSITIVITY ANALYSIS (Confirmed on exam)
+─────────────────────────────────────────────────────────────────────────────
+The exam shows you a simplex sensitivity report and asks "what happens if X changes?"
+
+RULES:
+• If an objective function coefficient changes WITHIN its allowable range:
+    → Basis stays the SAME, but the optimal Z VALUE changes
+• If an RHS (right-hand side constraint) changes WITHIN its allowable range:
+    → Solution values change BUT the basis stays the same
+• If a change is OUTSIDE the allowable range:
+    → THE BASIS CHANGES (new optimal solution structure)
+
+EXAMPLE FROM SOURCE FILE:
+  "Objective function coefficient was 220. Profit looks like it will be 250."
+  → If allowable increase was 20 (so max allowed is 240), then 250 > 240
+  → Answer: The BASIS WILL CHANGE
+
+Excel Solver setup:
+  → LHS formulas use: =SUMPRODUCT(variable_cells, coefficient_range)
+  → Objective: maximize or minimize the SUMPRODUCT formula
+  → Constraints: LHS <= RHS
+
+─────────────────────────────────────────────────────────────────────────────
+3. SIMULATION — MONTE CARLO (Theory questions)
+─────────────────────────────────────────────────────────────────────────────
+• Simulation = imitation of a real-world system to evaluate and improve performance
+• Types of simulations (THREE axis classification):
+    Static vs Dynamic:
+      Static  = single point in time, no change over time
+      Dynamic = models changes OVER TIME
+    Stochastic vs Deterministic:
+      Stochastic   = involves randomness; different result each run
+      Deterministic = predictable; same inputs → same output always
+    Discrete-event vs Continuous:
+      Discrete-event = events occur at specific discrete points in time
+      Continuous     = changes occur continuously over time
+
+• Monte Carlo = STATIC + STOCHASTIC simulation
+  → Uses large numbers of random numbers to simulate a system/problem
+  → Classic example: estimating π by throwing random points in a square
+
+─────────────────────────────────────────────────────────────────────────────
+4. MARKOV CHAINS (Theory questions)
+─────────────────────────────────────────────────────────────────────────────
+• Markov chain = mathematical model where system moves between states
+• The NEXT state depends ONLY on the CURRENT state (NOT past states)
+• This is called: MEMORYLESSNESS (also called "Markov property")
+• Also: HOMOGENEITY — transition probabilities don't change over time
+
+Properties:
+  1. Memorylessness: next state depends only on current state
+  2. Homogeneity: transition probabilities are constant (don't change as chain progresses)
+
+• A Markov chain has: a SET OF STATES and a TRANSITION MATRIX
+• Transition matrix rows must sum to 1.0
+
+Stationary distribution:
+  π * P = π  AND  Σπᵢ = 1
+  (Solve this system of equations to find long-run steady-state probabilities)
+
+─────────────────────────────────────────────────────────────────────────────
+5. SYSTEM THEORY AND THINKING (Theory questions)
+─────────────────────────────────────────────────────────────────────────────
+• System = a group of elements and the RELATIONS between those elements
+• Complex system = multiple interacting elements where whole behavior CANNOT be
+  explained only by individual parts
+
+5 Components of a Complex System:
+  1. Self-organization: organizes itself WITHOUT external control
+  2. Emergence: whole behavior cannot be predicted from individual parts
+  3. Nonlinearity: small change in one part → large effect on whole system
+  4. Adaptation: changes behavior/structure in response to changing conditions
+  5. Feedback loops: outputs feed back as inputs
+
+System classification:
+  Closed system = does NOT need to interact with environment (atoms, molecules)
+  Open system   = MUST interact with environment to survive (people, ecosystems)
+
+System THINKING:
+  = analyzing complex systems as a WHOLE, not just individual parts
+  = understanding how changes in ONE part cause changes in ANOTHER part
+
+Soft Thinking vs Hard Thinking:
+  SOFT (SSM)                      | HARD (HST)
+  ─────────────────────────────── | ───────────────────────────────
+  Oriented to LEARNING            | Oriented to GOAL SEEKING
+  World is complex & problematic  | World has engineerable systems
+  Models = intellectual constructs| Models = actual world models
+  (epistemology-based)            | (ontology-based)
+  Uses "issues" & "accommodations"| Uses "problems" & "solutions"
+  ✓ Accessible to problem owners  | ✓ Allows use of powerful techniques
+  ✗ No final answers              | ✗ Needs experts; ignores human aspects
+
+Model types:
+  Normative vs Descriptive: Normative = what SHOULD be done; Descriptive = what IS being done
+  Static vs Dynamic: Static = one point in time; Dynamic = changes over time
+  Deterministic vs Stochastic: Deterministic = all variables known; Stochastic = accounts for randomness
+
+─────────────────────────────────────────────────────────────────────────────
+ORSA EXAM — PRIORITY VIDEO LIST (Ranked by exam weight)
+─────────────────────────────────────────────────────────────────────────────
+
+🥇 PRIORITY 1 — Leontief Input-Output Model [calculation problem on exam]
+Search YouTube: "Leontief Input Output Model" by patrickJMT
+  → Step-by-step matrix construction: builds A matrix, (I-A), inverse, solves for x
+  → This is exactly the procedure described in the exam source file
+  → Link search: youtube.com/results?search_query=patrickjmt+leontief+input+output
+
+Search YouTube: "Input Output Analysis Economics" by EconplusDal
+  → Slower paced, shows completing the IO table before building matrices
+  → Link search: youtube.com/results?search_query=econplusdal+input+output+leontief
+
+🥇 PRIORITY 1 — Simplex Sensitivity Analysis [confirmed problem type]
+Search YouTube: "LP Sensitivity Analysis" by LINDO Systems or MIT OpenCourseWare
+  → The basis change rule (inside/outside allowable range) is the exact topic
+  → Link search: youtube.com/results?search_query=linear+programming+sensitivity+analysis+allowable+range
+
+Search YouTube: "Excel Solver Linear Programming" by ExcelIsFun
+  → Shows exact SUMPRODUCT setup, solver parameters, reading sensitivity report
+  → Link search: youtube.com/results?search_query=excel+solver+linear+programming+excelisfun
+
+🥈 PRIORITY 2 — Monte Carlo Simulation
+Search YouTube: "Monte Carlo Simulation" by 3Blue1Brown or Numberphile
+  → Intuitive explanation of why random sampling solves deterministic-seeming problems
+  → Link search: youtube.com/results?search_query=monte+carlo+simulation+explained
+
+Search YouTube: "Types of Simulation Static Dynamic Stochastic" by Tutorials
+  → Covers the classification grid (Static/Dynamic, Stochastic/Deterministic, Discrete/Continuous)
+  → Link search: youtube.com/results?search_query=simulation+types+static+dynamic+stochastic+deterministic
+
+🥈 PRIORITY 2 — Markov Chains
+Search YouTube: "Markov Chains Clearly Explained" by Normalized Nerd
+  → Best beginner-friendly explanation; covers memorylessness, transition matrix, stationary distribution
+  → Link search: youtube.com/results?search_query=markov+chains+clearly+explained+normalized+nerd
+
+Search YouTube: "Markov Chain Stationary Distribution" by patrickJMT
+  → Solves π*P=π step by step — this is the exact calculation type
+  → Link search: youtube.com/results?search_query=patrickjmt+markov+chain+stationary+distribution
+
+🥉 PRIORITY 3 — System Thinking Soft vs Hard
+Search YouTube: "Systems Thinking" by The Systems Thinker or RSA Animate
+  → RSA Animate "Systems Thinking" is a famous 11-min video that explains emergence,
+    feedback loops, and nonlinearity in an intuitive and memorable way
+  → Link search: youtube.com/results?search_query=rsa+animate+systems+thinking
+
+🥉 PRIORITY 3 — System Archetypes (if Vensim is also tested)
+Search YouTube: "Limits to Growth System Archetype" by MIT System Dynamics
+  → Covers Limits to Growth, Tragedy of Commons, Shifting the Burden archetypes
+  → Link search: youtube.com/results?search_query=system+dynamics+archetypes+limits+to+growth
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 4 — OPERATING SYSTEMS & COMPUTER NETWORKS (OS) EXAM
+Source: OSCN Template, oscn answers, Ozturk (IP law essay)
+Format: Short written essays + multiple-choice questions
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT: The OS exam has TWO parts:
+  A) Multiple-choice quiz (quick facts)
+  B) Short essay answers (paragraph-level explanations)
+PREPARE BOTH.
+
+─────────────────────────────────────────────────────────────────────────────
+1. IP ADDRESSES AND NETWORKING FUNDAMENTALS (High frequency)
+─────────────────────────────────────────────────────────────────────────────
+• Regular IPs: assigned by your ISP, describe approximate location, limited supply
+• Private IPs: can be used by multiple devices but only within the SAME isolated local network
+• Private IPs allow: communication between devices on the SAME network
+• Beyond the local network: requires NAT (Network Address Translation)
+• NAT: converts private IP → public IP for communication outside the local network
+• DNS = distributed database system
+• DNS resolver: begins lookup chain from root servers
+• Which is true for DNS: "DNS is a distributed database"
+• Windows and GNU/Linux default diagnostic tools: traceroute (tracert on Windows) and ping
+
+─────────────────────────────────────────────────────────────────────────────
+2. CLOUD COMPUTING (Written answer question — Essay expected)
+─────────────────────────────────────────────────────────────────────────────
+Template answer structure:
+  "There is no cloud, it's just someone else's computer."
+  Cloud = service providing convenient, redundant, and safe data storage to clients
+  Three deployment types: Private cloud, Hybrid cloud, Public cloud
+  Three service types:
+    PaaS = Platform as a Service
+    IaaS = Infrastructure as a Service
+    SaaS = Software as a Service
+
+GDPR-sensitive data → Private cloud
+Web applications → Public cloud
+
+─────────────────────────────────────────────────────────────────────────────
+3. COOPERATIVE vs PRE-EMPTIVE MULTITASKING (Written answer question)
+─────────────────────────────────────────────────────────────────────────────
+Cooperative Multitasking (OLD method):
+  → Apps managed their OWN resources
+  → Each app released resources when done
+  → Problem: faulty/badly written apps could crash the whole system
+  → Historical (used in old Mac OS, Windows 3.x)
+
+Pre-emptive Multitasking (MODERN method):
+  → OS is in charge of allocating CPU time to applications
+  → If app misbehaves, OS can forcibly SHUT IT DOWN and reallocate resources
+  → Modern OS uses pre-emptive
+  Timeline:
+    → Unix: ALWAYS used pre-emptive from the beginning
+    → Windows: started with Windows NT and Windows 95
+    → Mac: started with Mac OS X (called OS X)
+
+─────────────────────────────────────────────────────────────────────────────
+4. TEXT/COMMAND LINE INTERFACE — CLI/TUI (Written answer question)
+─────────────────────────────────────────────────────────────────────────────
+What is TUI/CLI:
+  → Text-based user interface, displays graphics in text mode
+  → Also called: command line interface, shell
+
+CLI Advantages:
+  ✓ Faster for experts who know commands
+  ✓ Does NOT require Windows (runs on boot or headless servers)
+  ✓ Low RAM usage (text only)
+  ✓ Runs on low-resolution screens
+  ✓ Low CPU processing
+  ✓ Remote access requires LOW BANDWIDTH (key exam point)
+  ✓ User can perform ANY action that has a command
+
+CLI Disadvantages:
+  ✗ Must memorize command sequences
+  ✗ Difficult for novices/beginners
+  ✗ No autocomplete or suggestions
+  ✗ Spelling errors restart the process
+  ✗ High learning curve
+  ✗ Unknown conventions (unusual compared to GUI)
+  ✗ Eye strain from same color scheme
+
+CLI is used today in: networking setup, server administration, DevOps, scripting
+Examples: MS-DOS (Windows), bash/zsh (Linux/Mac), Windows PowerShell
+
+─────────────────────────────────────────────────────────────────────────────
+5. VIRTUAL MEMORY (Written answer question + multiple choice)
+─────────────────────────────────────────────────────────────────────────────
+• Virtual memory = memory management technique
+• Uses HDD/SSD disk space to simulate additional RAM
+• How: OS divides memory into PAGE FILES or SWAP FILES
+• The OS copies pages from disk to RAM when needed
+• Virtual addresses are then translated into real physical addresses
+• KEY TERM when using virtual memory + HDD: "SWAPPING" (also "paging")
+• Software responsible for virtual memory: THE OPERATING SYSTEM (e.g., Windows, Linux)
+• Benefit: allows running larger programs or more programs than physical RAM allows
+• Computers have FINITE RAM → virtual memory compensates
+
+─────────────────────────────────────────────────────────────────────────────
+6. WIRELESS NETWORKING (Written answer question)
+─────────────────────────────────────────────────────────────────────────────
+Advantages:
+  ✓ Increased range with relatively easy installation
+  ✓ No cables (cables are expensive and require maintenance)
+  ✓ Faster to install than wired networks
+  ✓ Cost-effective long-term (despite higher initial costs)
+  ✓ Mobility and portability — enables portable devices
+  ✓ Works in places cables cannot reach
+
+Disadvantages:
+  ✗ Security risks (poor encryption/password protection)
+  ✗ SLOWER data transfer speeds than wired alternatives
+  ✗ Signal degrades with distance from origin
+  ✗ Prone to interference (especially in shared/free frequency bands)
+  ✗ Limited bandwidth — cannot support video conferencing (VTC)
+  ✗ Limited extensibility due to lack of wireless spectrum
+
+─────────────────────────────────────────────────────────────────────────────
+7. KEY QUICK-FIRE FACTS — Multiple Choice OS (Memorize these)
+─────────────────────────────────────────────────────────────────────────────
+• Linux = OS kernel (officially: "Linux is an OS kernel written from scratch")
+• What function is NOT performed by OS: DEFRAGMENTATION
+  (Defragmentation is a utility, not a core OS function — tricky!)
+• BIOS software location: EEPROM / NAND flash memory (not RAM, not HDD)
+• FAT16 max file system size: 4 GB
+• OS resources controlled: CPU time + Operating memory (RAM)
+• SSH vs Terminal: SSH uses an ENCRYPTED CHANNEL
+• When PCs were introduced, users got: CPU power, operating memory, local storage
+• Host-terminal model: used data networks for computing (terminals connected to mainframes)
+• What creates/builds an OS: C, C++, C#, assembly language
+• Defragmentation is NOT an OS function → it's a disk utility (often external)
+
+─────────────────────────────────────────────────────────────────────────────
+8. INTELLECTUAL PROPERTY — ESSAY TOPIC (Ozturk paper)
+─────────────────────────────────────────────────────────────────────────────
+Key arguments FOR intellectual property:
+  → Provides incentive to invest time/money in new ideas
+  → Rewards creativity and innovation
+  → Protects ideas from being stolen without compensation
+  → Without IP protection, people lose incentive to innovate
+
+Key arguments AGAINST intellectual property:
+  → Can create monopolies and STIFLE competition
+  → Leads to higher prices for consumers
+  → Reduced access to products/services
+  → Large companies can use IP to prevent smaller companies from competing
+
+Historical context:
+  → Magna Carta (1215), US Declaration of Independence (1776),
+    French Declaration (1789), Universal Declaration of Human Rights (1948)
+  → All recognize property rights in some form
+
+Balance: each society must decide the right balance between incentives and access.
+
+─────────────────────────────────────────────────────────────────────────────
+OS EXAM — PRIORITY VIDEO LIST (Ranked by exam weight)
+─────────────────────────────────────────────────────────────────────────────
+
+🥇 PRIORITY 1 — Pre-emptive vs Cooperative Multitasking [Essay question]
+Search YouTube: "Preemptive vs Cooperative Multitasking" by CrashCourse CS or Brian Will
+  → Explains exactly why modern OSes use pre-emptive (OS controls resources)
+  → Key: what happens when an app misbehaves; Unix vs Windows NT vs Mac OS X history
+  → Link search: youtube.com/results?search_query=preemptive+cooperative+multitasking+operating+system
+
+🥇 PRIORITY 1 — Virtual Memory [Essay + multiple choice question]
+Search YouTube: "Virtual Memory in Operating Systems" by CrashCourse Computer Science
+  → Episode 19 or 20; explains paging, page files, swapping concept perfectly
+  → This is THE most cited tutorial for virtual memory for exams
+  → Link search: youtube.com/results?search_query=crashcourse+virtual+memory+operating+system
+
+Search YouTube: "Virtual Memory Explained" by Simple Snippets
+  → Shorter (10 min), covers page files, swapping, and the OS role clearly
+  → Link search: youtube.com/results?search_query=simple+snippets+virtual+memory+explained
+
+🥇 PRIORITY 1 — CLI/TUI Text Interface [Essay question confirmed in source]
+Search YouTube: "Command Line Interface vs GUI" by CS Dojo or Fireship
+  → Advantages (low bandwidth, low memory, remote access) and disadvantages (learning curve)
+  → Essential for writing the CLI essay answer
+  → Link search: youtube.com/results?search_query=command+line+interface+advantages+disadvantages
+
+🥈 PRIORITY 2 — IP Addressing, Private IPs, NAT
+Search YouTube: "Private vs Public IP Address Explained" by PowerCert Animated Videos
+  → Explains private IP (same network), public IP (internet-visible), and NAT
+  → Exactly covers the exam question about communication beyond the local network
+  → Link search: youtube.com/results?search_query=powercert+private+public+ip+address+nat
+
+Search YouTube: "How DNS Works" by Techquickie
+  → Explains distributed database nature of DNS, how resolvers work
+  → Very short (5 min), excellent for exam prep
+  → Link search: youtube.com/results?search_query=techquickie+how+dns+works
+
+🥈 PRIORITY 2 — Cloud Computing (Private/Hybrid/Public + SaaS/PaaS/IaaS)
+Search YouTube: "Public vs Private vs Hybrid Cloud" by IBM Technology
+  → Covers all three deployment types with clear use-case examples (GDPR etc.)
+  → Link search: youtube.com/results?search_query=ibm+technology+public+private+hybrid+cloud
+
+🥉 PRIORITY 3 — Wireless Networking Advantages/Disadvantages [Essay question]
+Search YouTube: "Wireless vs Wired Networks Pros and Cons" by PowerCert Animated Videos
+  → Covers security, speed, interference, bandwidth limitations systematically
+  → Link search: youtube.com/results?search_query=powercert+wireless+vs+wired+network
+
+🥉 PRIORITY 3 — BIOS, FAT16, Linux Kernel (Quick facts)
+Search YouTube: "How BIOS Works" by CrashCourse or Techquickie
+  → Where BIOS is stored (EEPROM/NAND), what it does during POST
+  → Link search: youtube.com/results?search_query=how+bios+works+eeprom
+
+Search YouTube: "File Systems Explained FAT NTFS ext4" by PowerCert Animated Videos
+  → Covers FAT16 (4GB limit), FAT32, NTFS, ext4 — useful for that tricky FAT16 question
+  → Link search: youtube.com/results?search_query=powercert+file+systems+fat+ntfs
+
+Search YouTube: "SSH Explained" by Techquickie or NetworkChuck
+  → Encrypted channel concept, difference from plain terminal/telnet
+  → Link search: youtube.com/results?search_query=techquickie+ssh+explained+encrypted
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MASTER STUDY SCHEDULE — IF EXAM IS IN 3 DAYS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DAY 1 — Markup + OS
+  Morning:  Markup — XSD restrictions + HTTP status codes (hardest parts)
+  Afternoon: Markup — JSON Schema, XPath, HTML5 semantic elements
+  Evening:   OS — virtual memory essay + CLI/TUI essay + pre-emptive multitasking essay
+  Watch: XSD tutorial + XPath 10min + Virtual Memory CrashCourse
+
+DAY 2 — IS + ORSA
+  Morning:  IS — Data Warehouse SINV + Decision types (structured/semi/unstructured)
+  Afternoon: IS — ERP (advantages/disadvantages/vendors) + Cloud (SaaS/PaaS/IaaS)
+  Evening:   ORSA — Leontief step-by-step + Simplex sensitivity rules
+  Watch: Leontief patrickJMT + Markov Chains Normalized Nerd + OLTP vs OLAP PowerCert
+
+DAY 3 — Review + Flash Cards
+  Morning:  OS — IP addresses + DNS + wireless networking quick facts
+  Afternoon: ORSA — Markov chain, simulation types, system thinking soft/hard
+  Evening:   All flash cards in smart_cram_cards.html for all 4 suites
+  Watch: Monte Carlo Simulation + Private vs Public IP PowerCert
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CRITICAL TRAP ANSWERS — THINGS THAT LOOK RIGHT BUT ARE WRONG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ "date" is a JSON data type → WRONG. JSON has no native date type.
+❌ "Defragmentation is an OS function" → WRONG. It is a utility, not core OS.
+❌ "DSS replaces managers" → WRONG. DSS SUPPORTS (not replaces) managers.
+❌ "Competitive Intelligence = espionage" → WRONG. CI uses only PUBLIC/LEGAL sources.
+❌ "Cooperative multitasking = modern" → WRONG. Pre-emptive is the modern standard.
+❌ "A well-formed XML document is always valid" → WRONG. Valid = well-formed + schema-compliant.
+❌ "JSON Schema maxLength restricts array" → WRONG. maxLength restricts STRINGS; use maxItems for arrays.
+❌ "SSH is the same as a terminal connection" → WRONG. SSH uses ENCRYPTED channel.
+❌ "ERP is more general than IS" → WRONG. IS is MORE GENERAL than ERP.
+❌ "Soft systems thinking produces final answers" → WRONG. SSM accepts that questioning never stops.
+
+================================================================================
+END OF DEEP ANALYSIS EXAM PREP
+Good luck - you've got this!
+================================================================================

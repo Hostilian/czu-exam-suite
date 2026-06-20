@@ -1,0 +1,35 @@
+What is a System?	A group of elements and relations maintaining existence through mutual interaction. More than the sum of its parts.	system
+Closed vs Open System	<b>Closed:</b> no interaction with environment (atoms).<br><b>Open:</b> must interact (orgs, people).	system
+Complex System: 5 Key Components	1. Self-organization<br>2. Emergence<br>3. Nonlinearity<br>4. Adaptation<br>5. Feedback loops	system
+Emergence (Definition)	Whole system behavior cannot be predicted from the behavior of its individual parts.	system
+Nonlinearity (Definition)	Small changes in one part can cause disproportionate effects on the whole system.	system
+Hard vs Soft Systems Thinking	<b>Hard:</b> Optimizes defined performance criteria.<br><b>Soft:</b> Negotiates action using conceptual models.	systems_thinking
+Peter Checkland's SSM: 7 Stages	1. Unstructured<br>2. Rich Picture<br>3. CATWOE<br>4. Conceptual Model<br>5. Comparison<br>6. Feasible Changes<br>7. Action	ssm
+Rich Picture Contents (Stage 2)	Structures, Processes, Climate, People, Issues, and Conflicts.	ssm
+CATWOE Mnemonic Elements	<b>C</b>ustomers, <b>A</b>ctors, <b>T</b>ransformation (Input➔Output), <b>W</b>eltanschauung, <b>O</b>wners, <b>E</b>nvironmental constraints.	ssm
+Weltanschauung (Worldview)	The underlying belief system that makes the system's transformation meaningful.	ssm
+Conceptual Model (Stage 4)	Diagram of activities using verbs in the imperative (aim for <b>$7 \pm 2$</b> activities).	ssm
+SSM Stage 6 Feasibility Checks	1. Owner analysis (authority)<br>2. Social system analysis (roles/norms/values)<br>3. Political analysis (power)	ssm
+Simplex Optimal Solution Location	Always at one of the corner points (vertices) of the feasible region.	linear_programming
+Shadow Price (Definition)	The rate of change in the objective function (profit) per 1-unit increase in the resource (RHS value).	linear_programming
+Shadow Price of Non-Binding Constraint	<b>Zero (0)</b>. If a resource has Slack > 0, increasing it further yields no additional profit.	linear_programming
+Excel Solver LHS Formula (Grading)	<code>=SUMPRODUCT(decision_variables, resource_coefficients)</code>. Never hardcode!	linear_programming
+Excel Solver Profit Formula	<code>=SUMPRODUCT(decision_variables, objective_coefficients)</code>.	linear_programming
+Range of Optimality	Price/profit range where the current optimal corner point (quantities) remains unchanged.	linear_programming
+Range of Feasibility	Right-Hand Side (RHS) resource range where the current shadow prices remain valid.	linear_programming
+Technical Coefficient (a_ij) Formula	$$a_{ij} = \frac{z_{ij}}{X_j}$$<br>Value of inputs from sector i needed to produce 1 unit of output in sector j.	input_output
+Leontief Inverse Matrix (I - A)^-1	The multiplier matrix representing direct and indirect inputs required across all sectors to satisfy one unit of final demand.	input_output
+Markov Property (Memorylessness)	The probability of moving to the next state depends <b>only</b> on the current state, not on past history.	markov_chains
+Transition Matrix Row Sum Rule	The sum of each row in the transition matrix P must equal exactly <b>1.0</b>.	markov_chains
+Absorbing vs Transient State	<b>Absorbing:</b> cannot be left ($P_{ii}=1$).<br><b>Transient:</b> positive probability of never returning.	markov_chains
+M/M/1 Queue Utilization & Stability	$$\rho = \frac{\lambda}{\mu}$$<br>Stable if $\rho < 1.0$ (arrival rate < service rate).	queuing_theory
+M/M/1 Queue P0 (Empty System)	$$P_0 = 1 - \rho$$<br>Probability that the server is idle.	queuing_theory
+Vensim Stock-to-Stock connection error	<b>-10 points</b>. Stocks must only connect via Flow pipe. Causal arrows cannot go directly to stocks.	vensim
+Vensim missing arrow signs error	<b>-5 points</b>. Every causal arrow must have a polarity sign (+ or -).	vensim
+Vensim missing loop identifier error	<b>-6 points / -4 points</b>. Feedback loops must be identified and labeled (R / B).	vensim
+CLD loop polarity rule	<b>Even</b> negative links = Reinforcing (R).<br><b>Odd</b> negative links = Balancing (B).	vensim
+Vensim missing equation check	Variables with black outlines in equation editor are missing formulas.	vensim
+Limits to Growth Archetype	Reinforcing loop (R1) drives growth, balancing loop (B2) limits it via resource constraint.	system_archetypes
+Tragedy of the Commons Archetype	Shared resource overexploited and degraded by actors acting in self-interest.	system_archetypes
+Shifting the Burden Archetype	External fix solves symptom, side effects weaken internal solution capacity, creating dependence.	system_archetypes
+Fixes that Fail Archetype	Quick fix solves symptom, but triggers delayed unintended consequence making it worse.	system_archetypes

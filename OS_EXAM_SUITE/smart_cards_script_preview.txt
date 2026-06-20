@@ -1,0 +1,16 @@
+<script>
+// ═══════════════════════════════════════════════════════
+// CARD DATA — 44 exam-targeted cards
+// ═══════════════════════════════════════════════════════
+const CARDS = [
+  {cat:'os_basics',q:'OS — what system resources does it control?',a:'The OS controls: <b>CPU time</b> and <b>Operating memory (RAM)</b> — the core resources.'},
+  {cat:'os_basics',q:'What function is NOT performed by the OS?',a:'<b>Defragmentation</b> — this is a disk utility, NOT a core OS function. (Common exam trap!)'},
+  {cat:'os_basics',q:'What programming languages are used to build an OS?',a:'<b>C, C++, C#</b>, and <b>assembly language</b>'},
+  {cat:'os_basics',q:'Linux — what is it technically?',a:'An open-source <b>OS kernel</b> written from scratch by Linus Torvalds in 1991. NOT derived from Unix code.'},
+  {cat:'os_basics',q:'BIOS — where is it stored?',a:'In <b>EEPROM or NAND flash memory</b> on the motherboard — non-volatile, survives power-off.'},
+  {cat:'os_basics',q:'FAT16 file system — max size',a:'<b>4 GB</b> — mathematically limited by 16-bit cluster addressing.'},
+  {cat:'os_basics',q:'PC core components (when PCs were introduced)',a:'Each PC gave users their own: <b>CPU power</b>, <b>operating memory (RAM)</b>, and <b>local storage (HDD)</b>.'},
+  {cat:'os_basics',q:'Host-terminal computational model',a:'A central <b>mainframe (host)</b> held all data and processing. The network only carried raw inputs/outputs (keystrokes and screen redraws) to dumb terminals.'},
+  {cat:'os_basics',q:'Batch processing model',a:'Jobs grouped into batches and executed one-by-one by mainframe. Key feature: <b>offline processing</b> (no user interaction during execution).'},
+  {cat:'multitask',q:'Cooperative vs Pre-emptive multitasking — key difference',a:'<b>Cooperative</b>: apps manage their own resources, voluntarily yield CPU.<br><b>Pre-emptive</b>: the OS forcibly manages CPU allocation; can kill misbehaving apps.'},
+  {cat:'multitask',q:'Cooperative multitasking — problem',a:'Apps 

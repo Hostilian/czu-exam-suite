@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORSA Exam Prep Suite V4 - Cram & Normal Simulator</title>
+  <meta name="description" content="Ultimate last-minute exam simulator and step-by-step solver with dynamic visual charts for ORSA PEF ČZU." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Premium Glassmorphic Design System ──────────────────────── */
+    :root {
+      --bg:          #080a11;
+      --surface:     #0f121d;
+      --surface-card:#141827;
+      --glass:       rgba(255, 255, 255, 0.03);
+      --glass-hover: rgba(255, 255, 255, 0.06);
+      --border:      rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(124, 106, 255, 0.25);
+      
+      --accent-purple: #7c6aff;
+      --accent-purple-glow: rgba(124, 106, 255, 0.4);
+      --accent-teal:   #00d4aa;
+      --accent-teal-glow: rgba(0, 212, 170, 0.4);
+      --accent-rose:   #ff6b6b;
+      --accent-gold:   #ffc107;
+      
+      --text:        #e2e8f0;
+      --text-muted:  #8f9bb3;
+      --radius:      16px;
+      --transition:  0.25s cubic-bezier(.4,0,.2,1);
+    }
+    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    
+    /* ─── Animated Mesh Background ───────────────────────────────── */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 5% 10%, rgba(124, 106, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 55% at 95% 90%, rgba(0, 212, 170, 0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 45% at 50% 50%, rgba(255, 107, 107, 0.04) 0%, transparent 55%);
+    }
+
+    /* ─── Top Header ─────────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8, 10, 17, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.8rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-size: 1.25rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-teal));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo span { font-weight: 300; -webkit-text-fill-color: var(--text-muted); }
+    
+    .nav-links { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-links a {
+      padding: 0.45rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+      color: var(--text-muted); text-decoration: none; border: 1px solid transparent;
+      transition: var(--transition); display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .nav-links a:hover { background: var(--glass); color: var(--text); border-color: var(--border); }
+    .nav-links a.primary-btn {
+      background: linear-gradient(135deg, var(--accent-purple), #5e4fd4);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(124, 106, 255, 0.3);
+    }
+    .nav-links a.primary-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124, 106, 255, 0.4); }
+
+    /* ─── Mode Switch Toggle ──────────────────────────────────────── */
+    .mode-switch-container {
+      display: flex; background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+      padding: 0.25rem; border-radius: 30px; margin-left: 1rem;
+    }
+    .mode-btn {
+      background: none; border: none; padding: 0.4rem 1.1rem; border-radius: 20px;
+      font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700;
+      color: var(--text-muted); cursor: pointer; transition: var(--transition);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .mode-btn.active {
+      color: #fff;
+    }
+    .mode-btn.cram-active.active {
+      background: linear-gradient(135deg, var(--accent-rose), #d63031);
+      box-shadow: 0 4px 10px rgba(255,107,107,0.25);
+    }
+    .mode-btn.normal-active.active {
+      background: linear-gradient(135deg, var(--accent-purple), #5e4fd4);
+      box-shadow: 0 4px 10px rgba(124,106,255,0.25);
+    }
+
+    /* ─── Layout Container ────────────────────────────────────────── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 1280px; margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    
+    /* ─── Cram Banner Callout ─────────────────────────────────────── */
+    .banner {
+      background: linear-gradient(135deg, rgba(124, 106, 255, 0.12), rgba(0, 212, 170, 0.05));
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem; margin-bottom: 2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+      backdrop-filter: blur(12px);
+      transition: var(--transition);
+    }
+    .banner-content h1 { font-size: 1.85rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.25rem; }
+    .banner-content h1 span { color: var(--accent-teal); }
+    .banner-content p { color: var(--text-muted); font-size: 0.9rem; }
+    
+    .cram-badge {
+      background: var(--accent-rose); color: #fff; font-size: 0.72rem; font-weight: 800;
+      padding: 0.3rem 0.8rem; border-radius: 20px; text-transform: uppercase;
+      letter-spacing: 1px; animation: pulse 2.5s infinite;
+    }
+    .normal-badge {
+      background: var(--accent-purple); color: #fff; font-size: 0.72rem; font-weight: 800;
+      padding: 0.3rem 0.8rem; border-radius: 20px; text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.85; }
+    }
+
+    /* ─── Grid Systems ────────────────────────────────────────────── */
+    .grid-container {
+      display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem;
+    }
+    .card-full { grid-column: span 12; }
+    .card-half { grid-column: span 6; }
+    .card-eight { grid-column: span 8; }
+    .card-four { grid-column: span 4; }
+    
+    @media (max-width: 1024px) {
+      .card-half, .card-eight, .card-four { grid-column: span 12; }
+    }
+
+    /* ─── Premium Glassmorphic Cards ─────────────────────────────── */
+    .cram-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      backdrop-filter: blur(16px);
+      transition: var(--transition);
+      position: relative; overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+    .cram-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      box-shadow: 0 15px 50px rgba(124, 106, 255, 0.08);
+      transform: translateY(-4px);
+    }
+    
+    .card-title {
+      font-size: 1.25rem; font-weight: 700; margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;
+      color: #fff;
+    }
+    .card-title span.emoji { font-size: 1.4rem; }
+    .card-title .badge-highlight {
+      margin-left: auto; font-size: 0.72rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 6px; text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── Interactive Matcher Game ───────────────────────────────── */
+    .game-area {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; position: relative;
+    }
+    .game-area.mismatching { pointer-events: none; }
+    @media (max-width: 600px) {
+      .game-area { grid-template-columns: 1fr; }
+    }
+    .game-col { display: flex; flex-direction: column; gap: 0.6rem; }
+    .game-item {
+      padding: 0.75rem 1rem; border-radius: 10px; cursor: pointer;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.01);
+      font-size: 0.84rem; font-weight: 500; line-height: 1.4;
+      transition: var(--transition); user-select: none;
+    }
+    .game-item:hover {
+      border-color: var(--accent-purple-glow);
+      background: rgba(124,106,255,0.04);
+      transform: translateX(2px);
+    }
+    .game-item.selected {
+      border-color: var(--accent-purple);
+      background: rgba(124,106,255,0.15);
+      color: #fff;
+      box-shadow: 0 0 10px rgba(124,106,255,0.3);
+    }
+    .game-item.matched {
+      border-color: var(--accent-teal);
+      background: rgba(0,212,170,0.08);
+      color: var(--accent-teal);
+      cursor: default;
+      transform: none;
+    }
+    .game-item.wrong {
+      border-color: var(--accent-rose);
+      background: rgba(255,107,107,0.08);
+      color: var(--accent-rose);
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    
+    .progress-bar-container {
+      width: 100%; height: 6px; background: rgba(0,0,0,0.3);
+      border-radius: 10px; overflow: hidden; margin: 1rem 0;
+    }
+    .progress-bar-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-teal));
+      border-radius: 10px; transition: width 0.3s ease;
+    }
+
+    /* ─── Loop Coach Upgrades ────────────────────────────────────── */
+    .coach-btns-row {
+      display: flex; gap: 0.5rem; margin-bottom: 0.8rem;
+    }
+    .coach-click-btn {
+      flex: 1; padding: 0.6rem; border-radius: 8px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02); color: var(--text); font-weight: 700;
+      font-size: 0.85rem; cursor: pointer; transition: var(--transition);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem;
+    }
+    .coach-click-btn.plus { border-color: rgba(0,212,170,0.3); color: var(--accent-teal); }
+    .coach-click-btn.plus:hover { background: rgba(0,212,170,0.08); }
+    .coach-click-btn.minus { border-color: rgba(255,107,107,0.3); color: var(--accent-rose); }
+    .coach-click-btn.minus:hover { background: rgba(255,107,107,0.08); }
+    
+    .coach-trace {
+      background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.6rem 0.8rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; margin-bottom: 0.8rem; min-height: 38px; display: flex; align-items: center;
+      flex-wrap: wrap; gap: 0.4rem;
+    }
+    .trace-node {
+      padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: bold; font-size: 0.76rem;
+    }
+    .trace-node.plus { background: rgba(0,212,170,0.15); color: var(--accent-teal); }
+    .trace-node.minus { background: rgba(255,107,107,0.15); color: var(--accent-rose); }
+    
+    .explain-block {
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+      border-left: 2px solid var(--border); padding-left: 0.8rem; margin-top: 0.6rem;
+    }
+
+    /* ─── Tab-based Solvers Section ──────────────────────────────── */
+    .tabs-nav {
+      display: flex; gap: 0.4rem; margin-bottom: 1.5rem; overflow-x: auto;
+      padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      background: none; border: none; cursor: pointer; white-space: nowrap;
+      color: var(--text-muted); font-size: 0.88rem; font-weight: 700;
+      padding: 0.5rem 1.1rem; border-radius: 8px; transition: var(--transition);
+      font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .tab-btn:hover { background: var(--glass); color: var(--text); }
+    .tab-btn.active {
+      background: rgba(124,106,255,0.15); color: var(--accent-purple);
+      border: 1px solid rgba(124,106,255,0.3);
+    }
+    .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+    .tab-panel.active { display: block; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── Micro Calculators Styles ───────────────────────────────── */
+    .solver-layout {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 1.8rem;
+    }
+    @media (max-width: 900px) {
+      .solver-layout { grid-template-columns: 1fr; }
+    }
+    .calc-inputs {
+      display: flex; flex-direction: column; gap: 1rem;
+      background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+      padding: 1.2rem; border-radius: 12px;
+    }
+    .input-grp { display: flex; flex-direction: column; gap: 0.4rem; }
+    .input-grp label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+    .input-grp input[type="number"] {
+      background: rgba(8, 10, 17, 0.8); border: 1px solid var(--border);
+      color: #fff; padding: 0.6rem 0.8rem; border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+    }
+    .input-grp input[type="number"]:focus { outline: none; border-color: var(--accent-purple); }
+    
+    .input-grp input[type="range"] {
+      width: 100%; height: 6px; background: var(--border); border-radius: 5px;
+      outline: none; -webkit-appearance: none; margin: 0.3rem 0;
+    }
+    .input-grp input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
+      border-radius: 50%; background: var(--accent-purple); cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-purple-glow);
+    }
+    
+    .calc-results {
+      background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+      padding: 1.2rem; border-radius: 12px; font-size: 0.88rem; line-height: 1.6;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .step-math {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+      padding: 0.8rem; border-radius: 8px; line-height: 1.7; overflow-x: auto;
+      margin-top: 0.8rem; max-height: 250px;
+    }
+    
+    /* ─── Interactive Canvas Elements ────────────────────────────── */
+    .canvas-container {
+      width: 100%; border: 1px solid var(--border); border-radius: 10px;
+      background: #06070a; overflow: hidden; position: relative;
+    }
+    .canvas-container canvas { display: block; width: 100%; height: 100%; }
+
+    /* ─── SVG State Transition Styles ────────────────────────────── */
+    .svg-container {
+      width: 100%; border: 1px solid var(--border); border-radius: 10px;
+      background: #06070a; aspect-ratio: 16/9; position: relative;
+    }
+    .svg-container svg { width: 100%; height: 100%; }
+    .markov-node {
+      cursor: pointer; fill: #10131d; stroke: var(--border); stroke-width: 2;
+      transition: var(--transition);
+    }
+    .markov-node:hover { fill: rgba(124,106,255,0.08); stroke: var(--accent-purple); }
+    .markov-node.active { fill: rgba(0,212,170,0.12); stroke: var(--accent-teal); stroke-width: 3; }
+    
+    .markov-arrow {
+      stroke: var(--text-muted); stroke-width: 1.5; fill: none; marker-end: url(#arrow);
+      transition: var(--transition);
+    }
+    .markov-arrow:hover { stroke: var(--accent-purple); }
+    
+    .markov-lbl {
+      font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; fill: var(--text-muted);
+      font-weight: 500; text-anchor: middle;
+    }
+
+    /* ─── Alert Banners & Warnings ───────────────────────────────── */
+    .alert-box {
+      background: rgba(255, 107, 107, 0.08);
+      border: 1px solid rgba(255, 107, 107, 0.25);
+      border-left: 4px solid var(--accent-rose);
+      border-radius: 8px; padding: 0.85rem 1.2rem; margin-bottom: 0.8rem;
+      font-size: 0.84rem; line-height: 1.5;
+    }
+    .alert-box.green {
+      background: rgba(0, 212, 170, 0.06);
+      border-color: rgba(0, 212, 170, 0.2);
+      border-left-color: var(--accent-teal);
+    }
+    .alert-box.yellow {
+      background: rgba(255, 193, 7, 0.06);
+      border-color: rgba(255, 193, 7, 0.2);
+      border-left-color: var(--accent-gold);
+    }
+    
+    .copy-btn {
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      color: var(--text); padding: 0.15rem 0.5rem; border-radius: 4px;
+      font-size: 0.7rem; cursor: pointer; transition: var(--transition); font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.2rem;
+    }
+    .copy-btn:hover { background: var(--accent-teal); border-color: var(--accent-teal); color: #000; }
+
+    /* ─── Vensim Structure Mockup ────────────────────────────────── */
+    .mock-moodle-box {
+      background: #080a11; border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem; margin-top: 1rem;
+    }
+    .moodle-desc { font-size: 0.85rem; margin-bottom: 0.8rem; color: var(--text-muted); }
+
+    /* ─── Celebration Screen Overlay ─────────────────────────────── */
+    .overlay-celebration {
+      position: absolute; inset: 0; background: rgba(8, 10, 17, 0.95);
+      z-index: 10; display: none; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; border-radius: var(--radius);
+      animation: zoomIn 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .overlay-celebration h2 { font-size: 1.8rem; font-weight: 800; color: var(--accent-teal); margin-bottom: 0.5rem; }
+    .overlay-celebration p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+    .overlay-celebration button {
+      background: linear-gradient(135deg, var(--accent-teal), #009879);
+      color: #000; border: none; font-weight: 800; padding: 0.6rem 1.5rem;
+      border-radius: 8px; cursor: pointer; font-family: 'Outfit', sans-serif;
+      box-shadow: 0 4px 10px var(--accent-teal-glow); transition: var(--transition);
+    }
+    .overlay-celebration button:hover { transform: translateY(-1px); }
+
+    /* ─── Custom scrollbar ────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+    /* ─── Mode display blocks ────────────────────────────────────── */
+    .cram-only { display: block; }
+    .normal-only { display: none; }
+    
+    body.normal-mode .cram-only { display: none; }
+    body.normal-mode .normal-only { display: block; }
+
+    /* ─── Footer ─────────────────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.78rem;
+      border-top: 1px solid var(--border); position: relative; z-index: 1;
+      margin-top: 3rem;
+    }
+    footer a { color: var(--accent-purple); text-decoration: none; }
+  
+/* ─── 2-HOUR AUDIO CRAM STYLES ─── */
+.cram-container { display: flex; flex-direction: column; gap: 1.5rem; padding: 0.5rem 0; }
+.player-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 32px rgba(6, 8, 16, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 1.25rem; }
+.player-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.player-title { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
+.player-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.play-btn-main { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); border: none; color: #000; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 0 15px var(--glow-cyan); }
+.play-btn-main:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan); }
+.play-btn-main.paused { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); box-shadow: 0 0 15px var(--glow-orange); }
+.ctrl-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
+.ctrl-btn:hover { background: var(--border); color: var(--cyan); transform: translateY(-2px); }
+.player-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.04); }
+.setting-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.setting-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; }
+.setting-select, .setting-slider { background: var(--surface3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 0.85rem; outline: none; cursor: pointer; }
+.setting-slider { -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--surface3); padding: 0; }
+.setting-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 10px var(--glow-cyan); }
+.player-progress-bar { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; position: relative; }
+.player-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--orange)); transition: width 0.3s; }
+.anki-deck-btn { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); border: none; color: #fff; padding: 10px 20px; border-radius: 50px; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none; }
+.anki-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-orange); }
+.cram-list-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 768px) { .cram-list-grid { grid-template-columns: repeat(2, 1fr); } }
+.cram-card-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer; }
+.cram-card-item:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.3); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05); }
+.cram-card-item.active-speaking { border-color: var(--cyan); box-shadow: 0 0 20px var(--glow-cyan); background: var(--surface2); }
+.card-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+.card-cat-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
+.card-cat-io { color: var(--cyan); border-color: rgba(34, 211, 238, 0.2); }
+.card-cat-queue { color: #a78bfa; border-color: rgba(167, 139, 250, 0.2); }
+.card-cat-markov { color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
+.card-cat-sd { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
+.card-cat-lp { color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
+.card-cat-st { color: #fbbf24; border-color: rgba(251, 191, 36, 0.2); }
+.card-cat-stochastic { color: #ec4899; border-color: rgba(236, 72, 153, 0.2); }
+.card-play-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text-dim); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.card-play-btn:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
+.card-question-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.card-desc-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.4; }
+.card-answer-box { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.75rem; margin-top: auto; font-size: 0.88rem; line-height: 1.5; color: #86efac; display: none; }
+.cram-card-item.show-ans .card-answer-box { display: block; }
+.search-filter-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
+.search-input:focus { border-color: var(--cyan); }
+.filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <header>
+    <div class="logo">ORSA <span>Cram &amp; Solver V4</span></div>
+    
+    <div class="mode-switch-container">
+      <button class="mode-btn cram-active active" id="btn-cram" onclick="setMode('cram')">⚡ Cram Mode</button>
+      <button class="mode-btn normal-active" id="btn-normal" onclick="setMode('normal')">📚 Normal Mode</button>
+    </div>
+
+    <div class="nav-links">
+      <a href="MOCK_EXAM.html">📝 Mock Exam</a>
+      <a href="STUDY_GUIDE.html">📚 Study Guide</a>
+      <a href="ANSWER_SHEET.html">🔑 Answers</a>
+      <a href="smart_cram_cards.html" class="primary-btn">🃏 Cram Flashcards</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Banner Callout -->
+    <div class="banner">
+      <div class="banner-content">
+        <span class="cram-badge cram-only" id="mode-badge-cram">Exam Cram Mode Enabled</span>
+        <span class="normal-badge normal-only" style="display:none;" id="mode-badge-normal">Normal Study Mode Enabled</span>
+        <h1 style="margin-top:0.4rem;">ORSA last-minute <span>Visual Prep Deck</span></h1>
+        <p class="cram-only">Aggregated formulas, rules, and core definitions. Toggle **Normal Mode** for dynamic graphing, mock layouts, and step-by-step solvers.</p>
+        <p class="normal-only" style="display:none;">Interactive dashboard with dynamic queue charts, live LP graphing, and full matrices math explanations.</p>
+      </div>
+    </div>
+
+    <!-- Active Workspace -->
+    <div class="grid-container">
+      
+      <!-- Card 1: 8 Definitions Matcher -->
+      <div class="cram-card card-half" style="min-height: 480px;">
+        <div class="overlay-celebration" id="congrats-overlay">
+          <h2>🎉 Correct Matcher!</h2>
+          <p>You correctly matched all 8 definitions. Full 8/8 score simulated!</p>
+          <button onclick="resetGame()">Play Again</button>
+        </div>
+        
+        <div class="card-title">
+          <span>🎯</span> The 8 Golden Definitions Matcher
+          <div class="badge-highlight" style="background:rgba(124,106,255,0.15); color:#a89fff;">Moodle Part 1</div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+          Match each concept with its correct definition. Shakes on errors; green glows on success.
+        </p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="game-progress-fill"></div>
+        </div>
+        
+        <div class="game-area" id="game-area">
+          <div class="game-col" id="col-terms"></div>
+          <div class="game-col" id="col-defs"></div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.2rem; font-size: 0.8rem; color: var(--text-muted);">
+          <span id="game-feedback">Click a term, then its correct definition.</span>
+          <button onclick="resetGame()" style="background:rgba(255,255,255,0.04); border: 1px solid var(--border); color:var(--text); padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer;">Reset</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Interactive CLD Loop Polarity Coach -->
+      <div class="cram-card card-half">
+        <div class="card-title">
+          <span>🔄</span> Causal Loop Polarity Coach
+          <div class="badge-highlight" style="background:rgba(0,212,170,0.15); color:var(--accent-teal);">Exam Practice</div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+          Build a feedback loop by clicking polarities. Understand the odd vs. even link signs rule.
+        </p>
+        
+        <div class="coach-btns-row">
+          <button class="coach-click-btn plus" onclick="addCoachLink('s')">⊕ Same (+ / s)</button>
+          <button class="coach-click-btn minus" onclick="addCoachLink('o')">⊖ Opposite (- / o)</button>
+          <button class="coach-click-btn" onclick="clearCoach()" style="flex:0.4; border-color:var(--border);">Clear</button>
+        </div>
+
+        <div class="coach-trace" id="coach-trace-row">
+          <!-- Clicked elements trace here -->
+          <span style="color:var(--text-muted); font-size:0.75rem;">Click signs above to trace a cycle...</span>
+        </div>
+        
+        <div class="alert-box green" id="coach-conclusion-box" style="margin-bottom:0; min-height: 80px; display:flex; flex-direction:column; justify-content:center;">
+          <div><strong>Waiting for loop inputs...</strong></div>
+          <div class="explain-block" id="coach-explain" style="display:none;">Explanation details.</div>
+        </div>
+        
+        <div class="normal-only" style="display:none; margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.8rem;">
+          <h4 style="font-size: 0.82rem; font-weight:600; color:#fff; margin-bottom:0.2rem;">Detailed Math Rule:</h4>
+          <p style="font-size:0.76rem; color:var(--text-muted); line-height:1.5;">
+            Mathematically, a loop is a product of partial derivatives: $\text{sign}(\text{loop}) = \prod \text{sign}(\text{link}_i)$. 
+            A positive times a negative is negative. Thus, any odd count of negative links yields a negative loop product (Balancing), while an even count yields a positive loop product (Reinforcing).
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3: Dynamic Charts & Step-by-Step Solvers -->
+      <div class="cram-card card-full normal-only" style="display:none;" id="normal-solvers-card">
+        <div class="card-title">
+          <span>⚙️</span> Interactive Solvers with Graphs &amp; Solutions
+          <div class="badge-highlight" style="background:rgba(124,106,255,0.15); color:var(--accent-purple)">Normal Mode</div>
+        </div>
+        
+        <div class="tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(event, 'tab-lp')">📈 LP Grapher</button>
+          <button class="tab-btn" onclick="switchTab(event, 'tab-queue')">🧮 M/M/1 Queue Curves</button>
+          <button class="tab-btn" onclick="switchTab(event, 'tab-markov')">🎲 Markov Chain State SVG</button>
+          <button class="tab-btn" onclick="switchTab(event, 'tab-leontief')">🏢 Input-Output Solver</button>
+          <button class="tab-btn" onclick="switchTab(event, 'tab-binomial')">🪙 Binomial Solver</button>
+        </div>
+
+        <!-- TAB: LP Solver and Graph -->
+            <!-- TAB 0: 2-Hour Audio Cram -->
+    <div class="tab-panel active" id="tab-cram">
+      <div class="cram-container">
+        
+        <!-- PLAYER PANEL -->
+        <div class="player-panel">
+          <div class="player-title-row">
+            <div class="player-title">
+              <span>🧠</span> ORSA 2-Hour Audio Cram Narrator
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <button class="anki-deck-btn" onclick="copyAnkiImportText()">
+                📦 Copy Anki Import TSV
+              </button>
+              <a href="anki_decks/ORSA_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3);border:1px solid var(--border);">
+                💾 Download Anki File
+              </a>
+            </div>
+          </div>
+          
+          <div class="player-controls">
+            <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
+            <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
+            <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
+            <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio" style="margin-left:0.5rem;">⏹</button>
+            
+            <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <span id="player-status-text" style="font-size:0.82rem; color:var(--text-dim);">Ready to cram! Click play to listen.</span>
+              <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan);">0 / 56</span>
+            </div>
+          </div>
+          
+          <div class="player-progress-bar">
+            <div class="player-progress-fill" id="player-progress-fill"></div>
+          </div>
+          
+          <div class="player-settings">
+            <div class="setting-item">
+              <label class="setting-label">Voice Narrator</label>
+              <select class="setting-select" id="tts-voice" onchange="voicesChanged()"></select>
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Cram Speed (<span id="speed-val">1.25x</span>)</label>
+              <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">Reading Mode</label>
+              <select class="setting-select" id="tts-mode">
+                <option value="qa">Read Question & Answer</option>
+                <option value="q">Read Question Only</option>
+                <option value="a">Read Answer Only</option>
+              </select>
+            </div>
+            
+            <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
+              <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:16px; height:16px;">
+              <label for="auto-advance-chk" class="setting-label" style="cursor:pointer;">Auto-Advance Playlist</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SEARCH & FILTERS -->
+        <div class="search-filter-row">
+          <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
+          <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
+            <option value="all">All Categories</option>
+            <option value="Input-Output Analysis (Leontief)">Input-Output Analysis (Leontief)</option>
+            <option value="Queueing Theory (M/M/1)">Queueing Theory (M/M/1)</option>
+            <option value="Markov Chains & Decisions">Markov Chains & Decisions</option>
+            <option value="System Dynamics (Vensim)">System Dynamics (Vensim)</option>
+            <option value="Linear Programming (Simplex)">Linear Programming (Simplex)</option>
+            <option value="Simplex & Sensitivity">Simplex & Sensitivity</option>
+            <option value="Systems Thinking & Archetypes">Systems Thinking & Archetypes</option>
+            <option value="Stochastic Models">Stochastic Models</option>
+          </select>
+          <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
+            👁️ Show All Answers
+          </button>
+        </div>
+        
+        <!-- CARDS GRID -->
+        <div class="cram-list-grid" id="cram-cards-list">
+          <!-- Populated by JavaScript -->
+        </div>
+        
+      </div>
+    </div>
+
+
+<div class="tab-panel" id="tab-lp">
+          <div class="solver-layout">
+            <div class="calc-inputs">
+              <h3 style="font-size: 0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">"Mixing a Drink" LP Bounds</h3>
+              
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Rum Taste Weight (cx)</label>
+                  <span id="lbl-cx" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">6</span>
+                </div>
+                <input type="range" id="val-cx" min="2" max="15" value="6" step="1" oninput="solveLP()" />
+              </div>
+              
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Juice Taste Weight (cy)</label>
+                  <span id="lbl-cy" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">9</span>
+                </div>
+                <input type="range" id="val-cy" min="2" max="15" value="9" step="1" oninput="solveLP()" />
+              </div>
+
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Min Alcohol (dl of Rum)</label>
+                  <span id="lbl-alch" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">5.0 dl</span>
+                </div>
+                <input type="range" id="val-alch" min="2" max="8" value="5" step="0.5" oninput="solveLP()" />
+              </div>
+
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Max Sugar limit (g)</label>
+                  <span id="lbl-sugar" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">90g</span>
+                </div>
+                <input type="range" id="val-sugar" min="60" max="110" value="90" step="5" oninput="solveLP()" />
+              </div>
+              
+              <div style="font-size:0.76rem; color:var(--text-muted); line-height:1.4;">
+                Adjust inputs to shift coordinates in real time. Shaded region shows the feasible space. Optimality occurs at one of the corner nodes.
+              </div>
+            </div>
+            
+            <div class="calc-results">
+              <div>
+                <h3 style="font-size:0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Feasible Region &amp; Optimal Spot</h3>
+                <div class="canvas-container" style="height: 250px; margin-top:0.8rem;">
+                  <canvas id="lpCanvas"></canvas>
+                </div>
+              </div>
+              <div>
+                <div class="step-math" id="lp-math-box">
+                  Calculating solution steps...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: M/M/1 Queue Solver -->
+        <div class="tab-panel" id="tab-queue">
+          <div class="solver-layout">
+            <div class="calc-inputs">
+              <h3 style="font-size: 0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Arrival &amp; Service Rates</h3>
+              
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Arrival Rate λ (req/hr)</label>
+                  <span id="lbl-lambda" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">30</span>
+                </div>
+                <input type="range" id="val-lambda" min="5" max="95" value="30" oninput="solveQueue()" />
+              </div>
+              
+              <div class="input-grp">
+                <div style="display:flex; justify-content:space-between;">
+                  <label>Service Rate μ (req/hr)</label>
+                  <span id="lbl-mu" style="font-family:'JetBrains Mono'; font-size:0.8rem; color:var(--accent-purple);">40</span>
+                </div>
+                <input type="range" id="val-mu" min="10" max="100" value="40" oninput="solveQueue()" />
+              </div>
+              
+              <div style="font-size:0.76rem; color:var(--text-muted); line-height:1.4; margin-top:0.4rem;">
+                The queue is only stable when λ &lt; μ. When utilization ρ approaches 1, waiting queues rise exponentially toward infinity!
+              </div>
+            </div>
+            
+            <div class="calc-results">
+              <div>
+                <h3 style="font-size:0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Queue Length &amp; Wait Curves</h3>
+                <div class="canvas-container" style="height: 200px; margin-top:0.8rem;">
+                  <canvas id="queueCanvas"></canvas>
+                </div>
+              </div>
+              <div>
+                <div class="step-math" id="queue-math-box">
+                  Plugging numbers into M/M/1 formulas...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: Markov Chain State Diagram -->
+        <div class="tab-panel" id="tab-markov">
+          <div class="solver-layout">
+            <div class="calc-inputs">
+              <h3 style="font-size: 0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Interactive Markov Explorer</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.8rem;">
+                Click on the states in the diagram to simulate step transitions and view distribution.
+              </p>
+              
+              <div style="display:flex; gap:0.5rem; margin-bottom: 0.8rem;">
+                <button class="coach-click-btn" onclick="runMarkovStep()" style="border-color:var(--accent-purple);">Simulate Step (+1 Step)</button>
+                <button class="coach-click-btn" onclick="resetMarkovState()">Reset Vector</button>
+              </div>
+              
+              <div id="markov-vector-display" style="font-family:'JetBrains Mono', monospace; font-size:0.82rem; background:rgba(0,0,0,0.3); border:1px solid var(--border); padding:0.8rem; border-radius:8px; line-height:1.6;">
+                Vector π⁽⁰⁾ = [1.00, 0.00, 0.00]
+              </div>
+              
+              <div style="margin-top:1rem; border-top:1px solid var(--border); padding-top:0.8rem;">
+                <h4 style="font-size:0.82rem; color:#fff; margin-bottom:0.3rem;">3x3 Stationary Equation Solver:</h4>
+                <div style="display:flex; gap:0.3rem;">
+                  <button class="coach-click-btn" onclick="solveMarkovStationary()" style="font-size:0.75rem;">Explain Stationary Solver</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="calc-results">
+              <div>
+                <h3 style="font-size:0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">State Transition Diagram (Sunny / Cloudy / Rainy)</h3>
+                <div class="svg-container" style="margin-top:0.8rem;">
+                  <svg id="markovSvg" viewBox="0 0 400 220">
+                    <defs>
+                      <marker id="arrow" viewBox="0 0 10 10" refX="22" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--text-muted)" />
+                      </marker>
+                    </defs>
+                    
+                    <!-- Curves & Arcs -->
+                    <!-- S to S self loop -->
+                    <path class="markov-arrow" d="M 80,70 A 15,15 0 1,1 100,70" />
+                    <!-- S to C -->
+                    <path class="markov-arrow" d="M 110,90 Q 200,60 290,90" />
+                    <!-- C to S -->
+                    <path class="markov-arrow" d="M 290,110 Q 200,140 110,110" />
+                    <!-- C to C self loop -->
+                    <path class="markov-arrow" d="M 300,70 A 15,15 0 1,1 320,70" />
+                    <!-- C to R -->
+                    <path class="markov-arrow" d="M 310,120 Q 250,180 200,180" />
+                    <!-- R to C -->
+                    <path class="markov-arrow" d="M 190,190 Q 260,200 300,130" />
+                    <!-- S to R -->
+                    <path class="markov-arrow" d="M 90,120 Q 140,180 190,190" />
+                    <!-- R to S -->
+                    <path class="markov-arrow" d="M 200,200 Q 130,190 100,130" />
+                    <!-- R to R self loop -->
+                    <path class="markov-arrow" d="M 190,215 A 15,15 0 1,0 210,215" />
+
+                    <!-- Nodes -->
+                    <circle id="node-S" class="markov-node active" cx="100" cy="100" r="20" onclick="setMarkovInit(0)" />
+                    <text x="100" y="104" font-weight="600" fill="#fff" font-size="11" text-anchor="middle" pointer-events="none">S</text>
+                    
+                    <circle id="node-C" class="markov-node" cx="300" cy="100" r="20" onclick="setMarkovInit(1)" />
+                    <text x="300" y="104" font-weight="600" fill="#fff" font-size="11" text-anchor="middle" pointer-events="none">C</text>
+                    
+                    <circle id="node-R" class="markov-node" cx="200" cy="190" r="20" onclick="setMarkovInit(2)" />
+                    <text x="200" y="194" font-weight="600" fill="#fff" font-size="11" text-anchor="middle" pointer-events="none">R</text>
+
+                    <!-- Link Labels -->
+                    <text x="100" y="45" class="markov-lbl">0.7</text>
+                    <text x="320" y="45" class="markov-lbl">0.25</text>
+                    <text x="200" y="240" class="markov-lbl">0.3</text>
+                    <text x="200" y="55" class="markov-lbl">0.1</text>
+                    <text x="200" y="145" class="markov-lbl">0.5</text>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="step-math" id="markov-math-box" style="max-height: 180px;">
+                  Select transition simulation or stationary distribution solver output.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: Input-Output Solver -->
+        <div class="tab-panel" id="tab-leontief">
+          <div class="solver-layout">
+            <div class="calc-inputs">
+              <h3 style="font-size: 0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Economy Size &amp; Demand</h3>
+              
+              <div class="input-grp" style="margin-top:0.4rem;">
+                <label>Select Matrix Template</label>
+                <select id="io-template-select" onchange="loadIOTemplate()" style="background:#080a11; border:1px solid var(--border); color:#fff; padding:0.5rem; border-radius:6px; font-family:'Outfit';">
+                  <option value="2x2">Worksheet 2-Sector Economy (Agriculture &amp; Industry)</option>
+                  <option value="4x4">Gluttony Ltd. (Brewery / Butcher / Greengrocer / Restaurant)</option>
+                </select>
+              </div>
+              
+              <div class="input-grp" id="io-demand-input-wrap">
+                <!-- Dynamic demand inputs depending on selection -->
+              </div>
+              
+              <button class="coach-btn" onclick="solveIO()" style="padding: 0.6rem; font-weight:700; margin-top:0.5rem;">Calculate Leontief Inverse &amp; Outputs</button>
+            </div>
+            
+            <div class="calc-results">
+              <h3 style="font-size:0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Step-by-Step Matrix Math</h3>
+              <div class="step-math" id="io-math-box" style="max-height:380px;">
+                Click "Calculate Leontief Inverse" to generate calculations.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: Binomial Distribution Solver -->
+        <div class="tab-panel" id="tab-binomial">
+          <div class="solver-layout">
+            <div class="calc-inputs">
+              <h3 style="font-size: 0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Binomial Parameters</h3>
+              
+              <div class="input-grp">
+                <label>Number of trials (n)</label>
+                <input type="number" id="bin-n" min="1" max="100" value="10" />
+              </div>
+              
+              <div class="input-grp">
+                <label>Probability of success (p)</label>
+                <input type="number" id="bin-p" min="0" max="1" step="0.05" value="0.2" />
+              </div>
+              
+              <div class="input-grp">
+                <label>Target Success count (k)</label>
+                <input type="number" id="bin-k" min="0" max="100" value="6" />
+              </div>
+              
+              <button class="coach-btn" onclick="solveBinomial()" style="padding:0.6rem; font-weight:700; margin-top:0.5rem;">Solve P(X = k)</button>
+            </div>
+            
+            <div class="calc-results">
+              <h3 style="font-size:0.95rem; color:#fff; border-bottom:1px solid var(--border); padding-bottom:0.4rem;">Probability Solution Details</h3>
+              <div class="step-math" id="bin-math-box">
+                Provide parameters and click Solve.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Card 4: Vensim Cheat Sheet & Constants (Visible in Cram & Normal) -->
+      <div class="cram-card card-eight">
+        <div class="card-title">
+          <span>🖥️</span> Vensim Models Structural Templates
+          <div class="badge-highlight" style="background:rgba(0,212,170,0.15); color:var(--accent-teal);">Model Guidelines</div>
+        </div>
+        
+        <div class="vensim-model-tab" style="display:flex; gap:0.4rem; border-bottom: 1px solid var(--border); padding-bottom:0.5rem; margin-bottom: 1rem;">
+          <button class="coach-click-btn" style="flex:1;" onclick="switchModel('sir-mdl')">SIR Epidemic Model</button>
+          <button class="coach-click-btn" style="flex:1;" onclick="switchModel('pop-mdl')">Population &amp; GDP Feedback</button>
+          <button class="coach-click-btn" style="flex:1;" onclick="switchModel('inv-mdl')">Inventory Control System</button>
+        </div>
+
+        <!-- MODEL 1: SIR -->
+        <div class="model-block" id="mdl-sir-mdl">
+          <div class="alert-box green" style="padding: 0.6rem 1rem; font-size:0.8rem; margin-bottom:0.6rem;">
+            <strong>Moodle Target Model:</strong> Represents viral transmission inside a population of 50,000.
+          </div>
+          
+          <div style="font-family:'JetBrains Mono', monospace; font-size:0.76rem; background:rgba(0,0,0,0.3); border:1px solid var(--border); padding:0.8rem; border-radius:8px; line-height:1.7;">
+            <div><span style="color:var(--accent-purple)">Susceptible population</span> = INTEG(recovery without imunity - infection rate, 49990) <button class="copy-btn" onclick="copyText('INTEG(recovery without imunity - infection rate, 49990)')">Copy</button></div>
+            <div><span style="color:var(--accent-purple)">Infected population</span> = INTEG(infection rate - recovery without imunity - recovery with imunity - death rate, 10) <button class="copy-btn" onclick="copyText('INTEG(infection rate - recovery without imunity - recovery with imunity - death rate, 10)')">Copy</button></div>
+            <div><span style="color:var(--accent-purple)">Imune population</span> = INTEG(recovery with imunity, 0) <button class="copy-btn" onclick="copyText('INTEG(recovery with imunity, 0)')">Copy</button></div>
+            <div><span style="color:var(--accent-purple)">Total deaths</span> = INTEG(death rate, 0) <button class="copy-btn" onclick="copyText('INTEG(death rate, 0)')">Copy</button></div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div><span style="color:var(--accent-teal)">infection rate</span> = totla number of risk contacts * share of infected on the total population * INFECTIVITY</div>
+            <div><span style="color:var(--accent-teal)">totla number of risk contacts</span> = Susceptible population * AVERAGE NUMBER OF RISK CONTACTS</div>
+            <div><span style="color:var(--accent-teal)">share of infected on the total population</span> = Infected population / (Infected population + Susceptible population + Imune population)</div>
+            <div><span style="color:var(--accent-teal)">exit rate</span> = Infected population / AVERAGE DUTATION OF INFECTION</div>
+            <div><span style="color:var(--accent-teal)">recovery rate</span> = exit rate * (1 - MORTALITY)</div>
+            <div><span style="color:var(--accent-teal)">recovery with imunity</span> = recovery rate * SHARE OF IMUNE</div>
+            <div><span style="color:var(--accent-teal)">recovery without imunity</span> = recovery rate * (1 - SHARE OF IMUNE)</div>
+            <div><span style="color:var(--accent-teal)">death rate</span> = exit rate * MORTALITY</div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div style="color:var(--text-muted)">Constants: AVERAGE NUMBER OF RISK CONTACTS = 10 | AVERAGE DUTATION OF INFECTION = 7 | INFECTIVITY = 0.05 | SHARE OF IMUNE = 0.5 | MORTALITY = 0.03</div>
+          </div>
+        </div>
+
+        <!-- MODEL 2: POP -->
+        <div class="model-block" id="mdl-pop-mdl" style="display:none;">
+          <div class="alert-box green" style="padding: 0.6rem 1rem; font-size:0.8rem; margin-bottom:0.6rem;">
+            <strong>Moodle Target Model:</strong> Shows demographic feedbacks with GDP per Capita lookup tables.
+          </div>
+          
+          <div style="font-family:'JetBrains Mono', monospace; font-size:0.76rem; background:rgba(0,0,0,0.3); border:1px solid var(--border); padding:0.8rem; border-radius:8px; line-height:1.7;">
+            <div><span style="color:var(--accent-purple)">Population</span> = INTEG(births - deaths, 458) <button class="copy-btn" onclick="copyText('INTEG(births - deaths, 458)')">Copy</button></div>
+            <div><span style="color:var(--accent-purple)">GDP</span> = INTEG(GDP growth, 430) <button class="copy-btn" onclick="copyText('INTEG(GDP growth, 430)')">Copy</button></div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div><span style="color:var(--accent-teal)">births</span> = Population * birth rate</div>
+            <div><span style="color:var(--accent-teal)">deaths</span> = Population / average life expectancy</div>
+            <div><span style="color:var(--accent-teal)">GDP growth</span> = GDP * GDP growth rate</div>
+            <div><span style="color:var(--accent-teal)">GDP per capita</span> = GDP / Population</div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div><span style="color:var(--accent-gold)">birth rate</span> = WITH LOOKUP (GDP per capita, ([(0,0.02)-(20,0.05)],(0.44,0.0288),(1.22,0.032),(1.90,0.0307),(20,0.0307))) <button class="copy-btn" onclick="copyText('WITH LOOKUP (GDP per capita, ([(0,0.02)-(20,0.05)],(0.44,0.0288),(1.22,0.032),(1.90,0.0307),(20,0.0307)))')">Copy</button></div>
+            <div><span style="color:var(--accent-gold)">GDP growth rate</span> = WITH LOOKUP (Time, ([(0,0)-(2021,0.07)],(1500,0.0007),(1820,0.006),(1950,0.025),(1980,0.06),(1990,0.02),(2021,0.05))) <button class="copy-btn" onclick="copyText('WITH LOOKUP (Time, ([(0,0)-(2021,0.07)],(1500,0.0007),(1820,0.006),(1950,0.025),(1980,0.06),(1990,0.02),(2021,0.05)))')">Copy</button></div>
+            <div><span style="color:var(--accent-gold)">average life expectancy</span> = WITH LOOKUP (Time, ([(0,0)-(2021,70)],(0,35),(1800,35),(1950,50),(2000,70),(2021,70))) <button class="copy-btn" onclick="copyText('WITH LOOKUP (Time, ([(0,0)-(2021,70)],(0,35),(1800,35),(1950,50),(2000,70),(2021,70)))')">Copy</button></div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div style="color:var(--text-muted)">Initial Time = 1500 | Final Time = 2020 | Time Step = 0.125</div>
+          </div>
+        </div>
+
+        <!-- MODEL 3: INV -->
+        <div class="model-block" id="mdl-inv-mdl" style="display:none;">
+          <div class="alert-box green" style="padding: 0.6rem 1rem; font-size:0.8rem; margin-bottom:0.6rem;">
+            <strong>Moodle Target Model:</strong> Inventory scheduling control with workforce delay and schedule pressure.
+          </div>
+          
+          <div style="font-family:'JetBrains Mono', monospace; font-size:0.76rem; background:rgba(0,0,0,0.3); border:1px solid var(--border); padding:0.8rem; border-radius:8px; line-height:1.7;">
+            <div><span style="color:var(--accent-purple)">Inventory</span> = INTEG(production - shipment, 4000) <button class="copy-btn" onclick="copyText('INTEG(production - shipment, 4000)')">Copy</button></div>
+            <div><span style="color:var(--accent-purple)">Workforce</span> = INTEG(hire rate - quit rate, 50) <button class="copy-btn" onclick="copyText('INTEG(hire rate - quit rate, 50)')">Copy</button></div>
+            <div style="border-top: 1px solid var(--border); margin:0.4rem 0; padding-top:0.4rem;"></div>
+            <div><span style="color:var(--accent-teal)">shipment</span> = customer orders</div>
+            <div><span style="color:var(--accent-teal)">customer orders</span> = 1000 * (1 + STEP(0.1, 10))</div>
+            <div><span style="color:var(--accent-teal)">average order rate</span> = SMOOTH(customer orders, time period for averaging orders)</div>
+            <div><span style="color:var(--accent-teal)">desired inventory</span> = average order rate * time period for inventory holdings</div>
+            <div><span style="color:var(--accent-teal)">inventory correction</span> = (desired inventory - Inventory) / time period for reconciling inventory</div>
+            <div><span style="color:var(--accent-teal)">desired production</span> = average order rate + inventory correction</div>
+            <div><span style="color:var(--accent-teal)">production</span> = production rate * effect of schedule pressure</div>
+            <div><span style="color:var(--accent-teal)">production rate</span> = Workforce * average productivity</div>
+            <div><span style="color:var(--accent-teal)">desired workforce</span> = desired production / average productivity</div>
+            <div><span style="color:var(--accent-teal)">hire rate</span> = quit rate + workforce correction</div>
+            <div><span style="color:var(--accent-teal)">quit rate</span> = Workforce / time period of average employment</div>
+            <div><span style="color:var(--accent-teal)">workforce correction</span> = (desired workforce - Workforce) / time period to hire new workers</div>
+            <div><span style="color:var(--accent-teal)">schedule pressure</span> = desired production / production rate</div>
+            <div><span style="color:var(--accent-gold)">effect of schedule pressure</span> = WITH LOOKUP(schedule pressure, ([(0.8,0.8)-(1.2,1.3)],(0.8,0.875),(0.9,0.875),(1,1),(1.1,1.25),(1.2,1.25))) <button class="copy-btn" onclick="copyText('WITH LOOKUP(schedule pressure, ([(0.8,0.8)-(1.2,1.3)],(0.8,0.875),(0.9,0.875),(1,1),(1.1,1.25),(1.2,1.25)))')">Copy</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Vensim Exam-Day Deduction Checklist (Cram column) -->
+      <div class="cram-card card-four">
+        <div class="card-title">
+          <span>⚠️</span> Vensim PLE Mistakes
+          <div class="badge-highlight" style="background:rgba(255,107,107,0.15); color:var(--accent-rose);">Deductions</div>
+        </div>
+        
+        <div class="alert-box">
+          <strong>STRICT RULE #1 (-10 pts)</strong>: NEVER connect Stock to Stock directly with an information arrow. Must use a <strong>Flow arrow (Valve / Rate)</strong>.
+        </div>
+        
+        <div class="alert-box">
+          <strong>STRICT RULE #2 (-7 pts)</strong>: Every Stock equation must start with <code>INTEG(Inflows - Outflows, Initial Value)</code>.
+        </div>
+        
+        <div class="alert-box yellow" style="margin-bottom:0;">
+          <strong>STRICT RULE #3 (-6 pts)</strong>: Loops must have loop indicators placed (e.g. <code>R1</code> or <code>B1</code>) using loop utility inside cycles.
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════════════
+       GLOBAL STATE & MODE SWITCHING
+       ══════════════════════════════════════════════════════════════════ */
+    let currentMode = 'cram';
+    
+    function setMode(mode) {
+      currentMode = mode;
+      document.body.className = (mode === 'normal') ? 'normal-mode' : '';
+      
+      document.getElementById('btn-cram').classList.toggle('active', mode === 'cram');
+      document.getElementById('btn-normal').classList.toggle('active', mode === 'normal');
+      
+      document.getElementById('mode-badge-cram').style.display = (mode === 'cram') ? 'inline-block' : 'none';
+      document.getElementById('mode-badge-normal').style.display = (mode === 'normal') ? 'inline-block' : 'none';
+      
+      document.getElementById('normal-solvers-card').style.display = (mode === 'normal') ? 'block' : 'none';
+      
+      if (mode === 'normal') {
+        // Initialise calculators
+        solveLP();
+        solveQueue();
+        loadIOTemplate();
+        solveMarkovStationary();
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       THE 8 DEFINITIONS MATCH GAME DATA & LOGIC
+       ══════════════════════════════════════════════════════════════════ */
+    const ALL_ORSA_PAIRS = [
+  { t: "Input-Output Model", d: "Leontief technique analyzing sector interdependence in an economy." },
+  { t: "Total Inputs = Total Outputs", d: "Fundamental Leontief model rule stating sector total input matches total output." },
+  { t: "Technical Coefficient (a_ij)", d: "Amount of sector i's output needed to produce one unit of sector j's output." },
+  { t: "Leontief Inverse", d: "Multiplier matrix (I-A)\u207b\u00b9 mapping final consumer demand to total direct + indirect outputs." },
+  { t: "Linear Programming", d: "Optimization method for linear objective functions subject to linear constraints." },
+  { t: "Shadow Price", d: "Rate of change in the optimal objective value (Z) per 1-unit increase in constraint RHS." },
+  { t: "Allowable Range", d: "Interval in sensitivity analysis where basis and dual prices remain constant." },
+  { t: "Simulation", d: "Imitation of real-world processes to evaluate and improve performance without real system risk." },
+  { t: "Monte Carlo", d: "Static and stochastic simulation using random sampling to estimate outcomes." },
+  { t: "Stochastic Simulation", d: "Simulation containing random variables yielding different results each run." },
+  { t: "Deterministic Simulation", d: "Simulation without randomness that yields identical outputs for same inputs." },
+  { t: "Markov Chain", d: "Mathematical model where next state depends only on the current state (memoryless)." },
+  { t: "Markov Property", d: "Memorylessness: next state probability depends only on current state, not past history." },
+  { t: "Absorbing State", d: "State in a Markov chain that cannot be left once entered (transition probability P_ii = 1)." },
+  { t: "Transient State", d: "State in a Markov chain that can be left with a chance of never returning." },
+  { t: "Stationary Distribution", d: "Long-run steady-state probability vector \u03c0 satisfying \u03c0P = \u03c0 and sum(\u03c0) = 1." },
+  { t: "Queue Utilization (\u03c1)", d: "Ratio of arrival rate to service rate (\u03bb/\u03bc) indicating server utilization fraction." },
+  { t: "Little's Law", d: "Fundamental queue relation stating average queue length equals arrival rate times wait time (L = \u03bbW)." },
+  { t: "System", d: "A group of elements and the relations between those elements." },
+  { t: "Complex System", d: "System whose collective behavior cannot be predicted from parts alone (non-linear, adaptive)." },
+  { t: "Emergence", d: "Property where the whole system behavior is more than the sum of its parts." },
+  { t: "Soft Systems Thinking", d: "Learning-oriented view of messy human situations (SSM) using models as intellectual constructs." },
+  { t: "Vensim Stock Equation", d: "Accumulation equation wrapped in INTEG(Inflows - Outflows, Initial Value)." },
+  { t: "Feedback Loop Polarity", d: "Reinforcing loop if even count of opposite links; balancing loop if odd count of opposite links." }
+];
+
+    let selectedTerm = null;
+    let selectedDef = null;
+    let matchedCount = 0;
+    let currentPairs = [];
+
+    function shuffleArray(array) {
+      return array.map(a => ({ sort: Math.random(), value: a }))
+                  .sort((a, b) => a.sort - b.sort)
+                  .map(a => a.value);
+    }
+
+    function resetGame() {
+      selectedTerm = null;
+      selectedDef = null;
+      matchedCount = 0;
+      document.getElementById('congrats-overlay').style.display = 'none';
+      document.getElementById('game-progress-fill').style.width = '0%';
+      document.getElementById('game-feedback').textContent = "Select a term and then its matching definition.";
+      document.getElementById('game-feedback').style.color = 'var(--text-muted)';
+      
+      const termCol = document.getElementById('col-terms');
+      const defCol = document.getElementById('col-defs');
+      termCol.innerHTML = '';
+      defCol.innerHTML = '';
+
+      // Select 8 random pairs
+      currentPairs = shuffleArray(ALL_ORSA_PAIRS).slice(0, 8);
+
+      const shuffledTerms = shuffleArray(currentPairs.map(x => x.t));
+      const shuffledDefs = shuffleArray(currentPairs.map(x => x.d));
+
+      shuffledTerms.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'game-item';
+        div.textContent = t;
+        div.onclick = () => selectItem(div, 'term');
+        termCol.appendChild(div);
+      });
+
+      shuffledDefs.forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'game-item';
+        div.textContent = d;
+        div.onclick = () => selectItem(div, 'def');
+        defCol.appendChild(div);
+      });
+    }
+
+    function selectItem(el, type) {
+      if (el.classList.contains('matched')) return;
+
+      if (type === 'term') {
+        document.querySelectorAll('#col-terms .game-item').forEach(item => item.classList.remove('selected', 'wrong'));
+        selectedTerm = el;
+        el.classList.add('selected');
+      } else {
+        document.querySelectorAll('#col-defs .game-item').forEach(item => item.classList.remove('selected', 'wrong'));
+        selectedDef = el;
+        el.classList.add('selected');
+      }
+
+      if (selectedTerm && selectedDef) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      const termVal = selectedTerm.textContent;
+      const defVal = selectedDef.textContent;
+      const pair = currentPairs.find(x => x.t === termVal);
+
+      if (pair && pair.d === defVal) {
+        selectedTerm.classList.remove('selected');
+        selectedTerm.classList.add('matched');
+        selectedDef.classList.remove('selected');
+        selectedDef.classList.add('matched');
+        matchedCount++;
+        selectedTerm = null;
+        selectedDef = null;
+
+        const progressPercent = (matchedCount / 8) * 100;
+        document.getElementById('game-progress-fill').style.width = progressPercent + '%';
+
+        if (matchedCount === 8) {
+          document.getElementById('congrats-overlay').style.display = 'flex';
+        } else {
+          document.getElementById('game-feedback').textContent = `Correct! (${matchedCount}/8)`;
+          document.getElementById('game-feedback').style.color = 'var(--accent-teal)';
+        }
+      } else {
+        selectedTerm.classList.add('wrong');
+        selectedDef.classList.add('wrong');
+        document.getElementById('game-feedback').textContent = "Try again! Incorrect pair.";
+        document.getElementById('game-feedback').style.color = 'var(--accent-rose)';
+        
+        const container = document.getElementById('game-area');
+        container.classList.add('mismatching');
+
+        const st = selectedTerm;
+        const sd = selectedDef;
+        selectedTerm = null;
+        selectedDef = null;
+        
+        setTimeout(() => {
+          if (st) st.classList.remove('selected', 'wrong');
+          if (sd) sd.classList.remove('selected', 'wrong');
+          container.classList.remove('mismatching');
+        }, 800);
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       CLD COACH LOGIC WITH CLICK BUTTONS
+       ══════════════════════════════════════════════════════════════════ */
+    let clickedSigns = [];
+
+    function addCoachLink(sign) {
+      clickedSigns.push(sign);
+      renderCoachTrace();
+      evaluateCoachLoop();
+    }
+
+    function clearCoach() {
+      clickedSigns = [];
+      renderCoachTrace();
+      evaluateCoachLoop();
+    }
+
+    function renderCoachTrace() {
+      const row = document.getElementById('coach-trace-row');
+      if (clickedSigns.length === 0) {
+        row.innerHTML = `<span style="color:var(--text-muted); font-size:0.75rem;">Click signs above to trace a cycle...</span>`;
+        return;
+      }
+      row.innerHTML = clickedSigns.map((sig, idx) => {
+        const signText = (sig === 's') ? '+' : '-';
+        const signClass = (sig === 's') ? 'plus' : 'minus';
+        return `
+          <span class="trace-node ${signClass}">${signText}</span>
+          ${idx < clickedSigns.length - 1 ? '→' : ''}
+        `;
+      }).join('');
+    }
+
+    function evaluateCoachLoop() {
+      const conclBox = document.getElementById('coach-conclusion-box');
+      const explain = document.getElementById('coach-explain');
+      
+      if (clickedSigns.length === 0) {
+        conclBox.className = "alert-box green";
+        conclBox.innerHTML = `<div><strong>Waiting for loop inputs...</strong></div>`;
+        explain.style.display = 'none';
+        return;
+      }
+
+      let oCount = clickedSigns.filter(s => s === 'o').length;
+      const isBalancing = (oCount % 2 === 1);
+      
+      conclBox.className = isBalancing ? "alert-box green" : "alert-box";
+      if (!isBalancing) conclBox.style.borderLeftColor = 'var(--accent-purple)';
+      
+      const loopType = isBalancing ? 'Balancing Loop (B)' : 'Reinforcing Loop (R)';
+      const loopColor = isBalancing ? 'var(--accent-teal)' : 'var(--accent-purple)';
+      
+      conclBox.innerHTML = `
+        <div>Loop Type: <strong style="color:${loopColor}">${loopType}</strong></div>
+        <div style="font-size:0.78rem; margin-top:0.2rem; color:var(--text)">
+          Total negative/opposite links: <strong>${oCount}</strong> (which is ${oCount % 2 === 0 ? 'even' : 'odd'}).
+        </div>
+      `;
+
+      let explanationText = clickedSigns.map((sig, idx) => {
+        return `Link ${idx + 1} is <strong>${sig === 's' ? 'same (+)' : 'opposite (-)'}</strong>.`;
+      }).join('<br/>');
+      
+      explanationText += `<br/><strong>Rule:</strong> since the sum of opposite (-) links is ${isBalancing ? 'odd' : 'even'}, the loop is ${isBalancing ? 'Balancing (stable/seeking target)' : 'Reinforcing (runaway/exponential)'}.`;
+      
+      explain.innerHTML = explanationText;
+      explain.style.display = 'block';
+      conclBox.appendChild(explain);
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       TAB SWITCHING
+       ══════════════════════════════════════════════════════════════════ */
+    function switchTab(evt, tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      evt.target.classList.add('active');
+      
+      if (tabId === 'tab-lp') solveLP();
+      if (tabId === 'tab-queue') solveQueue();
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       VENSIM MODEL EQUATIONS TABS
+       ══════════════════════════════════════════════════════════════════ */
+    function switchModel(modelId) {
+      document.querySelectorAll('.model-block').forEach(b => b.style.display = 'none');
+      document.getElementById('mdl-' + modelId).style.display = 'block';
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        alert("Equation copied to clipboard!");
+      });
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SOLVER 1: LP FEASIBLE REGION GRAPH & MATH WIZARD
+       ══════════════════════════════════════════════════════════════════ */
+    function solveLP() {
+      const cx = parseFloat(document.getElementById('val-cx').value);
+      const cy = parseFloat(document.getElementById('val-cy').value);
+      const alch = parseFloat(document.getElementById('val-alch').value);
+      const sugar = parseFloat(document.getElementById('val-sugar').value);
+      
+      document.getElementById('lbl-cx').textContent = cx;
+      document.getElementById('lbl-cy').textContent = cy;
+      document.getElementById('lbl-alch').textContent = alch + ' dl';
+      document.getElementById('lbl-sugar').textContent = sugar + 'g';
+
+      // Substitution math logic
+      // Max taste: Z = cx*x + cy*y, subject to:
+      // x + y = 10 => y = 10 - x
+      // 5x + 12y <= sugar => 5x + 12(10-x) <= sugar => 5x + 120 - 12x <= sugar => -7x <= sugar - 120 => x >= (120 - sugar)/7
+      const sugarMinX = ((120 - sugar) / 7).toFixed(3);
+      // Juice limit: y >= 4 => 10 - x >= 4 => x <= 6
+      // Alcohol limit: x >= alch
+      
+      const lowerBound = Math.max(alch, parseFloat(sugarMinX));
+      const upperBound = 6.0;
+      
+      let optimalX = 0;
+      let optimalY = 0;
+      let optimalZ = 0;
+      let mathHtml = '';
+
+      if (lowerBound > upperBound) {
+        mathHtml = `<span style="color:var(--accent-rose)">No feasible solution exists! The lower bound for Rum (x ≥ ${lowerBound.toFixed(2)}) exceeds the upper bound (x ≤ 6.0). Reduce alcohol constraint or increase sugar allowance.</span>`;
+        drawLPCanvas(cx, cy, alch, sugar, null);
+      } else {
+        // Z = cx*x + cy*(10-x) = 10*cy + (cx - cy)*x
+        // If cx - cy < 0 (i.e. cy > cx), we minimize x to maximize Z => optimalX = lowerBound
+        // If cx - cy > 0 (i.e. cx > cy), we maximize x to maximize Z => optimalX = upperBound
+        if (cx >= cy) {
+          optimalX = upperBound;
+        } else {
+          optimalX = lowerBound;
+        }
+        optimalY = 10 - optimalX;
+        optimalZ = cx * optimalX + cy * optimalY;
+
+        mathHtml = `
+<strong>Step-by-Step Substitution Solution:</strong><br/>
+1. Substitute <code>y = 10 - x</code> into constraints:<br/>
+   • Alcohol constraint: <code>x ≥ ${alch}</code><br/>
+   • Sugar constraint: <code>5x + 12(10 - x) ≤ ${sugar}</code><br/>
+     <code>-7x + 120 ≤ ${sugar} ➔ -7x ≤ ${sugar - 120} ➔ x ≥ ${sugarMinX}</code><br/>
+   • Fruit juice constraint: <code>y ≥ 4 ➔ 10 - x ≥ 4 ➔ x ≤ 6.0</code><br/>
+2. Combine bounds for Rum (x):<br/>
+   • Feasible range: <code>${lowerBound.toFixed(3)} ≤ x ≤ 6.0</code><br/>
+3. Express Objective Function (Taste):<br/>
+   • <code>Z = ${cx}x + ${cy}y = ${cx}x + ${cy}(10 - x) = ${10*cy} + (${cx - cy})x</code><br/>
+4. Find Optimum:<br/>
+   • Slope is <code>${cx - cy}</code>. Since it is ${cx - cy >= 0 ? 'positive' : 'negative'}, we ${cx - cy >= 0 ? 'maximize' : 'minimize'} x.<br/>
+   • Optimal Rum: <strong>x = ${optimalX.toFixed(2)} dl</strong><br/>
+   • Optimal Juice: <strong>y = ${optimalY.toFixed(2)} dl</strong><br/>
+   • Maximum Taste score: <strong style="color:var(--accent-teal)">Z = ${optimalZ.toFixed(2)} pts</strong>
+        `;
+        drawLPCanvas(cx, cy, alch, sugar, {x: optimalX, y: optimalY, lx: lowerBound, ux: upperBound});
+      }
+      
+      document.getElementById('lp-math-box').innerHTML = mathHtml;
+    }
+
+    function drawLPCanvas(cx, cy, alch, sugar, solution) {
+      const canvas = document.getElementById('lpCanvas');
+      if (!canvas) return;
+      
+      // Responsive scale
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const margin = 35;
+      const xMax = 12;
+      const yMax = 12;
+      
+      const toCanvasX = (val) => margin + (val / xMax) * (canvas.width - 2 * margin);
+      const toCanvasY = (val) => canvas.height - margin - (val / yMax) * (canvas.height - 2 * margin);
+
+      // Grid Lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 11; i++) {
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(i), toCanvasY(0));
+        ctx.lineTo(toCanvasX(i), toCanvasY(12));
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(0), toCanvasY(i));
+        ctx.lineTo(toCanvasX(12), toCanvasY(i));
+        ctx.stroke();
+      }
+
+      // Draw Axes
+      ctx.strokeStyle = 'var(--border)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(0), toCanvasY(0));
+      ctx.lineTo(toCanvasX(xMax), toCanvasY(0));
+      ctx.moveTo(toCanvasX(0), toCanvasY(0));
+      ctx.lineTo(toCanvasX(0), toCanvasY(yMax));
+      ctx.stroke();
+
+      // Axis Labels
+      ctx.fillStyle = 'var(--text-muted)';
+      ctx.font = '9px Outfit';
+      ctx.fillText('Rum x (dl)', canvas.width - 50, canvas.height - 10);
+      ctx.fillText('Juice y (dl)', 5, 20);
+      
+      for (let i = 2; i <= 10; i += 2) {
+        ctx.fillText(i, toCanvasX(i) - 3, canvas.height - 18);
+        ctx.fillText(i, margin - 15, toCanvasY(i) + 3);
+      }
+
+      // Draw boundary line: x + y = 10 (cocktail volume)
+      ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(0), toCanvasY(10));
+      ctx.lineTo(toCanvasX(10), toCanvasY(0));
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw Sugar line: 5x + 12y = sugar => y = (sugar - 5x)/12
+      ctx.strokeStyle = 'var(--accent-rose)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(0), toCanvasY(sugar / 12));
+      ctx.lineTo(toCanvasX(sugar / 5), toCanvasY(0));
+      ctx.stroke();
+
+      // Draw juice line: y = 4 (juice >= 4)
+      ctx.strokeStyle = 'var(--accent-gold)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(0), toCanvasY(4));
+      ctx.lineTo(toCanvasX(12), toCanvasY(4));
+      ctx.stroke();
+
+      // Draw alcohol constraint: x = alch (x >= alch)
+      ctx.strokeStyle = 'var(--accent-teal)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(alch), toCanvasY(0));
+      ctx.lineTo(toCanvasX(alch), toCanvasY(12));
+      ctx.stroke();
+
+      if (solution) {
+        // Shade Feasible Region along x+y=10: x goes from lx to ux, y = 10 - x
+        ctx.fillStyle = 'rgba(0, 212, 170, 0.15)';
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(solution.lx), toCanvasY(10 - solution.lx));
+        ctx.lineTo(toCanvasX(solution.ux), toCanvasY(10 - solution.ux));
+        
+        // Project down to the baseline or bounds (since y = 10-x is active)
+        ctx.lineTo(toCanvasX(solution.ux), toCanvasY(4)); // limit juice line
+        ctx.lineTo(toCanvasX(solution.lx), toCanvasY(4));
+        ctx.closePath();
+        ctx.fill();
+
+        // Highlight optimal point
+        ctx.fillStyle = 'var(--accent-teal)';
+        ctx.beginPath();
+        ctx.arc(toCanvasX(solution.x), toCanvasY(solution.y), 6, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(toCanvasX(solution.x), toCanvasY(solution.y), 10, 0, 2 * Math.PI);
+        ctx.stroke();
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SOLVER 2: QUEUE PERFORMANCE CURVES & MATH WIZARD
+       ══════════════════════════════════════════════════════════════════ */
+    function solveQueue() {
+      const lam = parseFloat(document.getElementById('val-lambda').value);
+      const mu = parseFloat(document.getElementById('val-mu').value);
+      
+      document.getElementById('lbl-lambda').textContent = lam;
+      document.getElementById('lbl-mu').textContent = mu;
+
+      let mathHtml = '';
+      if (lam >= mu) {
+        mathHtml = `
+          <span style="color:var(--accent-rose)">
+            <strong>⚠️ Queue Unstable!</strong><br/>
+            Arrival rate <code>λ = ${lam}</code> is ≥ Service rate <code>μ = ${mu}</code>. 
+            The system cannot handle the load. Traffic intensity <code>ρ = ${(lam/mu).toFixed(2)} ≥ 1</code>.
+            Queue length ($L_q$) and waiting time ($W$) blow up to infinity.
+          </span>
+        `;
+        drawQueueCanvas(lam, mu, false);
+      } else {
+        const rho = lam / mu;
+        const p0 = 1 - rho;
+        const lq = (rho * rho) / (1 - rho);
+        const l = rho / (1 - rho);
+        const w = 1 / (mu - lam);
+        const wq = rho / (mu - lam);
+        
+        // Conversions
+        const wMins = w * 60;
+        const wqMins = wq * 60;
+
+        mathHtml = `
+<strong>Queue Performance Calculations (M/M/1):</strong><br/>
+1. Traffic Intensity (ρ):<br/>
+   • <code>ρ = λ / μ = ${lam} / ${mu} = <strong>${rho.toFixed(3)}</strong></code> (server busy ${ (rho*100).toFixed(1) }%)<br/>
+2. Probability Server is Idle (P₀):<br/>
+   • <code>P₀ = 1 - ρ = 1 - ${rho.toFixed(3)} = <strong>${p0.toFixed(3)}</strong></code> (${ (p0*100).toFixed(1) }% empty system)<br/>
+3. Average Customers Waiting in Line (Lq):<br/>
+   • <code>Lq = ρ² / (1 - ρ) = ${rho.toFixed(3)}² / ${p0.toFixed(3)} = <strong>${lq.toFixed(3)} customers</strong></code><br/>
+4. Average Customers in System (L):<br/>
+   • <code>L = λ / (μ - λ) = ${lam} / (${mu} - ${lam}) = <strong>${l.toFixed(3)} customers</strong></code><br/>
+5. Average Time in System (W):<br/>
+   • <code>W = 1 / (μ - λ) = 1 / (${mu} - ${lam}) = <strong>${w.toFixed(3)} hours</strong></code> (➔ <strong>${wMins.toFixed(2)} minutes</strong>)<br/>
+6. Average Time in Queue (Wq):<br/>
+   • <code>Wq = ρ / (μ - λ) = ${rho.toFixed(3)} / (${mu} - ${lam}) = <strong>${wq.toFixed(3)} hours</strong></code> (➔ <strong>${wqMins.toFixed(2)} minutes</strong>)
+        `;
+        drawQueueCanvas(lam, mu, true);
+      }
+      document.getElementById('queue-math-box').innerHTML = mathHtml;
+    }
+
+    function drawQueueCanvas(lam, mu, stable) {
+      const canvas = document.getElementById('queueCanvas');
+      if (!canvas) return;
+      
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const margin = 30;
+      
+      // We plot Lq vs rho from 0.0 to 0.95
+      const toCanvasX = (r) => margin + (r / 0.98) * (canvas.width - 2 * margin);
+      const toCanvasY = (val) => canvas.height - margin - (val / 15) * (canvas.height - 2 * margin); // cap Lq view at 15
+
+      // Grid / Axes
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 1;
+      for (let r = 0.1; r < 0.95; r += 0.1) {
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(r), toCanvasY(0));
+        ctx.lineTo(toCanvasX(r), toCanvasY(15));
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'var(--border)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(0), toCanvasY(0));
+      ctx.lineTo(toCanvasX(0.98), toCanvasY(0));
+      ctx.moveTo(toCanvasX(0), toCanvasY(0));
+      ctx.lineTo(toCanvasX(0), toCanvasY(15));
+      ctx.stroke();
+
+      // Axis Labels
+      ctx.fillStyle = 'var(--text-muted)';
+      ctx.font = '9px Outfit';
+      ctx.fillText('Intensity ρ', canvas.width - 55, canvas.height - 8);
+      ctx.fillText('Lq', 5, 15);
+
+      // Plot Lq Curve
+      ctx.strokeStyle = 'var(--accent-purple)';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let r = 0; r <= 0.94; r += 0.01) {
+        let curveLq = (r * r) / (1 - r);
+        if (r === 0) ctx.moveTo(toCanvasX(r), toCanvasY(curveLq));
+        else ctx.lineTo(toCanvasX(r), toCanvasY(curveLq));
+      }
+      ctx.stroke();
+
+      if (stable) {
+        const rho = lam / mu;
+        const currentLq = (rho * rho) / (1 - rho);
+
+        // Vertical indicator line
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(rho), toCanvasY(0));
+        ctx.lineTo(toCanvasX(rho), toCanvasY(Math.min(currentLq, 15)));
+        ctx.stroke();
+
+        // Highlight dot
+        if (rho < 0.98) {
+          ctx.fillStyle = 'var(--accent-teal)';
+          ctx.beginPath();
+          ctx.arc(toCanvasX(rho), toCanvasY(Math.min(currentLq, 15)), 5, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SOLVER 3: MARKOV SIMULATION STEPS & STATIONARY WIZARD
+       ══════════════════════════════════════════════════════════════════ */
+    let markovState = [1.0, 0.0, 0.0]; // S, C, R
+    const P_MATRIX = [
+      [0.7, 0.1, 0.2],
+      [0.5, 0.25, 0.25],
+      [0.4, 0.3, 0.3]
+    ];
+    let markovStepCount = 0;
+
+    function setMarkovInit(idx) {
+      markovState = [0.0, 0.0, 0.0];
+      markovState[idx] = 1.0;
+      markovStepCount = 0;
+      
+      // Update visual nodes
+      document.querySelectorAll('.markov-node').forEach(n => n.classList.remove('active'));
+      const keys = ['S', 'C', 'R'];
+      document.getElementById('node-' + keys[idx]).classList.add('active');
+
+      updateMarkovDisplay();
+    }
+
+    function runMarkovStep() {
+      const nextVector = [0, 0, 0];
+      for (let col = 0; col < 3; col++) {
+        nextVector[col] = markovState[0] * P_MATRIX[0][col] + 
+                          markovState[1] * P_MATRIX[1][col] + 
+                          markovState[2] * P_MATRIX[2][col];
+      }
+      
+      const mathBox = document.getElementById('markov-math-box');
+      mathBox.innerHTML = `
+<strong>Step Vector Matrix Multiplication details (Step ${markovStepCount + 1}):</strong><br/>
+•Sunny: <code>${markovState[0].toFixed(2)}*(0.7) + ${markovState[1].toFixed(2)}*(0.5) + ${markovState[2].toFixed(2)}*(0.4) = ${nextVector[0].toFixed(4)}</code><br/>
+•Cloudy: <code>${markovState[0].toFixed(2)}*(0.1) + ${markovState[1].toFixed(2)}*(0.25) + ${markovState[2].toFixed(2)}*(0.3) = ${nextVector[1].toFixed(4)}</code><br/>
+•Rainy: <code>${markovState[0].toFixed(2)}*(0.2) + ${markovState[1].toFixed(2)}*(0.25) + ${markovState[2].toFixed(2)}*(0.3) = ${nextVector[2].toFixed(4)}</code>
+      `;
+
+      markovState = nextVector;
+      markovStepCount++;
+      updateMarkovDisplay();
+    }
+
+    function resetMarkovState() {
+      setMarkovInit(0);
+      document.getElementById('markov-math-box').innerHTML = "Vector reset to Sunny state. Click 'Simulate Step' to run transitions.";
+    }
+
+    function updateMarkovDisplay() {
+      document.getElementById('markov-vector-display').innerHTML = `
+        <strong>Step Vector π⁽${markovStepCount}⁾:</strong><br/>
+        •Sunny: <code>${markovState[0].toFixed(4)}</code> &nbsp;|&nbsp; 
+        •Cloudy: <code>${markovState[1].toFixed(4)}</code> &nbsp;|&nbsp; 
+        •Rainy: <code>${markovState[2].toFixed(4)}</code>
+      `;
+    }
+
+    function solveMarkovStationary() {
+      const mathBox = document.getElementById('markov-math-box');
+      mathBox.innerHTML = `
+<strong>Stationary Distribution Equation Resolver (3x3):</strong><br/>
+Solve: <code>π · P = P</code> and <code>π_S + π_C + π_R = 1</code><br/>
+1. Formulate System of Equations:<br/>
+   • S: <code>0.6π_S + 0.2π_C + 0.3π_R = π_S ➔ -0.4π_S + 0.2π_C + 0.3π_R = 0</code><br/>
+   • C: <code>0.3π_S + 0.5π_C + 0.3π_R = π_C ➔ 0.3π_S - 0.5π_C + 0.3π_R = 0</code><br/>
+2. Substitute <code>π_R = 1 - π_S - π_C</code> into equations:<br/>
+   • Eq A: <code>-0.4π_S + 0.2π_C + 0.3(1 - π_S - π_C) = 0 ➔ -0.7π_S - 0.1π_C = -0.3</code><br/>
+   • Eq B: <code>0.3π_S - 0.5π_C + 0.3(1 - π_S - π_C) = 0 ➔ -0.8π_C = -0.3 ➔ π_C = 0.375</code><br/>
+3. Back substitute to solve vectors:<br/>
+   • <code>-0.7π_S - 0.1(0.375) = -0.3 ➔ 7π_S = 2.625 ➔ π_S = 0.375</code><br/>
+   • <code>π_R = 1 - 0.375 - 0.375 = 0.25</code><br/>
+• Result Vector: <strong style="color:var(--accent-teal)">π = [0.375, 0.375, 0.25] (or [3/8, 3/8, 1/4])</strong>
+      `;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SOLVER 4: LEONTIEF INPUT-OUTPUT MATRIX MATH WIZARD
+       ══════════════════════════════════════════════════════════════════ */
+    let currentIOTemplate = '2x2';
+
+    const IO_DATA = {
+      '2x2': {
+        labels: ['Agriculture', 'Industry'],
+        A: [[0.2, 0.3], [0.1, 0.4]],
+        X: [100.0, 100.0],
+        y: [50.0, 50.0]
+      },
+      '4x4': {
+        labels: ['Brewery', 'Butcher', 'Greengrocer', 'Restaurant'],
+        A: [
+          [0.1, 0.0625, 0.0667, 0.3],
+          [0.05, 0.125, 0.0667, 0.225],
+          [0.02, 0.025, 0.2, 0.075],
+          [0.05, 0.0625, 0.0333, 0.025]
+        ],
+        X: [100.0, 80.0, 30.0, 200.0],
+        y: [23.0, 18.0, 5.0, 184.0]
+      }
+    };
+
+    function loadIOTemplate() {
+      currentIOTemplate = document.getElementById('io-template-select').value;
+      const data = IO_DATA[currentIOTemplate];
+      
+      const wrap = document.getElementById('io-demand-input-wrap');
+      wrap.innerHTML = `<h4 style="font-size:0.85rem; color:#fff; margin-bottom:0.4rem;">Edit Final Demand Vector (y)</h4>`;
+      
+      data.labels.forEach((lbl, idx) => {
+        wrap.innerHTML += `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+            <label style="font-size:0.78rem;">${lbl} Demand</label>
+            <input type="number" id="io-dem-${idx}" value="${data.y[idx]}" style="width: 80px; background:#080a11; border:1px solid var(--border); color:#fff; padding:0.3rem; border-radius:5px; font-family:'JetBrains Mono';" />
+          </div>
+        `;
+      });
+      document.getElementById('io-math-box').innerHTML = "Parameters loaded. Adjust demands and click Calculate.";
+    }
+
+    function solveIO() {
+      const data = IO_DATA[currentIOTemplate];
+      const yNew = [];
+      data.labels.forEach((lbl, idx) => {
+        yNew.push(parseFloat(document.getElementById('io-dem-' + idx).value));
+      });
+
+      const mathBox = document.getElementById('io-math-box');
+      
+      if (currentIOTemplate === '2x2') {
+        // Solve step-by-step for 2x2
+        // A = [[0.2, 0.3], [0.1, 0.4]]
+        // I - A = [[0.8, -0.3], [-0.1, 0.6]]
+        const det = 0.8 * 0.6 - (-0.3) * (-0.1); // 0.45
+        // Inverse = 1/det * [[0.6, 0.3], [0.1, 0.8]] = [[1.333, 0.667], [0.222, 1.778]]
+        const inv = [
+          [0.6 / det, 0.3 / det],
+          [0.1 / det, 0.8 / det]
+        ];
+        
+        const xNew = [
+          inv[0][0] * yNew[0] + inv[0][1] * yNew[1],
+          inv[1][0] * yNew[0] + inv[1][1] * yNew[1]
+        ];
+
+        mathBox.innerHTML = `
+<strong>Step-by-Step Leontief inverse (2x2) calculation:</strong><br/>
+1. Technical Coefficients Matrix (A):<br/>
+   <code>[ 0.2   0.3 ]</code><br/>
+   <code>[ 0.1   0.4 ]</code><br/>
+2. Subtract A from Identity Matrix I to get (I - A):<br/>
+   <code>[  0.8  -0.3 ]</code><br/>
+   <code>[ -0.1   0.6 ]</code><br/>
+3. Find determinant: det(I - A):<br/>
+   • <code>det = (0.8 * 0.6) - (-0.3 * -0.1) = 0.48 - 0.03 = <strong>0.45</strong></code><br/>
+4. Compute Multiplier Matrix (Inverse): (I - A)⁻¹:<br/>
+   • <code>(I - A)⁻¹ = 1/0.45 * [ 0.6  0.3 ] = <strong>[ ${inv[0][0].toFixed(3)}  ${inv[0][1].toFixed(3)} ]</strong></code><br/>
+   • <code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ 0.1  0.8 ]   <strong>[ ${inv[1][0].toFixed(3)}  ${inv[1][1].toFixed(3)} ]</strong></code><br/>
+5. Multiply by Final Demand vector: y = [${yNew.join(', ')}]:<br/>
+   • <code>x_Agri = ${inv[0][0].toFixed(3)}*(${yNew[0]}) + ${inv[0][1].toFixed(3)}*(${yNew[1]}) = <strong>${xNew[0].toFixed(2)}</strong></code><br/>
+   • <code>x_Indu = ${inv[1][0].toFixed(3)}*(${yNew[0]}) + ${inv[1][1].toFixed(3)}*(${yNew[1]}) = <strong>${xNew[1].toFixed(2)}</strong></code><br/>
+• Result Vector: <strong style="color:var(--accent-teal)">Total Outputs: [${xNew.map(v => v.toFixed(2)).join(', ')}]</strong>
+        `;
+      } else {
+        // Solve step-by-step for 4x4 using hardcoded Inverse of Gluttony Ltd matrix
+        // (I - A)^-1 for Gluttony Ltd:
+        const LeontiefInverse4x4 = [
+          [1.1444, 0.1121, 0.1044, 0.3860],
+          [0.1083, 1.1718, 0.1072, 0.3065],
+          [0.0357, 0.0465, 1.2588, 0.1083],
+          [0.0669, 0.0863, 0.0537, 1.0543]
+        ];
+
+        const xNew = [];
+        for (let row = 0; row < 4; row++) {
+          let sum = 0;
+          for (let col = 0; col < 4; col++) {
+            sum += LeontiefInverse4x4[row][col] * yNew[col];
+          }
+          xNew.push(sum);
+        }
+
+        mathBox.innerHTML = `
+<strong>Step-by-Step Leontief inverse (4x4) calculation:</strong><br/>
+1. Invert the 4x4 matrix (I - A) to get Multiplier Matrix (I - A)⁻¹:<br/>
+   <code>[ 1.1444  0.1121  0.1044  0.3860 ]</code><br/>
+   <code>[ 0.1083  1.1718  0.1072  0.3065 ]</code><br/>
+   <code>[ 0.0357  0.0465  1.2588  0.1083 ]</code><br/>
+   <code>[ 0.0669  0.0863  0.0537  1.0543 ]</code><br/>
+2. Multiply by Final Demand vector: y = [${yNew.join(', ')}]:<br/>
+   • Brewery Output: <code>1.1444*(${yNew[0]}) + 0.1121*(${yNew[1]}) + 0.1044*(${yNew[2]}) + 0.3860*(${yNew[3]}) = <strong>${xNew[0].toFixed(2)}</strong></code><br/>
+   • Butcher Output: <code>0.1083*(${yNew[0]}) + 1.1718*(${yNew[1]}) + 0.1072*(${yNew[2]}) + 0.3065*(${yNew[3]}) = <strong>${xNew[1].toFixed(2)}</strong></code><br/>
+   • Greengrocer: <code>0.0357*(${yNew[0]}) + 0.0465*(${yNew[1]}) + 1.2588*(${yNew[2]}) + 0.1083*(${yNew[3]}) = <strong>${xNew[2].toFixed(2)}</strong></code><br/>
+   • Restaurant: <code>0.0669*(${yNew[0]}) + 0.0863*(${yNew[1]}) + 0.0537*(${yNew[2]}) + 1.0543*(${yNew[3]}) = <strong>${xNew[3].toFixed(2)}</strong></code><br/>
+• Result Vector: <strong style="color:var(--accent-teal)">Total Outputs: [${xNew.map(v => v.toFixed(2)).join(', ')}]</strong>
+        `;
+      }
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       SOLVER 5: BINOMIAL DISTRIBUTION SOLVER
+       ══════════════════════════════════════════════════════════════════ */
+    function fact(num) {
+      if (num <= 1) return 1;
+      let r = 1;
+      for (let i = 2; i <= num; i++) r *= i;
+      return r;
+    }
+
+    function comb(n, k) {
+      return fact(n) / (fact(k) * fact(n - k));
+    }
+
+    function solveBinomial() {
+      const n = parseInt(document.getElementById('bin-n').value);
+      const p = parseFloat(document.getElementById('bin-p').value);
+      const k = parseInt(document.getElementById('bin-k').value);
+      
+      const mathBox = document.getElementById('bin-math-box');
+
+      if (k > n || k < 0 || p < 0 || p > 1) {
+        mathBox.innerHTML = `<span style="color:var(--accent-rose)">Invalid parameter range. Ensure k ≤ n and 0 ≤ p ≤ 1.</span>`;
+        return;
+      }
+
+      const q = 1 - p;
+      const combinations = comb(n, k);
+      const prob = combinations * Math.pow(p, k) * Math.pow(q, n - k);
+
+      mathBox.innerHTML = `
+<strong>Binomial Probability solution steps P(X = k):</strong><br/>
+Formula: <code>P(X = k) = C(n, k) · pᵏ · qⁿ⁻ᵏ</code><br/>
+1. Identify variables:<br/>
+   • <code>n = ${n}</code> (trials), <code>p = ${p}</code> (success rate), <code>q = 1 - p = ${q.toFixed(2)}</code> (failure rate)<br/>
+   • <code>k = ${k}</code> (success target)<br/>
+2. Calculate combinations C(${n}, ${k}):<br/>
+   • <code>C(${n}, ${k}) = ${n}! / (${k}! · (${n - k})!) = ${combinations}</code><br/>
+3. Calculate power segments:<br/>
+   • <code>pᵏ = ${p}^${k} = ${Math.pow(p, k).toFixed(8)}</code><br/>
+   • <code>qⁿ⁻ᵏ = ${q.toFixed(2)}^${n - k} = ${Math.pow(q, n - k).toFixed(8)}</code><br/>
+4. Multiply elements:<br/>
+   • <code>P(X = ${k}) = ${combinations} · ${Math.pow(p, k).toFixed(6)} · ${Math.pow(q, n - k).toFixed(6)}</code><br/>
+• Result Probability: <strong style="color:var(--accent-teal)">P(X = ${k}) = ${prob.toFixed(6)} (or ${(prob * 100).toFixed(4)}%)</strong>
+      `;
+    }
+
+    /* ══════════════════════════════════════════════════════════════════
+       INITIALIZE PAGE
+       ══════════════════════════════════════════════════════════════════ */
+    resetGame();
+    setMode('cram');
+  
+// ══════════════════════════════════════════
+// 2-HOUR AUDIO CRAM & TTS ENGINE
+// ══════════════════════════════════════════
+const cramCardsData = [{"id": 1, "category": "Input-Output Analysis (Leontief)", "q": "Input-Output model", "desc": "what is it?", "ans": "A modeling technique analyzing relationships between sectors of an economy. Every sector is both a <b>supplier</b> and <b>consumer</b> of goods. Each sector is represented by a matrix of inputs and outputs."}, {"id": 2, "category": "Input-Output Analysis (Leontief)", "q": "I-O model: rule about total inputs vs total outputs", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Total Inputs = Total Outputs</b> for every sector. Use this rule to find any missing value in the table."}, {"id": 3, "category": "Input-Output Analysis (Leontief)", "q": "How to build the A matrix (coefficient matrix)", "desc": "Explain or calculate the following ORSA concept.", "ans": "For each column: divide each cell by that column's <b>Total Input</b>.<br>A[i,j] = value[i,j] ÷ TotalInput[j]"}, {"id": 4, "category": "Input-Output Analysis (Leontief)", "q": "Identity matrix I", "desc": "structure for 3 sectors", "ans": "Diagonal = 1, all others = 0:<br>[[1,0,0],[0,1,0],[0,0,1]]"}, {"id": 5, "category": "Input-Output Analysis (Leontief)", "q": "How to find new Y when task gives new X", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>new_Y = (I − A) × new_X</b><br>Multiply the (I-A) matrix by the new total output vector."}, {"id": 6, "category": "Input-Output Analysis (Leontief)", "q": "How to find new X when task gives new Y", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>new_X = (I − A)⁻¹ × new_Y</b><br>First invert (I-A), then multiply by the final demand vector."}, {"id": 7, "category": "Input-Output Analysis (Leontief)", "q": "Leontief core formula", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>x = (I − A)⁻¹ · y</code><br>x = total output vector, y = final demand vector, A = coefficient matrix"}, {"id": 8, "category": "Input-Output Analysis (Leontief)", "q": "Leontief Inverse", "desc": "what does (I-A)⁻¹ represent?", "ans": "The multiplier matrix mapping <b>final consumer demand to total direct + indirect outputs</b> required across all sectors."}, {"id": 9, "category": "Input-Output Analysis (Leontief)", "q": "Gluttony Ltd. base outputs", "desc": "Explain or calculate the following ORSA concept.", "ans": "Brewery (X_B) = <b>100</b>, Butcher (X_Bu) = <b>80</b>, Greengrocer (X_G) = <b>30</b>, Restaurant (X_R) = <b>200</b>."}, {"id": 10, "category": "Input-Output Analysis (Leontief)", "q": "Gluttony Ltd.", "desc": "Butcher final demand rises to 35", "ans": "New outputs: Brewery = <b>101.91</b>, Butcher = <b>99.96</b>, Greengrocer = <b>30.80</b>, Restaurant = <b>201.41</b>."}, {"id": 11, "category": "Input-Output Analysis (Leontief)", "q": "Gluttony Ltd.", "desc": "Greengrocer +10%, Restaurant +20% cost", "ans": "Output price indices: Brewery = <b>1.00135</b>, Butcher = <b>1.00171</b>, Greengrocer = <b>1.01347</b>, Restaurant = <b>1.01723</b>."}, {"id": 12, "category": "Linear Programming (Simplex)", "q": "What is Linear Programming?", "desc": "Explain or calculate the following ORSA concept.", "ans": "A mathematical method to <b>maximize or minimize a linear objective function</b> subject to linear constraints (resource limitations)."}, {"id": 13, "category": "Linear Programming (Simplex)", "q": "LP Sensitivity: change WITHIN allowable range", "desc": "Explain or calculate the following ORSA concept.", "ans": "Objective coefficient change within range → <b>Z value changes but basis stays the same</b>.<br>RHS change within range → solution values change but <b>basis stays the same</b>."}, {"id": 14, "category": "Linear Programming (Simplex)", "q": "LP Sensitivity: change OUTSIDE allowable range", "desc": "Explain or calculate the following ORSA concept.", "ans": "If any change exceeds its allowable interval → the <b>BASIS CHANGES</b> (new optimal corner of feasible region)."}, {"id": 15, "category": "Linear Programming (Simplex)", "q": "LP exam example: coefficient was 220, new value 250, allowable increase = 20", "desc": "Explain or calculate the following ORSA concept.", "ans": "Max allowed = 220 + 20 = 240. Since 250 > 240 → change is OUTSIDE range → <b>The basis WILL CHANGE</b>."}, {"id": 16, "category": "Linear Programming (Simplex)", "q": "Shadow Price", "desc": "definition", "ans": "Amount by which the optimal Z value increases per <b>1-unit increase in the RHS</b> constraint resource."}, {"id": 17, "category": "Linear Programming (Simplex)", "q": "Excel Solver: formula for LHS cells", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>=SUMPRODUCT(decision_variable_cells, coefficient_range)</code><br>Never hardcode values in LHS cells!"}, {"id": 18, "category": "Linear Programming (Simplex)", "q": "Mixing a Drink LP task result", "desc": "Explain or calculate the following ORSA concept.", "ans": "Optimal: Rum = <b>5 dl</b>, Juice = <b>5 dl</b>. Taste = <b>75 pts</b>. Rum restriction <code>x ≥ 5</code> is binding."}, {"id": 19, "category": "SIM", "q": "What is simulation?", "desc": "Explain or calculate the following ORSA concept.", "ans": "The <b>imitation of a real-world system or process</b> with the goal to evaluate performance and improve it — without risking the real system."}, {"id": 20, "category": "SIM", "q": "Static vs Dynamic simulation", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Static</b> = models at a <b>single point in time</b>, no change over time<br><b>Dynamic</b> = models <b>changes over time</b>"}, {"id": 21, "category": "SIM", "q": "Stochastic vs Deterministic simulation", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Stochastic</b> = involves <b>randomness</b>; different output each run<br><b>Deterministic</b> = same inputs → <b>same output always</b>"}, {"id": 22, "category": "SIM", "q": "Discrete-event vs Continuous simulation", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Discrete-event</b> = events at specific discrete points in time<br><b>Continuous</b> = changes occur continuously over time"}, {"id": 23, "category": "SIM", "q": "Monte Carlo simulation", "desc": "type classification", "ans": "Monte Carlo = <b>STATIC + STOCHASTIC</b> simulation.<br>Uses large numbers of random values to estimate outcomes."}, {"id": 24, "category": "Markov Chains & Decisions", "q": "What is a Markov Chain?", "desc": "Explain or calculate the following ORSA concept.", "ans": "A mathematical model where a system moves between states, and the <b>next state depends ONLY on the current state</b> (not on past history)."}, {"id": 25, "category": "Markov Chains & Decisions", "q": "Markov property", "desc": "memorylessness", "ans": "The probability of moving to the next state depends <b>ONLY on the current state</b>. Past history is irrelevant (memoryless)."}, {"id": 26, "category": "Markov Chains & Decisions", "q": "Homogeneity property of Markov Chains", "desc": "Explain or calculate the following ORSA concept.", "ans": "Transition probabilities <b>do not change over time</b> as the chain progresses — they stay constant."}, {"id": 27, "category": "Markov Chains & Decisions", "q": "Markov Chain transition matrix rule", "desc": "Explain or calculate the following ORSA concept.", "ans": "Each <b>row</b> of the transition matrix must sum to <b>1.0</b> (all probabilities of leaving each state)."}, {"id": 28, "category": "Markov Chains & Decisions", "q": "Markov Chain step transition formula", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>π⁽ᵗ⁾ = π⁽⁰⁾ · Pᵗ</code><br>State vector at step t = initial state vector × transition matrix to the power t."}, {"id": 29, "category": "Markov Chains & Decisions", "q": "Markov stationary distribution", "desc": "equation", "ans": "Solve: <b>π · P = π</b> with constraint <b>Σπᵢ = 1</b><br>π = long-run steady-state probability vector."}, {"id": 30, "category": "Markov Chains & Decisions", "q": "Absorbing State", "desc": "definition", "ans": "A state that <b>cannot be left</b> once entered. P[i][i] = 1."}, {"id": 31, "category": "Markov Chains & Decisions", "q": "Transient State", "desc": "definition", "ans": "A state that can be left, with positive probability of <b>never returning</b>."}, {"id": 32, "category": "Markov Chains & Decisions", "q": "Elite EU Officer Queue (λ=30, μ=40)", "desc": "Explain or calculate the following ORSA concept.", "ans": "P₀ = <b>0.25 (25%)</b> idle probability, Lq = <b>2.25</b> average queue length."}, {"id": 33, "category": "Markov Chains & Decisions", "q": "Elite EU Officer Wait Times (λ=30, μ=40)", "desc": "Explain or calculate the following ORSA concept.", "ans": "W = <b>6 minutes (0.1 hr)</b> in system, Wq = <b>4.5 minutes (0.075 hr)</b> in queue."}, {"id": 34, "category": "Markov Chains & Decisions", "q": "Weather Forecast Markov probability", "desc": "Explain or calculate the following ORSA concept.", "ans": "Rainy today. Probability of Rainy day after tomorrow = <b>0.2450 (24.50%)</b>."}, {"id": 35, "category": "Markov Chains & Decisions", "q": "Scared Frog survival probability after 5 hours", "desc": "Explain or calculate the following ORSA concept.", "ans": "Starting on lily A (stork hungry). Probability alive after 5 hours = <b>0.03125 (3.125%)</b>."}, {"id": 36, "category": "Markov Chains & Decisions", "q": "Markov Chain 3×3 stationary distribution", "desc": "Explain or calculate the following ORSA concept.", "ans": "Matrix rows [0.6,0.3,0.1], [0.2,0.5,0.3], [0.3,0.3,0.4]:<br>π = <b>[0.375, 0.375, 0.25]</b>"}, {"id": 37, "category": "Queueing Theory (M/M/1)", "q": "Queue Utilization ρ formula", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>ρ = λ / μ</code> — fraction of time server is busy. <b>Must be &lt; 1</b> for stable queue.<br>(λ = arrival rate, μ = service rate)"}, {"id": 38, "category": "Queueing Theory (M/M/1)", "q": "P₀", "desc": "Idle Queue Probability", "ans": "<code>P₀ = 1 − ρ</code> — probability the queue is empty and server is idle."}, {"id": 39, "category": "Queueing Theory (M/M/1)", "q": "Average Queue Length Lq", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>Lq = ρ² / (1 − ρ)</code> — expected number of customers waiting in line."}, {"id": 40, "category": "Queueing Theory (M/M/1)", "q": "Average Time in Queue Wq", "desc": "Explain or calculate the following ORSA concept.", "ans": "<code>Wq = ρ / (μ − λ)</code> — expected time a customer spends waiting in queue."}, {"id": 41, "category": "Queueing Theory (M/M/1)", "q": "Flower Shop Queue: idle probability P₀ = 0.5", "desc": "Explain or calculate the following ORSA concept.", "ans": "λ=9/hr. For P₀=0.5 → ρ=0.5 → μ=18/hr → average service time = <b>3.33 minutes</b>."}, {"id": 42, "category": "Queueing Theory (M/M/1)", "q": "Flower Shop Queue: W = 10 minutes target", "desc": "Explain or calculate the following ORSA concept.", "ans": "λ=9/hr. For W=10 min → service rate μ must be <b>15 customers/hour</b>."}, {"id": 43, "category": "SYS", "q": "What is a System?", "desc": "Explain or calculate the following ORSA concept.", "ans": "A <b>group of elements AND the relations between those elements</b>."}, {"id": 44, "category": "SYS", "q": "What is a Complex System?", "desc": "Explain or calculate the following ORSA concept.", "ans": "A system of <b>multiple interacting elements</b> where the <b>whole behavior CANNOT be explained</b> by understanding individual parts alone."}, {"id": 45, "category": "SYS", "q": "5 components of a Complex System", "desc": "Explain or calculate the following ORSA concept.", "ans": "1. <b>Self-organization</b> — organizes without external control<br>2. <b>Emergence</b> — whole > sum of parts<br>3. <b>Nonlinearity</b> — small change → large effect<br>4. <b>Adaptation</b> — adjusts to changing conditions<br>5. <b>Feedback loops</b>"}, {"id": 46, "category": "SYS", "q": "Closed vs Open System", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Closed</b> = does NOT interact with environment (atoms, molecules)<br><b>Open</b> = MUST interact with environment to survive (people, ecosystems)"}, {"id": 47, "category": "SYS", "q": "Soft vs Hard Systems Thinking", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Soft</b>: oriented to LEARNING; world is complex; models = intellectual constructs; 'issues' + 'accommodations'<br><b>Hard</b>: oriented to GOAL SEEKING; world is engineerable; models = reality; 'problems' + 'solutions'"}, {"id": 48, "category": "SYS", "q": "Model types: Normative vs Descriptive", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Normative</b> = what <b>SHOULD</b> be done (optimal behavior)<br><b>Descriptive</b> = what <b>IS</b> being done (actual behavior)"}, {"id": 49, "category": "SYS", "q": "Model types: Deterministic vs Stochastic", "desc": "Explain or calculate the following ORSA concept.", "ans": "<b>Deterministic</b> = all variables known; same inputs → same output<br><b>Stochastic</b> = accounts for randomness and uncertainty"}, {"id": 50, "category": "VENSIM", "q": "Direct Stock-to-Stock link", "desc": "allowed?", "ans": "<b>NEVER ALLOWED! (−10 points)</b><br>A stock must only connect to another stock through a <b>Flow rate arrow (with a valve symbol)</b>."}, {"id": 51, "category": "VENSIM", "q": "Stock equation wrapper in Vensim", "desc": "Explain or calculate the following ORSA concept.", "ans": "Every Stock equation must be wrapped in:<br><code>INTEG(Inflows − Outflows, Initial Value)</code>"}, {"id": 52, "category": "VENSIM", "q": "CLD link polarity", "desc": "Reinforcing vs Balancing loop", "ans": "Count negative/opposite (o / −) links in the loop:<br><b>Even count</b> = Reinforcing (R)<br><b>Odd count</b> = Balancing (B)"}, {"id": 53, "category": "ARCHETYPES", "q": "Limits to Growth archetype", "desc": "Explain or calculate the following ORSA concept.", "ans": "A reinforcing growth loop hits a capacity constraint, activating a balancing loop that halts progress.<br><b>Fix</b>: Plan for constraints early."}, {"id": 54, "category": "ARCHETYPES", "q": "Tragedy of the Commons archetype", "desc": "Explain or calculate the following ORSA concept.", "ans": "Individual growth actions exploit a shared resource until depletion.<br><b>Fix</b>: Impose shared resource regulation."}, {"id": 55, "category": "ARCHETYPES", "q": "Shifting the Burden archetype", "desc": "Explain or calculate the following ORSA concept.", "ans": "Quick fix relieves symptoms temporarily, creating dependency and reducing pressure to fix the real problem.<br><b>Loops</b>: B1 (quick fix) vs. B2 (fundamental fix). R3 = side effect dependency."}, {"id": 56, "category": "ARCHETYPES", "q": "Fixes that Fail archetype", "desc": "Explain or calculate the following ORSA concept.", "ans": "A quick fix relieves the problem but creates a delayed unintended consequence that worsens it.<br><b>Loops</b>: B1 (fix) vs. R2 (delayed reinforcing side effect)."}];
+
+let synth = window.speechSynthesis;
+let utterance = null;
+let currentCramIndex = -1;
+let isCramPlaying = false;
+let isCramPaused = false;
+let voices = [];
+let allAnswersVisible = false;
+
+function initTTS() {
+  if (typeof speechSynthesis === 'undefined') return;
+  populateCramVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateCramVoices;
+  }
+  renderCramCards();
+}
+
+function populateCramVoices() {
+  voices = speechSynthesis.getVoices();
+  const select = document.getElementById('tts-voice');
+  if (!select) return;
+  const currentVal = select.value;
+  select.innerHTML = '';
+  let filtered = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+  if (filtered.length === 0) filtered = voices;
+  filtered.forEach(voice => {
+    const opt = document.createElement('option');
+    opt.value = voice.name;
+    opt.textContent = `${voice.name} (${voice.lang})`;
+    if (voice.name === currentVal) {
+      opt.selected = true;
+    } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
+      opt.selected = true;
+    }
+    select.appendChild(opt);
+  });
+}
+
+function voicesChanged() {
+  if (isCramPlaying) {
+    playCramCard(currentCramIndex);
+  }
+}
+
+function renderCramCards() {
+  const grid = document.getElementById('cram-cards-list');
+  if (!grid) return;
+  grid.innerHTML = '';
+  cramCardsData.forEach((card, idx) => {
+    let catClass = 'card-cat-io';
+    if (card.category.includes('Queueing')) catClass = 'card-cat-queue';
+    else if (card.category.includes('Markov')) catClass = 'card-cat-markov';
+    else if (card.category.includes('Dynamics')) catClass = 'card-cat-sd';
+    else if (card.category.includes('Linear')) catClass = 'card-cat-lp';
+    else if (card.category.includes('Thinking')) catClass = 'card-cat-st';
+    else if (card.category.includes('Stochastic')) catClass = 'card-cat-stochastic';
+    
+    const cardEl = document.createElement('div');
+    cardEl.className = 'cram-card-item';
+    cardEl.id = `cram-card-${card.id}`;
+    cardEl.onclick = (e) => {
+      if (e.target.closest('.card-play-btn')) return;
+      cardEl.classList.toggle('show-ans');
+    };
+    cardEl.innerHTML = `
+      <div class="card-header-row">
+        <span class="card-cat-badge ${catClass}">${card.category}</span>
+        <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
+      </div>
+      <div class="card-question-title">${card.q}</div>
+      <div class="card-desc-text">${card.desc}</div>
+      <div class="card-answer-box">${card.ans}</div>
+    `;
+    grid.appendChild(cardEl);
+  });
+}
+
+function filterCramCards() {
+  const query = document.getElementById('cram-search').value.toLowerCase();
+  const catFilter = document.getElementById('cram-filter-cat').value;
+  cramCardsData.forEach(card => {
+    const el = document.getElementById(`cram-card-${card.id}`);
+    if (!el) return;
+    const matchesQuery = card.q.toLowerCase().includes(query) || card.desc.toLowerCase().includes(query) || card.ans.toLowerCase().includes(query) || card.category.toLowerCase().includes(query);
+    const matchesCat = catFilter === 'all' || card.category === catFilter;
+    el.style.display = (matchesQuery && matchesCat) ? 'flex' : 'none';
+  });
+}
+
+function toggleAllAnswers() {
+  allAnswersVisible = !allAnswersVisible;
+  const btn = document.getElementById('toggle-all-answers-btn');
+  btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
+  document.querySelectorAll('.cram-card-item').forEach(el => {
+    if (allAnswersVisible) el.classList.add('show-ans');
+    else el.classList.remove('show-ans');
+  });
+}
+
+function speakCramText(text, callback) {
+  if (!synth) return;
+  synth.cancel();
+  utterance = new SpeechSynthesisUtterance(text);
+  const voiceSelect = document.getElementById('tts-voice');
+  if (voiceSelect && voiceSelect.value) {
+    const voice = voices.find(v => v.name === voiceSelect.value);
+    if (voice) utterance.voice = voice;
+  }
+  const rateInput = document.getElementById('tts-speed');
+  if (rateInput) utterance.rate = parseFloat(rateInput.value);
+  utterance.onend = () => { if (callback) callback(); };
+  utterance.onerror = (e) => { console.error("TTS error:", e); if (callback) callback(); };
+  synth.speak(utterance);
+}
+
+function playCramCard(idx) {
+  if (idx < 0 || idx >= cramCardsData.length) {
+    stopTTS();
+    return;
+  }
+  currentCramIndex = idx;
+  isCramPlaying = true;
+  isCramPaused = false;
+  const card = cramCardsData[idx];
+  document.getElementById('main-play-btn').innerHTML = '⏸';
+  document.getElementById('main-play-btn').classList.add('paused');
+  document.getElementById('player-status-text').textContent = `Reading: "${card.q}"`;
+  document.getElementById('player-progress-counter').textContent = `${idx + 1} / ${cramCardsData.length}`;
+  document.getElementById('player-progress-fill').style.width = `${((idx + 1) / cramCardsData.length) * 100}%`;
+  highlightCramCard(card.id);
+  
+  const cleanHTML = (str) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
+  const cleanQ = cleanHTML(card.q) + ". " + cleanHTML(card.desc);
+  const cleanA = cleanHTML(card.ans);
+  const mode = document.getElementById('tts-mode').value;
+  let text = "";
+  if (mode === 'qa') text = `Question: ${cleanQ}... Answer: ${cleanA}`;
+  else if (mode === 'q') text = `Question: ${cleanQ}`;
+  else if (mode === 'a') text = `Answer: ${cleanA}`;
+  
+  const cardEl = document.getElementById(`cram-card-${card.id}`);
+  if (cardEl && mode !== 'q') cardEl.classList.add('show-ans');
+  
+  speakCramText(text, () => {
+    const autoAdvance = document.getElementById('auto-advance-chk').checked;
+    if (isCramPlaying && autoAdvance) {
+      setTimeout(() => { playCramCard(currentCramIndex + 1); }, 800);
+    } else if (isCramPlaying && !autoAdvance) {
+      stopTTS();
+    }
+  });
+}
+
+function playCramCardSingle(idx) {
+  isCramPlaying = false;
+  playCramCard(idx);
+  document.getElementById('auto-advance-chk').checked = false;
+}
+
+function togglePlayPlaylist() {
+  if (!synth) return;
+  if (isCramPlaying) {
+    if (isCramPaused) {
+      synth.resume();
+      isCramPaused = false;
+      document.getElementById('main-play-btn').innerHTML = '⏸';
+      document.getElementById('player-status-text').textContent = `Resumed: "${cramCardsData[currentCramIndex].q}"`;
+    } else {
+      synth.pause();
+      isCramPaused = true;
+      document.getElementById('main-play-btn').innerHTML = '▶';
+      document.getElementById('player-status-text').textContent = "Audio paused.";
+    }
+  } else {
+    document.getElementById('auto-advance-chk').checked = true;
+    if (currentCramIndex === -1) currentCramIndex = 0;
+    playCramCard(currentCramIndex);
+  }
+}
+
+function nextTTSCard() {
+  if (currentCramIndex < cramCardsData.length - 1) playCramCard(currentCramIndex + 1);
+}
+
+function prevTTSCard() {
+  if (currentCramIndex > 0) playCramCard(currentCramIndex - 1);
+}
+
+function stopTTS() {
+  if (synth) synth.cancel();
+  isCramPlaying = false;
+  isCramPaused = false;
+  const playBtn = document.getElementById('main-play-btn');
+  if (playBtn) { playBtn.innerHTML = '▶'; playBtn.classList.remove('paused'); }
+  const status = document.getElementById('player-status-text');
+  if (status) status.textContent = "Audio stopped.";
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+}
+
+function highlightCramCard(id) {
+  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
+  const activeEl = document.getElementById(`cram-card-${id}`);
+  if (activeEl) {
+    activeEl.classList.add('active-speaking');
+    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+function copyAnkiImportText() {
+  let tsvText = "#separator:tab\n#html:true\n#tags column:3\n";
+  cramCardsData.forEach(card => {
+    const front = `<div class="anki-card"><div class="anki-category">${card.category}</div><div class="anki-q-title">${card.q}</div><div class="anki-desc">${card.desc}</div></div>`;
+    const back = `<div class="anki-card-back"><div class="anki-ans">${card.ans}</div></div>`;
+    const tag = `ORSA_Exam ${card.category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '_')}`;
+    tsvText += `${front}\t${back}\t${tag}\n`;
+  });
+  navigator.clipboard.writeText(tsvText).then(() => {
+    alert("Anki import text copied!");
+  }).catch(err => {
+    alert("Copy failed. Use download button instead.");
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initTTS();
+});
+</script>
+</body>
+</html>
+
+

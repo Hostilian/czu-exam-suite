@@ -1,0 +1,59 @@
+∫ xⁿ dx  (n ≠ -1)	xⁿ⁺¹/(n+1) + C<br><br>Power Rule for integration.<br>Add 1 to exponent, divide by new exponent.	integrals
+∫ eˣ dx	eˣ + C<br><br>The exponential function is its own antiderivative.	integrals
+∫ sin(x) dx	-cos(x) + C<br><br>Negative cosine — remember the sign!	integrals
+∫ cos(x) dx	sin(x) + C<br><br>Positive sine.	integrals
+∫ 1/x dx	ln|x| + C<br><br>Valid for x ≠ 0. Absolute value is required.	integrals
+∫ tan(x) dx	-ln|cos(x)| + C  =  ln|sec(x)| + C<br><br>Use substitution u = cos(x).	integrals
+∫ sec²(x) dx	tan(x) + C<br><br>Derivative of tan(x) = sec²(x), so ∫sec²dx = tan + C.	integrals
+Integration by Parts (IBP) formula	∫ u dv = uv − ∫ v du<br><br>Choose u = LIATE order:<br>Logarithm → Inverse trig → Algebraic → Trig → Exponential	integrals
+∫ x·eˣ dx  (IBP example)	u = x,  dv = eˣ dx<br>du = dx,  v = eˣ<br><br>∫ x·eˣ dx = x·eˣ − ∫eˣ dx = xeˣ − eˣ + C = eˣ(x−1) + C	integrals
+Partial fractions: (2x+1) / [(x+1)(x-2)]	Write: A/(x+1) + B/(x-2)<br><br>Multiply both sides by (x+1)(x-2):<br>A(x-2) + B(x+1) = 2x+1<br><br>x=2: 3B=5 → B=5/3<br>x=-1: -3A=-1 → A=1/3	integrals
+Substitution: ∫ 2x·cos(x²) dx	Let u = x²,  du = 2x dx<br><br>∫ cos(u) du = sin(u) + C<br><br>= sin(x²) + C	integrals
+∫ 1/(1+x²) dx	arctan(x) + C<br><br>Standard inverse trig result.	integrals
+∫ 1/√(1-x²) dx	arcsin(x) + C<br><br>Valid for -1 < x < 1.	integrals
+Fundamental Theorem of Calculus	∫ₐᵇ f(x) dx = F(b) − F(a)<br><br>where F'(x) = f(x).<br><br>Links differentiation and integration.<br>Gives signed area under curve.	integrals
+Separation of Variables method	Rewrite dy/dx = f(x)·g(y) as:<br><br>dy/g(y) = f(x) dx<br><br>Then integrate both sides separately:<br>∫ dy/g(y) = ∫ f(x) dx	odes
+Solve: dy/dx = 3y	Separate: dy/y = 3 dx<br>Integrate: ln|y| = 3x + C₀<br>Solve: y = Ae^(3x)<br><br>where A = e^C₀ = arbitrary constant.	odes
+Solve: dy/dx = x/y	Separate: y dy = x dx<br>Integrate: y²/2 = x²/2 + C<br><br>General solution: y² − x² = K<br>(family of hyperbolas)	odes
+1st order linear ODE — standard form	dy/dx + P(x)·y = Q(x)<br><br>Solution method:<br>1. Find integrating factor μ(x) = e^(∫P dx)<br>2. Multiply through: d/dx[μy] = μQ<br>3. Integrate both sides	odes
+Integrating factor μ(x)	μ(x) = e^(∫P(x) dx)<br><br>Multiplying the ODE by μ makes the left side<br>a perfect derivative: d/dx[μ(x)·y] = μ(x)·Q(x)	odes
+Characteristic equation for y'' + py' + qy = 0	r² + pr + q = 0<br><br>Solve for roots r₁, r₂:<br>• 2 distinct real → C₁e^(r₁x) + C₂e^(r₂x)<br>• Repeated root  → (C₁+C₂x)e^(rx)<br>• Complex α±βi  → e^(αx)[C₁cos(βx)+C₂sin(βx)]	odes
+Two distinct real roots r₁, r₂	y = C₁e^(r₁x) + C₂e^(r₂x)<br><br>C₁, C₂ determined by initial conditions.<br>The two exponentials are linearly independent.	odes
+Repeated root r (multiplicity 2)	y = (C₁ + C₂x)·e^(rx)<br><br>The extra factor of x ensures linear independence<br>when we only have one root.	odes
+Complex roots r = α ± βi	y = e^(αx)[C₁·cos(βx) + C₂·sin(βx)]<br><br>Euler's formula: e^(iβx) = cos(βx) + i·sin(βx).<br>Real solution uses cos & sin enveloped by e^(αx).	odes
+Variation of Parameters formula (y_p)	y_p = y₁·∫(−y₂·g / W) dx  +  y₂·∫(y₁·g / W) dx<br><br>where W = Wronskian of y₁, y₂<br>g(x) = right-hand side of non-hom. ODE	odes
+Wronskian W(y₁, y₂)	W = y₁y₂' − y₂y₁'<br><br>If W ≠ 0 on interval → y₁, y₂ are<br>linearly independent → valid fundamental set.	odes
+Non-homogeneous ODE — general solution	y = y_h + y_p<br><br>y_h = homogeneous (complementary) solution<br>y_p = particular solution<br><br>Superposition principle.	odes
+Partial derivative ∂f/∂x	Differentiate f(x,y,...) with respect to x,<br>TREATING all other variables (y, z, ...) as constants.<br><br>Example: f=x²y³ → ∂f/∂x = 2xy³	multivariable
+Gradient ∇f  (2 variables)	∇f = (∂f/∂x,  ∂f/∂y)<br><br>Points in direction of steepest ascent.<br>|∇f| = magnitude of steepest slope.<br>∇f ⊥ level curves.	multivariable
+Critical point conditions	∂f/∂x = 0  AND  ∂f/∂y = 0  simultaneously.<br><br>Solve the system of equations to find<br>critical points (x₀, y₀).	multivariable
+Hessian determinant D	D = f_xx·f_yy − (f_xy)²<br><br>D > 0, f_xx > 0  →  Local MINIMUM<br>D > 0, f_xx < 0  →  Local MAXIMUM<br>D < 0             →  SADDLE POINT<br>D = 0             →  Inconclusive	multivariable
+Chain rule for z=f(x,y), x=x(t), y=y(t)	dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt)<br><br>Sum of partial derivatives times rates of change.<br>Chain rule extends naturally to more variables.	multivariable
+Clairaut's Theorem (mixed partials)	If f_xy and f_yx are continuous at (a,b), then:<br><br>f_xy(a,b) = f_yx(a,b)<br><br>Order of differentiation doesn't matter.	multivariable
+Find critical points of f(x,y) = x² + y² − 2x	f_x = 2x − 2 = 0  →  x = 1<br>f_y = 2y = 0       →  y = 0<br>Critical point: (1, 0)<br><br>D = (2)(2) − 0² = 4 > 0, f_xx=2 > 0<br>→ LOCAL MINIMUM at (1,0).	multivariable
+Directional derivative formula	D_u f = ∇f · u<br><br>where u is a unit vector (|u|=1).<br><br>Measures rate of change of f in direction u.<br>Maximum rate = |∇f| in direction of ∇f.	multivariable
+Level curves of f(x,y)	Curves f(x,y) = c (constant) in xy-plane.<br><br>∇f is always perpendicular to level curves.<br>Closely-spaced curves → steep gradient.	multivariable
+Second-order test: D > 0 and f_xx < 0	LOCAL MAXIMUM at that critical point.<br><br>The surface is concave DOWN in all directions<br>(like an upside-down bowl).	multivariable
+Taylor series formula (centered at a)	f(x) = Σ_{n=0}^∞  f⁽ⁿ⁾(a)/n! · (x−a)ⁿ<br><br>= f(a) + f'(a)(x-a) + f''(a)(x-a)²/2! + ...	series
+Maclaurin series for eˣ	eˣ = Σ_{n=0}^∞  xⁿ/n!<br><br>= 1 + x + x²/2! + x³/3! + x⁴/4! + ...<br><br>Converges for ALL x (radius R = ∞).	series
+Maclaurin series for sin(x)	sin(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n+1)/(2n+1)!<br><br>= x − x³/3! + x⁵/5! − x⁷/7! + ...<br><br>Only odd powers. R = ∞.	series
+Maclaurin series for cos(x)	cos(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n)/(2n)!<br><br>= 1 − x²/2! + x⁴/4! − x⁶/6! + ...<br><br>Only even powers. R = ∞.	series
+Maclaurin series for ln(1+x)	ln(1+x) = Σ_{n=1}^∞  (-1)^(n+1)·xⁿ/n<br><br>= x − x²/2 + x³/3 − x⁴/4 + ...<br><br>Converges for -1 < x ≤ 1.	series
+Ratio Test for series Σaₙ	L = lim_{n→∞} |a_{n+1}/a_n|<br><br>L < 1  →  Converges ABSOLUTELY<br>L > 1  →  DIVERGES<br>L = 1  →  INCONCLUSIVE<br><br>Best for factorials or exponentials.	series
+Root Test for series Σaₙ	L = lim_{n→∞} (|aₙ|)^(1/n)<br><br>L < 1  →  Converges<br>L > 1  →  Diverges<br>L = 1  →  Inconclusive<br><br>Best when aₙ = [g(n)]ⁿ.	series
+Geometric series Σ arⁿ  (n=0 to ∞)	Converges to  a/(1−r)  if |r| < 1<br><br>Diverges if |r| ≥ 1<br><br>Partial sum S_n = a(1−rⁿ)/(1−r)	series
+Comparison Test	If 0 ≤ aₙ ≤ bₙ for all n:<br>• Σbₙ converges  →  Σaₙ converges<br>• Σaₙ diverges   →  Σbₙ diverges<br><br>Compare to known series (geometric, p-series).	series
+Alternating Series Test (Leibniz)	Σ(-1)ⁿ·aₙ converges if:<br>1. aₙ > 0<br>2. aₙ decreases monotonically<br>3. lim aₙ = 0<br><br>Error ≤ first omitted term.	series
+p-series:  Σ 1/nᵖ  (n=1 to ∞)	Converges if p > 1<br>Diverges  if p ≤ 1<br><br>Examples:<br>Σ 1/n² → converges (p=2 > 1)<br>Σ 1/n  → diverges (harmonic, p=1)	series
+Radius of convergence R	R = 1 / limsup_{n→∞} |aₙ|^(1/n)<br><br>Or via Ratio Test: R = lim|aₙ/a_{n+1}|<br><br>Series Σaₙ(x−a)ⁿ converges for |x−a| < R.<br>Check endpoints separately!	series
+Area between two curves y=f(x) and y=g(x)	A = ∫_a^b |f(x) − g(x)| dx<br><br>f(x) must be the UPPER curve.<br>Find intersection points for limits a, b.	applications
+Volume by disk method (rotation about x-axis)	V = π ∫_a^b [f(x)]² dx<br><br>Imagine stacking infinitely thin circular disks.<br>Each disk has radius = f(x) and thickness dx.	applications
+Volume by washer method (hollow solid)	V = π ∫_a^b ([R(x)]² − [r(x)]²) dx<br><br>R(x) = outer radius,  r(x) = inner radius.<br>Washer = disk with a hole.	applications
+Volume by shell method (rotation about y-axis)	V = 2π ∫_a^b x·f(x) dx<br><br>Shell circumference = 2πx<br>Shell height = f(x)<br>Shell thickness = dx	applications
+Arc length formula	L = ∫_a^b √(1 + [f'(x)]²) dx<br><br>Derive via Pythagoras: ds = √(dx²+dy²)<br>ds = √(1+(dy/dx)²) dx	applications
+Surface area of revolution (about x-axis)	S = 2π ∫_a^b f(x)·√(1 + [f'(x)]²) dx<br><br>Circumference 2πf(x) times arc length element ds.	applications
+Average value of f on [a, b]	f_avg = 1/(b−a) · ∫_a^b f(x) dx<br><br>Mean Value Theorem for Integrals:<br>∃ c ∈ [a,b] such that f(c) = f_avg.	applications
+Work done by variable force F(x)	W = ∫_a^b F(x) dx<br><br>Units: Joules (if F in Newtons, x in metres).<br>Example: Hooke's Law F = kx → W = kx²/2 |_a^b	applications
+Improper integral  ∫₁^∞ 1/xᵖ dx	= lim_{t→∞} ∫₁^t x^{-p} dx<br><br>= [x^{1-p}/(1-p)]₁^∞  (p≠1)<br><br>Converges to 1/(p−1)  if p > 1<br>Diverges                if p ≤ 1	applications
+Evaluate  ∫₀² x² dx	Antiderivative: F(x) = x³/3<br><br>∫₀² x² dx = F(2) − F(0)<br>= 8/3 − 0<br>= 8/3 ≈ 2.6667	applications
+∫ aˣ dx  (a > 0, a ≠ 1)	aˣ / ln(a) + C<br><br>Derived from d/dx[aˣ] = aˣ·ln(a).<br>Note: when a=e, ln(e)=1, giving eˣ + C.	integrals

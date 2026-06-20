@@ -1,0 +1,31 @@
+Best Graph for Group Comparisons	<strong>Boxplot</strong>. Highly useful for comparing the distribution of a numerical variable across different categorical groups.	descriptive
+Range Calculation & Limitation	Formula: <code>Range = Max - Min</code>. Disadvantage: It is <strong>easily influenced by outliers</strong> (not robust) and ignores all middle data points.	descriptive
+Quartile Definitions	• <strong>Q1</strong>: The median of the lower half of the sorted data (25th percentile).<br>• <strong>Q3</strong>: The median of the upper half of the sorted data (75th percentile).<br>• <strong>IQR</strong>: Interquartile Range = <code>Q3 - Q1</code>.	descriptive
+Linear Parameter Scale Changes	If each data point in a dataset is multiplied by a constant C, the new mean is <code>C × Old Mean</code>, and the new Standard Deviation is <code>C × Old SD</code>. Example: multiply by 3 gives Mean = 150, SD = 30.	descriptive
+Qualitative vs Quantitative Data	• <strong>Qualitative (Categorical)</strong>: Colors, names, yes/no responses.<br>• <strong>Quantitative (Numerical)</strong>: Heights, temperatures, salaries.	descriptive
+Continuous vs Discrete Variables	• <strong>Continuous</strong>: Can take any real value in an interval (e.g., Temperature, Height).<br>• <strong>Discrete</strong>: Countable values only (e.g., number of applicants, population of a state).	descriptive
+Variable Skewness	• <strong>Right-skewed</strong>: Tail extends to the right (Mean > Median). Common in housing prices, incomes.<br>• <strong>Left-skewed</strong>: Tail extends to the left (Mean < Median).<br>• <strong>Symmetric</strong>: Tail is balanced (Mean ≈ Median).	descriptive
+Symmetric Z-score of Median	For a symmetric distribution, the Z-score for the median is approximately <strong>0</strong>. For left-skewed, it is typically negative.	descriptive
+Mode definition	The **most common value** in a variable. It is appropriate for all scales of measurement (nominal, ordinal, interval, ratio).	descriptive
+Relative Frequency calculation	To convert frequency to relative frequency, <strong>divide the frequency by the total sample size (n)</strong>.	descriptive
+Law of Large Numbers (LLN)	As the number of trials increases, the sample proportion of an outcome converges to the **theoretical probability** (e.g. coin flips).	probability
+Sample Space	The set of <strong>all possible outcomes</strong> of a probability experiment.	probability
+At least one success formula	To find probability of at least one success in n independent trials: <code>P(at least one) = 1 - P(no successes) = 1 - (1 - p)ⁿ</code>. Example: 3 coin flips gives 7/8.	probability
+Mutually Exclusive vs Independent	If two events are mutually exclusive (cannot happen together), they **cannot be independent** (if A happens, P(B) becomes 0).	probability
+Standard Normal Percentile Z = 0.675	The Z-score corresponding to the <strong>75th percentile</strong> of the Standard Normal variable is <code>0.675</code>.	distributions
+Normal Probability Plot	A normal probability plot of a nearly normal sample should show a <strong>fairly straight line</strong>. Curved lines indicate skewness.	distributions
+Unusual Data Z-score rule	An observation is considered unusual if its Z-score is <strong>beyond ±3 standard deviations</strong> from the mean (Z-score calculation: <code>Z = (x - μ)/σ</code>).	distributions
+Binomial Distribution criteria	Requires: 1. Fixed number of trials (n).<br>2. Independent trials.<br>3. Only two outcomes (success/failure).<br>4. Constant success probability (p).	distributions
+Standard Z Critical values	• 90% Confidence: **1.645**<br>• 95% Confidence: **1.96**<br>• 98% Confidence: **2.33**<br>• 99% Confidence: **2.576**	distributions
+p-value interpretation	A p-value measures the probability of obtaining data as extreme as observed assuming H₀ is true. A small p-value (e.g., 0.003) means **the data are inconsistent with H₀** (reject H₀).	hypothesis
+Type I vs Type II errors	• <strong>Type I</strong>: Rejecting a true H₀ (False Positive, alpha).<br>• <strong>Type II</strong>: Failing to reject a false H₀ (False Negative, beta).	hypothesis
+One-tailed vs Two-tailed tests	Use **one-tailed** when you have a specific directional hypothesis in advance. Use **two-tailed** when you test for any difference.	hypothesis
+Independent vs Paired t-test	• <strong>Independent</strong>: Compares two unrelated groups (e.g., employees of Branch A vs Branch B).<br>• <strong>Paired</strong>: Compares related measurements on same subjects (e.g., pre- and post-training).	hypothesis
+One-way ANOVA purpose	Used to <strong>compare the means of three or more independent groups</strong> to see if at least one differs.	hypothesis
+ANOVA eta-squared (η²)	Represents the **proportion of variation in the dependent variable** explained by the categorical independent variable (ranges from 0 to 1).	hypothesis
+Within-groups variation (W)	Represents the variation in the dependent variable due to **chance or random fluctuations** (residual variance).	hypothesis
+Between-groups variation (B)	Represents the variation in the dependent variable due to the **factor/group differences**. If B is much larger than W, reject H₀.	hypothesis
+ANOVA required conditions	1. Normality within groups.<br>2. Independence of observations.<br>3. Homoscedasticity (equal variances). (Note: equal group means is NOT an assumption!).	hypothesis
+t-test and ANOVA equivalence	For two independent groups, a one-way ANOVA F-test and a two-sample t-test yield the <strong>exact same p-value</strong>, with <code>F = t²</code>.	hypothesis
+Confidence Interval Width	Increasing the confidence level **increases the width** of the interval. Increasing sample size **decreases the width**.	regression
+Standard Deviation Approximation	A standard rule of thumb for standard deviation approximation: <strong>Approximate SD ≈ Range / 6</strong>. Example: range = 90 gives SD ≈ 15.	descriptive

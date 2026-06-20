@@ -1,0 +1,56 @@
+# ============================================================
+# Information Systems — CZU Prague — CRAM Deck (Quick Review Mode)
+# DW/SINV | ERP | DSS | BI/BPM | AI/ML | Cloud | CI — 50 exam-targeted cards
+# Use this for last-minute revision — same cards, cram tags
+# ============================================================
+
+Data Warehouse — 4 characteristics (acronym SINV)	<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time	cram_dw
+What does 'Non-volatile' mean in a Data Warehouse?	Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly.	cram_dw
+What does 'Time-variant' mean in a Data Warehouse?	Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state).	cram_dw
+Main purpose of a Data Warehouse	To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions.	cram_dw
+Which system is for DAILY TRANSACTIONS?	<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP.	cram_dw
+Which system is for STRATEGIC ANALYSIS?	<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP.	cram_dw
+OLTP vs OLAP	<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse	cram_dw
+ERP stands for?	<b>Enterprise Resource Planning</b>	cram_erp
+ERPS stands for?	<b>Enterprise Resource Planning System</b>	cram_erp
+IS vs ERP — which is more general?	<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS.	cram_erp
+ERP main goal	<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments.	cram_erp
+ERP advantage	<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos.	cram_erp
+ERP disadvantage	<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>.	cram_erp
+Vendor lock-in — definition	A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch.	cram_erp
+Leading ERP vendors — 3 examples	<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders.	cram_erp
+SAP HANA — what is it?	SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk.	cram_erp
+In-memory database — meaning	Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics.	cram_erp
+DSS stands for?	<b>Decision Support System</b>	cram_dss
+What is a DSS?	An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information.	cram_dss
+DSS transforms what into what?	<b>Raw data → useful information</b> for decision-making.	cram_dss
+What decisions does DSS support?	<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS).	cram_dss
+DSS role — should it replace managers?	NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential.	cram_dss
+STRUCTURED decision — definition	A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level.	cram_dss
+UNSTRUCTURED decision — definition	A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation.	cram_dss
+SEMI-STRUCTURED decision — definition	<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed.	cram_dss
+Computers vs humans in decision-making	<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment.	cram_dss
+BI — what does it stand for and do?	<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>.	cram_bi
+BPM — definition and formula	<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance.	cram_bi
+KPI stands for?	<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives.	cram_bi
+Dashboard — what is it used for?	Visualizes <b>important business information and KPIs</b> in real-time for decision-makers.	cram_bi
+4 main AI areas tested on exam	1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks	cram_ai
+Machine Learning — definition	AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task.	cram_ai
+Neural network — what inspired it?	Inspired by the structure of the <b>human brain</b> — neurons connected in layers.	cram_ai
+Deep Learning — what is it connected to?	<b>Multi-layer neural networks</b> — 'deep' = many hidden layers of neurons.	cram_ai
+Computer Vision — definition	AI field focused on <b>interpreting visual/image data</b> — enabling machines to 'see' and understand images and video.	cram_ai
+NLP — definition	<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation).	cram_ai
+Modern IS phenomena (current trends)	<b>Cloud computing, virtualization, big data, AI, security</b>	cram_ai
+Cloud computing — definition	Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable).	cram_cloud
+SaaS — definition and example	<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365).	cram_cloud
+IaaS — definition and example	<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2).	cram_cloud
+PaaS — definition	<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku).	cram_cloud
+Cloud core idea / model	<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware.	cram_cloud
+Application architecture evolution	Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services.	cram_cloud
+Competitive Intelligence (CI) — definition	<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage.	cram_ci
+CI helps decision-makers by?	Improving understanding of the <b>competitive environment</b> to support strategic planning.	cram_ci
+CI sources — what kind?	<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking.	cram_ci
+IS and management — how do they relate?	Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters.	cram_is_basics
+Who sets the rules in an IS?	<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules.	cram_is_basics
+Goal of IS in management	To <b>support management</b> — never to replace decision makers.	cram_is_basics
+Example of automatic IS tool	<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold.	cram_is_basics

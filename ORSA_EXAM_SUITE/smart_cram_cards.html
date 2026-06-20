@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORSA Cram Cards — Operations Research | CZU Prague</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080e;
+      --surface: #0f0f1a;
+      --surface2: #151525;
+      --border: rgba(245,158,11,0.15);
+      --accent: #f59e0b;
+      --accent2: #34d399;
+      --accent-glow: rgba(245,158,11,0.25);
+      --accent2-glow: rgba(52,211,153,0.25);
+      --text: #f0f0ff;
+      --text-muted: #9090b0;
+      --font: 'Outfit', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mesh-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .mesh-bg::before {
+      content:''; position:absolute; width:800px; height:800px; top:-150px; left:-150px;
+      background: radial-gradient(circle, color-mix(in srgb, #f59e0b 12%, transparent) 0%, transparent 70%);
+      animation: drift1 16s ease-in-out infinite alternate;
+    }
+    .mesh-bg::after {
+      content:''; position:absolute; width:600px; height:600px; bottom:-100px; right:-100px;
+      background: radial-gradient(circle, color-mix(in srgb, #34d399 10%, transparent) 0%, transparent 70%);
+      animation: drift2 12s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { 0%{transform:translate(0,0)} 100%{transform:translate(70px,50px)} }
+    @keyframes drift2 { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,-70px)} }
+
+    header {
+      position:sticky; top:0; z-index:100;
+      background:rgba(8,8,14,0.92);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 2rem;
+    }
+    .header-inner {
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; gap:1.25rem; height:64px;
+    }
+    .logo { font-size:1.2rem; font-weight:800; text-decoration:none; color:var(--text); white-space:nowrap; }
+    .logo span { color:var(--accent); }
+    .badge { background:color-mix(in srgb, #f59e0b 15%, transparent); border:1px solid color-mix(in srgb, #f59e0b 35%, transparent); color:var(--accent); font-size:0.72rem; font-weight:600; letter-spacing:.05em; padding:3px 10px; border-radius:999px; }
+    .header-spacer { flex:1; }
+    .card-count-badge { font-size:.75rem; color:var(--text-muted); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:3px 12px; border-radius:999px; }
+    .shortcuts-pill {
+      background:rgba(15,15,26,0.9); border:1px solid var(--border);
+      border-radius:999px; padding:5px 16px; font-size:.72rem; color:var(--text-muted);
+      display:flex; align-items:center; gap:.75rem;
+    }
+    .sc-key { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:5px; padding:1px 7px; font-family:var(--mono); color:var(--text); }
+    .back-link { display:flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--text-muted); font-size:.82rem; font-weight:600; padding:6px 14px; border:1px solid var(--border); border-radius:999px; transition:all .2s; }
+    .back-link:hover { color:var(--text); border-color:var(--accent); }
+
+    main { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:2rem 2rem 4rem; }
+
+    .stats-row {
+      display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+      margin-bottom:1.5rem;
+    }
+    .stat-box {
+      background:rgba(15,15,26,0.7); border:1px solid var(--border);
+      border-radius:14px; padding:.7rem 1.5rem; text-align:center; min-width:90px;
+    }
+    .stat-num { font-size:1.5rem; font-weight:800; }
+    .stat-label { font-size:.7rem; color:var(--text-muted); margin-top:2px; }
+    .stat-total .stat-num { color:var(--text); }
+    .stat-known .stat-num { color:var(--accent2); }
+    .stat-review .stat-num { color:var(--accent); }
+    .progress-bar-wrap { flex:1; min-width:180px; }
+    .progress-bar-label { font-size:.72rem; color:var(--text-muted); margin-bottom:.35rem; }
+    .progress-bar { height:8px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .4s ease; }
+
+    .deck-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .deck-tab {
+      padding:8px 20px; border-radius:999px; cursor:pointer;
+      font-family:var(--font); font-size:.84rem; font-weight:600;
+      border:1.5px solid var(--border); background:transparent; color:var(--text-muted);
+      transition:all .2s;
+    }
+    .deck-tab.active {
+      background:color-mix(in srgb, #f59e0b 18%, transparent);
+      border-color:var(--accent); color:var(--accent);
+      box-shadow:0 0 16px var(--accent-glow);
+    }
+    .deck-tab:hover:not(.active) { border-color:color-mix(in srgb, #f59e0b 40%, transparent); color:var(--text); }
+
+    .card-stage { perspective:1200px; width:100%; max-width:760px; margin:0 auto 2rem; min-height:340px; }
+    .flash-card {
+      position:relative; width:100%; min-height:340px;
+      cursor:pointer; transform-style:preserve-3d;
+      transition:transform .55s cubic-bezier(.4,0,.2,1);
+    }
+    .flash-card.flipped { transform:rotateY(180deg); }
+    .card-face {
+      position:absolute; inset:0;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      border-radius:24px; padding:2.5rem;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; overflow:hidden;
+    }
+    .card-front {
+      background:rgba(15,15,26,0.97);
+      border:1.5px solid var(--border);
+      box-shadow:0 8px 40px rgba(0,0,0,.4), 0 0 0 1px color-mix(in srgb, #f59e0b 6%, transparent);
+    }
+    .card-back {
+      background:linear-gradient(135deg, color-mix(in srgb, #f59e0b 10%, transparent) 0%, color-mix(in srgb, #34d399 7%, transparent) 100%);
+      border:1.5px solid color-mix(in srgb, #f59e0b 35%, transparent);
+      transform:rotateY(180deg);
+      box-shadow:0 8px 40px color-mix(in srgb, #f59e0b 14%, transparent);
+    }
+    .card-category {
+      font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      padding:3px 12px; border-radius:999px; margin-bottom:1.25rem;
+    }
+    .cat-io { background:rgba(96,165,250,.12); border:1px solid rgba(96,165,250,.25); color:#60a5fa; }
+    .cat-lp { background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.25); color:#f59e0b; }
+    .cat-sim { background:rgba(232,121,249,.12); border:1px solid rgba(232,121,249,.25); color:#e879f9; }
+    .cat-markov { background:rgba(52,211,153,.12); border:1px solid rgba(52,211,153,.25); color:#34d399; }
+    .cat-queue { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.25); color:#f87171; }
+    .cat-sys { background:rgba(251,146,60,.12); border:1px solid rgba(251,146,60,.25); color:#fb923c; }
+    .cat-vensim { background:rgba(45,212,191,.12); border:1px solid rgba(45,212,191,.25); color:#2dd4bf; }
+    .cat-archetypes { background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.25); color:#a78bfa; }
+
+    .card-q { font-size:1.4rem; font-weight:700; line-height:1.45; max-width:620px; }
+    .card-q code { font-family:var(--mono); font-size:1.05rem; color:var(--accent); background:color-mix(in srgb, #f59e0b 12%, transparent); padding:2px 8px; border-radius:6px; }
+    .card-a { font-size:.975rem; line-height:1.7; max-width:640px; color:var(--text); text-align:left; }
+    .card-a code { font-family:var(--mono); font-size:.88rem; color:var(--accent2); background:color-mix(in srgb, #34d399 12%, transparent); padding:1px 6px; border-radius:4px; }
+    .card-a strong { color:var(--accent); }
+    .card-hint { position:absolute; bottom:1.1rem; font-size:.72rem; color:rgba(255,255,255,.22); }
+    .card-num { position:absolute; top:1.1rem; right:1.25rem; font-size:.72rem; color:var(--text-muted); font-family:var(--mono); }
+    .flip-indicator { font-size:.75rem; color:var(--text-muted); text-align:center; margin-bottom:.75rem; transition:opacity .3s; }
+
+    .rating-row { display:flex; gap:1rem; justify-content:center; margin-bottom:2rem; }
+    .rate-btn {
+      padding:.75rem 2rem; border-radius:14px; cursor:pointer;
+      font-family:var(--font); font-size:.9rem; font-weight:700;
+      border:none; transition:all .25s;
+    }
+    .rate-review { background:color-mix(in srgb, #f59e0b 12%, transparent); border:1.5px solid color-mix(in srgb, #f59e0b 35%, transparent); color:var(--accent); }
+    .rate-review:hover { background:color-mix(in srgb, #f59e0b 25%, transparent); box-shadow:0 0 20px var(--accent-glow); }
+    .rate-know { background:color-mix(in srgb, #34d399 12%, transparent); border:1.5px solid color-mix(in srgb, #34d399 35%, transparent); color:var(--accent2); }
+    .rate-know:hover { background:color-mix(in srgb, #34d399 25%, transparent); box-shadow:0 0 20px var(--accent2-glow); }
+
+    .nav-row { display:flex; align-items:center; justify-content:center; gap:1.25rem; margin-bottom:2rem; }
+    .nav-btn {
+      width:44px; height:44px; border-radius:12px;
+      background:rgba(15,15,26,.8); border:1.5px solid var(--border);
+      color:var(--text); font-size:1.2rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s; font-family:var(--font);
+    }
+    .nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .card-counter { font-size:.9rem; font-weight:700; color:var(--text-muted); min-width:80px; text-align:center; }
+
+    .weak-panel { background:rgba(15,15,26,.8); border:1px solid var(--border); border-radius:20px; padding:1.5rem; margin-top:1rem; }
+    .weak-panel-title { font-size:1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+    .weak-count { font-size:.75rem; background:color-mix(in srgb, #f59e0b 15%, transparent); border:1px solid color-mix(in srgb, #f59e0b 28%, transparent); color:var(--accent); padding:2px 10px; border-radius:999px; }
+    .weak-list { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .weak-chip { background:color-mix(in srgb, #f59e0b 7%, transparent); border:1px solid color-mix(in srgb, #f59e0b 20%, transparent); color:var(--text-muted); font-size:.75rem; padding:4px 12px; border-radius:8px; cursor:pointer; transition:all .2s; }
+    .weak-chip:hover { border-color:var(--accent); color:var(--accent); }
+    .no-weak { color:var(--text-muted); font-size:.85rem; }
+
+    footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:1.5rem 2rem; text-align:center; color:var(--text-muted); font-size:.8rem; }
+    footer span { color:var(--accent); }
+    footer a { color:var(--accent2); text-decoration:none; }
+
+    .toast {
+      position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+      background:rgba(15,15,26,.98); border:1px solid var(--border);
+      padding:.65rem 1.5rem; border-radius:999px; font-size:.82rem; font-weight:600;
+      z-index:999; opacity:0; transition:opacity .3s;
+      pointer-events:none; white-space:nowrap;
+    }
+    .toast.show { opacity:1; }
+
+    @media (max-width:600px) {
+      .card-q { font-size:1.1rem; }
+      .card-a { font-size:.88rem; }
+      .card-face { padding:1.75rem; }
+      .shortcuts-pill { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">ORSA <span>Exam Prep</span></a>
+    <span class="badge">ORSA</span>
+    <div class="header-spacer"></div>
+    <span class="card-count-badge">56 Cards</span>
+    <div class="shortcuts-pill">
+      <span><span class="sc-key">Space</span> flip</span>
+      <span><span class="sc-key">←→</span> navigate</span>
+      <span><span class="sc-key">1</span> review</span>
+      <span><span class="sc-key">2</span> know it</span>
+    </div>
+    <a class="back-link" href="index.html">← Dashboard</a>
+  </div>
+</header>
+
+<main>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box stat-total"><div class="stat-num" id="stat-total">56</div><div class="stat-label">Total Cards</div></div>
+    <div class="stat-box stat-known"><div class="stat-num" id="stat-known">0</div><div class="stat-label">Known ✓</div></div>
+    <div class="stat-box stat-review"><div class="stat-num" id="stat-review">0</div><div class="stat-label">Review ↻</div></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label" id="progress-label">Progress: 0%</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <button onclick="resetAll()" style="padding:6px 18px;border-radius:999px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171;cursor:pointer;font-family:var(--font);font-size:.78rem;font-weight:600;transition:all .2s;">Reset All</button>
+  </div>
+
+  <!-- DECK TABS -->
+  <div class="deck-tabs">
+    <button class="deck-tab active" onclick="setDeck('all',this)">⭐ All</button>
+    <button class="deck-tab" onclick="setDeck('io',this)">📊 Input-Output</button>
+    <button class="deck-tab" onclick="setDeck('lp',this)">📐 LP & Simplex</button>
+    <button class="deck-tab" onclick="setDeck('sim',this)">🎲 Simulation</button>
+    <button class="deck-tab" onclick="setDeck('markov',this)">🔄 Markov Chains</button>
+    <button class="deck-tab" onclick="setDeck('queue',this)">⏳ Queueing Theory</button>
+    <button class="deck-tab" onclick="setDeck('sys',this)">🌐 System Theory</button>
+    <button class="deck-tab" onclick="setDeck('vensim',this)">📈 Vensim & Dynamics</button>
+    <button class="deck-tab" onclick="setDeck('archetypes',this)">🎭 System Archetypes</button>
+  </div>
+
+  <!-- FLIP INDICATOR -->
+  <div class="flip-indicator" id="flip-indicator">👆 Click card or press <strong>Space</strong> to reveal answer</div>
+
+  <!-- CARD STAGE -->
+  <div class="card-stage">
+    <div class="flash-card" id="flash-card" onclick="flipCard()">
+      <div class="card-face card-front" id="card-front">
+        <span class="card-num" id="card-num-front">1 / 56</span>
+        <span class="card-category" id="card-cat-front"></span>
+        <div class="card-q" id="card-q"></div>
+        <span class="card-hint">Click to flip</span>
+      </div>
+      <div class="card-face card-back" id="card-back">
+        <span class="card-num" id="card-num-back">1 / 56</span>
+        <span class="card-category" id="card-cat-back"></span>
+        <div class="card-a" id="card-a"></div>
+        <span class="card-hint">Rate below</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RATING -->
+  <div class="rating-row">
+    <button class="rate-btn rate-review" onclick="rateCard(1)">↻ Review Again (1)</button>
+    <button class="rate-btn rate-know" onclick="rateCard(2)">✓ Got It! (2)</button>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-row">
+    <button class="nav-btn" onclick="prevCard()" title="Previous (←)">←</button>
+    <span class="card-counter" id="card-counter">1 / 56</span>
+    <button class="nav-btn" onclick="nextCard()" title="Next (→)">→</button>
+  </div>
+
+  <!-- WEAK PANEL -->
+  <div class="weak-panel">
+    <div class="weak-panel-title">
+      📌 Cards Marked for Review
+      <span class="weak-count" id="weak-count">0</span>
+    </div>
+    <div class="weak-list" id="weak-list">
+      <span class="no-weak">No cards marked yet — start studying!</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>ORSA Exam Prep · <span>56 High-Yield Cards</span> · <a href="index.html">← Back to Dashboard</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CARD DATA — 56 exam-targeted cards
+// ═══════════════════════════════════════════════════════
+const CARDS = [
+  {cat:'io',q:'Input-Output model — what is it?',a:'A modeling technique analyzing relationships between sectors of an economy. Every sector is both a <b>supplier</b> and <b>consumer</b> of goods. Each sector is represented by a matrix of inputs and outputs.'},
+  {cat:'io',q:'I-O model: rule about total inputs vs total outputs',a:'<b>Total Inputs = Total Outputs</b> for every sector. Use this rule to find any missing value in the table.'},
+  {cat:'io',q:'How to build the A matrix (coefficient matrix)',a:'For each column: divide each cell by that column\'s <b>Total Input</b>.<br>A[i,j] = value[i,j] ÷ TotalInput[j]'},
+  {cat:'io',q:'Identity matrix I — structure for 3 sectors',a:'Diagonal = 1, all others = 0:<br>[[1,0,0],[0,1,0],[0,0,1]]'},
+  {cat:'io',q:'How to find new Y when task gives new X',a:'<b>new_Y = (I − A) × new_X</b><br>Multiply the (I-A) matrix by the new total output vector.'},
+  {cat:'io',q:'How to find new X when task gives new Y',a:'<b>new_X = (I − A)⁻¹ × new_Y</b><br>First invert (I-A), then multiply by the final demand vector.'},
+  {cat:'io',q:'Leontief core formula',a:'<code>x = (I − A)⁻¹ · y</code><br>x = total output vector, y = final demand vector, A = coefficient matrix'},
+  {cat:'io',q:'Leontief Inverse — what does (I-A)⁻¹ represent?',a:'The multiplier matrix mapping <b>final consumer demand to total direct + indirect outputs</b> required across all sectors.'},
+  {cat:'io',q:'Gluttony Ltd. base outputs',a:'Brewery (X_B) = <b>100</b>, Butcher (X_Bu) = <b>80</b>, Greengrocer (X_G) = <b>30</b>, Restaurant (X_R) = <b>200</b>.'},
+  {cat:'io',q:'Gluttony Ltd. — Butcher final demand rises to 35',a:'New outputs: Brewery = <b>101.91</b>, Butcher = <b>99.96</b>, Greengrocer = <b>30.80</b>, Restaurant = <b>201.41</b>.'},
+  {cat:'io',q:'Gluttony Ltd. — Greengrocer +10%, Restaurant +20% cost',a:'Output price indices: Brewery = <b>1.00135</b>, Butcher = <b>1.00171</b>, Greengrocer = <b>1.01347</b>, Restaurant = <b>1.01723</b>.'},
+  {cat:'lp',q:'What is Linear Programming?',a:'A mathematical method to <b>maximize or minimize a linear objective function</b> subject to linear constraints (resource limitations).'},
+  {cat:'lp',q:'LP Sensitivity: change WITHIN allowable range',a:'Objective coefficient change within range → <b>Z value changes but basis stays the same</b>.<br>RHS change within range → solution values change but <b>basis stays the same</b>.'},
+  {cat:'lp',q:'LP Sensitivity: change OUTSIDE allowable range',a:'If any change exceeds its allowable interval → the <b>BASIS CHANGES</b> (new optimal corner of feasible region).'},
+  {cat:'lp',q:'LP exam example: coefficient was 220, new value 250, allowable increase = 20',a:'Max allowed = 220 + 20 = 240. Since 250 > 240 → change is OUTSIDE range → <b>The basis WILL CHANGE</b>.'},
+  {cat:'lp',q:'Shadow Price — definition',a:'Amount by which the optimal Z value increases per <b>1-unit increase in the RHS</b> constraint resource.'},
+  {cat:'lp',q:'Excel Solver: formula for LHS cells',a:'<code>=SUMPRODUCT(decision_variable_cells, coefficient_range)</code><br>Never hardcode values in LHS cells!'},
+  {cat:'lp',q:'Mixing a Drink LP task result',a:'Optimal: Rum = <b>5 dl</b>, Juice = <b>5 dl</b>. Taste = <b>75 pts</b>. Rum restriction <code>x ≥ 5</code> is binding.'},
+  {cat:'sim',q:'What is simulation?',a:'The <b>imitation of a real-world system or process</b> with the goal to evaluate performance and improve it — without risking the real system.'},
+  {cat:'sim',q:'Static vs Dynamic simulation',a:'<b>Static</b> = models at a <b>single point in time</b>, no change over time<br><b>Dynamic</b> = models <b>changes over time</b>'},
+  {cat:'sim',q:'Stochastic vs Deterministic simulation',a:'<b>Stochastic</b> = involves <b>randomness</b>; different output each run<br><b>Deterministic</b> = same inputs → <b>same output always</b>'},
+  {cat:'sim',q:'Discrete-event vs Continuous simulation',a:'<b>Discrete-event</b> = events at specific discrete points in time<br><b>Continuous</b> = changes occur continuously over time'},
+  {cat:'sim',q:'Monte Carlo simulation — type classification',a:'Monte Carlo = <b>STATIC + STOCHASTIC</b> simulation.<br>Uses large numbers of random values to estimate outcomes.'},
+  {cat:'markov',q:'What is a Markov Chain?',a:'A mathematical model where a system moves between states, and the <b>next state depends ONLY on the current state</b> (not on past history).'},
+  {cat:'markov',q:'Markov property — memorylessness',a:'The probability of moving to the next state depends <b>ONLY on the current state</b>. Past history is irrelevant (memoryless).'},
+  {cat:'markov',q:'Homogeneity property of Markov Chains',a:'Transition probabilities <b>do not change over time</b> as the chain progresses — they stay constant.'},
+  {cat:'markov',q:'Markov Chain transition matrix rule',a:'Each <b>row</b> of the transition matrix must sum to <b>1.0</b> (all probabilities of leaving each state).'},
+  {cat:'markov',q:'Markov Chain step transition formula',a:'<code>π⁽ᵗ⁾ = π⁽⁰⁾ · Pᵗ</code><br>State vector at step t = initial state vector × transition matrix to the power t.'},
+  {cat:'markov',q:'Markov stationary distribution — equation',a:'Solve: <b>π · P = π</b> with constraint <b>Σπᵢ = 1</b><br>π = long-run steady-state probability vector.'},
+  {cat:'markov',q:'Absorbing State — definition',a:'A state that <b>cannot be left</b> once entered. P[i][i] = 1.'},
+  {cat:'markov',q:'Transient State — definition',a:'A state that can be left, with positive probability of <b>never returning</b>.'},
+  {cat:'markov',q:'Elite EU Officer Queue (λ=30, μ=40)',a:'P₀ = <b>0.25 (25%)</b> idle probability, Lq = <b>2.25</b> average queue length.'},
+  {cat:'markov',q:'Elite EU Officer Wait Times (λ=30, μ=40)',a:'W = <b>6 minutes (0.1 hr)</b> in system, Wq = <b>4.5 minutes (0.075 hr)</b> in queue.'},
+  {cat:'markov',q:'Weather Forecast Markov probability',a:'Rainy today. Probability of Rainy day after tomorrow = <b>0.2450 (24.50%)</b>.'},
+  {cat:'markov',q:'Scared Frog survival probability after 5 hours',a:'Starting on lily A (stork hungry). Probability alive after 5 hours = <b>0.03125 (3.125%)</b>.'},
+  {cat:'markov',q:'Markov Chain 3×3 stationary distribution',a:'Matrix rows [0.6,0.3,0.1], [0.2,0.5,0.3], [0.3,0.3,0.4]:<br>π = <b>[0.375, 0.375, 0.25]</b>'},
+  {cat:'queue',q:'Queue Utilization ρ formula',a:'<code>ρ = λ / μ</code> — fraction of time server is busy. <b>Must be &lt; 1</b> for stable queue.<br>(λ = arrival rate, μ = service rate)'},
+  {cat:'queue',q:'P₀ — Idle Queue Probability',a:'<code>P₀ = 1 − ρ</code> — probability the queue is empty and server is idle.'},
+  {cat:'queue',q:'Average Queue Length Lq',a:'<code>Lq = ρ² / (1 − ρ)</code> — expected number of customers waiting in line.'},
+  {cat:'queue',q:'Average Time in Queue Wq',a:'<code>Wq = ρ / (μ − λ)</code> — expected time a customer spends waiting in queue.'},
+  {cat:'queue',q:'Flower Shop Queue: idle probability P₀ = 0.5',a:'λ=9/hr. For P₀=0.5 → ρ=0.5 → μ=18/hr → average service time = <b>3.33 minutes</b>.'},
+  {cat:'queue',q:'Flower Shop Queue: W = 10 minutes target',a:'λ=9/hr. For W=10 min → service rate μ must be <b>15 customers/hour</b>.'},
+  {cat:'sys',q:'What is a System?',a:'A <b>group of elements AND the relations between those elements</b>.'},
+  {cat:'sys',q:'What is a Complex System?',a:'A system of <b>multiple interacting elements</b> where the <b>whole behavior CANNOT be explained</b> by understanding individual parts alone.'},
+  {cat:'sys',q:'5 components of a Complex System',a:'1. <b>Self-organization</b> — organizes without external control<br>2. <b>Emergence</b> — whole > sum of parts<br>3. <b>Nonlinearity</b> — small change → large effect<br>4. <b>Adaptation</b> — adjusts to changing conditions<br>5. <b>Feedback loops</b>'},
+  {cat:'sys',q:'Closed vs Open System',a:'<b>Closed</b> = does NOT interact with environment (atoms, molecules)<br><b>Open</b> = MUST interact with environment to survive (people, ecosystems)'},
+  {cat:'sys',q:'Soft vs Hard Systems Thinking',a:'<b>Soft</b>: oriented to LEARNING; world is complex; models = intellectual constructs; \'issues\' + \'accommodations\'<br><b>Hard</b>: oriented to GOAL SEEKING; world is engineerable; models = reality; \'problems\' + \'solutions\''},
+  {cat:'sys',q:'Model types: Normative vs Descriptive',a:'<b>Normative</b> = what <b>SHOULD</b> be done (optimal behavior)<br><b>Descriptive</b> = what <b>IS</b> being done (actual behavior)'},
+  {cat:'sys',q:'Model types: Deterministic vs Stochastic',a:'<b>Deterministic</b> = all variables known; same inputs → same output<br><b>Stochastic</b> = accounts for randomness and uncertainty'},
+  {cat:'vensim',q:'Direct Stock-to-Stock link — allowed?',a:'<b>NEVER ALLOWED! (−10 points)</b><br>A stock must only connect to another stock through a <b>Flow rate arrow (with a valve symbol)</b>.'},
+  {cat:'vensim',q:'Stock equation wrapper in Vensim',a:'Every Stock equation must be wrapped in:<br><code>INTEG(Inflows − Outflows, Initial Value)</code>'},
+  {cat:'vensim',q:'CLD link polarity — Reinforcing vs Balancing loop',a:'Count negative/opposite (o / −) links in the loop:<br><b>Even count</b> = Reinforcing (R)<br><b>Odd count</b> = Balancing (B)'},
+  {cat:'archetypes',q:'Limits to Growth archetype',a:'A reinforcing growth loop hits a capacity constraint, activating a balancing loop that halts progress.<br><b>Fix</b>: Plan for constraints early.'},
+  {cat:'archetypes',q:'Tragedy of the Commons archetype',a:'Individual growth actions exploit a shared resource until depletion.<br><b>Fix</b>: Impose shared resource regulation.'},
+  {cat:'archetypes',q:'Shifting the Burden archetype',a:'Quick fix relieves symptoms temporarily, creating dependency and reducing pressure to fix the real problem.<br><b>Loops</b>: B1 (quick fix) vs. B2 (fundamental fix). R3 = side effect dependency.'},
+  {cat:'archetypes',q:'Fixes that Fail archetype',a:'A quick fix relieves the problem but creates a delayed unintended consequence that worsens it.<br><b>Loops</b>: B1 (fix) vs. R2 (delayed reinforcing side effect).'}
+];
+
+// ═══════════════════════════════════════════════════════
+// CATEGORY META
+// ═══════════════════════════════════════════════════════
+const catLabel = {'io':'Input-Output','lp':'LP & Simplex','sim':'Simulation','markov':'Markov Chains','queue':'Queueing Theory','sys':'System Theory','vensim':'Vensim & Dynamics','archetypes':'System Archetypes'};
+const catEmoji = {'io':'📊','lp':'📐','sim':'🎲','markov':'🔄','queue':'⏳','sys':'🌐','vensim':'📈','archetypes':'🎭'};
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let deck = [...CARDS];
+let idx = 0;
+let isFlipped = false;
+let ratings = JSON.parse(localStorage.getItem('orsa_ratings') || '{}');
+let currentDeck = 'all';
+
+function saveDeckIdx() { localStorage.setItem('orsa_ratings_idx', JSON.stringify({deck:currentDeck,idx})); }
+function loadDeckIdx() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('orsa_ratings_idx') || '{}');
+    if (saved.deck === currentDeck) { idx = Math.min(saved.idx || 0, deck.length - 1); }
+  } catch(e){}
+}
+
+// ═══════════════════════════════════════════════════════
+// DECK SELECTION
+// ═══════════════════════════════════════════════════════
+function setDeck(cat, btn) {
+  currentDeck = cat;
+  deck = cat === 'all' ? [...CARDS] : CARDS.filter(c => c.cat === cat);
+  idx = 0; isFlipped = false;
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCard();
+  updateStats();
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER CARD
+// ═══════════════════════════════════════════════════════
+function renderCard() {
+  if (deck.length === 0) {
+    document.getElementById('card-q').textContent = 'No cards in this deck.';
+    document.getElementById('card-a').textContent = '';
+    document.getElementById('card-counter').textContent = '0 / 0';
+    return;
+  }
+  const card = deck[idx];
+  const num = `${idx+1} / ${deck.length}`;
+  const catClass = `cat-${card.cat}`;
+  const catText = `${catEmoji[card.cat] || '📝'} ${catLabel[card.cat] || card.cat}`;
+
+  document.getElementById('card-q').innerHTML = card.q;
+  document.getElementById('card-a').innerHTML = card.a;
+  document.getElementById('card-num-front').textContent = num;
+  document.getElementById('card-num-back').textContent = num;
+  document.getElementById('card-counter').textContent = num;
+
+  ['card-cat-front','card-cat-back'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = `card-category ${catClass}`;
+    el.textContent = catText;
+  });
+
+  if (isFlipped) {
+    document.getElementById('flash-card').classList.remove('flipped');
+    isFlipped = false;
+  }
+  document.getElementById('flip-indicator').style.opacity = '1';
+  saveDeckIdx();
+}
+
+// ═══════════════════════════════════════════════════════
+// FLIP
+// ═══════════════════════════════════════════════════════
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flash-card').classList.toggle('flipped', isFlipped);
+  document.getElementById('flip-indicator').style.opacity = isFlipped ? '0' : '1';
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATE
+// ═══════════════════════════════════════════════════════
+function nextCard() {
+  if (deck.length === 0) return;
+  idx = (idx + 1) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+function prevCard() {
+  if (deck.length === 0) return;
+  idx = (idx - 1 + deck.length) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RATING
+// ═══════════════════════════════════════════════════════
+function rateCard(rating) {
+  if (deck.length === 0) return;
+  const card = deck[idx];
+  const key = `${card.cat}::${card.q.substring(0,40)}`;
+  ratings[key] = rating;
+  localStorage.setItem('orsa_ratings', JSON.stringify(ratings));
+  showToast(rating === 2 ? '✅ Got it!' : '↻ Marked for review');
+  updateStats();
+  updateWeakPanel();
+  nextCard();
+}
+
+function getRatingKey(card) {
+  return `${card.cat}::${card.q.substring(0,40)}`;
+}
+
+// ═══════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════
+function updateStats() {
+  let known = 0, review = 0;
+  CARDS.forEach(c => {
+    const k = getRatingKey(c);
+    if (ratings[k] === 2) known++;
+    else if (ratings[k] === 1) review++;
+  });
+  document.getElementById('stat-total').textContent = CARDS.length;
+  document.getElementById('stat-known').textContent = known;
+  document.getElementById('stat-review').textContent = review;
+  const pct = Math.round((known / CARDS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Progress: ${pct}% (${known}/${CARDS.length} known)`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WEAK PANEL
+// ═══════════════════════════════════════════════════════
+function updateWeakPanel() {
+  const weakCards = CARDS.filter(c => ratings[getRatingKey(c)] === 1);
+  document.getElementById('weak-count').textContent = weakCards.length;
+  const wl = document.getElementById('weak-list');
+  if (weakCards.length === 0) {
+    wl.innerHTML = '<span class="no-weak">No cards marked for review. Keep going!</span>';
+    return;
+  }
+  wl.innerHTML = '';
+  weakCards.forEach(c => {
+    const chip = document.createElement('span');
+    chip.className = 'weak-chip';
+    const stripped = c.q.replace(/<[^>]+>/g,'');
+    chip.textContent = stripped.length > 32 ? stripped.substring(0,32) + '…' : stripped;
+    chip.title = stripped;
+    chip.onclick = () => jumpToCard(c);
+    wl.appendChild(chip);
+  });
+}
+
+function jumpToCard(card) {
+  currentDeck = 'all';
+  deck = [...CARDS];
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('.deck-tab').classList.add('active');
+  idx = CARDS.indexOf(card);
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════════
+function resetAll() {
+  if (!confirm('Reset all ratings? Your progress will be lost.')) return;
+  ratings = {};
+  localStorage.removeItem('orsa_ratings');
+  updateStats();
+  updateWeakPanel();
+  showToast('🗑️ All ratings reset');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ═══════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch(e.key) {
+    case ' ': e.preventDefault(); flipCard(); break;
+    case 'ArrowRight': nextCard(); break;
+    case 'ArrowLeft': prevCard(); break;
+    case '1': rateCard(1); break;
+    case '2': rateCard(2); break;
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+loadDeckIdx();
+renderCard();
+updateStats();
+updateWeakPanel();
+</script>
+</body>
+</html>

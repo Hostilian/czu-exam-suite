@@ -1,0 +1,13 @@
+# Python temporary scripts
+*inspect*.py
+*extract*.py
+generate_anki.py
+
+# Temp output files
+inspect_out.txt
+pdf_content.txt
+docx_content.txt
+
+# Python cache
+__pycache__/
+*.pyc

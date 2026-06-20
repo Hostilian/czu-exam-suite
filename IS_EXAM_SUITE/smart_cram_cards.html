@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Information Systems Cram Cards | CZU Prague</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080e;
+      --surface: #0f0f1a;
+      --surface2: #151525;
+      --border: rgba(96,165,250,0.15);
+      --accent: #60a5fa;
+      --accent2: #34d399;
+      --accent-glow: rgba(96,165,250,0.25);
+      --accent2-glow: rgba(52,211,153,0.25);
+      --text: #f0f0ff;
+      --text-muted: #9090b0;
+      --font: 'Outfit', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .mesh-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .mesh-bg::before {
+      content:''; position:absolute; width:800px; height:800px; top:-150px; left:-150px;
+      background: radial-gradient(circle, color-mix(in srgb, #60a5fa 12%, transparent) 0%, transparent 70%);
+      animation: drift1 16s ease-in-out infinite alternate;
+    }
+    .mesh-bg::after {
+      content:''; position:absolute; width:600px; height:600px; bottom:-100px; right:-100px;
+      background: radial-gradient(circle, color-mix(in srgb, #34d399 10%, transparent) 0%, transparent 70%);
+      animation: drift2 12s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { 0%{transform:translate(0,0)} 100%{transform:translate(70px,50px)} }
+    @keyframes drift2 { 0%{transform:translate(0,0)} 100%{transform:translate(-50px,-70px)} }
+
+    header {
+      position:sticky; top:0; z-index:100;
+      background:rgba(8,8,14,0.92);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      padding:0 2rem;
+    }
+    .header-inner {
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; gap:1.25rem; height:64px;
+    }
+    .logo { font-size:1.2rem; font-weight:800; text-decoration:none; color:var(--text); white-space:nowrap; }
+    .logo span { color:var(--accent); }
+    .badge { background:color-mix(in srgb, #60a5fa 15%, transparent); border:1px solid color-mix(in srgb, #60a5fa 35%, transparent); color:var(--accent); font-size:0.72rem; font-weight:600; letter-spacing:.05em; padding:3px 10px; border-radius:999px; }
+    .header-spacer { flex:1; }
+    .card-count-badge { font-size:.75rem; color:var(--text-muted); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:3px 12px; border-radius:999px; }
+    .shortcuts-pill {
+      background:rgba(15,15,26,0.9); border:1px solid var(--border);
+      border-radius:999px; padding:5px 16px; font-size:.72rem; color:var(--text-muted);
+      display:flex; align-items:center; gap:.75rem;
+    }
+    .sc-key { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:5px; padding:1px 7px; font-family:var(--mono); color:var(--text); }
+    .back-link { display:flex; align-items:center; gap:.4rem; text-decoration:none; color:var(--text-muted); font-size:.82rem; font-weight:600; padding:6px 14px; border:1px solid var(--border); border-radius:999px; transition:all .2s; }
+    .back-link:hover { color:var(--text); border-color:var(--accent); }
+
+    main { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:2rem 2rem 4rem; }
+
+    .stats-row {
+      display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
+      margin-bottom:1.5rem;
+    }
+    .stat-box {
+      background:rgba(15,15,26,0.7); border:1px solid var(--border);
+      border-radius:14px; padding:.7rem 1.5rem; text-align:center; min-width:90px;
+    }
+    .stat-num { font-size:1.5rem; font-weight:800; }
+    .stat-label { font-size:.7rem; color:var(--text-muted); margin-top:2px; }
+    .stat-total .stat-num { color:var(--text); }
+    .stat-known .stat-num { color:var(--accent2); }
+    .stat-review .stat-num { color:var(--accent); }
+    .progress-bar-wrap { flex:1; min-width:180px; }
+    .progress-bar-label { font-size:.72rem; color:var(--text-muted); margin-bottom:.35rem; }
+    .progress-bar { height:8px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden; }
+    .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .4s ease; }
+
+    .deck-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .deck-tab {
+      padding:8px 20px; border-radius:999px; cursor:pointer;
+      font-family:var(--font); font-size:.84rem; font-weight:600;
+      border:1.5px solid var(--border); background:transparent; color:var(--text-muted);
+      transition:all .2s;
+    }
+    .deck-tab.active {
+      background:color-mix(in srgb, #60a5fa 18%, transparent);
+      border-color:var(--accent); color:var(--accent);
+      box-shadow:0 0 16px var(--accent-glow);
+    }
+    .deck-tab:hover:not(.active) { border-color:color-mix(in srgb, #60a5fa 40%, transparent); color:var(--text); }
+
+    .card-stage { perspective:1200px; width:100%; max-width:760px; margin:0 auto 2rem; min-height:340px; }
+    .flash-card {
+      position:relative; width:100%; min-height:340px;
+      cursor:pointer; transform-style:preserve-3d;
+      transition:transform .55s cubic-bezier(.4,0,.2,1);
+    }
+    .flash-card.flipped { transform:rotateY(180deg); }
+    .card-face {
+      position:absolute; inset:0;
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      border-radius:24px; padding:2.5rem;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; overflow:hidden;
+    }
+    .card-front {
+      background:rgba(15,15,26,0.97);
+      border:1.5px solid var(--border);
+      box-shadow:0 8px 40px rgba(0,0,0,.4), 0 0 0 1px color-mix(in srgb, #60a5fa 6%, transparent);
+    }
+    .card-back {
+      background:linear-gradient(135deg, color-mix(in srgb, #60a5fa 10%, transparent) 0%, color-mix(in srgb, #34d399 7%, transparent) 100%);
+      border:1.5px solid color-mix(in srgb, #60a5fa 35%, transparent);
+      transform:rotateY(180deg);
+      box-shadow:0 8px 40px color-mix(in srgb, #60a5fa 14%, transparent);
+    }
+    .card-category {
+      font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      padding:3px 12px; border-radius:999px; margin-bottom:1.25rem;
+    }
+    .cat-dw { background:rgba(52,211,153,.12); border:1px solid rgba(52,211,153,.25); color:#34d399; }
+    .cat-erp { background:rgba(96,165,250,.12); border:1px solid rgba(96,165,250,.25); color:#60a5fa; }
+    .cat-dss { background:rgba(232,121,249,.12); border:1px solid rgba(232,121,249,.25); color:#e879f9; }
+    .cat-bi { background:rgba(250,204,21,.12); border:1px solid rgba(250,204,21,.25); color:#fbbf24; }
+    .cat-ai { background:rgba(251,146,60,.12); border:1px solid rgba(251,146,60,.25); color:#fb923c; }
+    .cat-cloud { background:rgba(139,92,246,.12); border:1px solid rgba(139,92,246,.25); color:#a78bfa; }
+    .cat-ci { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.25); color:#f87171; }
+    .cat-is_basics { background:rgba(45,212,191,.12); border:1px solid rgba(45,212,191,.25); color:#2dd4bf; }
+
+    .card-q { font-size:1.4rem; font-weight:700; line-height:1.45; max-width:620px; }
+    .card-q code { font-family:var(--mono); font-size:1.05rem; color:var(--accent); background:color-mix(in srgb, #60a5fa 12%, transparent); padding:2px 8px; border-radius:6px; }
+    .card-a { font-size:.975rem; line-height:1.7; max-width:640px; color:var(--text); text-align:left; }
+    .card-a code { font-family:var(--mono); font-size:.88rem; color:var(--accent2); background:color-mix(in srgb, #34d399 12%, transparent); padding:1px 6px; border-radius:4px; }
+    .card-a strong { color:var(--accent); }
+    .card-hint { position:absolute; bottom:1.1rem; font-size:.72rem; color:rgba(255,255,255,.22); }
+    .card-num { position:absolute; top:1.1rem; right:1.25rem; font-size:.72rem; color:var(--text-muted); font-family:var(--mono); }
+    .flip-indicator { font-size:.75rem; color:var(--text-muted); text-align:center; margin-bottom:.75rem; transition:opacity .3s; }
+
+    .rating-row { display:flex; gap:1rem; justify-content:center; margin-bottom:2rem; }
+    .rate-btn {
+      padding:.75rem 2rem; border-radius:14px; cursor:pointer;
+      font-family:var(--font); font-size:.9rem; font-weight:700;
+      border:none; transition:all .25s;
+    }
+    .rate-review { background:color-mix(in srgb, #60a5fa 12%, transparent); border:1.5px solid color-mix(in srgb, #60a5fa 35%, transparent); color:var(--accent); }
+    .rate-review:hover { background:color-mix(in srgb, #60a5fa 25%, transparent); box-shadow:0 0 20px var(--accent-glow); }
+    .rate-know { background:color-mix(in srgb, #34d399 12%, transparent); border:1.5px solid color-mix(in srgb, #34d399 35%, transparent); color:var(--accent2); }
+    .rate-know:hover { background:color-mix(in srgb, #34d399 25%, transparent); box-shadow:0 0 20px var(--accent2-glow); }
+
+    .nav-row { display:flex; align-items:center; justify-content:center; gap:1.25rem; margin-bottom:2rem; }
+    .nav-btn {
+      width:44px; height:44px; border-radius:12px;
+      background:rgba(15,15,26,.8); border:1.5px solid var(--border);
+      color:var(--text); font-size:1.2rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s; font-family:var(--font);
+    }
+    .nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .card-counter { font-size:.9rem; font-weight:700; color:var(--text-muted); min-width:80px; text-align:center; }
+
+    .weak-panel { background:rgba(15,15,26,.8); border:1px solid var(--border); border-radius:20px; padding:1.5rem; margin-top:1rem; }
+    .weak-panel-title { font-size:1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+    .weak-count { font-size:.75rem; background:color-mix(in srgb, #60a5fa 15%, transparent); border:1px solid color-mix(in srgb, #60a5fa 28%, transparent); color:var(--accent); padding:2px 10px; border-radius:999px; }
+    .weak-list { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .weak-chip { background:color-mix(in srgb, #60a5fa 7%, transparent); border:1px solid color-mix(in srgb, #60a5fa 20%, transparent); color:var(--text-muted); font-size:.75rem; padding:4px 12px; border-radius:8px; cursor:pointer; transition:all .2s; }
+    .weak-chip:hover { border-color:var(--accent); color:var(--accent); }
+    .no-weak { color:var(--text-muted); font-size:.85rem; }
+
+    footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:1.5rem 2rem; text-align:center; color:var(--text-muted); font-size:.8rem; }
+    footer span { color:var(--accent); }
+    footer a { color:var(--accent2); text-decoration:none; }
+
+    .toast {
+      position:fixed; bottom:2rem; left:50%; transform:translateX(-50%);
+      background:rgba(15,15,26,.98); border:1px solid var(--border);
+      padding:.65rem 1.5rem; border-radius:999px; font-size:.82rem; font-weight:600;
+      z-index:999; opacity:0; transition:opacity .3s;
+      pointer-events:none; white-space:nowrap;
+    }
+    .toast.show { opacity:1; }
+
+    @media (max-width:600px) {
+      .card-q { font-size:1.1rem; }
+      .card-a { font-size:.88rem; }
+      .card-face { padding:1.75rem; }
+      .shortcuts-pill { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">Info Systems <span>Exam Prep</span></a>
+    <span class="badge">IS Exam</span>
+    <div class="header-spacer"></div>
+    <span class="card-count-badge">50 Cards</span>
+    <div class="shortcuts-pill">
+      <span><span class="sc-key">Space</span> flip</span>
+      <span><span class="sc-key">←→</span> navigate</span>
+      <span><span class="sc-key">1</span> review</span>
+      <span><span class="sc-key">2</span> know it</span>
+    </div>
+    <a class="back-link" href="index.html">← Dashboard</a>
+  </div>
+</header>
+
+<main>
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box stat-total"><div class="stat-num" id="stat-total">50</div><div class="stat-label">Total Cards</div></div>
+    <div class="stat-box stat-known"><div class="stat-num" id="stat-known">0</div><div class="stat-label">Known ✓</div></div>
+    <div class="stat-box stat-review"><div class="stat-num" id="stat-review">0</div><div class="stat-label">Review ↻</div></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label" id="progress-label">Progress: 0%</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <button onclick="resetAll()" style="padding:6px 18px;border-radius:999px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171;cursor:pointer;font-family:var(--font);font-size:.78rem;font-weight:600;transition:all .2s;">Reset All</button>
+  </div>
+
+  <!-- DECK TABS -->
+  <div class="deck-tabs">
+    <button class="deck-tab active" onclick="setDeck('all',this)">⭐ All</button>
+    <button class="deck-tab" onclick="setDeck('dw',this)">🗄️ Data Warehouse</button>
+    <button class="deck-tab" onclick="setDeck('erp',this)">⚙️ ERP & SAP</button>
+    <button class="deck-tab" onclick="setDeck('dss',this)">🧠 DSS & Decisions</button>
+    <button class="deck-tab" onclick="setDeck('bi',this)">📊 BI & BPM</button>
+    <button class="deck-tab" onclick="setDeck('ai',this)">🤖 AI & ML</button>
+    <button class="deck-tab" onclick="setDeck('cloud',this)">☁️ Cloud Computing</button>
+    <button class="deck-tab" onclick="setDeck('ci',this)">🕵️‍♂️ Competitive Intelligence</button>
+    <button class="deck-tab" onclick="setDeck('is_basics',this)">🖥️ IS Basics</button>
+  </div>
+
+  <!-- FLIP INDICATOR -->
+  <div class="flip-indicator" id="flip-indicator">👆 Click card or press <strong>Space</strong> to reveal answer</div>
+
+  <!-- CARD STAGE -->
+  <div class="card-stage">
+    <div class="flash-card" id="flash-card" onclick="flipCard()">
+      <div class="card-face card-front" id="card-front">
+        <span class="card-num" id="card-num-front">1 / 50</span>
+        <span class="card-category" id="card-cat-front"></span>
+        <div class="card-q" id="card-q"></div>
+        <span class="card-hint">Click to flip</span>
+      </div>
+      <div class="card-face card-back" id="card-back">
+        <span class="card-num" id="card-num-back">1 / 50</span>
+        <span class="card-category" id="card-cat-back"></span>
+        <div class="card-a" id="card-a"></div>
+        <span class="card-hint">Rate below</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RATING -->
+  <div class="rating-row">
+    <button class="rate-btn rate-review" onclick="rateCard(1)">↻ Review Again (1)</button>
+    <button class="rate-btn rate-know" onclick="rateCard(2)">✓ Got It! (2)</button>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-row">
+    <button class="nav-btn" onclick="prevCard()" title="Previous (←)">←</button>
+    <span class="card-counter" id="card-counter">1 / 50</span>
+    <button class="nav-btn" onclick="nextCard()" title="Next (→)">→</button>
+  </div>
+
+  <!-- WEAK PANEL -->
+  <div class="weak-panel">
+    <div class="weak-panel-title">
+      📌 Cards Marked for Review
+      <span class="weak-count" id="weak-count">0</span>
+    </div>
+    <div class="weak-list" id="weak-list">
+      <span class="no-weak">No cards marked yet — start studying!</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Info Systems Exam Prep · <span>50 High-Yield Cards</span> · <a href="index.html">← Back to Dashboard</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CARD DATA — 50 exam-targeted cards
+// ═══════════════════════════════════════════════════════
+const CARDS = [
+  {cat:'dw',q:'Data Warehouse — 4 characteristics (acronym SINV)',a:'<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time'},
+  {cat:'dw',q:'What does \'Non-volatile\' mean in a Data Warehouse?',a:'Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly.'},
+  {cat:'dw',q:'What does \'Time-variant\' mean in a Data Warehouse?',a:'Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state).'},
+  {cat:'dw',q:'Main purpose of a Data Warehouse',a:'To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions.'},
+  {cat:'dw',q:'Which system is for DAILY TRANSACTIONS?',a:'<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP.'},
+  {cat:'dw',q:'Which system is for STRATEGIC ANALYSIS?',a:'<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP.'},
+  {cat:'dw',q:'OLTP vs OLAP',a:'<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse'},
+  {cat:'erp',q:'ERP stands for?',a:'<b>Enterprise Resource Planning</b>'},
+  {cat:'erp',q:'ERPS stands for?',a:'<b>Enterprise Resource Planning System</b>'},
+  {cat:'erp',q:'IS vs ERP — which is more general?',a:'<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS.'},
+  {cat:'erp',q:'ERP main goal',a:'<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments.'},
+  {cat:'erp',q:'ERP advantage',a:'<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos.'},
+  {cat:'erp',q:'ERP disadvantage',a:'<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>.'},
+  {cat:'erp',q:'Vendor lock-in — definition',a:'A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch.'},
+  {cat:'erp',q:'Leading ERP vendors — 3 examples',a:'<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders.'},
+  {cat:'erp',q:'SAP HANA — what is it?',a:'SAP\'s next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk.'},
+  {cat:'erp',q:'In-memory database — meaning',a:'Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics.'},
+  {cat:'dss',q:'DSS stands for?',a:'<b>Decision Support System</b>'},
+  {cat:'dss',q:'What is a DSS?',a:'An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information.'},
+  {cat:'dss',q:'DSS transforms what into what?',a:'<b>Raw data → useful information</b> for decision-making.'},
+  {cat:'dss',q:'What decisions does DSS support?',a:'<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS).'},
+  {cat:'dss',q:'DSS role — should it replace managers?',a:'NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential.'},
+  {cat:'dss',q:'STRUCTURED decision — definition',a:'A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level.'},
+  {cat:'dss',q:'UNSTRUCTURED decision — definition',a:'A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation.'},
+  {cat:'dss',q:'SEMI-STRUCTURED decision — definition',a:'<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed.'},
+  {cat:'dss',q:'Computers vs humans in decision-making',a:'<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment.'},
+  {cat:'bi',q:'BI — what does it stand for and do?',a:'<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>.'},
+  {cat:'bi',q:'BPM — definition and formula',a:'<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance.'},
+  {cat:'bi',q:'KPI stands for?',a:'<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives.'},
+  {cat:'bi',q:'Dashboard — what is it used for?',a:'Visualizes <b>important business information and KPIs</b> in real-time for decision-makers.'},
+  {cat:'ai',q:'4 main AI areas tested on exam',a:'1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks'},
+  {cat:'ai',q:'Machine Learning — definition',a:'AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task.'},
+  {cat:'ai',q:'Neural network — what inspired it?',a:'Inspired by the structure of the <b>human brain</b> — neurons connected in layers.'},
+  {cat:'ai',q:'Deep Learning — what is it connected to?',a:'<b>Multi-layer neural networks</b> — \'deep\' = many hidden layers of neurons.'},
+  {cat:'ai',q:'Computer Vision — definition',a:'AI field focused on <b>interpreting visual/image data</b> — enabling machines to \'see\' and understand images and video.'},
+  {cat:'ai',q:'NLP — definition',a:'<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation).'},
+  {cat:'ai',q:'Modern IS phenomena (current trends)',a:'<b>Cloud computing, virtualization, big data, AI, security</b>'},
+  {cat:'cloud',q:'Cloud computing — definition',a:'Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable).'},
+  {cat:'cloud',q:'SaaS — definition and example',a:'<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365).'},
+  {cat:'cloud',q:'IaaS — definition and example',a:'<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2).'},
+  {cat:'cloud',q:'PaaS — definition',a:'<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku).'},
+  {cat:'cloud',q:'Cloud core idea / model',a:'<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware.'},
+  {cat:'cloud',q:'Application architecture evolution',a:'Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services.'},
+  {cat:'ci',q:'Competitive Intelligence (CI) — definition',a:'<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage.'},
+  {cat:'ci',q:'CI helps decision-makers by?',a:'Improving understanding of the <b>competitive environment</b> to support strategic planning.'},
+  {cat:'ci',q:'CI sources — what kind?',a:'<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking.'},
+  {cat:'is_basics',q:'IS and management — how do they relate?',a:'Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters.'},
+  {cat:'is_basics',q:'Who sets the rules in an IS?',a:'<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules.'},
+  {cat:'is_basics',q:'Goal of IS in management',a:'To <b>support management</b> — never to replace decision makers.'},
+  {cat:'is_basics',q:'Example of automatic IS tool',a:'<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold.'}
+];
+
+// ═══════════════════════════════════════════════════════
+// CATEGORY META
+// ═══════════════════════════════════════════════════════
+const catLabel = {'dw':'Data Warehouse','erp':'ERP & SAP','dss':'DSS & Decisions','bi':'BI & BPM','ai':'AI & ML','cloud':'Cloud Computing','ci':'Competitive Intelligence','is_basics':'IS Basics'};
+const catEmoji = {'dw':'🗄️','erp':'⚙️','dss':'🧠','bi':'📊','ai':'🤖','cloud':'☁️','ci':'🕵️‍♂️','is_basics':'🖥️'};
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let deck = [...CARDS];
+let idx = 0;
+let isFlipped = false;
+let ratings = JSON.parse(localStorage.getItem('is_ratings') || '{}');
+let currentDeck = 'all';
+
+function saveDeckIdx() { localStorage.setItem('is_ratings_idx', JSON.stringify({deck:currentDeck,idx})); }
+function loadDeckIdx() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('is_ratings_idx') || '{}');
+    if (saved.deck === currentDeck) { idx = Math.min(saved.idx || 0, deck.length - 1); }
+  } catch(e){}
+}
+
+// ═══════════════════════════════════════════════════════
+// DECK SELECTION
+// ═══════════════════════════════════════════════════════
+function setDeck(cat, btn) {
+  currentDeck = cat;
+  deck = cat === 'all' ? [...CARDS] : CARDS.filter(c => c.cat === cat);
+  idx = 0; isFlipped = false;
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCard();
+  updateStats();
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER CARD
+// ═══════════════════════════════════════════════════════
+function renderCard() {
+  if (deck.length === 0) {
+    document.getElementById('card-q').textContent = 'No cards in this deck.';
+    document.getElementById('card-a').textContent = '';
+    document.getElementById('card-counter').textContent = '0 / 0';
+    return;
+  }
+  const card = deck[idx];
+  const num = `${idx+1} / ${deck.length}`;
+  const catClass = `cat-${card.cat}`;
+  const catText = `${catEmoji[card.cat] || '📝'} ${catLabel[card.cat] || card.cat}`;
+
+  document.getElementById('card-q').innerHTML = card.q;
+  document.getElementById('card-a').innerHTML = card.a;
+  document.getElementById('card-num-front').textContent = num;
+  document.getElementById('card-num-back').textContent = num;
+  document.getElementById('card-counter').textContent = num;
+
+  ['card-cat-front','card-cat-back'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = `card-category ${catClass}`;
+    el.textContent = catText;
+  });
+
+  if (isFlipped) {
+    document.getElementById('flash-card').classList.remove('flipped');
+    isFlipped = false;
+  }
+  document.getElementById('flip-indicator').style.opacity = '1';
+  saveDeckIdx();
+}
+
+// ═══════════════════════════════════════════════════════
+// FLIP
+// ═══════════════════════════════════════════════════════
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flash-card').classList.toggle('flipped', isFlipped);
+  document.getElementById('flip-indicator').style.opacity = isFlipped ? '0' : '1';
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATE
+// ═══════════════════════════════════════════════════════
+function nextCard() {
+  if (deck.length === 0) return;
+  idx = (idx + 1) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+function prevCard() {
+  if (deck.length === 0) return;
+  idx = (idx - 1 + deck.length) % deck.length;
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RATING
+// ═══════════════════════════════════════════════════════
+function rateCard(rating) {
+  if (deck.length === 0) return;
+  const card = deck[idx];
+  const key = `${card.cat}::${card.q.substring(0,40)}`;
+  ratings[key] = rating;
+  localStorage.setItem('is_ratings', JSON.stringify(ratings));
+  showToast(rating === 2 ? '✅ Got it!' : '↻ Marked for review');
+  updateStats();
+  updateWeakPanel();
+  nextCard();
+}
+
+function getRatingKey(card) {
+  return `${card.cat}::${card.q.substring(0,40)}`;
+}
+
+// ═══════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════
+function updateStats() {
+  let known = 0, review = 0;
+  CARDS.forEach(c => {
+    const k = getRatingKey(c);
+    if (ratings[k] === 2) known++;
+    else if (ratings[k] === 1) review++;
+  });
+  document.getElementById('stat-total').textContent = CARDS.length;
+  document.getElementById('stat-known').textContent = known;
+  document.getElementById('stat-review').textContent = review;
+  const pct = Math.round((known / CARDS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Progress: ${pct}% (${known}/${CARDS.length} known)`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WEAK PANEL
+// ═══════════════════════════════════════════════════════
+function updateWeakPanel() {
+  const weakCards = CARDS.filter(c => ratings[getRatingKey(c)] === 1);
+  document.getElementById('weak-count').textContent = weakCards.length;
+  const wl = document.getElementById('weak-list');
+  if (weakCards.length === 0) {
+    wl.innerHTML = '<span class="no-weak">No cards marked for review. Keep going!</span>';
+    return;
+  }
+  wl.innerHTML = '';
+  weakCards.forEach(c => {
+    const chip = document.createElement('span');
+    chip.className = 'weak-chip';
+    const stripped = c.q.replace(/<[^>]+>/g,'');
+    chip.textContent = stripped.length > 32 ? stripped.substring(0,32) + '…' : stripped;
+    chip.title = stripped;
+    chip.onclick = () => jumpToCard(c);
+    wl.appendChild(chip);
+  });
+}
+
+function jumpToCard(card) {
+  currentDeck = 'all';
+  deck = [...CARDS];
+  document.querySelectorAll('.deck-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('.deck-tab').classList.add('active');
+  idx = CARDS.indexOf(card);
+  isFlipped = false;
+  renderCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════════════════
+function resetAll() {
+  if (!confirm('Reset all ratings? Your progress will be lost.')) return;
+  ratings = {};
+  localStorage.removeItem('is_ratings');
+  updateStats();
+  updateWeakPanel();
+  showToast('🗑️ All ratings reset');
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// ═══════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch(e.key) {
+    case ' ': e.preventDefault(); flipCard(); break;
+    case 'ArrowRight': nextCard(); break;
+    case 'ArrowLeft': prevCard(); break;
+    case '1': rateCard(1); break;
+    case '2': rateCard(2); break;
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+loadDeckIdx();
+renderCard();
+updateStats();
+updateWeakPanel();
+</script>
+</body>
+</html>

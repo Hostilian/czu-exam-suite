@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CZU Prague | Exam Prep Hub — ETE2AE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060810;
+      --surface: #0d1018;
+      --surface2: #111520;
+      --surface3: #161c28;
+      --cyan: #22d3ee;
+      --cyan-dim: #0e7490;
+      --orange: #f97316;
+      --orange-dim: #c2410c;
+      --purple: #a855f7;
+      --purple-dim: #7c3aed;
+      --green: #10b981;
+      --green-dim: #059669;
+      --text: #e8eaf0;
+      --text-dim: #8b90a0;
+      --border: rgba(34, 211, 238, 0.12);
+      --glow-cyan: rgba(34, 211, 238, 0.25);
+      --radius: 20px;
+      --radius-sm: 12px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .mesh-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 20%, rgba(34, 211, 238, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 85% 70%, rgba(249, 115, 22, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 60%),
+        var(--bg);
+      animation: meshPulse 15s ease-in-out infinite alternate;
+    }
+    @keyframes meshPulse {
+      0% { background-position: 0% 0%, 100% 100%, 50% 50%; }
+      100% { background-position: 5% 10%, 95% 90%, 55% 45%; }
+    }
+    header {
+      position: relative; z-index: 10;
+      max-width: 1200px; width: 100%; margin: 3rem auto 2rem;
+      padding: 0 2rem; text-align: center;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      color: var(--cyan); font-size: 0.8rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 1.25rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    h1 {
+      font-size: 2.75rem; font-weight: 800; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 40%, var(--text-dim) 70%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem; line-height: 1.15;
+    }
+    .subtitle {
+      font-size: 1.1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto;
+      line-height: 1.5;
+    }
+    main {
+      position: relative; z-index: 10;
+      max-width: 1200px; width: 100%; margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: flex; flex-direction: column; gap: 3rem;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .grid-container { grid-template-columns: repeat(2, 1fr); }
+    }
+    .hub-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(6, 8, 16, 0.3);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    .hub-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      opacity: 0.7;
+    }
+    .hub-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(34, 211, 238, 0.25);
+      box-shadow: 0 12px 30px rgba(34, 211, 238, 0.08);
+    }
+    .hub-card.card-os::before { background: linear-gradient(90deg, var(--cyan), transparent); }
+    .hub-card.card-is::before { background: linear-gradient(90deg, var(--purple), transparent); }
+    .hub-card.card-markup::before { background: linear-gradient(90deg, var(--orange), transparent); }
+    .hub-card.card-orsa::before { background: linear-gradient(90deg, var(--green), transparent); }
+    
+    .card-header {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .card-os .card-icon { background: rgba(34, 211, 238, 0.1); color: var(--cyan); }
+    .card-is .card-icon { background: rgba(168, 85, 247, 0.1); color: var(--purple); }
+    .card-markup .card-icon { background: rgba(249, 115, 22, 0.1); color: var(--orange); }
+    .card-orsa .card-icon { background: rgba(16, 185, 129, 0.1); color: var(--green); }
+
+    .card-title-group { display: flex; flex-direction: column; }
+    .card-subject { font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .card-code { font-size: 0.72rem; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    
+    .card-body {
+      font-size: 0.92rem; color: var(--text-dim); line-height: 1.5;
+    }
+    .card-topics {
+      margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .topic-pill {
+      font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 50px;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+    }
+    
+    .card-actions {
+      display: flex; gap: 0.75rem; margin-top: auto; flex-wrap: wrap;
+    }
+    .btn-primary {
+      flex: 1; min-width: 140px; text-align: center;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: #fff; text-decoration: none; padding: 12px 20px;
+      border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem;
+      transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .card-os .btn-primary { border-color: rgba(34, 211, 238, 0.2); }
+    .card-is .btn-primary { border-color: rgba(168, 85, 247, 0.2); }
+    .card-markup .btn-primary { border-color: rgba(249, 115, 22, 0.2); }
+    .card-orsa .btn-primary { border-color: rgba(16, 185, 129, 0.2); }
+    
+    .card-os .btn-primary:hover { background: var(--cyan); color: #000; box-shadow: 0 0 15px var(--glow-cyan); }
+    .card-is .btn-primary:hover { background: var(--purple); color: #fff; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+    .card-markup .btn-primary:hover { background: var(--orange); color: #fff; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); }
+    .card-orsa .btn-primary:hover { background: var(--green); color: #000; box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
+
+    .btn-secondary {
+      background: transparent; border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-dim); text-decoration: none; padding: 12px 18px;
+      border-radius: var(--radius-sm); font-weight: 500; font-size: 0.88rem;
+      transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.2); color: #fff; background: rgba(255, 255, 255, 0.02);
+    }
+    footer {
+      margin-top: auto; padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: center; font-size: 0.82rem; color: var(--text-dim);
+      position: relative; z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="mesh-bg"></div>
+  
+  <header>
+    <div class="badge">🌐 ETE2AE EXAM PREP HUB</div>
+    <h1>CZU Prague Exam Suite</h1>
+    <p class="subtitle">Premium, interactive active-recall study guides and Text-to-Speech audio planners optimized for your phone.</p>
+  </header>
+
+  <main>
+    <div class="grid-container">
+      
+      <!-- OS CARD -->
+      <div class="hub-card card-os">
+        <div class="card-header">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title-group">
+            <span class="card-subject">Operating Systems</span>
+            <span class="card-code">OS &amp; Networks</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Complete dashboard covering CPU Scheduling Gantt calculators, virtual memory paging simulators, IP subnetting calculators, and Linux CLI sandbox.
+          <div class="card-topics">
+            <span class="topic-pill">Scheduling</span>
+            <span class="topic-pill">Subnetting</span>
+            <span class="topic-pill">Paging</span>
+            <span class="topic-pill">Linux CLI</span>
+            <span class="topic-pill">TTS Player</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="OS_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="OS_EXAM_SUITE/anki_decks/OSCN_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
+      <!-- MARKUP CARD -->
+      <div class="hub-card card-markup">
+        <div class="card-header">
+          <div class="card-icon">🌐</div>
+          <div class="card-title-group">
+            <span class="card-subject">Markup Languages</span>
+            <span class="card-code">XML, JSON &amp; HTML5</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Interactive study playground featuring XPath evaluators, CSS specificity calculators, JSON schema validation tools, and semantic HTML layout checkers.
+          <div class="card-topics">
+            <span class="topic-pill">XPath</span>
+            <span class="topic-pill">Specificity</span>
+            <span class="topic-pill">JSON Schema</span>
+            <span class="topic-pill">HTML5</span>
+            <span class="topic-pill">TTS Player</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="MARKUP_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="MARKUP_EXAM_SUITE/anki_decks/Markup_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
+      <!-- IS CARD -->
+      <div class="hub-card card-is">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <div class="card-title-group">
+            <span class="card-subject">Information Systems</span>
+            <span class="card-code">IS Management</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Active recall checkers for Data Warehouses (SINV), systems evolution, cloud service comparisons (SaaS/PaaS/IaaS), and ERP implementation details.
+          <div class="card-topics">
+            <span class="topic-pill">Data Warehouse</span>
+            <span class="topic-pill">SaaS/PaaS/IaaS</span>
+            <span class="topic-pill">SDLC</span>
+            <span class="topic-pill">ERP (SAP)</span>
+            <span class="topic-pill">TTS Player</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="IS_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="IS_EXAM_SUITE/anki_decks/IS_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
+      <!-- ORSA CARD -->
+      <div class="hub-card card-orsa">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <div class="card-title-group">
+            <span class="card-subject">Operations Research</span>
+            <span class="card-code">ORSA &amp; Dynamics</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Mathematical solvers for Linear Programming (simplex), queueing theory curves (M/M/1), Markov state vectors, and Leontief Input-Output matrices.
+          <div class="card-topics">
+            <span class="topic-pill">Simplex</span>
+            <span class="topic-pill">Leontief I-O</span>
+            <span class="topic-pill">Queueing Curves</span>
+            <span class="topic-pill">Vensim SD</span>
+            <span class="topic-pill">TTS Player</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="ORSA_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="ORSA_EXAM_SUITE/anki_decks/ORSA_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>CZU Prague | Faculty of Economics and Management — IT | ETE2AE Exam Prep Portal</p>
+  </footer>
+</body>
+</html>

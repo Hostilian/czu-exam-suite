@@ -1,0 +1,118 @@
+/* Premium Anki Card Styling Template for ORSA Exam Prep */
+/* Paste this into the "Styling" box of your Anki Card Layout */
+
+.card {
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    text-align: center;
+    color: #e2e8f0; /* Soft slate pastel text */
+    background-color: #0d1117; /* Dark mode backdrop */
+    background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 400px),
+                      radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.03), transparent 300px);
+    line-height: 1.6;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+}
+
+/* Card container for a premium glassmorphic border */
+.card-body {
+    background: rgba(22, 27, 34, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 650px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.card-body:hover {
+    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.12);
+}
+
+/* Front card specific styles */
+.front-text {
+    font-weight: 600;
+    font-size: 22px;
+    color: #f8fafc;
+    letter-spacing: -0.01em;
+}
+
+/* Divider between front and back */
+hr#answer {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(99, 102, 241, 0), rgba(99, 102, 241, 0.5), rgba(99, 102, 241, 0));
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* Back card specific styles */
+.back-text {
+    font-weight: 400;
+    font-size: 18px;
+    color: #cbd5e1;
+    text-align: left;
+}
+
+/* Highlight key terms and important concepts */
+b, strong {
+    color: #818cf8; /* Light Indigo */
+    font-weight: 600;
+}
+
+i, em {
+    color: #fbbf24; /* Pastel Amber */
+}
+
+code {
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #34d399; /* Emerald Green */
+}
+
+/* Styled Tags */
+.tags-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-badge {
+    background: rgba(129, 140, 248, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.25);
+    color: #a5b4fc;
+    border-radius: 9999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Equations and formulas */
+.equation {
+    display: block;
+    text-align: center;
+    margin: 15px 0;
+    padding: 12px;
+    background: rgba(99, 102, 241, 0.08);
+    border-left: 3px solid #6366f1;
+    border-radius: 0 8px 8px 0;
+    font-size: 18px;
+    color: #818cf8;
+}

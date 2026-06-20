@@ -1,0 +1,31 @@
+# Ignore course assets and virtual environments
+_original_course_files/
+.venv/
+__pycache__/
+*.pyc
+
+# Ignore heavy media and zips
+*.mp4
+*.zip
+*.avi
+*.mkv
+*.mov
+
+# Ignore backup and temp files
+*.bak
+*inspect*.py
+*extract*.py
+*verify*.py
+*update*.py
+inspect_out.txt
+pdf_content.txt
+docx_content.txt
+example_pdf_content.txt
+
+# Keep local JSON dumps if needed, but we don't need them
+is_cards.json
+orsa_cards.json
+markup_db.json
+parse_is_cards.js
+parse_orsa_cards.js
+parse_markup_cards.js
