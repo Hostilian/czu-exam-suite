@@ -1,0 +1,101 @@
+# ============================================================
+# OS & Networks ETE2AE — EXAM-ORIENTED Anki Deck (New Format)
+# CZU Prague — 2026 Exam Blitz Edition
+# Format: Front[TAB]Back[TAB]Tag
+# Import: File > Import > this file | Fields: 3 (tab-separated)
+# ============================================================
+
+# ─── OS BASICS ───
+What 2 system resources does the OS control?	CPU time and Operating memory (RAM)	exam_os_basics
+What function is NOT performed by the OS?	Defragmentation — it's a disk utility tool, NOT an OS core function. (Common exam trap!)	exam_os_basics
+Programming languages used to build an OS?	C, C++, C#, and Assembly language	exam_os_basics
+Linux — what is it technically?	Open-source OS kernel written from scratch by Linus Torvalds in 1991. NOT derived from Unix.	exam_os_basics
+Where is BIOS software stored?	EEPROM or NAND flash memory on the motherboard (non-volatile)	exam_os_basics
+FAT16 file system — maximum size?	4 GB — limited by 16-bit cluster addressing	exam_os_basics
+What did PCs give each user when introduced?	CPU power, Operating memory (RAM), and Local storage (HDD)	exam_os_basics
+Host-Terminal model — how did it work?	Central mainframe processed everything; network only carried keystrokes and screen data to dumb terminals	exam_os_basics
+Batch processing — key feature?	Jobs grouped in batches, executed one-by-one with offline processing (no user interaction during execution)	exam_os_basics
+What is a server — common misconception?	A server is a ROLE, not necessarily a powerful dedicated machine. Any device can be a server.	exam_os_basics
+
+# ─── MULTITASKING ───
+Cooperative vs Pre-emptive multitasking — difference?	Cooperative: apps manage own resources, voluntarily yield CPU. Pre-emptive: OS forcibly manages CPU, can kill misbehaving apps.	exam_multitask
+Problem with cooperative multitasking?	A badly written app could crash the entire system by not releasing resources	exam_multitask
+Which multitasking do modern OSes use?	Pre-emptive multitasking — OS fully controls resource allocation	exam_multitask
+When did OSes adopt pre-emptive multitasking?	Unix: always. Windows: NT/95. Mac: Mac OS X	exam_multitask
+
+# ─── VIRTUAL MEMORY ───
+Virtual memory — definition?	OS uses HDD/SSD disk space to simulate additional RAM, allowing programs larger than physical RAM	exam_vmem
+Windows vs Linux virtual memory files?	Windows: page files | Linux: swap files	exam_vmem
+Recommended swap-to-RAM ratio?	3:1 — swap should be 3 times physical RAM	exam_vmem
+Which software manages virtual memory?	The OS kernel — translates virtual addresses into physical addresses	exam_vmem
+Swapping vs Paging — difference?	Swapping: moves entire process to disk. Paging: moves fixed-size blocks (pages) between RAM and disk.	exam_vmem
+What is FIFO page replacement?	Replace the page that has been in memory the longest. Suffers from Belady's Anomaly.	exam_vmem
+What is LRU page replacement?	Replace the Least Recently Used page. No Belady's Anomaly. More efficient than FIFO.	exam_vmem
+What is Belady's Anomaly?	Counter-intuitive: adding more frames causes MORE page faults in FIFO. Doesn't occur in LRU.	exam_vmem
+
+# ─── CLI ───
+CLI — two tested correct statements?	"Remote access requires low bandwidth" and "User can perform any action that has a command"	exam_cli
+CLI advantages (5)?	Very low bandwidth for remote access; any action possible; low RAM/CPU; works low-resolution; faster for experts	exam_cli
+CLI disadvantages (5)?	Must memorize commands; hard for novices; no autocomplete; spelling errors restart process; high learning curve	exam_cli
+Where is CLI used today?	Networking setup, server administration, DevOps, scripting, remote server management	exam_cli
+
+# ─── NETWORKING ───
+Public IP — what is it?	ISP-assigned, globally unique, internet-visible, limited supply in IPv4, shows approximate location	exam_net
+Private IP — what is it?	Local network only, multiple devices can share same range, not internet-routable	exam_net
+How do private IPs reach the internet?	NAT — Network Address Translation — converts private IP to public IP at the router	exam_net
+DNS — what kind of system?	Distributed database resolving domain names to IP addresses. Reads domain from right to left.	exam_net
+SSH vs plain terminal — difference?	SSH uses encrypted channel on port 22. Plain terminal/Telnet is unencrypted.	exam_net
+Default diagnostic tools in Windows AND Linux?	ping and traceroute (tracert on Windows)	exam_net
+What does ping do?	Sends ICMP Echo Request to test connectivity and measure round-trip time	exam_net
+What does traceroute do?	Traces path packets take to destination using TTL. Linux: traceroute, Windows: tracert	exam_net
+
+# ─── OSI MODEL ───
+OSI Layer 7 — name, PDU, protocols?	Application | PDU: Data | Protocols: HTTP, HTTPS, FTP, DNS, DHCP, SSH, SMTP	exam_osi
+OSI Layer 6 — name, PDU, protocols?	Presentation | PDU: Data | Protocols: TLS/SSL, JPEG, ASCII (encryption/encoding)	exam_osi
+OSI Layer 5 — name, PDU, protocols?	Session | PDU: Data | Protocols: NetBIOS, RPC	exam_osi
+OSI Layer 4 — name, PDU, protocols?	Transport | PDU: Segment | Protocols: TCP, UDP	exam_osi
+OSI Layer 3 — name, PDU, protocols?	Network | PDU: Packet | Protocols: IP, ICMP, ARP | Device: Router	exam_osi
+OSI Layer 2 — name, PDU, protocols?	Data Link | PDU: Frame | Protocols: Ethernet, MAC | Device: Switch	exam_osi
+OSI Layer 1 — name, PDU, protocols?	Physical | PDU: Bits | Devices: Hub, Cables, Repeater	exam_osi
+TCP/IP 4 layers — what maps to what?	Application(7+6+5) → Transport(4) → Internet(3) → Network Access(2+1)	exam_osi
+OSI mnemonic top-to-bottom?	All People Seem To Need Data Processing (Application, Presentation, Session, Transport, Network, Data Link, Physical)	exam_osi
+
+# ─── PROTOCOLS ───
+TCP vs UDP — key difference?	TCP: connection-oriented, reliable, ordered. UDP: connectionless, no guarantee, faster.	exam_protocols
+TCP 3-way handshake steps?	SYN → SYN-ACK → ACK	exam_protocols
+DHCP DORA process?	Discover → Offer → Request → Acknowledge	exam_protocols
+Port numbers — HTTP, HTTPS, SSH, FTP, DNS, SMTP?	HTTP=80, HTTPS=443, SSH=22, FTP=21, DNS=53, SMTP=25	exam_protocols
+What is ARP?	Address Resolution Protocol — maps IP address to MAC address within local network	exam_protocols
+MQTT — what transport? What model?	Runs over TCP. Publish/Subscribe model. Requires a broker. For IoT telemetry.	exam_protocols
+CoAP — what transport? What model?	Runs over UDP. RESTful request/response (GET/POST). For lightweight IoT nodes.	exam_protocols
+
+# ─── SUBNETTING ───
+Subnetting — usable hosts formula?	2^(host bits) − 2 (subtract network address and broadcast)	exam_subnet
+Private range Class A?	10.0.0.0/8	exam_subnet
+Private range Class B?	172.16.0.0/12	exam_subnet
+Private range Class C?	192.168.0.0/16	exam_subnet
+/24 subnet — how many usable hosts?	254 (2^8 − 2)	exam_subnet
+/25 subnet — how many usable hosts?	126 (2^7 − 2)	exam_subnet
+
+# ─── CLOUD & WIRELESS ───
+3 cloud deployment types?	Private (sensitive/GDPR data), Hybrid (mix), Public (scalable, e.g. AWS)	exam_cloud
+Cloud service models — IaaS, PaaS, SaaS?	IaaS=hardware/VMs, PaaS=OS+runtime, SaaS=ready software (Gmail)	exam_cloud
+Wireless — why can't it support VTC?	Limited bandwidth — cannot support video teleconferencing	exam_wireless
+Wireless shared bands problem?	2.4 GHz and 5 GHz are free but prone to congestion and interference	exam_wireless
+Wi-Fi 6 (802.11ax) specs?	9.6 Gbps maximum speed, 2.4/5/6 GHz frequencies	exam_wireless
+WPA3 vs WPA2 — difference?	WPA3 uses SAE (Simultaneous Authentication of Equals) — much more secure than WPA2 AES-CCMP	exam_wireless
+
+# ─── IP RIGHTS ───
+Arguments FOR intellectual property rights (3)?	Incentive to innovate, rewards creativity, protects ideas from theft	exam_ip
+Arguments AGAINST intellectual property rights (3)?	Creates monopolies, higher consumer prices, stifles competition	exam_ip
+Historical IP documents — 4 dates?	Magna Carta 1215, US Declaration 1776, French Declaration 1789, UN Human Rights 1948	exam_ip
+
+# ─── LINUX ───
+ls -la — what does it show?	All files including hidden (.files) in long format with permissions, owner, size, date	exam_linux
+chmod 755 — what permissions?	Owner: rwx (7), Group: r-x (5), Others: r-x (5) — makes executable for all	exam_linux
+chmod 644 — what permissions?	Owner: rw- (6), Group: r-- (4), Others: r-- (4) — standard for web files	exam_linux
+kill -9 vs kill -15?	kill -9 = SIGKILL (force, unblockable). kill -15 = SIGTERM (graceful, can clean up)	exam_linux
+ps aux — what does it show?	All running processes with user, PID, CPU%, MEM%, command	exam_linux
+netstat -tulpn — what does it show?	TCP/UDP listening ports with PID. Modern replacement: ss -tulpn	exam_linux
+df -h — what does it show?	Disk Free — filesystem usage in human-readable format per mount point	exam_linux
+grep -r "pattern" /dir — what does it do?	Recursively searches for pattern in all files. -i = case-insensitive, -n = line numbers	exam_linux

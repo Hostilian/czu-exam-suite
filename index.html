@@ -179,6 +179,277 @@
       text-align: center; font-size: 0.82rem; color: var(--text-dim);
       position: relative; z-index: 10;
     }
+
+    /* --- Master Audio Player CSS --- */
+    .player-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 12px 40px rgba(6, 8, 16, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .player-container::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--orange), var(--green));
+    }
+    .player-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .player-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .player-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+    .player-controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .player-controls {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .control-group label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .control-group select, .control-group input[type="range"] {
+      background: var(--surface2);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .control-group select:focus {
+      border-color: var(--cyan);
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .slider-val {
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan);
+      min-width: 35px;
+    }
+    .now-playing-card {
+      background: var(--surface3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .now-playing-card.active-speaking {
+      border-color: rgba(34, 211, 238, 0.35);
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.08);
+    }
+    .now-playing-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .now-playing-tags {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .subj-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .subj-badge.os { background: rgba(34, 211, 238, 0.15); color: var(--cyan); }
+    .subj-badge.is { background: rgba(168, 85, 247, 0.15); color: var(--purple); }
+    .subj-badge.markup { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
+    .subj-badge.orsa { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+    
+    .cat-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-dim);
+    }
+    .now-playing-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+    .now-playing-q {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+    .now-playing-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+    .now-playing-ans {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--cyan);
+      padding: 1rem;
+      border-radius: 4px;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      display: none;
+      margin-top: 0.5rem;
+    }
+    .now-playing-ans.visible {
+      display: block;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal-btn {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .reveal-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .playback-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 0.5rem 0;
+    }
+    .media-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-media {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--surface2);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .btn-media:hover {
+      background: var(--surface3);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+    .btn-media.play-pause-btn {
+      width: 52px;
+      height: 52px;
+      background: var(--cyan);
+      color: #000;
+      font-size: 1.25rem;
+      border: none;
+    }
+    .btn-media.play-pause-btn:hover {
+      background: #06b6d4;
+      box-shadow: 0 0 15px var(--glow-cyan);
+    }
+    .btn-media.play-pause-btn.playing {
+      background: var(--orange);
+      color: #fff;
+    }
+    .btn-media.play-pause-btn.playing:hover {
+      background: #ea580c;
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+    }
+    .media-checkboxes {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      user-select: none;
+    }
+    .media-checkboxes label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .media-checkboxes input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--cyan);
+      cursor: pointer;
+    }
+    .player-progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .player-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -191,6 +462,85 @@
   </header>
 
   <main>
+
+    <!-- 🎧 GLOBAL AUDIO CRAM PLAYER -->
+    <section class="player-container">
+      <div class="player-header">
+        <div class="player-title">🎧 Global 2-Hour Audio Cram Player</div>
+        <p class="player-subtitle">Listen to active-recall flashcards across all 4 subjects mixed together or filtered. Uses native text-to-speech with auto-scrolling and screen wake lock to keep your phone active while you listen.</p>
+      </div>
+
+      <div class="player-controls">
+        <div class="control-group">
+          <label for="player-subject">Subject Filter</label>
+          <select id="player-subject" onchange="changePlaylistSubject()">
+            <option value="all">⚡ All Subjects Combined</option>
+            <option value="os">🖥️ Operating Systems</option>
+            <option value="markup">🌐 Markup Languages</option>
+            <option value="is">📊 Information Systems</option>
+            <option value="orsa">📈 Operations Research</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="player-mode">Reading Mode</label>
+          <select id="player-mode">
+            <option value="qa">Question + Answer</option>
+            <option value="q">Question Only</option>
+            <option value="a">Answer Only</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="player-voice">TTS Voice</label>
+          <select id="player-voice"></select>
+        </div>
+        <div class="control-group">
+          <label for="player-speed">Speed Selector</label>
+          <div class="slider-container">
+            <input type="range" id="player-speed" min="0.8" max="2.0" step="0.1" value="1.0" oninput="updateSpeedVal(this.value)"/>
+            <span class="slider-val" id="player-speed-val">1.0x</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Now Playing Display Card -->
+      <div class="now-playing-card" id="now-playing-display">
+        <div class="now-playing-meta">
+          <div class="now-playing-tags">
+            <span id="now-playing-subj" class="subj-badge os">Subject</span>
+            <span id="now-playing-cat" class="cat-badge">Category</span>
+          </div>
+          <span class="now-playing-counter" id="now-playing-progress">Card 0 / 0</span>
+        </div>
+        <div class="now-playing-q" id="now-playing-question">Select play to start the session.</div>
+        <div class="now-playing-desc" id="now-playing-desc">Detailed card sub-concept description will show here.</div>
+        <button class="reveal-btn" id="now-playing-reveal-btn" onclick="toggleNowPlayingAnswer()">👁️ Reveal Answer</button>
+        <div class="now-playing-ans" id="now-playing-answer">Answer content will be displayed here.</div>
+      </div>
+
+      <!-- Media Controls -->
+      <div class="playback-controls">
+        <div class="media-buttons">
+          <button class="btn-media" onclick="prevCard()" title="Previous Card">⏮</button>
+          <button class="btn-media play-pause-btn" id="player-play-btn" onclick="togglePlay()" title="Play / Pause">▶</button>
+          <button class="btn-media" onclick="nextCard()" title="Next Card">⏭</button>
+          <button class="btn-media" onclick="stopPlayer()" title="Stop Player">⏹</button>
+        </div>
+
+        <div class="media-checkboxes">
+          <label title="Automatically advance to the next card after speaking">
+            <input type="checkbox" id="player-auto-advance" checked/> Auto-Advance
+          </label>
+          <label title="Shuffle the selected cards randomly for active recall">
+            <input type="checkbox" id="player-shuffle" onchange="changePlaylistSubject()"/> Shuffle Decks
+          </label>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="player-progress-container">
+        <div class="player-progress-bar" id="player-progress-bar"></div>
+      </div>
+    </section>
     <div class="grid-container">
       
       <!-- OS CARD -->
@@ -299,5 +649,325 @@
   <footer>
     <p>CZU Prague | Faculty of Economics and Management — IT | ETE2AE Exam Prep Portal</p>
   </footer>
+
+  <script src="master_cards.js"></script>
+  <script>
+    let synth = window.speechSynthesis;
+    let utterance = null;
+    let playlist = [];
+    let currentIdx = -1;
+    let isPlaying = false;
+    let isPaused = false;
+    let voices = [];
+    let wakeLock = null;
+
+    // Wake Lock functions
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          console.log('Wake Lock is active');
+        }
+      } catch (err) {
+        console.warn(`Wake lock request failed: ${err.name}, ${err.message}`);
+      }
+    }
+
+    function releaseWakeLock() {
+      if (wakeLock !== null) {
+        wakeLock.release();
+        wakeLock = null;
+        console.log('Wake Lock released');
+      }
+    }
+
+    document.addEventListener('visibilitychange', async () => {
+      if (wakeLock !== null && document.visibilityState === 'visible') {
+        try {
+          wakeLock = await navigator.wakeLock.request('screen');
+        } catch(e){}
+      }
+    });
+
+    // Initialize TTS and populate voice options
+    function initPlayerTTS() {
+      if (typeof speechSynthesis === 'undefined') return;
+      populateVoices();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoices;
+      }
+      changePlaylistSubject();
+    }
+
+    function populateVoices() {
+      voices = speechSynthesis.getVoices();
+      const select = document.getElementById('player-voice');
+      if (!select) return;
+      const currentVal = select.value;
+      select.innerHTML = '';
+      
+      let filtered = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
+      if (filtered.length === 0) filtered = voices;
+      
+      filtered.forEach(voice => {
+        const opt = document.createElement('option');
+        opt.value = voice.name;
+        opt.textContent = `${voice.name} (${voice.lang})`;
+        if (voice.name === currentVal) {
+          opt.selected = true;
+        } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+
+    function updateSpeedVal(val) {
+      document.getElementById('player-speed-val').textContent = val + 'x';
+    }
+
+    // Set up the active playlist based on subject filter
+    function changePlaylistSubject() {
+      stopPlayer();
+      const subj = document.getElementById('player-subject').value;
+      const shuffle = document.getElementById('player-shuffle').checked;
+      
+      let rawList = [];
+      if (subj === 'all') {
+        // Combine cards from all subjects
+        for (const s in masterCardsData) {
+          masterCardsData[s].forEach(c => {
+            rawList.push({ ...c, subject: s });
+          });
+        }
+      } else {
+        if (masterCardsData[subj]) {
+          masterCardsData[subj].forEach(c => {
+            rawList.push({ ...c, subject: subj });
+          });
+        }
+      }
+
+      if (shuffle) {
+        // Shuffle the array
+        for (let i = rawList.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [rawList[i], rawList[j]] = [rawList[j], rawList[i]];
+        }
+      } else {
+        // Sort by subject first, then id
+        const order = { os: 1, markup: 2, is: 3, orsa: 4 };
+        rawList.sort((a, b) => {
+          if (a.subject !== b.subject) {
+            return (order[a.subject] || 99) - (order[b.subject] || 99);
+          }
+          return a.id - b.id;
+        });
+      }
+
+      playlist = rawList;
+      currentIdx = playlist.length > 0 ? 0 : -1;
+      updateDisplay();
+    }
+
+    function toggleNowPlayingAnswer() {
+      const ansDiv = document.getElementById('now-playing-answer');
+      const btn = document.getElementById('now-playing-reveal-btn');
+      if (ansDiv.classList.contains('visible')) {
+        ansDiv.classList.remove('visible');
+        btn.textContent = '👁️ Reveal Answer';
+      } else {
+        ansDiv.classList.add('visible');
+        btn.textContent = '🙈 Hide Answer';
+      }
+    }
+
+    function updateDisplay() {
+      const displayCard = document.getElementById('now-playing-display');
+      const progressFill = document.getElementById('player-progress-bar');
+      const progressText = document.getElementById('now-playing-progress');
+      
+      if (currentIdx < 0 || currentIdx >= playlist.length) {
+        document.getElementById('now-playing-subj').style.display = 'none';
+        document.getElementById('now-playing-cat').style.display = 'none';
+        document.getElementById('now-playing-question').textContent = "Playlist is empty or completed.";
+        document.getElementById('now-playing-desc').textContent = "Select a subject filter or click play.";
+        document.getElementById('now-playing-answer').classList.remove('visible');
+        document.getElementById('now-playing-answer').textContent = "";
+        document.getElementById('now-playing-reveal-btn').style.display = 'none';
+        progressText.textContent = `Card 0 / 0`;
+        progressFill.style.width = `0%`;
+        displayCard.classList.remove('active-speaking');
+        return;
+      }
+
+      const card = playlist[currentIdx];
+      const subjBadge = document.getElementById('now-playing-subj');
+      subjBadge.style.display = 'inline-block';
+      subjBadge.textContent = card.subject.toUpperCase();
+      subjBadge.className = 'subj-badge ' + card.subject;
+
+      const catBadge = document.getElementById('now-playing-cat');
+      catBadge.style.display = 'inline-block';
+      catBadge.textContent = card.category;
+
+      document.getElementById('now-playing-question').innerHTML = card.q;
+      document.getElementById('now-playing-desc').innerHTML = card.desc;
+      document.getElementById('now-playing-answer').innerHTML = card.ans;
+      document.getElementById('now-playing-reveal-btn').style.display = 'inline-block';
+      
+      // Keep answer state sync
+      const mode = document.getElementById('player-mode').value;
+      if (mode === 'qa' || mode === 'a') {
+        document.getElementById('now-playing-answer').classList.add('visible');
+        document.getElementById('now-playing-reveal-btn').textContent = '🙈 Hide Answer';
+      } else {
+        document.getElementById('now-playing-answer').classList.remove('visible');
+        document.getElementById('now-playing-reveal-btn').textContent = '👁️ Reveal Answer';
+      }
+
+      progressText.textContent = `Card ${currentIdx + 1} / ${playlist.length}`;
+      const pct = ((currentIdx + 1) / playlist.length) * 100;
+      progressFill.style.width = `${pct}%`;
+      
+      if (isPlaying) {
+        displayCard.classList.add('active-speaking');
+      } else {
+        displayCard.classList.remove('active-speaking');
+      }
+    }
+
+    function togglePlay() {
+      if (playlist.length === 0) return;
+      
+      if (isPlaying) {
+        if (isPaused) {
+          synth.resume();
+          isPaused = false;
+          isPlaying = true;
+          document.getElementById('player-play-btn').innerHTML = '⏸';
+          document.getElementById('player-play-btn').classList.add('playing');
+          document.getElementById('now-playing-display').classList.add('active-speaking');
+          requestWakeLock();
+        } else {
+          synth.pause();
+          isPaused = true;
+          document.getElementById('player-play-btn').innerHTML = '▶';
+          document.getElementById('player-play-btn').classList.remove('playing');
+          document.getElementById('now-playing-display').classList.remove('active-speaking');
+          releaseWakeLock();
+        }
+      } else {
+        isPlaying = true;
+        isPaused = false;
+        if (currentIdx === -1) currentIdx = 0;
+        document.getElementById('player-play-btn').innerHTML = '⏸';
+        document.getElementById('player-play-btn').classList.add('playing');
+        requestWakeLock();
+        speakCard();
+      }
+    }
+
+    function speakCard() {
+      if (!isPlaying || currentIdx < 0 || currentIdx >= playlist.length) {
+        stopPlayer();
+        return;
+      }
+      
+      updateDisplay();
+      
+      const card = playlist[currentIdx];
+      const cleanHTML = (str) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
+      
+      const cleanQ = cleanHTML(card.q) + ". " + cleanHTML(card.desc);
+      const cleanA = cleanHTML(card.ans);
+      const mode = document.getElementById('player-mode').value;
+      
+      let text = "";
+      if (mode === 'qa') {
+        text = `Subject ${card.subject.toUpperCase()}: Question: ${cleanQ}. Answer: ${cleanA}`;
+      } else if (mode === 'q') {
+        text = `Subject ${card.subject.toUpperCase()}: Question: ${cleanQ}`;
+      } else if (mode === 'a') {
+        text = `Subject ${card.subject.toUpperCase()}: Answer: ${cleanA}`;
+      }
+
+      synth.cancel();
+      utterance = new SpeechSynthesisUtterance(text);
+
+      // Apply voice
+      const voiceSelect = document.getElementById('player-voice');
+      if (voiceSelect && voiceSelect.value) {
+        const v = voices.find(val => val.name === voiceSelect.value);
+        if (v) utterance.voice = v;
+      }
+
+      // Apply speed rate
+      const rateInput = document.getElementById('player-speed');
+      if (rateInput) utterance.rate = parseFloat(rateInput.value);
+
+      utterance.onend = () => {
+        const autoAdvance = document.getElementById('player-auto-advance').checked;
+        if (isPlaying && autoAdvance) {
+          setTimeout(() => {
+            if (currentIdx < playlist.length - 1) {
+              currentIdx++;
+              speakCard();
+            } else {
+              stopPlayer();
+            }
+          }, 1000);
+        } else if (isPlaying && !autoAdvance) {
+          stopPlayer();
+        }
+      };
+
+      utterance.onerror = (e) => {
+        console.error("TTS play error:", e);
+        // On error, auto advance or stop
+        const autoAdvance = document.getElementById('player-auto-advance').checked;
+        if (isPlaying && autoAdvance && currentIdx < playlist.length - 1) {
+          currentIdx++;
+          setTimeout(speakCard, 1000);
+        } else {
+          stopPlayer();
+        }
+      };
+
+      synth.speak(utterance);
+    }
+
+    function stopPlayer() {
+      if (synth) synth.cancel();
+      isPlaying = false;
+      isPaused = false;
+      document.getElementById('player-play-btn').innerHTML = '▶';
+      document.getElementById('player-play-btn').classList.remove('playing');
+      const displayCard = document.getElementById('now-playing-display');
+      if (displayCard) displayCard.classList.remove('active-speaking');
+      releaseWakeLock();
+      updateDisplay();
+    }
+
+    function nextCard() {
+      if (currentIdx < playlist.length - 1) {
+        currentIdx++;
+        if (isPlaying) speakCard();
+        else updateDisplay();
+      }
+    }
+
+    function prevCard() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        if (isPlaying) speakCard();
+        else updateDisplay();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initPlayerTTS();
+    });
+  </script>
 </body>
 </html>

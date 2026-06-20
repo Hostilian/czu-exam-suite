@@ -1543,241 +1543,33 @@ function resetQuiz() { initQuiz(); }
 // ══════════════════════════════════════════
 // 2-HOUR AUDIO CRAM & TTS ENGINE
 // ══════════════════════════════════════════
-const cramCardsData = [];
-
-let synth = window.speechSynthesis;
-let utterance = null;
-let currentCramIndex = -1;
-let isCramPlaying = false;
-let isCramPaused = false;
-let voices = [];
-let allAnswersVisible = false;
-
-function initTTS() {
-  if (typeof speechSynthesis === 'undefined') return;
-  populateCramVoices();
-  if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = populateCramVoices;
-  }
-  renderCramCards();
-}
-
-function populateCramVoices() {
-  voices = speechSynthesis.getVoices();
-  const select = document.getElementById('tts-voice');
-  if (!select) return;
-  const currentVal = select.value;
-  select.innerHTML = '';
-  let filtered = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('ru'));
-  if (filtered.length === 0) filtered = voices;
-  filtered.forEach(voice => {
-    const opt = document.createElement('option');
-    opt.value = voice.name;
-    opt.textContent = `${voice.name} (${voice.lang})`;
-    if (voice.name === currentVal) {
-      opt.selected = true;
-    } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
-      opt.selected = true;
-    }
-    select.appendChild(opt);
-  });
-}
-
-function voicesChanged() {
-  if (isCramPlaying) {
-    playCramCard(currentCramIndex);
-  }
-}
-
-function renderCramCards() {
-  const grid = document.getElementById('cram-cards-list');
-  if (!grid) return;
-  grid.innerHTML = '';
-  cramCardsData.forEach((card, idx) => {
-    let catClass = 'card-cat-dw';
-    if (card.category.includes('Systems Theory')) catClass = 'card-cat-sys';
-    else if (card.category.includes('Cloud')) catClass = 'card-cat-cloud';
-    else if (card.category.includes('Enterprise')) catClass = 'card-cat-erp';
-    else if (card.category.includes('Development')) catClass = 'card-cat-sdlc';
-    else if (card.category.includes('Security')) catClass = 'card-cat-sec';
-    
-    const cardEl = document.createElement('div');
-    cardEl.className = 'cram-card-item';
-    cardEl.id = `cram-card-${card.id}`;
-    cardEl.onclick = (e) => {
-      if (e.target.closest('.card-play-btn')) return;
-      cardEl.classList.toggle('show-ans');
-    };
-    cardEl.innerHTML = `
-      <div class="card-header-row">
-        <span class="card-cat-badge ${catClass}">${card.category}</span>
-        <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
-      </div>
-      <div class="card-question-title">${card.q}</div>
-      <div class="card-desc-text">${card.desc}</div>
-      <div class="card-answer-box">${card.ans}</div>
-    `;
-    grid.appendChild(cardEl);
-  });
-}
-
-function filterCramCards() {
-  const query = document.getElementById('cram-search').value.toLowerCase();
-  const catFilter = document.getElementById('cram-filter-cat').value;
-  cramCardsData.forEach(card => {
-    const el = document.getElementById(`cram-card-${card.id}`);
-    if (!el) return;
-    const matchesQuery = card.q.toLowerCase().includes(query) || card.desc.toLowerCase().includes(query) || card.ans.toLowerCase().includes(query) || card.category.toLowerCase().includes(query);
-    const matchesCat = catFilter === 'all' || card.category === catFilter;
-    el.style.display = (matchesQuery && matchesCat) ? 'flex' : 'none';
-  });
-}
-
-function toggleAllAnswers() {
-  allAnswersVisible = !allAnswersVisible;
-  const btn = document.getElementById('toggle-all-answers-btn');
-  btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
-  document.querySelectorAll('.cram-card-item').forEach(el => {
-    if (allAnswersVisible) el.classList.add('show-ans');
-    else el.classList.remove('show-ans');
-  });
-}
-
-function speakCramText(text, callback) {
-  if (!synth) return;
-  synth.cancel();
-  utterance = new SpeechSynthesisUtterance(text);
-  const voiceSelect = document.getElementById('tts-voice');
-  if (voiceSelect && voiceSelect.value) {
-    const voice = voices.find(v => v.name === voiceSelect.value);
-    if (voice) utterance.voice = voice;
-  }
-  const rateInput = document.getElementById('tts-speed');
-  if (rateInput) utterance.rate = parseFloat(rateInput.value);
-  utterance.onend = () => { if (callback) callback(); };
-  utterance.onerror = (e) => { console.error("TTS error:", e); if (callback) callback(); };
-  synth.speak(utterance);
-}
-
-function playCramCard(idx) {
-  if (idx < 0 || idx >= cramCardsData.length) {
-    stopTTS();
-    return;
-  }
-  currentCramIndex = idx;
-  isCramPlaying = true;
-  isCramPaused = false;
-  const card = cramCardsData[idx];
-  document.getElementById('main-play-btn').innerHTML = '⏸';
-  document.getElementById('main-play-btn').classList.add('paused');
-  document.getElementById('player-status-text').textContent = `Reading: "${card.q}"`;
-  document.getElementById('player-progress-counter').textContent = `${idx + 1} / ${cramCardsData.length}`;
-  document.getElementById('player-progress-fill').style.width = `${((idx + 1) / cramCardsData.length) * 100}%`;
-  highlightCramCard(card.id);
-  
-  const cleanHTML = (str) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&');
-  const cleanQ = cleanHTML(card.q) + ". " + cleanHTML(card.desc);
-  const cleanA = cleanHTML(card.ans);
-  const mode = document.getElementById('tts-mode').value;
-  let text = "";
-  if (mode === 'qa') text = `Question: ${cleanQ}... Answer: ${cleanA}`;
-  else if (mode === 'q') text = `Question: ${cleanQ}`;
-  else if (mode === 'a') text = `Answer: ${cleanA}`;
-  
-  const cardEl = document.getElementById(`cram-card-${card.id}`);
-  if (cardEl && mode !== 'q') cardEl.classList.add('show-ans');
-  
-  speakCramText(text, () => {
-    const autoAdvance = document.getElementById('auto-advance-chk').checked;
-    if (isCramPlaying && autoAdvance) {
-      setTimeout(() => { playCramCard(currentCramIndex + 1); }, 800);
-    } else if (isCramPlaying && !autoAdvance) {
-      stopTTS();
-    }
-  });
-}
-
-function playCramCardSingle(idx) {
-  isCramPlaying = false;
-  playCramCard(idx);
-  document.getElementById('auto-advance-chk').checked = false;
-}
-
-function togglePlayPlaylist() {
-  if (!synth) return;
-  if (isCramPlaying) {
-    if (isCramPaused) {
-      synth.resume();
-      isCramPaused = false;
-      document.getElementById('main-play-btn').innerHTML = '⏸';
-      document.getElementById('player-status-text').textContent = `Resumed: "${cramCardsData[currentCramIndex].q}"`;
-    } else {
-      synth.pause();
-      isCramPaused = true;
-      document.getElementById('main-play-btn').innerHTML = '▶';
-      document.getElementById('player-status-text').textContent = "Audio paused.";
-    }
-  } else {
-    document.getElementById('auto-advance-chk').checked = true;
-    if (currentCramIndex === -1) currentCramIndex = 0;
-    playCramCard(currentCramIndex);
-  }
-}
-
-function nextTTSCard() {
-  if (currentCramIndex < cramCardsData.length - 1) playCramCard(currentCramIndex + 1);
-}
-
-// Add simple lower function helper to bypass JS object error
-function prevTTSCard() {
-  if (currentCramIndex > 0) playCramCard(currentCramIndex - 1);
-}
-
-function stopTTS() {
-  if (synth) synth.cancel();
-  isCramPlaying = false;
-  isCramPaused = false;
-  const playBtn = document.getElementById('main-play-btn');
-  if (playBtn) { playBtn.innerHTML = '▶'; playBtn.classList.remove('paused'); }
-  const status = document.getElementById('player-status-text');
-  if (status) status.textContent = "Audio stopped.";
-  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
-}
-
-function highlightCramCard(id) {
-  document.querySelectorAll('.cram-card-item').forEach(el => el.classList.remove('active-speaking'));
-  const activeEl = document.getElementById(`cram-card-${id}`);
-  if (activeEl) {
-    activeEl.classList.add('active-speaking');
-    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-function copyAnkiImportText() {
-  let tsvText = "#separator:tab\n#html:true\n#tags column:3\n";
-  cramCardsData.forEach(card => {
-    const cleanT = (s) => s.replace(/\t/g, ' ').replace(/\n/g, ' ').replace(/\r/g, ' ');
-    const front = `<div class="anki-card"><div class="anki-category">${card.category}</div><div class="anki-q-title">${card.q}</div><div class="anki-desc">${card.desc}</div></div>`;
-    const back = `<div class="anki-card-back"><div class="anki-ans">${card.ans}</div></div>`;
-    const tag = `IS_Exam ${card.category.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '_')}`;
-    tsvText += `${front}\t${back}\t${tag}\n`;
-  });
-  navigator.clipboard.writeText(tsvText).then(() => {
-    alert("Anki import text copied!");
-  }).catch(err => {
-    alert("Copy failed. Use download button instead.");
-  });
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  initTTS();
-});
-
-// ══════════════════════════════════════════
-// 2-HOUR AUDIO CRAM & TTS ENGINE
-// ══════════════════════════════════════════
 const cramCardsData = [{"id": 1, "category": "Data Warehousing & BI", "q": "Data Warehouse", "desc": "4 characteristics (acronym SINV)", "ans": "<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time"}, {"id": 2, "category": "Data Warehousing & BI", "q": "What does 'Non-volatile' mean in a Data Warehouse?", "desc": "Explain or define the following concept.", "ans": "Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly."}, {"id": 3, "category": "Data Warehousing & BI", "q": "What does 'Time-variant' mean in a Data Warehouse?", "desc": "Explain or define the following concept.", "ans": "Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state)."}, {"id": 4, "category": "Data Warehousing & BI", "q": "Main purpose of a Data Warehouse", "desc": "Explain or define the following concept.", "ans": "To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions."}, {"id": 5, "category": "Data Warehousing & BI", "q": "Which system is for DAILY TRANSACTIONS?", "desc": "Explain or define the following concept.", "ans": "<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP."}, {"id": 6, "category": "Data Warehousing & BI", "q": "Which system is for STRATEGIC ANALYSIS?", "desc": "Explain or define the following concept.", "ans": "<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP."}, {"id": 7, "category": "Data Warehousing & BI", "q": "OLTP vs OLAP", "desc": "Explain or define the following concept.", "ans": "<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse"}, {"id": 8, "category": "Enterprise Resource Planning", "q": "ERP stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Enterprise Resource Planning</b>"}, {"id": 9, "category": "Enterprise Resource Planning", "q": "ERPS stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Enterprise Resource Planning System</b>"}, {"id": 10, "category": "Enterprise Resource Planning", "q": "IS vs ERP", "desc": "which is more general?", "ans": "<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS."}, {"id": 11, "category": "Enterprise Resource Planning", "q": "ERP main goal", "desc": "Explain or define the following concept.", "ans": "<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments."}, {"id": 12, "category": "Enterprise Resource Planning", "q": "ERP advantage", "desc": "Explain or define the following concept.", "ans": "<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos."}, {"id": 13, "category": "Enterprise Resource Planning", "q": "ERP disadvantage", "desc": "Explain or define the following concept.", "ans": "<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>."}, {"id": 14, "category": "Enterprise Resource Planning", "q": "Vendor lock-in", "desc": "definition", "ans": "A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch."}, {"id": 15, "category": "Enterprise Resource Planning", "q": "Leading ERP vendors", "desc": "3 examples", "ans": "<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders."}, {"id": 16, "category": "Enterprise Resource Planning", "q": "SAP HANA", "desc": "what is it?", "ans": "SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk."}, {"id": 17, "category": "Enterprise Resource Planning", "q": "In-memory database", "desc": "meaning", "ans": "Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics."}, {"id": 18, "category": "DSS", "q": "DSS stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Decision Support System</b>"}, {"id": 19, "category": "DSS", "q": "What is a DSS?", "desc": "Explain or define the following concept.", "ans": "An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information."}, {"id": 20, "category": "DSS", "q": "DSS transforms what into what?", "desc": "Explain or define the following concept.", "ans": "<b>Raw data → useful information</b> for decision-making."}, {"id": 21, "category": "DSS", "q": "What decisions does DSS support?", "desc": "Explain or define the following concept.", "ans": "<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS)."}, {"id": 22, "category": "DSS", "q": "DSS role", "desc": "should it replace managers?", "ans": "NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential."}, {"id": 23, "category": "DSS", "q": "STRUCTURED decision", "desc": "definition", "ans": "A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level."}, {"id": 24, "category": "DSS", "q": "UNSTRUCTURED decision", "desc": "definition", "ans": "A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation."}, {"id": 25, "category": "DSS", "q": "SEMI-STRUCTURED decision", "desc": "definition", "ans": "<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed."}, {"id": 26, "category": "DSS", "q": "Computers vs humans in decision-making", "desc": "Explain or define the following concept.", "ans": "<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment."}, {"id": 27, "category": "BI", "q": "BI", "desc": "what does it stand for and do?", "ans": "<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>."}, {"id": 28, "category": "BI", "q": "BPM", "desc": "definition and formula", "ans": "<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance."}, {"id": 29, "category": "BI", "q": "KPI stands for?", "desc": "Explain or define the following concept.", "ans": "<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives."}, {"id": 30, "category": "BI", "q": "Dashboard", "desc": "what is it used for?", "ans": "Visualizes <b>important business information and KPIs</b> in real-time for decision-makers."}, {"id": 31, "category": "AI", "q": "4 main AI areas tested on exam", "desc": "Explain or define the following concept.", "ans": "1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks"}, {"id": 32, "category": "AI", "q": "Machine Learning", "desc": "definition", "ans": "AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task."}, {"id": 33, "category": "AI", "q": "Neural network", "desc": "what inspired it?", "ans": "Inspired by the structure of the <b>human brain</b> — neurons connected in layers."}, {"id": 34, "category": "AI", "q": "Deep Learning", "desc": "what is it connected to?", "ans": "<b>Multi-layer neural networks</b> — 'deep' = many hidden layers of neurons."}, {"id": 35, "category": "AI", "q": "Computer Vision", "desc": "definition", "ans": "AI field focused on <b>interpreting visual/image data</b> — enabling machines to 'see' and understand images and video."}, {"id": 36, "category": "AI", "q": "NLP", "desc": "definition", "ans": "<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation)."}, {"id": 37, "category": "AI", "q": "Modern IS phenomena (current trends)", "desc": "Explain or define the following concept.", "ans": "<b>Cloud computing, virtualization, big data, AI, security</b>"}, {"id": 38, "category": "Cloud Computing Services", "q": "Cloud computing", "desc": "definition", "ans": "Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable)."}, {"id": 39, "category": "Cloud Computing Services", "q": "SaaS", "desc": "definition and example", "ans": "<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365)."}, {"id": 40, "category": "Cloud Computing Services", "q": "IaaS", "desc": "definition and example", "ans": "<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2)."}, {"id": 41, "category": "Cloud Computing Services", "q": "PaaS", "desc": "definition", "ans": "<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku)."}, {"id": 42, "category": "Cloud Computing Services", "q": "Cloud core idea / model", "desc": "Explain or define the following concept.", "ans": "<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware."}, {"id": 43, "category": "Cloud Computing Services", "q": "Application architecture evolution", "desc": "Explain or define the following concept.", "ans": "Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services."}, {"id": 44, "category": "CI", "q": "Competitive Intelligence (CI)", "desc": "definition", "ans": "<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage."}, {"id": 45, "category": "CI", "q": "CI helps decision-makers by?", "desc": "Explain or define the following concept.", "ans": "Improving understanding of the <b>competitive environment</b> to support strategic planning."}, {"id": 46, "category": "CI", "q": "CI sources", "desc": "what kind?", "ans": "<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking."}, {"id": 47, "category": "IS_BASICS", "q": "IS and management", "desc": "how do they relate?", "ans": "Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters."}, {"id": 48, "category": "IS_BASICS", "q": "Who sets the rules in an IS?", "desc": "Explain or define the following concept.", "ans": "<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules."}, {"id": 49, "category": "IS_BASICS", "q": "Goal of IS in management", "desc": "Explain or define the following concept.", "ans": "To <b>support management</b> — never to replace decision makers."}, {"id": 50, "category": "IS_BASICS", "q": "Example of automatic IS tool", "desc": "Explain or define the following concept.", "ans": "<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold."}];
 
+let wakeLock = null;
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      console.log("Screen Wake Lock acquired.");
+    }
+  } catch (err) {
+    console.warn("Wake Lock request failed:", err);
+  }
+}
+function releaseWakeLock() {
+  if (wakeLock !== null) {
+    wakeLock.release();
+    wakeLock = null;
+    console.log("Screen Wake Lock released.");
+  }
+}
+document.addEventListener('visibilitychange', async () => {
+  if (wakeLock !== null && document.visibilityState === 'visible') {
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+    } catch(err) {}
+  }
+});
 let synth = window.speechSynthesis;
 let utterance = null;
 let currentCramIndex = -1;
@@ -1898,7 +1690,7 @@ function playCramCard(idx) {
     return;
   }
   currentCramIndex = idx;
-  isCramPlaying = true;
+  isCramPlaying = true; requestWakeLock();
   isCramPaused = false;
   const card = cramCardsData[idx];
   document.getElementById('main-play-btn').innerHTML = '⏸';
@@ -1940,12 +1732,12 @@ function togglePlayPlaylist() {
   if (!synth) return;
   if (isCramPlaying) {
     if (isCramPaused) {
-      synth.resume();
+      synth.resume(); requestWakeLock();
       isCramPaused = false;
       document.getElementById('main-play-btn').innerHTML = '⏸';
       document.getElementById('player-status-text').textContent = `Resumed: "${cramCardsData[currentCramIndex].q}"`;
     } else {
-      synth.pause();
+      synth.pause(); releaseWakeLock();
       isCramPaused = true;
       document.getElementById('main-play-btn').innerHTML = '▶';
       document.getElementById('player-status-text').textContent = "Audio paused.";
@@ -1969,6 +1761,7 @@ function stopTTS() {
   if (synth) synth.cancel();
   isCramPlaying = false;
   isCramPaused = false;
+  releaseWakeLock();
   const playBtn = document.getElementById('main-play-btn');
   if (playBtn) { playBtn.innerHTML = '▶'; playBtn.classList.remove('paused'); }
   const status = document.getElementById('player-status-text');

@@ -1,0 +1,2229 @@
+{
+  "os": [
+    {
+      "id": 1,
+      "category": "OS Basics & Architecture",
+      "q": "OS Purpose & Resources",
+      "desc": "What is the primary purpose of an Operating System, and what are the three key system resources it controls and allocates?",
+      "ans": "The Operating System controls and assigns system resources: <strong>CPU time</strong>, <strong>operating memory (RAM)</strong>, and <strong>local storage space (HDD/SSD)</strong>. It acts as a bridge between the user/applications and the hardware, and provides APIs for user programs."
+    },
+    {
+      "id": 2,
+      "category": "OS Basics & Architecture",
+      "q": "5 Elements of a Modern OS",
+      "desc": "What are the 5 core components/elements that compose a modern operating system?",
+      "ans": "1. <strong>Kernel</strong>: The core program that links applications to the hardware.<br>2. <strong>File System</strong>: Responsible for organizing and storing data on local storage devices (LTSDs).<br>3. <strong>Programming Language</strong>: The languages used to write the OS (e.g., C, Assembly).<br>4. <strong>User Interface (UI)</strong>: The mechanism for human interaction, either graphical (GUI) or text-based (CLI/Shell).<br>5. <strong>API (Application Programming Interface)</strong>: Set of functions allowing applications to request services from the kernel."
+    },
+    {
+      "id": 3,
+      "category": "OS Basics & Architecture",
+      "q": "Cooperative vs. Preemptive Multitasking",
+      "desc": "What is the key operational difference between Cooperative and Preemptive multitasking? Name the systems that used/use them.",
+      "ans": "• <strong>Cooperative Multitasking</strong>: Applications voluntarily yield CPU control back to the OS. If a program crashes or hangs, the entire system freezes (used in early Windows 3.x, Classic Mac OS).<br>• <strong>Preemptive Multitasking</strong>: The OS uses timer interrupts to forcibly reclaim the CPU from running applications. A hung application can be terminated without bringing down the system (used in modern OSs: Windows NT/95+, macOS X+, Linux)."
+    },
+    {
+      "id": 4,
+      "category": "OS Basics & Architecture",
+      "q": "Desktop vs. Mobile OS Design",
+      "desc": "How do mobile operating systems differ in design requirements and constraints compared to desktop systems?",
+      "ans": "Mobile OSs are designed for <strong>battery-operated devices</strong>, utilize a <strong>touchscreen as the primary interface</strong>, expect frequent <strong>display orientation changes</strong>, restrict <strong>background processing</strong> to conserve power, and implement <strong>stricter security/sandboxing</strong> due to a high physical risk of theft/loss."
+    },
+    {
+      "id": 5,
+      "category": "OS Basics & Architecture",
+      "q": "Type 1 vs. Type 2 Hypervisors",
+      "desc": "Contrast Type 1 (bare-metal) and Type 2 (hosted) hypervisors. Provide examples of each.",
+      "ans": "• <strong>Type 1 (Bare-Metal)</strong>: Runs directly on the physical hardware. Highly efficient, secure, and used in datacenters (e.g., VMware ESXi, Proxmox VE, Microsoft Hyper-V).<br>• <strong>Type 2 (Hosted)</strong>: Runs as an application on top of an existing host Operating System. Has more overhead (e.g., Oracle VirtualBox, VMware Workstation)."
+    },
+    {
+      "id": 6,
+      "category": "OS Basics & Architecture",
+      "q": "Open Source Licenses: Copyleft vs. Permissive",
+      "desc": "Explain the difference between Copyleft and Permissive open-source licenses. Give examples.",
+      "ans": "• <strong>Copyleft (e.g., GPL - GNU General Public License)</strong>: Requires that any modified or derivative software must also be released as open-source under the exact same license terms.<br>• <strong>Permissive (e.g., MIT, Apache)</strong>: Allows users to modify, redistribute, and even close the source code for commercial use with minimal restrictions (only attribution is required)."
+    },
+    {
+      "id": 7,
+      "category": "OS Basics & Architecture",
+      "q": "BIOS Location and Role",
+      "desc": "What is the function of the BIOS software, and where is it physically stored on the computer?",
+      "ans": "The BIOS (Basic Input/Output System) initializes and tests system hardware components during the boot process (POST - Power-On Self-Test) and loads the OS bootloader. It is physically stored in non-volatile <strong>EEPROM or NAND flash memory</strong> on the motherboard."
+    },
+    {
+      "id": 8,
+      "category": "OS Basics & Architecture",
+      "q": "Linux Kernel Definition & History",
+      "desc": "What is the Linux kernel, and was it derived from Unix code?",
+      "ans": "Linux is a free, open-source <strong>monolithic kernel</strong> written completely from scratch by Linus Torvalds in 1991. It is Unix-like but <strong>not</strong> derived from original Unix code. It handles process scheduling, memory allocation, and hardware communication."
+    },
+    {
+      "id": 9,
+      "category": "OS Basics & Architecture",
+      "q": "Cloud Computing & 5 Characteristics",
+      "desc": "Define cloud computing and list the five key characteristics of a cloud service as defined in ICT.",
+      "ans": "Cloud computing is the delivery of computing services (servers, storage, databases, networking, software) over the Internet. The five key characteristics are:<br>1. <strong>On-Demand Self-Service</strong>: Users can provision resources automatically without human interaction with the provider.<br>2. <strong>Broad Network Access</strong>: Services are accessible over the network from anywhere using various devices (phones, laptops).<br>3. <strong>Location-Independent Resource Pooling</strong>: Provider's resources are pooled to serve multiple consumers in a multi-tenant model.<br>4. <strong>Rapid Elasticity</strong>: Resources can be rapidly provisioned and released to scale out or in based on demand.<br>5. <strong>Measured Service</strong>: Resource usage is monitored, controlled, and optimized dynamically, allowing pay-per-use billing."
+    },
+    {
+      "id": 10,
+      "category": "Process Management",
+      "q": "5 Process States & Transitions",
+      "desc": "Name the 5 states of a process lifecycle and explain what triggers the transitions between them.",
+      "ans": "1. <strong>New</strong>: The process is being created.<br>2. <strong>Ready</strong>: The process is waiting in queue to be assigned to a CPU.<br>3. <strong>Running</strong>: Instructions are being executed by the CPU.<br>4. <strong>Waiting/Blocked</strong>: The process is waiting for an event or I/O operation to complete.<br>5. <strong>Terminated</strong>: The process has finished execution.<br>*Transitions*: Ready → Running (OS Scheduler dispatch); Running → Ready (time slice interrupt); Running → Waiting (I/O request); Waiting → Ready (I/O complete)."
+    },
+    {
+      "id": 11,
+      "category": "Process Management",
+      "q": "Process vs. Thread",
+      "desc": "Compare a process and a thread in terms of resources, memory, PID, and context-switching cost.",
+      "ans": "• <strong>Process</strong>: An independent program in execution. Has its own virtual address space, memory, open files, and a unique Process ID (PID). Context switching is expensive.<br>• <strong>Thread</strong>: A lightweight execution unit <strong>within</strong> a process. It shares the parent process's memory space, PID, and resources, but has its own stack and registers. Context switching is cheap."
+    },
+    {
+      "id": 12,
+      "category": "Process Management",
+      "q": "First-Come, First-Served (FCFS) Scheduling",
+      "desc": "Explain FCFS CPU scheduling, its preemptive status, and define the 'Convoy Effect'.",
+      "ans": "FCFS is a <strong>non-preemptive</strong> algorithm where the CPU is allocated to processes in their arrival order. The <strong>Convoy Effect</strong> occurs when short processes are stuck waiting behind a single, long CPU-bound process, resulting in high average waiting times."
+    },
+    {
+      "id": 13,
+      "category": "Process Management",
+      "q": "Shortest Job First (SJF) Scheduling",
+      "desc": "Explain SJF CPU scheduling, its optimality, its starvation risk, and its primary implementation challenge.",
+      "ans": "SJF selects the process with the shortest next CPU burst. It is <strong>non-preemptive</strong> and yields the <strong>mathematically optimal average waiting time</strong>. However, it is impossible to implement in general-purpose OSs because the future CPU burst duration cannot be predicted. It can also cause <strong>starvation</strong> of long processes if short processes keep arriving."
+    },
+    {
+      "id": 14,
+      "category": "Process Management",
+      "q": "Round Robin (RR) Scheduling",
+      "desc": "Explain Round Robin scheduling and how the choice of time quantum (Q) affects system performance.",
+      "ans": "Round Robin is a <strong>preemptive</strong> algorithm designed for time-sharing systems. Each process gets a small fixed slice of CPU time (time quantum Q). If unfinished, it is preempted and sent to the back of the queue.<br>• <strong>Q is too small</strong>: Causes high context-switch overhead, wasting CPU cycles.<br>• <strong>Q is too large</strong>: Behaves exactly like FCFS."
+    },
+    {
+      "id": 15,
+      "category": "Process Management",
+      "q": "4 Deadlock Conditions",
+      "desc": "Name the 4 conditions that must hold simultaneously for a deadlock to occur.",
+      "ans": "1. <strong>Mutual Exclusion</strong>: At least one resource must be held in a non-shareable mode (only one process can use it at a time).<br>2. <strong>Hold and Wait</strong>: A process must hold at least one resource and wait to acquire additional resources held by other processes.<br>3. <strong>No Preemption</strong>: Resources cannot be forcibly taken from a process; they can only be released voluntarily.<br>4. <strong>Circular Wait</strong>: A closed loop of processes exists where each process holds a resource that the next process in the loop is waiting to acquire."
+    },
+    {
+      "id": 16,
+      "category": "Process Management",
+      "q": "Banker's Algorithm",
+      "desc": "What is the Banker's Algorithm, what deadlock strategy does it represent, and how does it determine allocation safety?",
+      "ans": "The Banker's Algorithm is a <strong>deadlock avoidance</strong> algorithm. When a process requests resources, the OS simulates the allocation and checks if it leaves the system in a <strong>safe state</strong> (where a sequence exists allowing all processes to finish without deadlock). If unsafe, the request is denied or delayed."
+    },
+    {
+      "id": 17,
+      "category": "Process Management",
+      "q": "Deadlock Prevention vs. Recovery",
+      "desc": "Contrast deadlock prevention and deadlock detection & recovery.",
+      "ans": "• <strong>Deadlock Prevention</strong>: Structural methods that ensure at least one of the 4 deadlock conditions cannot hold (e.g., requesting all resources at once to prevent Hold-and-wait, or forcing resource preemption).<br>• <strong>Detection & Recovery</strong>: Allows deadlocks to occur, runs diagnostic algorithms to detect them, and recovers by either terminating deadlocked processes or preempting resources."
+    },
+    {
+      "id": 18,
+      "category": "Memory Management",
+      "q": "Virtual Memory & Paging Principle",
+      "desc": "Describe the function and principles of Virtual Memory. How does the CPU access data stored on disk?",
+      "ans": "Virtual memory compensates for physical RAM shortage by utilizing disk space (e.g., pagefile/swap). The OS divides memory into fixed-size <strong>pages</strong> (virtual) mapped to physical RAM <strong>frames</strong> using a <strong>Page Table</strong>.<br>When the CPU accesses virtual addresses, the MMU (Memory Management Unit) translates them. If the data is on disk, a <strong>page fault</strong> is triggered, and the OS performs <strong>swapping/paging</strong> to load it into RAM."
+    },
+    {
+      "id": 19,
+      "category": "Memory Management",
+      "q": "Swapping vs. Paging",
+      "desc": "What is the difference between Swapping and Paging? What is the recommended swap-to-RAM ratio?",
+      "ans": "• <strong>Swapping</strong>: Moving an <strong>entire process</strong> out of physical memory to secondary storage (swap space).<br>• <strong>Paging</strong>: Moving <strong>fixed-size blocks</strong> of memory (pages/pagefiles) between RAM and disk.<br>The recommended swap-to-RAM ratio is <strong>3:1</strong> to avoid thrashing while maintaining stability."
+    },
+    {
+      "id": 20,
+      "category": "Memory Management",
+      "q": "Translation Lookaside Buffer (TLB)",
+      "desc": "What is the Translation Lookaside Buffer (TLB) and why is it crucial for virtual memory performance?",
+      "ans": "The TLB is a high-speed, hardware-implemented <strong>cache</strong> located inside the CPU's MMU. It stores recent virtual-to-physical address translations. Without the TLB, every memory access would require two lookups (one for the page table in RAM, and one for the actual data), cutting memory performance in half."
+    },
+    {
+      "id": 21,
+      "category": "Memory Management",
+      "q": "FIFO Page Replacement & Belady's Anomaly",
+      "desc": "Explain FIFO page replacement and define Belady's Anomaly.",
+      "ans": "• <strong>FIFO (First-In, First-Out)</strong>: Replaces the page that has been in memory the longest.<br>• <strong>Belady's Anomaly</strong>: A phenomenon where allocating <strong>more physical page frames</strong> to a process results in <strong>more page faults</strong>. FIFO suffers from this anomaly, whereas stack-based algorithms like LRU do not."
+    },
+    {
+      "id": 22,
+      "category": "Memory Management",
+      "q": "Least Recently Used (LRU) Page Replacement",
+      "desc": "Explain LRU page replacement and why it does not suffer from Belady's Anomaly.",
+      "ans": "• <strong>LRU (Least Recently Used)</strong>: Replaces the page that has not been accessed for the longest period of time.<br>It is a 'stack algorithm', meaning the set of pages in memory for $n$ frames is always a subset of the pages in memory for $n+1$ frames. Therefore, allocating more frames is guaranteed not to increase page faults."
+    },
+    {
+      "id": 23,
+      "category": "Memory Management",
+      "q": "Optimal Page Replacement Algorithm",
+      "desc": "What is the Optimal Page Replacement algorithm, and why is it impossible to implement in practice?",
+      "ans": "The Optimal page replacement algorithm replaces the page that <strong>will not be used for the longest period of time in the future</strong>. It yields the absolute lowest page fault rate. It is impossible to implement in practice because it requires <strong>perfect future knowledge</strong> of memory access patterns. It is used as a theoretical baseline for comparison."
+    },
+    {
+      "id": 24,
+      "category": "Memory Management",
+      "q": "Internal vs. External Fragmentation",
+      "desc": "Contrast internal and external memory fragmentation, and how paging/segmentation handles them.",
+      "ans": "• <strong>Internal Fragmentation</strong>: Wasted space inside an allocated block of memory (e.g., a process is allocated a 4 KB page but only uses 1 KB). Paging suffers from internal fragmentation.<br>• <strong>External Fragmentation</strong>: Wasted space outside allocated blocks because free memory is broken into small, non-contiguous pieces. Solved by compaction or using paging (which maps non-contiguous frames into a contiguous virtual space)."
+    },
+    {
+      "id": 25,
+      "category": "Memory Management",
+      "q": "Thrashing & Working Set Model",
+      "desc": "Define 'Thrashing' and explain how the Working Set Model prevents it.",
+      "ans": "• <strong>Thrashing</strong>: A state where the OS spends more time swapping pages in and out of disk than executing instructions. Occurs when physical RAM is overcommitted.<br>• <strong>Working Set Model</strong>: Tracks the set of pages actively used by a process in a recent time window. The OS will only run a process if its entire working set can fit in physical RAM, preventing thrashing."
+    },
+    {
+      "id": 26,
+      "category": "Memory Management",
+      "q": "Linux Memory Stats & buff/cache",
+      "desc": "What commands are used to check memory utilization in Linux? Explain why the 'free' RAM often appears extremely low, and explain the 'empty RAM is wasted RAM' philosophy (OS Exercise 2).",
+      "ans": "• <strong>Commands</strong>: `free -m`, `top`, or viewing `/proc/meminfo`.<br>• <strong>Philosophy</strong>: 'empty RAM is wasted RAM'. Linux uses almost all spare RAM as <strong>buff/cache</strong> to speed up filesystem and disk reads. If a program needs memory, the kernel instantly drops caches and reallocates RAM to the program. Therefore, actual <strong>Available</strong> memory remains high even if strictly <strong>Free</strong> RAM is tiny."
+    },
+    {
+      "id": 27,
+      "category": "File Systems & Sharing Models",
+      "q": "FAT16 Volume Size Limit",
+      "desc": "What is the mathematical reason that the largest volume size in the FAT16 file system is 4 GB?",
+      "ans": "FAT16 uses <strong>16-bit addressing</strong> for clusters, allowing a maximum of $2^{16} = 65,536$ clusters. The maximum cluster size supported is <strong>64 KB</strong>. Therefore, the maximum volume size is: $65,536 \\text{ clusters} \\times 64 \\text{ KB/cluster} = 4,194,304 \\text{ KB} = 4,096 \\text{ MB} = 4 \\text{ GB}$."
+    },
+    {
+      "id": 28,
+      "category": "File Systems & Sharing Models",
+      "q": "Linux Inodes Structure",
+      "desc": "What is an inode in Linux filesystems (ext4) and what information does it store? Does it store the filename?",
+      "ans": "An inode (index node) is a data structure on disk representing a file system object. It stores metadata: <strong>file size, owner ID, group ID, access permissions (chmod), timestamps (creation/access/modification), and pointers to disk blocks</strong> containing the file content. It <strong>does NOT</strong> store the filename (which is stored in the directory entry)."
+    },
+    {
+      "id": 29,
+      "category": "File Systems & Sharing Models",
+      "q": "Host-Terminal Model",
+      "desc": "Explain the Host-Terminal computational model and its impact on network traffic. What does the network transport?",
+      "ans": "An early computing model where a central, powerful mainframe (host) holds all data and processing power. Users access it via dumb terminals (keyboard + monitor only). The network only transports <strong>raw inputs (keystrokes)</strong> and <strong>raw outputs (screen redraw commands)</strong> — no application logic runs locally."
+    },
+    {
+      "id": 30,
+      "category": "File Systems & Sharing Models",
+      "q": "Batch Processing Model",
+      "desc": "Describe the Batch Processing model, its primary feature, and its advantages/disadvantages.",
+      "ans": "A computational model where jobs are grouped into batches and processed sequentially by a mainframe without user intervention. The primary feature is <strong>offline processing</strong>.<br>• <strong>Advantages</strong>: Repetitive tasks run quickly, optimal CPU utilization, doesn't require user attention during runs.<br>• <strong>Disadvantages</strong>: Hard to debug, high turnaround times, errors halt the queue, and <strong>well-trained personnel are required to operate the computer</strong>."
+    },
+    {
+      "id": 31,
+      "category": "File Systems & Sharing Models",
+      "q": "Client-Server & 3-Tier Model",
+      "desc": "Explain the Client-Server architecture and identify the 'Universal Client' in a 3-tier web application model.",
+      "ans": "• <strong>Client-Server</strong>: Distributed application structure where clients request resources and servers provide them.<br>• <strong>3-Tier Model</strong>: Divides application into Presentation Tier, Logic/Application Tier, and Data Tier.<br>• <strong>Universal Client</strong>: The <strong>WWW browser (web browser)</strong>, which renders the interface locally while data and logic remain on servers."
+    },
+    {
+      "id": 32,
+      "category": "File Systems & Sharing Models",
+      "q": "Defragmentation: Kernel vs. Utility",
+      "desc": "Explain why disk defragmentation is NOT considered a core function of the OS kernel.",
+      "ans": "Defragmentation is a <strong>user-space utility software</strong>, not a kernel routine. The kernel's core responsibilities are process scheduling, memory allocation, and hardware device drivers. Defragmentation reorganizes data blocks at the file system level to make files contiguous, improving read speeds."
+    },
+    {
+      "id": 33,
+      "category": "File Systems & Sharing Models",
+      "q": "Server Definition & Types",
+      "desc": "What is a server in network communication, and what are some common types of servers?",
+      "ans": "A server is a <strong>specialized computer program</strong> (or the physical machine running it) that offers services to other computer programs (clients) and their users. Common types include: <strong>mail servers, proxy servers, application servers, virtual servers, blade servers, policy servers, and file servers</strong>."
+    },
+    {
+      "id": 34,
+      "category": "File Systems & Sharing Models",
+      "q": "Malicious Batch Agents (Botnets)",
+      "desc": "What is the name of unwanted or malicious software that operates within the autonomous agent batch model?",
+      "ans": "A <strong>Botnet</strong>. This is a network of compromised systems running malicious software (bots) as <strong>autonomous agents</strong> under a central command-and-control (C2) server. It executes coordinated tasks like DDoS attacks, data theft, or spam without direct human interaction."
+    },
+    {
+      "id": 35,
+      "category": "Computer Networks",
+      "q": "OSI 7-Layer Model & PDUs",
+      "desc": "List the 7 layers of the OSI model in order and state the PDU (Protocol Data Unit) for layers 1 to 5.",
+      "ans": "1. <strong>Physical</strong>: <strong>Bits</strong> (cables, repeaters, hubs)<br>2. <strong>Data Link</strong>: <strong>Frames</strong> (MAC address, switches)<br>3. <strong>Network</strong>: <strong>Packets</strong> (IP address, routers)<br>4. <strong>Transport</strong>: <strong>Segments</strong> (TCP) / <strong>Datagrams</strong> (UDP) (ports)<br>5. <strong>Session</strong>: <strong>Data</strong> (sockets, connection control)<br>6. <strong>Presentation</strong>: <strong>Data</strong> (encryption, translation)<br>7. <strong>Application</strong>: <strong>Data</strong> (HTTP, DNS, DHCP, SSH)"
+    },
+    {
+      "id": 36,
+      "category": "Computer Networks",
+      "q": "TCP vs. UDP",
+      "desc": "Compare TCP and UDP in detail (handshake, reliability, overhead, ordering, use cases).",
+      "ans": "• <strong>TCP (Transmission Control Protocol)</strong>: Connection-oriented (uses a <strong>3-way handshake</strong> SYN → SYN-ACK → ACK to open, and a <strong>4-way handshake</strong> to close), reliable (acknowledgments, retransmissions), ordered delivery, flow control, high overhead. (e.g., HTTP, SSH, FTP, SMTP).<br>• <strong>UDP (User Datagram Protocol)</strong>: Connectionless, unreliable (best-effort, no ACKs), unordered, low overhead/latency. (e.g., DNS, VoIP, streaming, CoAP)."
+    },
+    {
+      "id": 37,
+      "category": "Computer Networks",
+      "q": "DHCP DORA Process",
+      "desc": "Explain the DORA process in DHCP and list the configuration settings it assigns.",
+      "ans": "1. <strong>Discover</strong>: Client broadcasts to find a DHCP server.<br>2. <strong>Offer</strong>: DHCP server offers an IP address.<br>3. <strong>Request</strong>: Client requests the offered IP.<br>4. <strong>Acknowledge</strong>: Server confirms the lease and parameters.<br>*Parameters assigned*: Client IP address, Subnet Mask, Default Gateway (Router IP), and DNS Server IP."
+    },
+    {
+      "id": 38,
+      "category": "Computer Networks",
+      "q": "DNS Structure and Operation",
+      "desc": "Explain the distributed nature of DNS and the direction from which DNS resolvers read domain names.",
+      "ans": "DNS (Domain Name System) is a <strong>distributed database</strong> that maps domain names to IP addresses. DNS resolvers read domain names <strong>from the end (right to left)</strong>, beginning at the root domain (`.`), then Top-Level Domain (TLD like `.cz`), then Second-Level Domain (like `czu.cz` - Czech University of Life Sciences), down to subdomains."
+    },
+    {
+      "id": 39,
+      "category": "Computer Networks",
+      "q": "Private IP Addresses & NAT",
+      "desc": "What are private IP addresses, why were they introduced, and how do devices using them access the public internet?",
+      "ans": "Private IP addresses (RFC 1918) are reserved for local internal networks (e.g., `192.168.x.x`, `10.x.x.x`). They were introduced to <strong>prevent IPv4 address scarcity</strong>. They are <strong>non-routable</strong> on the public internet. To access the internet, a <strong>NAT (Network Address Translation)</strong> device (router) translates the private IP to a single public IP."
+    },
+    {
+      "id": 40,
+      "category": "Computer Networks",
+      "q": "VLAN Access vs. Trunk Ports",
+      "desc": "Compare VLAN Access Ports and Trunk Ports in 802.1Q switch configurations.",
+      "ans": "• <strong>Access Port</strong>: Belongs to a single VLAN. Connects end-user devices (PCs, printers). Frames leaving this port are sent without VLAN tags (untagged).<br>• <strong>Trunk Port</strong>: Configured to carry traffic for <strong>multiple VLANs</strong> simultaneously over a single physical link (usually between switches/routers). Uses <strong>802.1Q tagging</strong> to keep track of VLAN membership."
+    },
+    {
+      "id": 41,
+      "category": "Computer Networks",
+      "q": "IoT Protocols: MQTT vs. CoAP",
+      "desc": "Contrast the MQTT and CoAP messaging protocols used in IoT.",
+      "ans": "• <strong>MQTT (Message Queuing Telemetry Transport)</strong>: Publish-Subscribe architecture, runs over <strong>TCP</strong> (reliable), uses a central broker, ideal for continuous low-bandwidth links.<br>• <strong>CoAP (Constrained Application Protocol)</strong>: Request-Response architecture, runs over <strong>UDP</strong> (lightweight/RESTful), uses GET/POST/PUT methods, ideal for highly constrained, sleeping nodes."
+    },
+    {
+      "id": 42,
+      "category": "Computer Networks",
+      "q": "Wireless Networks: Advantages, Disadvantages, & Bands",
+      "desc": "List the pros and cons of wireless networks, define unlicensed bands, and explain frequency trade-offs.",
+      "ans": "• <strong>Advantages</strong>: Mobility, cost-effectiveness (no cabling), quick installation/adaptability.<br>• <strong>Disadvantages</strong>: Unreliability (interference), lower bandwidth, security risks (e.g., packet sniffing).<br>• <strong>Unlicensed Bands</strong>: Shared frequency bands (2.4 GHz, 5 GHz) that don't require licensing, meaning they are prone to congestion.<br>• <strong>Frequency Trade-off</strong>: Higher frequencies (5 GHz) provide <strong>more bandwidth</strong> but have <strong>shorter range</strong> and poorer obstacle penetration than lower frequencies (2.4 GHz)."
+    },
+    {
+      "id": 43,
+      "category": "Computer Networks",
+      "q": "Switch MAC Learning Behavior",
+      "desc": "How does an Ethernet switch learn MAC addresses? Explain the MAC table state before and after network traffic (Packet Tracer 2).",
+      "ans": "• <strong>MAC Learning</strong>: Switches perform <strong>source-MAC address learning</strong>. When an Ethernet frame enters a switch port, the switch reads the source MAC and adds a dynamic mapping to its MAC table. Switch does NOT learn destination MACs this way.<br>• <strong>MAC Table State</strong>: Before traffic, the table is empty or has only default ports. After a ping or frame is sent, the switch populates the table dynamically. Ports receiving no traffic remain unpopulated. Command: `show mac-address-table`."
+    },
+    {
+      "id": 44,
+      "category": "Computer Networks",
+      "q": "ARP Resolution in Ping",
+      "desc": "Explain what happens when PC1 pings PC2 for the first time. Focus on the ARP broadcast and subsequent unicast frames (Packet Tracer 2).",
+      "ans": "• <strong>First Packet (ARP)</strong>: Since PC1 does not know PC2's MAC, it sends an <strong>ARP Broadcast</strong> (destination MAC `ff:ff:ff:ff:ff:ff`). The switch floods this broadcast out all ports (except ingress).<br>• <strong>Second Packet (ICMP)</strong>: PC2 responds with a unicast ARP reply. Once MACs are known, subsequent ICMP Echo Request and Reply frames are sent as <strong>unicast</strong> directly between ports. The switch forwards them without flooding."
+    },
+    {
+      "id": 45,
+      "category": "Computer Networks",
+      "q": "IP Subnet Overlap Errors",
+      "desc": "What is an IP subnet overlap/conflict error, how is it diagnosed, and how do you resolve it (Packet Tracer 2)?",
+      "ans": "• <strong>Overlap Error</strong>: Occurs when two separate interfaces/subnets are assigned overlapping IP address spaces (e.g., configuring both Network A and Network C with `192.168.1.0/24`). It causes routing errors and address conflicts.<br>• <strong>Diagnosis/Resolution</strong>: Diagnosed via router configuration errors or packet loss. Resolved by assigning a <strong>unique subnet range</strong> to one of the conflicting networks (e.g., re-addressing Network C to `192.168.3.0/24`) and updating host IPs and gateways."
+    },
+    {
+      "id": 46,
+      "category": "Computer Networks",
+      "q": "IP Node Configuration Parameters",
+      "desc": "What four core IP parameters must be assigned to configure a network interface on a node, and what is the role of each?",
+      "ans": "1. <strong>IP Address</strong>: Uniquely identifies the node on the network.<br>2. <strong>Subnet Mask</strong>: Determines the size of the local network and distinguishes local hosts from remote subnets.<br>3. <strong>Default Gateway</strong>: The IP address of the local router, needed to forward packets outside the local network.<br>4. <strong>DNS Server</strong>: The IP address of a domain name resolver, needed to translate human-readable domain names into numeric IP addresses."
+    },
+    {
+      "id": 47,
+      "category": "Computer Networks",
+      "q": "Unlicensed Frequency Bands & Wireless",
+      "desc": "What does it mean for certain frequency bands (e.g., 2.4 GHz, 5 GHz) to be unlicensed? Why do we use higher frequencies?",
+      "ans": "• <strong>Unlicensed bands</strong>: These frequencies are <strong>shared</strong> and open to the public; anyone can transmit on them without a license, making them prone to interference.<br>• <strong>Higher Frequencies (e.g. 5 GHz)</strong>: We use higher frequencies mainly because of the <strong>more bandwidth</strong> available there, even though they suffer from shorter range and poorer penetration."
+    },
+    {
+      "id": 48,
+      "category": "CLI & Diagnostics",
+      "q": "CLI Advantages & Disadvantages",
+      "desc": "What are the primary technical advantages and disadvantages of a Command Line Interface (CLI) compared to a GUI?",
+      "ans": "• <strong>Advantages</strong>: Remote access requires <strong>very low bandwidth</strong> (text-only), consumes very little RAM and CPU, runs on low-resolution displays, and is highly scriptable/automatable.<br>• <strong>Disadvantages</strong>: Steep learning curve, requires remembering exact commands/syntax, no auto-completion by default in basic shells, typos can be catastrophic, and causes eye strain."
+    },
+    {
+      "id": 49,
+      "category": "CLI & Diagnostics",
+      "q": "PING Tool",
+      "desc": "What is the function of the PING diagnostic tool, what protocol does it use, and is it available on both Windows and Linux?",
+      "ans": "PING verifies network-level connectivity to a destination IP. It uses the <strong>ICMP (Internet Control Message Protocol)</strong> Echo Request and Echo Reply packets (operating at Layer 3, with <strong>no port numbers</strong>). It is installed <strong>by default in both Windows and GNU/Linux</strong>."
+    },
+    {
+      "id": 50,
+      "category": "CLI & Diagnostics",
+      "q": "Traceroute (tracert)",
+      "desc": "How does traceroute function to map a network path? Explain TTL and the differences between Windows and Linux implementations.",
+      "ans": "Traceroute sends packets with increasing <strong>TTL (Time to Live)</strong> values starting at 1. Each router decrements TTL by 1. When TTL reaches 0, the router discards the packet and sends an <strong>ICMP Time Exceeded</strong> message back, revealing its IP.<br>• <strong>Windows</strong>: Uses `tracert` which sends <strong>ICMP Echo Requests</strong>.<br>• <strong>Linux</strong>: Uses `traceroute` which sends <strong>UDP packets</strong> (or ICMP/TCP depending on flags)."
+    },
+    {
+      "id": 51,
+      "category": "CLI & Diagnostics",
+      "q": "Linux Process Management Commands",
+      "desc": "Name the primary Linux commands to view static processes, monitor real-time CPU usage, and terminate a process.",
+      "ans": "• <strong>`ps`</strong>: Displays a static snapshot of current running processes (e.g., `ps aux`).<br>• <strong>`top` / `htop`</strong>: Provides an interactive, dynamic, real-time view of system processes, CPU, and RAM usage.<br>• <strong>`kill`</strong>: Terminates a process by sending a signal (default SIGTERM 15, or SIGKILL 9) to its Process ID (PID) (e.g., `kill -9 1234`)."
+    },
+    {
+      "id": 52,
+      "category": "CLI & Diagnostics",
+      "q": "Linux Disk & Directory Commands",
+      "desc": "Name the Linux commands to list directory contents, check available disk space, and check directory storage usage.",
+      "ans": "• <strong>`ls`</strong>: Lists directory contents (use `ls -la` to see hidden files and details).<br>• <strong>`df`</strong>: Displays the amount of free and used disk space on mounted file systems (use `df -h` for human-readable format).<br>• <strong>`du`</strong>: Estimates file space usage of a directory recursively (use `du -sh *` to summarize sizes of subfolders)."
+    },
+    {
+      "id": 53,
+      "category": "CLI & Diagnostics",
+      "q": "Linux File Permissions (chmod)",
+      "desc": "Explain the numeric values used in `chmod` to set file permissions. What does `chmod 755` represent?",
+      "ans": "Permissions are defined for Owner (u), Group (g), and Others (o). Values: Read (r) = 4, Write (w) = 2, Execute (x) = 1. The three digits represent: Owner | Group | Others.<br>• <strong>`chmod 755`</strong>: Owner has <strong>7</strong> ($4+2+1$ = rwx), Group has <strong>5</strong> ($4+1$ = r-x), Others have <strong>5</strong> ($4+1$ = r-x). Often used for directories and executable scripts."
+    },
+    {
+      "id": 54,
+      "category": "CLI & Diagnostics",
+      "q": "Linux Diagnostics: w and uname",
+      "desc": "Explain the diagnostic purposes and outputs of the Linux commands 'w' and 'uname -a' (OS Exercise 1).",
+      "ans": "• <strong>`w`</strong>: Shows system uptime, load averages (over 1, 5, and 15 mins), and details of all logged-in users (username, TTY, source IP address, login time, idle duration, and their current running command). Note: the username `vokoun` is the surname/username of the ETE2AE course instructor.<br>• <strong>`uname -a`</strong>: Prints comprehensive system info: operating system kernel name (Linux), network hostname (e.g., `ete2ae.pef.czu.cz` - CZU is the Czech University of Life Sciences in Prague), kernel release version, build date, CPU architecture (`x86_64`), and operating system distribution."
+    },
+    {
+      "id": 55,
+      "category": "CLI & Diagnostics",
+      "q": "Linux Command Pipelines",
+      "desc": "Explain how command pipelines work in Linux. Walk through the command chain used in OS Exercise 1.",
+      "ans": "• <strong>Pipeline Principle</strong>: Uses the pipe symbol `|` to pass the standard output (stdout) of one command directly as the standard input (stdin) of the next command.<br>• <strong>Command Chain</strong>: `cat /home/vokoun/ete2ae | grep ';0dh26x;' | grep 'Q65302rt39442408' | cut -d ';' -f 6`:<br>1. `cat` reads and outputs the log file (stored in the directory of instructor `vokoun`).<br>2. First `grep` filters lines containing the session token `0dh26x`.<br>3. Second `grep` filters lines containing the target question ID.<br>4. `cut -d ';' -f 6` splits the output line by semicolon and extracts the 6th field (returning the correct answer `42`)."
+    },
+    {
+      "id": 56,
+      "category": "CLI & Diagnostics",
+      "q": "SSH vs. Terminal Connection Security",
+      "desc": "Explain the primary security difference between SSH and traditional Telnet/Terminal connections.",
+      "ans": "• <strong>SSH (Secure Shell)</strong>: Connects via an <strong>encrypted channel</strong> (usually on Port 22), protecting all credentials and session data from interception.<br>• <strong>Telnet/Terminal connection</strong>: Operates over unencrypted channels, transmitting usernames, passwords, and commands in <strong>plaintext</strong> (vulnerable to packet sniffing)."
+    },
+    {
+      "id": 57,
+      "category": "CLI & Diagnostics",
+      "q": "DNS Canonical Name (CNAME) & dig",
+      "desc": "What is a DNS CNAME record, and what command is used to find the True server name of www.pef.czu.cz? (OS Exercise 3)",
+      "ans": "• <strong>CNAME (Canonical Name)</strong>: A DNS record mapping an alias name to the True canonical domain name.<br>• <strong>Command</strong>: Run <strong>`dig www.pef.czu.cz CNAME`</strong> (or `nslookup -type=cname`). This query reveals that the canonical server name hosting the site is <strong>`wlbnginx.czu.cz`</strong> (where czu.cz is Czech University of Life Sciences)."
+    },
+    {
+      "id": 58,
+      "category": "CLI & Diagnostics",
+      "q": "WHOIS Database Lookup",
+      "desc": "What is the function of the WHOIS utility, and what organization owns the IP 94.199.40.226? (OS Exercise 3)",
+      "ans": "• <strong>Function</strong>: Queries registration databases to identify ownership details, registrant contacts, and allocated netblocks for domain names or IP addresses.<br>• <strong>Organization</strong>: For `94.199.40.226`, the WHOIS lookup returns <strong>Ministerstvo vnitra CR</strong> (which is Czech for <strong>Ministry of the Interior of the Czech Republic</strong>)."
+    },
+    {
+      "id": 59,
+      "category": "CLI & Diagnostics",
+      "q": "Ping Packet Size Customization",
+      "desc": "How do you customize the packet payload size in ping on Windows vs Linux, and why would you do this? (OS Exercise 3)",
+      "ans": "• <strong>Commands</strong>: On Windows use `ping -l <bytes> <host>`; on Linux use `ping -s <bytes> <host>` (e.g. `ping -s 1400 www.seznam.cz` - where `seznam.cz` is a popular Czech web portal).<br>• <strong>Purpose</strong>: Tests latency and packet loss under custom packet sizes. Useful to test MTU (Maximum Transmission Unit) constraints, payload boundaries, and network packet fragmentation limits."
+    },
+    {
+      "id": 60,
+      "category": "Step-by-Step Calculations",
+      "q": "CPU Scheduling Walkthrough",
+      "desc": "Walk through FCFS, SJF (non-preemptive), and Round Robin (Q=2) for: P1 (arrival 0, burst 6), P2 (arrival 1, burst 4), P3 (arrival 2, burst 2). Calculate Gantt charts and average waiting times.",
+      "ans": "• <strong>FCFS</strong>:<br>- Gantt: P1 (0-6) → P2 (6-10) → P3 (10-12).<br>- Waiting times: P1 = 0, P2 = 6-1 = 5, P3 = 10-2 = 8.<br>- Avg Waiting Time: (0+5+8)/3 = 4.33 ms.<br><br>• <strong>SJF</strong>:<br>- At t=0, only P1 is ready (runs 0-6).<br>- At t=6, both P2 (burst 4) and P3 (burst 2) are ready. SJF chooses P3 first.<br>- Gantt: P1 (0-6) → P3 (6-8) → P2 (8-12).<br>- Waiting times: P1 = 0, P3 = 6-2 = 4, P2 = 8-1 = 7.<br>- Avg Waiting Time: (0+4+7)/3 = 3.67 ms (SJF is optimal!).<br><br>• <strong>Round Robin (Q=2)</strong>:<br>- Queue transitions: t=0: [P1], t=2: [P2, P1(burst 4)], t=4: [P1(4), P3, P2(burst 2)]...<br>- Gantt: P1 (0-2) → P2 (2-4) → P1 (4-6) → P3 (6-8) → P2 (8-10) → P1 (10-12).<br>- Finish times: P3 = 8, P2 = 10, P1 = 12.<br>- Turnaround (Finish - Arrival): P1 = 12, P2 = 9, P3 = 6.<br>- Waiting (Turnaround - Burst): P1 = 12-6 = 6, P2 = 9-4 = 5, P3 = 6-2 = 4.<br>- Avg Waiting Time: (6+5+4)/3 = 5.0 ms."
+    },
+    {
+      "id": 61,
+      "category": "Step-by-Step Calculations",
+      "q": "IP Subnetting Walkthrough",
+      "desc": "For the host IP address 192.168.10.138/26, calculate the Subnet Mask, Network Address, Broadcast Address, First Usable IP, Last Usable IP, and Usable Host count.",
+      "ans": "• <strong>Subnet Mask</strong>: /26 means 26 network bits. In binary: `11111111.11111111.11111111.11000000` = <strong>255.255.255.192</strong>.<br>• <strong>Network Address</strong>: The block size is $256 - 192 = 64$. Subnets rise in multiples of 64: .0, .64, .128, .192. The host IP .138 lies in the <strong>192.168.10.128</strong> subnet.<br>• <strong>Broadcast Address</strong>: The next subnet starts at .192, so this subnet's broadcast is one address prior: <strong>192.168.10.191</strong>.<br>• <strong>First Usable Host</strong>: Network address + 1 = <strong>192.168.10.129</strong>.<br>• <strong>Last Usable Host</strong>: Broadcast address - 1 = <strong>192.168.10.190</strong>.<br>• <strong>Usable Hosts</strong>: $2^{32-26} - 2 = 2^6 - 2 = 64 - 2 = $ <strong>62 hosts</strong>."
+    },
+    {
+      "id": 62,
+      "category": "Step-by-Step Calculations",
+      "q": "Page Replacement Walkthrough",
+      "desc": "Given reference string: 7, 0, 1, 2, 0, 3 with 3 memory frames. Walk through FIFO and LRU step-by-step and count page faults.",
+      "ans": "• <strong>FIFO (First-In, First-Out)</strong>:<br>1. Access 7: Frame [7, -, -] - Page Fault (1)<br>2. Access 0: Frame [7, 0, -] - Page Fault (2)<br>3. Access 1: Frame [7, 0, 1] - Page Fault (3)<br>4. Access 2: Replaces 7 (oldest) → Frame [2, 0, 1] - Page Fault (4)<br>5. Access 0: Already in frame → Frame [2, 0, 1] - Hit<br>6. Access 3: Replaces 0 (oldest) → Frame [2, 3, 1] - Page Fault (5)<br>- <strong>Total Page Faults</strong>: 5<br><br>• <strong>LRU (Least Recently Used)</strong>:<br>1. Access 7: Frame [7, -, -] - Page Fault (1)<br>2. Access 0: Frame [7, 0, -] - Page Fault (2)<br>3. Access 1: Frame [7, 0, 1] - Page Fault (3)<br>4. Access 2: Replaces 7 (least recently used) → Frame [2, 0, 1] - Page Fault (4)<br>5. Access 0: Already in frame (updates recency) → Frame [2, 0, 1] - Hit<br>6. Access 3: Replaces 1 (least recently used, since 0 and 2 were used more recently) → Frame [2, 0, 3] - Page Fault (5)<br>- <strong>Total Page Faults</strong>: 5"
+    },
+    {
+      "id": 63,
+      "category": "Step-by-Step Calculations",
+      "q": "802.1Q VLAN Frame Header Structure",
+      "desc": "Describe the structure and fields of an 802.1Q VLAN tag inserted into an Ethernet frame.",
+      "ans": "An 802.1Q tag adds <strong>4 bytes</strong> into the Ethernet frame header between the Source MAC and EtherType fields:<br>1. <strong>TPID (Tag Protocol Identifier)</strong>: 2 bytes. Set to `0x8100` to identify it as an 802.1Q tagged frame.<br>2. <strong>TCI (Tag Control Information)</strong>: 2 bytes, split into:<br>   • <strong>PCP (Priority Code Point)</strong>: 3 bits. Used for Quality of Service (QoS) class of service.<br>   • <strong>DEI (Drop Eligible Indicator)</strong>: 1 bit. Indicates if frame can be dropped during congestion.<br>   • <strong>VID (VLAN Identifier)</strong>: 12 bits. Uniquely identifies the VLAN (values 1 to 4094; 0 and 4095 are reserved)."
+    },
+    {
+      "id": 64,
+      "category": "Step-by-Step Calculations",
+      "q": "IP Binary Conversion Walkthrough",
+      "desc": "Convert the decimal number 172 to binary, and the binary number 10011101 to decimal. Walk through the math.",
+      "ans": "• <strong>Decimal to Binary (172)</strong>:<br>- Compare with powers of 2 (128, 64, 32, 16, 8, 4, 2, 1):<br>  - $172 \\ge 128$ → bit is 1 ($172 - 128 = 44$)<br>  - $44 < 64$ → bit is 0<br>  - $44 \\ge 32$ → bit is 1 ($44 - 32 = 12$)<br>  - $12 < 16$ → bit is 0<br>  - $12 \\ge 8$ → bit is 1 ($12 - 8 = 4$)<br>  - $4 \\ge 4$ → bit is 1 ($4 - 4 = 0$)<br>  - Remaining bits (2, 1) are 0.<br>- Result: <strong>10101100</strong>.<br><br>• <strong>Binary to Decimal (10011101)</strong>:<br>- Multiply bits by their power-of-2 weights:<br>  - $1 \times 128 = 128$<br>  - $0 \times 64 = 0$<br>  - $0 \times 32 = 0$<br>  - $1 \times 16 = 16$<br>  - $1 \times 8 = 8$<br>  - $1 \times 4 = 4$<br>  - $0 \times 2 = 0$<br>  - $1 \times 1 = 1$<br>- Sum: $128 + 0 + 0 + 16 + 8 + 4 + 0 + 1 = $ <strong>157</strong>."
+    }
+  ],
+  "is": [
+    {
+      "id": 1,
+      "category": "Data Warehousing & BI",
+      "q": "Data Warehouse",
+      "desc": "4 characteristics (acronym SINV)",
+      "ans": "<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time"
+    },
+    {
+      "id": 2,
+      "category": "Data Warehousing & BI",
+      "q": "What does 'Non-volatile' mean in a Data Warehouse?",
+      "desc": "Explain or define the following concept.",
+      "ans": "Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly."
+    },
+    {
+      "id": 3,
+      "category": "Data Warehousing & BI",
+      "q": "What does 'Time-variant' mean in a Data Warehouse?",
+      "desc": "Explain or define the following concept.",
+      "ans": "Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state)."
+    },
+    {
+      "id": 4,
+      "category": "Data Warehousing & BI",
+      "q": "Main purpose of a Data Warehouse",
+      "desc": "Explain or define the following concept.",
+      "ans": "To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions."
+    },
+    {
+      "id": 5,
+      "category": "Data Warehousing & BI",
+      "q": "Which system is for DAILY TRANSACTIONS?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP."
+    },
+    {
+      "id": 6,
+      "category": "Data Warehousing & BI",
+      "q": "Which system is for STRATEGIC ANALYSIS?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP."
+    },
+    {
+      "id": 7,
+      "category": "Data Warehousing & BI",
+      "q": "OLTP vs OLAP",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse"
+    },
+    {
+      "id": 8,
+      "category": "Enterprise Resource Planning",
+      "q": "ERP stands for?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Enterprise Resource Planning</b>"
+    },
+    {
+      "id": 9,
+      "category": "Enterprise Resource Planning",
+      "q": "ERPS stands for?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Enterprise Resource Planning System</b>"
+    },
+    {
+      "id": 10,
+      "category": "Enterprise Resource Planning",
+      "q": "IS vs ERP",
+      "desc": "which is more general?",
+      "ans": "<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS."
+    },
+    {
+      "id": 11,
+      "category": "Enterprise Resource Planning",
+      "q": "ERP main goal",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments."
+    },
+    {
+      "id": 12,
+      "category": "Enterprise Resource Planning",
+      "q": "ERP advantage",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos."
+    },
+    {
+      "id": 13,
+      "category": "Enterprise Resource Planning",
+      "q": "ERP disadvantage",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>."
+    },
+    {
+      "id": 14,
+      "category": "Enterprise Resource Planning",
+      "q": "Vendor lock-in",
+      "desc": "definition",
+      "ans": "A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch."
+    },
+    {
+      "id": 15,
+      "category": "Enterprise Resource Planning",
+      "q": "Leading ERP vendors",
+      "desc": "3 examples",
+      "ans": "<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders."
+    },
+    {
+      "id": 16,
+      "category": "Enterprise Resource Planning",
+      "q": "SAP HANA",
+      "desc": "what is it?",
+      "ans": "SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk."
+    },
+    {
+      "id": 17,
+      "category": "Enterprise Resource Planning",
+      "q": "In-memory database",
+      "desc": "meaning",
+      "ans": "Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics."
+    },
+    {
+      "id": 18,
+      "category": "DSS",
+      "q": "DSS stands for?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Decision Support System</b>"
+    },
+    {
+      "id": 19,
+      "category": "DSS",
+      "q": "What is a DSS?",
+      "desc": "Explain or define the following concept.",
+      "ans": "An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information."
+    },
+    {
+      "id": 20,
+      "category": "DSS",
+      "q": "DSS transforms what into what?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Raw data → useful information</b> for decision-making."
+    },
+    {
+      "id": 21,
+      "category": "DSS",
+      "q": "What decisions does DSS support?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS)."
+    },
+    {
+      "id": 22,
+      "category": "DSS",
+      "q": "DSS role",
+      "desc": "should it replace managers?",
+      "ans": "NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential."
+    },
+    {
+      "id": 23,
+      "category": "DSS",
+      "q": "STRUCTURED decision",
+      "desc": "definition",
+      "ans": "A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level."
+    },
+    {
+      "id": 24,
+      "category": "DSS",
+      "q": "UNSTRUCTURED decision",
+      "desc": "definition",
+      "ans": "A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation."
+    },
+    {
+      "id": 25,
+      "category": "DSS",
+      "q": "SEMI-STRUCTURED decision",
+      "desc": "definition",
+      "ans": "<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed."
+    },
+    {
+      "id": 26,
+      "category": "DSS",
+      "q": "Computers vs humans in decision-making",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment."
+    },
+    {
+      "id": 27,
+      "category": "BI",
+      "q": "BI",
+      "desc": "what does it stand for and do?",
+      "ans": "<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>."
+    },
+    {
+      "id": 28,
+      "category": "BI",
+      "q": "BPM",
+      "desc": "definition and formula",
+      "ans": "<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance."
+    },
+    {
+      "id": 29,
+      "category": "BI",
+      "q": "KPI stands for?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives."
+    },
+    {
+      "id": 30,
+      "category": "BI",
+      "q": "Dashboard",
+      "desc": "what is it used for?",
+      "ans": "Visualizes <b>important business information and KPIs</b> in real-time for decision-makers."
+    },
+    {
+      "id": 31,
+      "category": "AI",
+      "q": "4 main AI areas tested on exam",
+      "desc": "Explain or define the following concept.",
+      "ans": "1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks"
+    },
+    {
+      "id": 32,
+      "category": "AI",
+      "q": "Machine Learning",
+      "desc": "definition",
+      "ans": "AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task."
+    },
+    {
+      "id": 33,
+      "category": "AI",
+      "q": "Neural network",
+      "desc": "what inspired it?",
+      "ans": "Inspired by the structure of the <b>human brain</b> — neurons connected in layers."
+    },
+    {
+      "id": 34,
+      "category": "AI",
+      "q": "Deep Learning",
+      "desc": "what is it connected to?",
+      "ans": "<b>Multi-layer neural networks</b> — 'deep' = many hidden layers of neurons."
+    },
+    {
+      "id": 35,
+      "category": "AI",
+      "q": "Computer Vision",
+      "desc": "definition",
+      "ans": "AI field focused on <b>interpreting visual/image data</b> — enabling machines to 'see' and understand images and video."
+    },
+    {
+      "id": 36,
+      "category": "AI",
+      "q": "NLP",
+      "desc": "definition",
+      "ans": "<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation)."
+    },
+    {
+      "id": 37,
+      "category": "AI",
+      "q": "Modern IS phenomena (current trends)",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Cloud computing, virtualization, big data, AI, security</b>"
+    },
+    {
+      "id": 38,
+      "category": "Cloud Computing Services",
+      "q": "Cloud computing",
+      "desc": "definition",
+      "ans": "Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable)."
+    },
+    {
+      "id": 39,
+      "category": "Cloud Computing Services",
+      "q": "SaaS",
+      "desc": "definition and example",
+      "ans": "<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365)."
+    },
+    {
+      "id": 40,
+      "category": "Cloud Computing Services",
+      "q": "IaaS",
+      "desc": "definition and example",
+      "ans": "<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2)."
+    },
+    {
+      "id": 41,
+      "category": "Cloud Computing Services",
+      "q": "PaaS",
+      "desc": "definition",
+      "ans": "<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku)."
+    },
+    {
+      "id": 42,
+      "category": "Cloud Computing Services",
+      "q": "Cloud core idea / model",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware."
+    },
+    {
+      "id": 43,
+      "category": "Cloud Computing Services",
+      "q": "Application architecture evolution",
+      "desc": "Explain or define the following concept.",
+      "ans": "Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services."
+    },
+    {
+      "id": 44,
+      "category": "CI",
+      "q": "Competitive Intelligence (CI)",
+      "desc": "definition",
+      "ans": "<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage."
+    },
+    {
+      "id": 45,
+      "category": "CI",
+      "q": "CI helps decision-makers by?",
+      "desc": "Explain or define the following concept.",
+      "ans": "Improving understanding of the <b>competitive environment</b> to support strategic planning."
+    },
+    {
+      "id": 46,
+      "category": "CI",
+      "q": "CI sources",
+      "desc": "what kind?",
+      "ans": "<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking."
+    },
+    {
+      "id": 47,
+      "category": "IS_BASICS",
+      "q": "IS and management",
+      "desc": "how do they relate?",
+      "ans": "Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters."
+    },
+    {
+      "id": 48,
+      "category": "IS_BASICS",
+      "q": "Who sets the rules in an IS?",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules."
+    },
+    {
+      "id": 49,
+      "category": "IS_BASICS",
+      "q": "Goal of IS in management",
+      "desc": "Explain or define the following concept.",
+      "ans": "To <b>support management</b> — never to replace decision makers."
+    },
+    {
+      "id": 50,
+      "category": "IS_BASICS",
+      "q": "Example of automatic IS tool",
+      "desc": "Explain or define the following concept.",
+      "ans": "<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold."
+    }
+  ],
+  "orsa": [
+    {
+      "id": 1,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Input-Output model",
+      "desc": "what is it?",
+      "ans": "A modeling technique analyzing relationships between sectors of an economy. Every sector is both a <b>supplier</b> and <b>consumer</b> of goods. Each sector is represented by a matrix of inputs and outputs."
+    },
+    {
+      "id": 2,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "I-O model: rule about total inputs vs total outputs",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Total Inputs = Total Outputs</b> for every sector. Use this rule to find any missing value in the table."
+    },
+    {
+      "id": 3,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "How to build the A matrix (coefficient matrix)",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "For each column: divide each cell by that column's <b>Total Input</b>.<br>A[i,j] = value[i,j] ÷ TotalInput[j]"
+    },
+    {
+      "id": 4,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Identity matrix I",
+      "desc": "structure for 3 sectors",
+      "ans": "Diagonal = 1, all others = 0:<br>[[1,0,0],[0,1,0],[0,0,1]]"
+    },
+    {
+      "id": 5,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "How to find new Y when task gives new X",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>new_Y = (I − A) × new_X</b><br>Multiply the (I-A) matrix by the new total output vector."
+    },
+    {
+      "id": 6,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "How to find new X when task gives new Y",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>new_X = (I − A)⁻¹ × new_Y</b><br>First invert (I-A), then multiply by the final demand vector."
+    },
+    {
+      "id": 7,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Leontief core formula",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>x = (I − A)⁻¹ · y</code><br>x = total output vector, y = final demand vector, A = coefficient matrix"
+    },
+    {
+      "id": 8,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Leontief Inverse",
+      "desc": "what does (I-A)⁻¹ represent?",
+      "ans": "The multiplier matrix mapping <b>final consumer demand to total direct + indirect outputs</b> required across all sectors."
+    },
+    {
+      "id": 9,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Gluttony Ltd. base outputs",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Brewery (X_B) = <b>100</b>, Butcher (X_Bu) = <b>80</b>, Greengrocer (X_G) = <b>30</b>, Restaurant (X_R) = <b>200</b>."
+    },
+    {
+      "id": 10,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Gluttony Ltd.",
+      "desc": "Butcher final demand rises to 35",
+      "ans": "New outputs: Brewery = <b>101.91</b>, Butcher = <b>99.96</b>, Greengrocer = <b>30.80</b>, Restaurant = <b>201.41</b>."
+    },
+    {
+      "id": 11,
+      "category": "Input-Output Analysis (Leontief)",
+      "q": "Gluttony Ltd.",
+      "desc": "Greengrocer +10%, Restaurant +20% cost",
+      "ans": "Output price indices: Brewery = <b>1.00135</b>, Butcher = <b>1.00171</b>, Greengrocer = <b>1.01347</b>, Restaurant = <b>1.01723</b>."
+    },
+    {
+      "id": 12,
+      "category": "Linear Programming (Simplex)",
+      "q": "What is Linear Programming?",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A mathematical method to <b>maximize or minimize a linear objective function</b> subject to linear constraints (resource limitations)."
+    },
+    {
+      "id": 13,
+      "category": "Linear Programming (Simplex)",
+      "q": "LP Sensitivity: change WITHIN allowable range",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Objective coefficient change within range → <b>Z value changes but basis stays the same</b>.<br>RHS change within range → solution values change but <b>basis stays the same</b>."
+    },
+    {
+      "id": 14,
+      "category": "Linear Programming (Simplex)",
+      "q": "LP Sensitivity: change OUTSIDE allowable range",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "If any change exceeds its allowable interval → the <b>BASIS CHANGES</b> (new optimal corner of feasible region)."
+    },
+    {
+      "id": 15,
+      "category": "Linear Programming (Simplex)",
+      "q": "LP exam example: coefficient was 220, new value 250, allowable increase = 20",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Max allowed = 220 + 20 = 240. Since 250 > 240 → change is OUTSIDE range → <b>The basis WILL CHANGE</b>."
+    },
+    {
+      "id": 16,
+      "category": "Linear Programming (Simplex)",
+      "q": "Shadow Price",
+      "desc": "definition",
+      "ans": "Amount by which the optimal Z value increases per <b>1-unit increase in the RHS</b> constraint resource."
+    },
+    {
+      "id": 17,
+      "category": "Linear Programming (Simplex)",
+      "q": "Excel Solver: formula for LHS cells",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>=SUMPRODUCT(decision_variable_cells, coefficient_range)</code><br>Never hardcode values in LHS cells!"
+    },
+    {
+      "id": 18,
+      "category": "Linear Programming (Simplex)",
+      "q": "Mixing a Drink LP task result",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Optimal: Rum = <b>5 dl</b>, Juice = <b>5 dl</b>. Taste = <b>75 pts</b>. Rum restriction <code>x ≥ 5</code> is binding."
+    },
+    {
+      "id": 19,
+      "category": "SIM",
+      "q": "What is simulation?",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "The <b>imitation of a real-world system or process</b> with the goal to evaluate performance and improve it — without risking the real system."
+    },
+    {
+      "id": 20,
+      "category": "SIM",
+      "q": "Static vs Dynamic simulation",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Static</b> = models at a <b>single point in time</b>, no change over time<br><b>Dynamic</b> = models <b>changes over time</b>"
+    },
+    {
+      "id": 21,
+      "category": "SIM",
+      "q": "Stochastic vs Deterministic simulation",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Stochastic</b> = involves <b>randomness</b>; different output each run<br><b>Deterministic</b> = same inputs → <b>same output always</b>"
+    },
+    {
+      "id": 22,
+      "category": "SIM",
+      "q": "Discrete-event vs Continuous simulation",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Discrete-event</b> = events at specific discrete points in time<br><b>Continuous</b> = changes occur continuously over time"
+    },
+    {
+      "id": 23,
+      "category": "SIM",
+      "q": "Monte Carlo simulation",
+      "desc": "type classification",
+      "ans": "Monte Carlo = <b>STATIC + STOCHASTIC</b> simulation.<br>Uses large numbers of random values to estimate outcomes."
+    },
+    {
+      "id": 24,
+      "category": "Markov Chains & Decisions",
+      "q": "What is a Markov Chain?",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A mathematical model where a system moves between states, and the <b>next state depends ONLY on the current state</b> (not on past history)."
+    },
+    {
+      "id": 25,
+      "category": "Markov Chains & Decisions",
+      "q": "Markov property",
+      "desc": "memorylessness",
+      "ans": "The probability of moving to the next state depends <b>ONLY on the current state</b>. Past history is irrelevant (memoryless)."
+    },
+    {
+      "id": 26,
+      "category": "Markov Chains & Decisions",
+      "q": "Homogeneity property of Markov Chains",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Transition probabilities <b>do not change over time</b> as the chain progresses — they stay constant."
+    },
+    {
+      "id": 27,
+      "category": "Markov Chains & Decisions",
+      "q": "Markov Chain transition matrix rule",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Each <b>row</b> of the transition matrix must sum to <b>1.0</b> (all probabilities of leaving each state)."
+    },
+    {
+      "id": 28,
+      "category": "Markov Chains & Decisions",
+      "q": "Markov Chain step transition formula",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>π⁽ᵗ⁾ = π⁽⁰⁾ · Pᵗ</code><br>State vector at step t = initial state vector × transition matrix to the power t."
+    },
+    {
+      "id": 29,
+      "category": "Markov Chains & Decisions",
+      "q": "Markov stationary distribution",
+      "desc": "equation",
+      "ans": "Solve: <b>π · P = π</b> with constraint <b>Σπᵢ = 1</b><br>π = long-run steady-state probability vector."
+    },
+    {
+      "id": 30,
+      "category": "Markov Chains & Decisions",
+      "q": "Absorbing State",
+      "desc": "definition",
+      "ans": "A state that <b>cannot be left</b> once entered. P[i][i] = 1."
+    },
+    {
+      "id": 31,
+      "category": "Markov Chains & Decisions",
+      "q": "Transient State",
+      "desc": "definition",
+      "ans": "A state that can be left, with positive probability of <b>never returning</b>."
+    },
+    {
+      "id": 32,
+      "category": "Markov Chains & Decisions",
+      "q": "Elite EU Officer Queue (λ=30, μ=40)",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "P₀ = <b>0.25 (25%)</b> idle probability, Lq = <b>2.25</b> average queue length."
+    },
+    {
+      "id": 33,
+      "category": "Markov Chains & Decisions",
+      "q": "Elite EU Officer Wait Times (λ=30, μ=40)",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "W = <b>6 minutes (0.1 hr)</b> in system, Wq = <b>4.5 minutes (0.075 hr)</b> in queue."
+    },
+    {
+      "id": 34,
+      "category": "Markov Chains & Decisions",
+      "q": "Weather Forecast Markov probability",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Rainy today. Probability of Rainy day after tomorrow = <b>0.2450 (24.50%)</b>."
+    },
+    {
+      "id": 35,
+      "category": "Markov Chains & Decisions",
+      "q": "Scared Frog survival probability after 5 hours",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Starting on lily A (stork hungry). Probability alive after 5 hours = <b>0.03125 (3.125%)</b>."
+    },
+    {
+      "id": 36,
+      "category": "Markov Chains & Decisions",
+      "q": "Markov Chain 3×3 stationary distribution",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Matrix rows [0.6,0.3,0.1], [0.2,0.5,0.3], [0.3,0.3,0.4]:<br>π = <b>[0.375, 0.375, 0.25]</b>"
+    },
+    {
+      "id": 37,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "Queue Utilization ρ formula",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>ρ = λ / μ</code> — fraction of time server is busy. <b>Must be &lt; 1</b> for stable queue.<br>(λ = arrival rate, μ = service rate)"
+    },
+    {
+      "id": 38,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "P₀",
+      "desc": "Idle Queue Probability",
+      "ans": "<code>P₀ = 1 − ρ</code> — probability the queue is empty and server is idle."
+    },
+    {
+      "id": 39,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "Average Queue Length Lq",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>Lq = ρ² / (1 − ρ)</code> — expected number of customers waiting in line."
+    },
+    {
+      "id": 40,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "Average Time in Queue Wq",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<code>Wq = ρ / (μ − λ)</code> — expected time a customer spends waiting in queue."
+    },
+    {
+      "id": 41,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "Flower Shop Queue: idle probability P₀ = 0.5",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "λ=9/hr. For P₀=0.5 → ρ=0.5 → μ=18/hr → average service time = <b>3.33 minutes</b>."
+    },
+    {
+      "id": 42,
+      "category": "Queueing Theory (M/M/1)",
+      "q": "Flower Shop Queue: W = 10 minutes target",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "λ=9/hr. For W=10 min → service rate μ must be <b>15 customers/hour</b>."
+    },
+    {
+      "id": 43,
+      "category": "SYS",
+      "q": "What is a System?",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A <b>group of elements AND the relations between those elements</b>."
+    },
+    {
+      "id": 44,
+      "category": "SYS",
+      "q": "What is a Complex System?",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A system of <b>multiple interacting elements</b> where the <b>whole behavior CANNOT be explained</b> by understanding individual parts alone."
+    },
+    {
+      "id": 45,
+      "category": "SYS",
+      "q": "5 components of a Complex System",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "1. <b>Self-organization</b> — organizes without external control<br>2. <b>Emergence</b> — whole > sum of parts<br>3. <b>Nonlinearity</b> — small change → large effect<br>4. <b>Adaptation</b> — adjusts to changing conditions<br>5. <b>Feedback loops</b>"
+    },
+    {
+      "id": 46,
+      "category": "SYS",
+      "q": "Closed vs Open System",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Closed</b> = does NOT interact with environment (atoms, molecules)<br><b>Open</b> = MUST interact with environment to survive (people, ecosystems)"
+    },
+    {
+      "id": 47,
+      "category": "SYS",
+      "q": "Soft vs Hard Systems Thinking",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Soft</b>: oriented to LEARNING; world is complex; models = intellectual constructs; 'issues' + 'accommodations'<br><b>Hard</b>: oriented to GOAL SEEKING; world is engineerable; models = reality; 'problems' + 'solutions'"
+    },
+    {
+      "id": 48,
+      "category": "SYS",
+      "q": "Model types: Normative vs Descriptive",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Normative</b> = what <b>SHOULD</b> be done (optimal behavior)<br><b>Descriptive</b> = what <b>IS</b> being done (actual behavior)"
+    },
+    {
+      "id": 49,
+      "category": "SYS",
+      "q": "Model types: Deterministic vs Stochastic",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "<b>Deterministic</b> = all variables known; same inputs → same output<br><b>Stochastic</b> = accounts for randomness and uncertainty"
+    },
+    {
+      "id": 50,
+      "category": "VENSIM",
+      "q": "Direct Stock-to-Stock link",
+      "desc": "allowed?",
+      "ans": "<b>NEVER ALLOWED! (−10 points)</b><br>A stock must only connect to another stock through a <b>Flow rate arrow (with a valve symbol)</b>."
+    },
+    {
+      "id": 51,
+      "category": "VENSIM",
+      "q": "Stock equation wrapper in Vensim",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Every Stock equation must be wrapped in:<br><code>INTEG(Inflows − Outflows, Initial Value)</code>"
+    },
+    {
+      "id": 52,
+      "category": "VENSIM",
+      "q": "CLD link polarity",
+      "desc": "Reinforcing vs Balancing loop",
+      "ans": "Count negative/opposite (o / −) links in the loop:<br><b>Even count</b> = Reinforcing (R)<br><b>Odd count</b> = Balancing (B)"
+    },
+    {
+      "id": 53,
+      "category": "ARCHETYPES",
+      "q": "Limits to Growth archetype",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A reinforcing growth loop hits a capacity constraint, activating a balancing loop that halts progress.<br><b>Fix</b>: Plan for constraints early."
+    },
+    {
+      "id": 54,
+      "category": "ARCHETYPES",
+      "q": "Tragedy of the Commons archetype",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Individual growth actions exploit a shared resource until depletion.<br><b>Fix</b>: Impose shared resource regulation."
+    },
+    {
+      "id": 55,
+      "category": "ARCHETYPES",
+      "q": "Shifting the Burden archetype",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "Quick fix relieves symptoms temporarily, creating dependency and reducing pressure to fix the real problem.<br><b>Loops</b>: B1 (quick fix) vs. B2 (fundamental fix). R3 = side effect dependency."
+    },
+    {
+      "id": 56,
+      "category": "ARCHETYPES",
+      "q": "Fixes that Fail archetype",
+      "desc": "Explain or calculate the following ORSA concept.",
+      "ans": "A quick fix relieves the problem but creates a delayed unintended consequence that worsens it.<br><b>Loops</b>: B1 (fix) vs. R2 (delayed reinforcing side effect)."
+    }
+  ],
+  "markup": [
+    {
+      "id": 1,
+      "category": "CSV & Other Formats",
+      "q": "Which programs can be used to open and edit CSV files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Notepad</li><li>Microsoft Excel</li><li>Adobe Photoshop</li><li>Libre Office Calc</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Notepad, Microsoft Excel, Libre Office Calc"
+    },
+    {
+      "id": 2,
+      "category": "JSON & Schema",
+      "q": "Which keywords are used to limit the length of a string in JSON schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>max Size</li><li>max Value</li><li>min Length</li><li>max Length</li><li>minLength</li><li>maxLength</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> minLength, maxLength"
+    },
+    {
+      "id": 3,
+      "category": "XML Basics",
+      "q": "In SVG, image data is represented in what format?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Binary</li><li>Numerically</li><li>Textually</li><li>Bicubic</li><li>Bitmap</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Textually"
+    },
+    {
+      "id": 4,
+      "category": "CSV & Other Formats",
+      "q": "Which of the following formats are text-based?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>JSON</li><li>CSV</li><li>XML</li><li>PNG</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> JSON, CSV, XML"
+    },
+    {
+      "id": 5,
+      "category": "JSON & Schema",
+      "q": "What is the purpose of JSON schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>API serialization</li><li>Describing the structure of JSON data</li><li>Serializing JSON data to XML</li><li>Validating JSON data</li><li>Describing the structure of JSON dat</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Describing the structure of JSON data, Validating JSON data, Describing the structure of JSON dat"
+    },
+    {
+      "id": 6,
+      "category": "XML Basics",
+      "q": "What is the main difference between a well-formed and a valid XML document?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements of an XML schema or DTD.</li><li>A well-formed document has correctly nested tags, while a valid document has properly closed tags.</li><li>A well-formed document meets the requirements of an XML schema or DTD, while a valid document adheres to the basic syntax rules.</li><li>A well-formed document contains only ASCII characters, while a valid document contains only Unicode characters.</li><li>A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements of an XML schema or DTD., A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements"
+    },
+    {
+      "id": 7,
+      "category": "HTTP & REST APIs",
+      "q": "Which of the following HTTP methods allow manipulation of data on the server?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>POST</li><li>DELETE</li><li>GET</li><li>PUT</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> POST, DELETE, PUT"
+    },
+    {
+      "id": 8,
+      "category": "HTML & Semantics",
+      "q": "Which of the following tags are found in the <head> section of an HTML document?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><ul></li><li><p></li><li><title></li><li><img></li><li><meta></li><li><link></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <title>, <meta>, <link>"
+    },
+    {
+      "id": 9,
+      "category": "XML Basics",
+      "q": "Which of the following are allowed for XML elements?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Elements can have attributes</li><li>Elements can contain other elements.</li><li>Elements can have textual content.</li><li>Elements can have multiple root/parent elements.</li><li>Elements can have attributes (if only one then this one)</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Elements can have attributes, Elements can contain other elements., Elements can have textual content., Elements can have attributes (if only one then this one)"
+    },
+    {
+      "id": 10,
+      "category": "HTML & Semantics",
+      "q": "Which of the following elements is used to create a table in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><grid></li><li><table></li><li><array></li><li><data table></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <table>"
+    },
+    {
+      "id": 11,
+      "category": "JSON & Schema",
+      "q": "Which of the following are true about XML and JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XML and JSON can be used for application configuration.</li><li>XML and JSON can be used for serializing objects.</li><li>XML and JSON are formats for storing and transmitting data.</li><li>XML and JSON are styling languages.</li><li>XML and JSON can be used for application configuration</li><li>XML and JSON can be used for serializing objects</li><li>XML and JSON are formats for storing and transmitting data</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XML and JSON can be used for application configuration., XML and JSON can be used for serializing objects., XML and JSON are formats for storing and transmitting data., XML and JSON can be used for application configuration, XML and JSON can be used for serializing objects, XML and JSON are formats for storing and transmitting data"
+    },
+    {
+      "id": 12,
+      "category": "XML Schema (XSD)",
+      "q": "What can be used to define custom data types in XML Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xs:simpleType</li><li>xs:attribute</li><li>xs:element</li><li>xs:complexType</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xs:simpleType, xs:complexType"
+    },
+    {
+      "id": 13,
+      "category": "XML Schema (XSD)",
+      "q": "Which of the following elements can be used inside xs:restriction to restrict the value of elements and attributes?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xs:minLenght</li><li>xs:maxLenght</li><li>xs:enumeration</li><li>xs:pattern</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xs:enumeration, xs:pattern"
+    },
+    {
+      "id": 14,
+      "category": "HTTP & REST APIs",
+      "q": "Which of the following statement about the HTTP protocol is true?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>HTTP is the primary protocol of the internet.</li><li>HTTP is a protocol for transferring data between a client and a server.</li><li>HTTP is the leading protocol for the World Wide Web.</li><li>HTTP is a protocol for transferring data to a database.</li><li>HTTP is a protocol for transferring data between a client and a server</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> HTTP is a protocol for transferring data between a client and a server., HTTP is a protocol for transferring data between a client and a server"
+    },
+    {
+      "id": 15,
+      "category": "JSON & Schema",
+      "q": "In JSON, which data type cannot be used?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Date</li><li>float</li><li>string</li><li>boolean</li><li>null</li><li>date</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Date, date"
+    },
+    {
+      "id": 16,
+      "category": "XML Basics",
+      "q": "XML can be?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>strict, well-balanced</li><li>valid, well-balanced</li><li>well-formed, strict</li><li>valid, well-formed</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> valid, well-formed"
+    },
+    {
+      "id": 17,
+      "category": "XPath & XQuery",
+      "q": "Which of the following technologies can use XPath expressions?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XPointer</li><li>XSLT</li><li>XML Schema</li><li>XQuery</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XPointer, XSLT, XQuery"
+    },
+    {
+      "id": 18,
+      "category": "XML Basics",
+      "q": "What is the true about XML namespaces?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XML namespaces limit the validity of an XML schema.</li><li>XML namespaces prevent conflicts between element and attribute names in an XML document.</li><li>XML namespaces group XML elements into logical blocks.</li><li>XML namespaces define shortcuts for elements and attributes.</li><li>XML namespaces prevent conflicts between element and attribute names in an XML document</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XML namespaces prevent conflicts between element and attribute names in an XML document., XML namespaces prevent conflicts between element and attribute names in an XML document"
+    },
+    {
+      "id": 19,
+      "category": "HTML & Semantics",
+      "q": "Which attribute is used to define a CSS file in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>src</li><li>href</li><li>url</li><li>path</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> href"
+    },
+    {
+      "id": 20,
+      "category": "XML Schema (XSD)",
+      "q": "What does xs:simpleType allow you to define?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Custom data type based on an existing simple data type.</li><li>Element containing child elements.</li><li>Attribute with multiple values.</li><li>Elements with attributes and child elements.</li><li>Custom data type based on an existing simple data type</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Custom data type based on an existing simple data type., Custom data type based on an existing simple data type"
+    },
+    {
+      "id": 21,
+      "category": "XML Schema (XSD)",
+      "q": "What can be defines using xs:complexType in XML Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Restrictions on the values of elements.</li><li>Elements with nested child elements.</li><li>Elements with attributes.</li><li>Custom data type based on an existing complex data type.</li><li>Custom data type based on an existing complex data type</li><li>Elements with nested child elements (if only one then this one)</li><li>Elements with attributes</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Elements with attributes., Custom data type based on an existing complex data type., Custom data type based on an existing complex data type, Elements with nested child elements (if only one then this one), Elements with attributes"
+    },
+    {
+      "id": 22,
+      "category": "HTML & Semantics",
+      "q": "Which of the following HTML5 elements are used for semantic tagging of content?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><footer></li><li><header></li><li><aside></li><li><span></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <footer>, <header>, <aside>"
+    },
+    {
+      "id": 23,
+      "category": "XML Basics",
+      "q": "Which organization is responsible for specifying XML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Institute of Electrical and Electronics Engineers (IEEE)</li><li>World Wide Web Consortium (W3C)</li><li>Internet Engineering Task Force (IETF)</li><li>International Organization for Standardization (ISO)</li><li>W3C</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> World Wide Web Consortium (W3C), W3C"
+    },
+    {
+      "id": 24,
+      "category": "XML Basics",
+      "q": "What is true about a valid XML document?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XML attributes must have a value.</li><li>A valid XML document complies with requirements defined by an XML schema or DTD.</li><li>A valid XML document is always well-formed.</li><li>A valid XML document does not need to have a root element.</li><li>A valid XML document complies with requirements defined by an XML schema or DTD</li><li>A valid XML document is always well-formed</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> A valid XML document complies with requirements defined by an XML schema or DTD., A valid XML document is always well-formed., A valid XML document complies with requirements defined by an XML schema or DTD, A valid XML document is always well-formed"
+    },
+    {
+      "id": 25,
+      "category": "XML Basics",
+      "q": "What format is used for SVG files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>CSV</li><li>XML</li><li>Binary</li><li>JSON</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XML"
+    },
+    {
+      "id": 26,
+      "category": "XSLT Transformations",
+      "q": "Which languages are used for addressing nodes in XSLT, among other things?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XPath</li><li>XAddress</li><li>XQuery</li><li>XLink</li><li>Xpath</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XPath, Xpath"
+    },
+    {
+      "id": 27,
+      "category": "XML Schema (XSD)",
+      "q": "What is the main purpose of XSD design patterns?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Creating a consistent and maintainable structure for XML Schema;</li><li>Creating a consistent and maintainable structure for XML Schema</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Creating a consistent and maintainable structure for XML Schema;, Creating a consistent and maintainable structure for XML Schema"
+    },
+    {
+      "id": 28,
+      "category": "XML Basics",
+      "q": "What are the purposes of using XML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a. For defining the structure of documents</li><li>b. For defining custom markup languages</li><li>c. For transferring data between different applications and systems;</li><li>for defining the structue of documents</li><li>for defining custom markup languages</li><li>for transferring data between different aplications and systems</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> b. For defining custom markup languages, for defining the structue of documents, for defining custom markup languages, for transferring data between different aplications and systems"
+    },
+    {
+      "id": 29,
+      "category": "XML Schema (XSD)",
+      "q": "Which of the following elements are used to apply restrictions on numeric values of elements and attributes within xs:restriction?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a. xs:maxInclusive</li><li>b. xs:minInclusive</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a. xs:maxInclusive, b. xs:minInclusive"
+    },
+    {
+      "id": 30,
+      "category": "XPath & XQuery",
+      "q": "What is the symbol for the root tag in Xpath?\n/?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>/</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> /"
+    },
+    {
+      "id": 31,
+      "category": "JSON & Schema",
+      "q": "What data types are supported in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Null</li><li>b.Number</li><li>c.String</li><li>d.Boolean;</li><li>Null</li><li>Number</li><li>String</li><li>Boolean</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Null, b.Number, c.String, d.Boolean;, Null, Number, String, Boolean"
+    },
+    {
+      "id": 32,
+      "category": "HTTP & REST APIs",
+      "q": "Which of the following principles of REST architecture are correct?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Cachability</li><li>b.Client-Server Interface</li><li>c.Unified Interface</li><li>d.Statelessness</li><li>Cachability</li><li>Client-Server interface</li><li>Unified Interface</li><li>Statelesness</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Cachability, b.Client-Server Interface, c.Unified Interface, Cachability, Client-Server interface, Unified Interface, Statelesness"
+    },
+    {
+      "id": 33,
+      "category": "XSLT Transformations",
+      "q": "What can be the output of an XSLT transformation?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.XML</li><li>b.CSS</li><li>c.HTML</li><li>d.JSON</li><li>XML</li><li>CSS</li><li>HTML</li><li>JSON (questionable)</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.XML, b.CSS, c.HTML, XML, CSS, HTML, JSON (questionable)"
+    },
+    {
+      "id": 34,
+      "category": "JSON & Schema",
+      "q": "How is an empty array written in JSON? \n[]\n{}\n(\"\")?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>[]</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> []"
+    },
+    {
+      "id": 35,
+      "category": "CSV & Other Formats",
+      "q": "What are the advantages of CSV format?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Universality</li><li>b.Space efficiency</li><li>c.Simple syntax</li><li>Universality</li><li>Space efficiency</li><li>Simple syntax</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Universality, b.Space efficiency, c.Simple syntax, Universality, Space efficiency, Simple syntax"
+    },
+    {
+      "id": 36,
+      "category": "CSV & Other Formats",
+      "q": "Which characters are commonly used as delimiters in CSV files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Tabs</li><li>b.Commas</li><li>Tabs</li><li>Commas</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Tabs, b.Commas, Tabs, Commas"
+    },
+    {
+      "id": 37,
+      "category": "HTML & Semantics",
+      "q": "What are the benefits of semantics and structured data on web pages?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Improved display of search results</li><li>b.Better indexing for search engines</li><li>c.Improved accessibility for reading devices</li><li>Improved display of search results</li><li>Better indexing for search engines</li><li>Improved accessibility for reading devices</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Improved display of search results, b.Better indexing for search engines, c.Improved accessibility for reading devices, Improved display of search results, Better indexing for search engines, Improved accessibility for reading devices"
+    },
+    {
+      "id": 38,
+      "category": "JSON & Schema",
+      "q": "What basic structures are supported in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Object</li><li>b.Array</li><li>Object</li><li>Array</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Object, b.Array, Object, Array"
+    },
+    {
+      "id": 39,
+      "category": "XML Basics",
+      "q": "What rules apply to XML element names?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>a.Element names can include colons when using a namespace</li><li>b.Element names can include hyphens, underscores, and periods</li><li>c.Element names can include spaces</li><li>d.Element names must not start with a number</li><li>Element names can include colons when using a namespace</li><li>Element names can include hyphens, underscores, and periods</li><li>Element names must not start with a number</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> a.Element names can include colons when using a namespace, b.Element names can include hyphens, underscores, and periods, d.Element names must not start with a number, Element names can include colons when using a namespace, Element names can include hyphens, underscores, and periods, Element names must not start with a number"
+    },
+    {
+      "id": 40,
+      "category": "HTTP & REST APIs",
+      "q": "Which HTTP status code signifies an Internal Server Error?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>301</li><li>500</li><li>200</li><li>204</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> 500"
+    },
+    {
+      "id": 41,
+      "category": "HTML & Semantics",
+      "q": "Ordered list in HTML5 (1 )?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><unnumberedlist></li><li><numberedlist></li><li><li></li><li><ol></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <ol>"
+    },
+    {
+      "id": 42,
+      "category": "XML Basics",
+      "q": "What must have a well formed XML document contain (1)?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>… Exactly one root element</li><li>… DTD declaration at least one</li><li>unlimited number</li><li>two root elements</li><li>... Exactly one root element</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> … Exactly one root element, ... Exactly one root element"
+    },
+    {
+      "id": 43,
+      "category": "XML Basics",
+      "q": "XML was created by",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>sgml increasing</li><li>simplifying SGML</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> simplifying SGML"
+    },
+    {
+      "id": 44,
+      "category": "XML Basics",
+      "q": "XML is a?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>W3C recommendation</li><li>ISO standard</li><li>de jure standard</li><li>ANSI recommendation</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> W3C recommendation"
+    },
+    {
+      "id": 45,
+      "category": "JSON & Schema",
+      "q": "Which keyword is used to restrict the maximum number of properties in a JSON Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>maxProperties</li><li>maxItems</li><li>maximum</li><li>maxLength</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> maxProperties"
+    },
+    {
+      "id": 46,
+      "category": "XML Basics",
+      "q": "Which of the following statements about XML attributes are true?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>can be listed in any order</li><li>enclosed in single or double quotes</li><li>must have a value</li><li>can have multiple values</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> can be listed in any order, enclosed in single or double quotes, must have a value"
+    },
+    {
+      "id": 47,
+      "category": "HTTP & REST APIs",
+      "q": "Which of the following HTTP status codes represent a successful communication?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>200 ok</li><li>201 created</li><li>204 No Content</li><li>404 error</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> 200 ok, 201 created, 204 No Content"
+    },
+    {
+      "id": 48,
+      "category": "HTTP & REST APIs",
+      "q": "advantages Web sockets over Traditional HTTP protocol",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Biderectional communication</li><li>Bidirectional communication</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Bidirectional communication"
+    },
+    {
+      "id": 49,
+      "category": "HTML & Semantics",
+      "q": "Which of the following are current HTML standards?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>HTML 5</li><li>HTML 4.01</li><li>HTML 5.5</li><li>HTML 1.0</li><li>HTML 3.4</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> HTML 5, HTML 4.01"
+    },
+    {
+      "id": 50,
+      "category": "XML Basics",
+      "q": "What type of graphics does SVG represent?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Vector Graphics</li><li>Raster Graphics</li><li>Bitmap Graphics</li><li>3D Graphics</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Vector Graphics"
+    },
+    {
+      "id": 51,
+      "category": "CSV & Other Formats",
+      "q": "What is the primary purpose of TeX?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Language for publishing and scientific publications that require a precise layout</li><li>For data exchange</li><li>For creating web animations</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Language for publishing and scientific publications that require a precise layout"
+    },
+    {
+      "id": 52,
+      "category": "CSV & Other Formats",
+      "q": "What is TeX?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Language for creating professional text documents</li><li>A database system</li><li>A programming compiler</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Language for creating professional text documents"
+    },
+    {
+      "id": 53,
+      "category": "HTML & Semantics",
+      "q": "HTML5 microdata specific elements and attributes",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>itemtype</li><li>itemscope</li><li>vocap</li><li>pulfi</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> itemtype, itemscope"
+    },
+    {
+      "id": 54,
+      "category": "HTML & Semantics",
+      "q": "What is the correct DOCTYPE declaration for HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><!DOCTYPE html></li><li><!DOCTYPE xml></li><li><DOCTYPE html></li><li><DOCTYPE xml></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <!DOCTYPE html>"
+    },
+    {
+      "id": 55,
+      "category": "CSV & Other Formats",
+      "q": "Which of the following are true properties of CSV files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Can be enclosed in quotes</li><li>Can be without quotes</li><li>Must be in quotes</li><li>Mustn't be in quotes</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Can be enclosed in quotes, Can be without quotes"
+    },
+    {
+      "id": 56,
+      "category": "HTML & Semantics",
+      "q": "Which element is used to define navigation links in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>nav</li><li>section</li><li>menu</li><li>dl</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> nav"
+    },
+    {
+      "id": 57,
+      "category": "HTML & Semantics",
+      "q": "Which of the following elements can be used inside the HTML5 <header> element?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>div</li><li>nav</li><li>span</li><li>ol</li><li>ul</li><li>li</li><li>p</li><li>img</li><li>h1 to h6</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> div, nav, span, ol, ul, li, p, img, h1 to h6"
+    },
+    {
+      "id": 58,
+      "category": "CSV & Other Formats",
+      "q": "RelaxNG is a schema language for which format?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xml</li><li>json</li><li>csv</li><li>svg</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xml"
+    },
+    {
+      "id": 59,
+      "category": "CSV & Other Formats",
+      "q": "What is the primary purpose of DocBook?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>For writing technical documentation and books in XML format</li><li>To check the syntax of web pages</li><li>For creating animations on websites</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> For writing technical documentation and books in XML format"
+    },
+    {
+      "id": 60,
+      "category": "XSLT Transformations",
+      "q": "Which of the following elements are used in XSLT for conditional processing?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xsl:switch</li><li>xsl:choose</li><li>xsl:otherwise</li><li>xsl:if</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xsl:choose, xsl:otherwise, xsl:if"
+    },
+    {
+      "id": 61,
+      "category": "XML Schema (XSD)",
+      "q": "Syntax XSD to set a number of occurrences unlimited",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><xs:element name=\"majitel\" type=\"xs:string\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\" minCount=\"0\" maxCount=\"unbounded\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\" minElement=\"0\" maxElement=\"unbounded\"/></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>"
+    },
+    {
+      "id": 62,
+      "category": "JSON & Schema",
+      "q": "Which of the following keywords can be used to define object properties in JSON Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Items</li><li>Attributes</li><li>Pattern properties</li><li>Properties</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Pattern properties, Properties"
+    },
+    {
+      "id": 63,
+      "category": "CSV & Other Formats",
+      "q": "Which of the following tools does Google offer for working with structured data?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Google Structured Data Markup Helper</li><li>Google Structured Data Testing Tool</li><li>Google AdWords</li><li>Google Analytics</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Google Structured Data Markup Helper, Google Structured Data Testing Tool"
+    },
+    {
+      "id": 64,
+      "category": "JSON & Schema",
+      "q": "Which keyword is used to define unique values in an array within JSON schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Distinct</li><li>Unique</li><li>uniqueItems</li><li>uniqueIndex</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Unique, uniqueItems"
+    },
+    {
+      "id": 65,
+      "category": "HTML & Semantics",
+      "q": "Which of the following elements is correct for embedding video in an HTML 5 pages?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><media></li><li><object></li><li><embed></li><li><video></li><li><video> Extra questions Who created HTML? HTML was created by Tim Berners-Lee in 1989 while working</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <video>, <video> Extra questions Who created HTML? HTML was created by Tim Berners-Lee in 1989 while working"
+    },
+    {
+      "id": 66,
+      "category": "JSON & Schema",
+      "q": "Which keywords is used to minimum the value of a … in JSON schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>minLength</li><li>maxLength</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> minLength, maxLength"
+    },
+    {
+      "id": 67,
+      "category": "CSV & Other Formats",
+      "q": "What is a DTD (Document Type Definition)?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>A set of rules describing elements, attributes, structure, and content of an XML document.</li><li>Data Type Design</li><li>Document Transfer Design</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> A set of rules describing elements, attributes, structure, and content of an XML document."
+    },
+    {
+      "id": 68,
+      "category": "HTML & Semantics",
+      "q": "How do you define a hyperlink in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><a href=\"URL\">link text</a></li><li><a>\"link text\"</a></li><li><href=\"URL\">\"link text\"</li><li><a> \"link text\" < / a></li><li><a href=\"URL\" >link text< / a></li><li><a href= link text< / a></li><li><href=\"URL\" > \"link text\"</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <a href=\"URL\">link text</a>, <a href=\"URL\" >link text< / a>"
+    },
+    {
+      "id": 69,
+      "category": "JSON & Schema",
+      "q": "A JSON array looks like this?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>[ \"apple\", \"banana\", \"cherry\" ]</li><li>XSLT is used to transform XML documents into other formats, such as HTML, plain text, or PDF.</li><li>Absolute XPath specifies the full path to an element from the root of the document, while</li><li>relative XPath specifies the path to an element relative to the current node. For absolute XPath, the root is denoted by a single forward slash (/), while for relative XPath, the root is denoted by a period (.).</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> [ \"apple\", \"banana\", \"cherry\" ]"
+    },
+    {
+      "id": 70,
+      "category": "XML Schema (XSD)",
+      "q": "How do you define a custom data type in XML Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Using xs:simpleType and facets like xs:maxLength</li><li>Using xs:complexType with child elements</li><li>Using xs:element type</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Using xs:simpleType and facets like xs:maxLength"
+    },
+    {
+      "id": 71,
+      "category": "XML Schema (XSD)",
+      "q": "Which of the following elements can be used inside xs:restriction to restrict the value?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xs:minLength</li><li>xs:maxLength</li><li>xs:enumeration</li><li>xs:pattern</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xs:minLength, xs:maxLength, xs:enumeration, xs:pattern"
+    },
+    {
+      "id": 72,
+      "category": "HTML & Semantics",
+      "q": "Ordered list in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><ol></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <ol>"
+    },
+    {
+      "id": 73,
+      "category": "XSLT Transformations",
+      "q": "What are the goals of XSLT design patterns?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Creating a consisent and maintainable structure for XML transformations</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Creating a consisent and maintainable structure for XML transformations"
+    },
+    {
+      "id": 74,
+      "category": "JSON & Schema",
+      "q": "Key word maximun number of properties in JSON Schema",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>MaxProperties</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> MaxProperties"
+    },
+    {
+      "id": 75,
+      "category": "HTTP & REST APIs",
+      "q": "Which of the following elements are used to apply restrictions on numeric values of?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xs:maxInclusive</li><li>xs:minInclusive</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xs:maxInclusive, xs:minInclusive"
+    },
+    {
+      "id": 76,
+      "category": "XML Basics",
+      "q": "Which of these are generally marked as sucessful states?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>200</li><li>201</li><li>204</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> 200, 201, 204"
+    },
+    {
+      "id": 77,
+      "category": "CSV & Other Formats",
+      "q": "CSV files are commmonly used for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Data storage and exchange, for large datasets that consist of rows and columns</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Data storage and exchange, for large datasets that consist of rows and columns"
+    },
+    {
+      "id": 78,
+      "category": "HTML & Semantics",
+      "q": "HTML5 microdata specific elements and attributes",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>itemtype</li><li>itemscope</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> itemtype, itemscope"
+    },
+    {
+      "id": 79,
+      "category": "HTML & Semantics",
+      "q": "Who created HTML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Tim Berners-Lee in CERN</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Tim Berners-Lee in CERN"
+    },
+    {
+      "id": 80,
+      "category": "HTML & Semantics",
+      "q": "How to put a link in a HTML5 document?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>using the anchor tag (<a>) with the href attribute</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> using the anchor tag (<a>) with the href attribute"
+    },
+    {
+      "id": 81,
+      "category": "HTML & Semantics",
+      "q": "What is the difference between <section> and <article>?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Section is a section of a document (doesn't make sense on its own) while article refers directly to a</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Section is a section of a document (doesn't make sense on its own) while article refers directly to a"
+    },
+    {
+      "id": 82,
+      "category": "XSLT Transformations",
+      "q": "What does XSLT do?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>It transforms XML into other formats like HTML, CSS, PDF and others</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> It transforms XML into other formats like HTML, CSS, PDF and others"
+    },
+    {
+      "id": 83,
+      "category": "XPath & XQuery",
+      "q": "Absolute XPath vs. Relative XPath",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Absolute uses / while relative uses .</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Absolute uses / while relative uses ."
+    },
+    {
+      "id": 84,
+      "category": "HTML & Semantics",
+      "q": "What can we use in the <footer>?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><p>, <ul>, <li>, <a> and more</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <p>, <ul>, <li>, <a> and more"
+    },
+    {
+      "id": 85,
+      "category": "HTML & Semantics",
+      "q": "What are semantics in HTML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>They bring meaning to a piece of code, such as using <article> for an article, they also include metadata</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> They bring meaning to a piece of code, such as using <article> for an article, they also include metadata"
+    },
+    {
+      "id": 86,
+      "category": "HTML & Semantics",
+      "q": "Which HTML tag do we use for audio?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><audio></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <audio>"
+    },
+    {
+      "id": 87,
+      "category": "HTML & Semantics",
+      "q": "Which HTML tag do we use for navigation?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><nav></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <nav>"
+    },
+    {
+      "id": 88,
+      "category": "HTTP & REST APIs",
+      "q": "What are the RES API processes? (f.e. Post, Delete)?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>POST, GET, PUT, DELETE, PATCH, they modify/update resources on a server</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> POST, GET, PUT, DELETE, PATCH, they modify/update resources on a server"
+    },
+    {
+      "id": 89,
+      "category": "CSV & Other Formats",
+      "q": "What is RelaxNG?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Schema language for XML designed to simplify of defining XML document structures and its validation</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Schema language for XML designed to simplify of defining XML document structures and its validation"
+    },
+    {
+      "id": 90,
+      "category": "XML Basics",
+      "q": "Which languages do we use for transforming XML files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XSLT</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> XSLT"
+    },
+    {
+      "id": 91,
+      "category": "CSV & Other Formats",
+      "q": "Choose examples of structured data",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Excel table</li><li>Relational data</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Excel table, Relational data"
+    },
+    {
+      "id": 92,
+      "category": "CSV & Other Formats",
+      "q": "Organizational standardizing CSV",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>None</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> None"
+    },
+    {
+      "id": 93,
+      "category": "JSON & Schema",
+      "q": "Defining object properties in Json schema",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>properties</li><li>pattern properties</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> properties, pattern properties"
+    },
+    {
+      "id": 94,
+      "category": "XML Basics",
+      "q": "Latest version of Doc book is defined using?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>RelaxNG with XSD provided</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> RelaxNG with XSD provided"
+    },
+    {
+      "id": 95,
+      "category": "HTML & Semantics",
+      "q": "Can be used within a form in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Input</li><li>Form</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Input, Form"
+    },
+    {
+      "id": 96,
+      "category": "CSV & Other Formats",
+      "q": "Correct statements about DTD",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Document Type Definition</li><li>A set of rules describing the elements</li><li>This is how the structure and content of a document in XML are defined</li><li>XML validation</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Document Type Definition, A set of rules describing the elements, This is how the structure and content of a document in XML are defined, XML validation"
+    },
+    {
+      "id": 97,
+      "category": "HTML & Semantics",
+      "q": "Semantic elements",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Aside</li><li>Header</li><li>Article</li><li>Nav</li><li>Main</li><li>Section</li><li>Footer</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Aside, Header, Article, Nav, Main, Section, Footer"
+    },
+    {
+      "id": 98,
+      "category": "HTTP & REST APIs",
+      "q": "Abbreviation REST",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Representational State Transfer</li><li>Representational Section Translator</li><li>Remote Super Transfer</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Representational State Transfer"
+    },
+    {
+      "id": 99,
+      "category": "JSON & Schema",
+      "q": "Empty object in JSON",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>[]</li><li>{}</li><li>()</li><li><></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> {}"
+    },
+    {
+      "id": 100,
+      "category": "XML Basics",
+      "q": "Definition of XML rules",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>defined using HTML syntax or HTML schemas</li><li>defined using JSON syntax or JSON schemas</li><li>defined using XML syntax or XML Schemas</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> defined using XML syntax or XML Schemas"
+    },
+    {
+      "id": 101,
+      "category": "HTML & Semantics",
+      "q": "Basic elements in HTML",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>html</li><li>body</li><li>h1</li><li>head</li><li>a</li><li>ol</li><li>p</li><li>li</li><li>img</li><li>title</li><li>ul</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> html, body, h1, head, a, ol, p, li, img, title, ul"
+    },
+    {
+      "id": 102,
+      "category": "CSV & Other Formats",
+      "q": "What does SGML stand for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Standard Generitic Markup Library</li><li>Standard Generalized Markup Language</li><li>Simple Generalized Markup Library</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Standard Generalized Markup Language"
+    },
+    {
+      "id": 103,
+      "category": "XML Basics",
+      "q": "How many elements are defined by the XML language specification?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>0</li><li>hundreds</li><li>dozen</li><li>up to 10</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> 0"
+    },
+    {
+      "id": 104,
+      "category": "HTML & Semantics",
+      "q": "Who is behind the HTML language and related technologies?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Tim Berners Lee</li><li>Bill Gates</li><li>William Tunnicliffe</li><li>Charles Goldfarb</li><li>Steve Jobs</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Tim Berners Lee"
+    },
+    {
+      "id": 105,
+      "category": "HTML & Semantics",
+      "q": "What is the correct syntax for HTML 5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Tags must always be written in lowercase</li><li>Tags must always be written in capital letters.</li><li>Some elements may be without an exit tag.</li><li>Uppercase and lowercase letters are not important in tag names.</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Some elements may be without an exit tag., Uppercase and lowercase letters are not important in tag names."
+    },
+    {
+      "id": 106,
+      "category": "XPath & XQuery",
+      "q": "A document node in XPath that indicates a tag selection independent of the hierarchy",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>/</li><li>//</li><li>.</li><li>*</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> //"
+    },
+    {
+      "id": 107,
+      "category": "CSV & Other Formats",
+      "q": "CSV abbreviation",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Common Section Validator</li><li>Common Separated Values</li><li>Comma Separated Validators</li><li>Comma-separated values</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Comma-separated values"
+    },
+    {
+      "id": 108,
+      "category": "XML Basics",
+      "q": "Who manages XML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>C4W</li><li>Steve Jobs</li><li>NASA</li><li>W3C</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> W3C"
+    },
+    {
+      "id": 109,
+      "category": "HTTP & REST APIs",
+      "q": "Error messages with the number 5XX mean",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Successful statuses</li><li>Server errors</li><li>Redirection</li><li>Information statuses</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Server errors"
+    },
+    {
+      "id": 110,
+      "category": "HTML & Semantics",
+      "q": "Elements in HTML header",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>img</li><li>link</li><li>meta</li><li>style</li><li>script</li><li>title</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> link, meta, style, script, title"
+    },
+    {
+      "id": 111,
+      "category": "XML Basics",
+      "q": "Who standardized XML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>W3C</li><li>Xavier Martinez</li><li>Steve Jobs</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> W3C"
+    },
+    {
+      "id": 112,
+      "category": "XML Schema (XSD)",
+      "q": "Which of the following elements is used to define an attribute in an XML Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xs:attribute</li><li>xs:simpleType</li><li>xs:complexType</li><li>xs:element</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xs:attribute"
+    },
+    {
+      "id": 113,
+      "category": "HTTP & REST APIs",
+      "q": "What is the truth about HTTP?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>HTTP is the primary internet protocol</li><li>HTTP is the leading protocol for WWW</li><li>HTTP is a protocol for transferring data to a database</li><li>HTTP is a protocol for transferring data between a client and a server</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> HTTP is the leading protocol for WWW, HTTP is a protocol for transferring data between a client and a server"
+    },
+    {
+      "id": 114,
+      "category": "HTML & Semantics",
+      "q": "How is doctype written in header?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><! DOCTYPE xml></li><li><DOCTYPE xml></li><li><DOCTYPE html></li><li><! DOCTYPE html></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <! DOCTYPE html>"
+    },
+    {
+      "id": 115,
+      "category": "XML Basics",
+      "q": "The XML language",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>ANSI recommendation</li><li>de jure standard</li><li>W3C recommendation</li><li>ISO standard</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> W3C recommendation"
+    },
+    {
+      "id": 116,
+      "category": "XML Basics",
+      "q": "What is SVG for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Defines what elements and attributes can be used in XML</li><li>For data exchange</li><li>Displaying vector graphics on a website</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Displaying vector graphics on a website"
+    },
+    {
+      "id": 117,
+      "category": "HTML & Semantics",
+      "q": "What do itemscope and itemprop elements mean in HTML5?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><itemscope> and <itemprop> are used to indicate microdata (metadata) in the content of a web page</li><li><itemscope> and <itemprop> are used for optical zoom of the predetermined part of the site</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <itemscope> and <itemprop> are used to indicate microdata (metadata) in the content of a web page"
+    },
+    {
+      "id": 118,
+      "category": "XML Basics",
+      "q": "What types of entities can be represented using a dictionary Schema.org?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Place</li><li>Educational organizations</li><li>Book titles</li><li>Recipe</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Place, Educational organizations, Book titles, Recipe"
+    },
+    {
+      "id": 119,
+      "category": "HTML & Semantics",
+      "q": "Which of the following elements should be used to navigate the page?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><menu></li><li><dl></li><li><nav></li><li><section></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <nav>"
+    },
+    {
+      "id": 120,
+      "category": "JSON & Schema",
+      "q": "How to limit string length in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>min_lenght</li><li>fitIn_lenght</li><li>optimal_lenght</li><li>max_lenght</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> max_lenght, min_lenght"
+    },
+    {
+      "id": 121,
+      "category": "XSLT Transformations",
+      "q": "How is sorting done in XSLT?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Using the xsl: select function and the\"sort\" parameter</li><li>Using the xsl: sort function and the \"select\"parameter</li><li>Sort by alphabetical order</li><li>They are sorted by how they are written in the code</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Using the xsl: sort function and the \"select\"parameter"
+    },
+    {
+      "id": 122,
+      "category": "HTML & Semantics",
+      "q": "Types of audio files in HTML",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Ogg</li><li>AAC</li><li>MP3</li><li>WAV</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Ogg, AAC, MP3, WAV"
+    },
+    {
+      "id": 123,
+      "category": "XML Basics",
+      "q": "Which of the following are allowed for XML attributes?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Attributes must have a value</li><li>Attributes can be listed in any order</li><li>Attributes can have multiple values</li><li>Attribute values must be quoted - single or triple</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Attributes must have a value, Attributes can be listed in any order"
+    },
+    {
+      "id": 124,
+      "category": "JSON & Schema",
+      "q": "The size of the element length in XSD/JSON is denoted?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>optimalLenght</li><li>maxLenght</li><li>tooManyLenght</li><li>minLenght</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> maxLenght, minLenght"
+    },
+    {
+      "id": 125,
+      "category": "XPath & XQuery",
+      "q": "What is XQuery?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>XML data manipulation and transformation language</li><li>Language for querying XML data</li><li>XML document validation tool</li><li>XSLT transformation visual design tool</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Language for querying XML data"
+    },
+    {
+      "id": 126,
+      "category": "JSON & Schema",
+      "q": "Cannot use data type in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>string</li><li>null</li><li>date</li><li>boolean</li><li>float</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> date"
+    },
+    {
+      "id": 127,
+      "category": "HTTP & REST APIs",
+      "q": "What is the REST API used for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Allows you to access data on the server and obtain this data in XML or JSON format</li><li>Communication between web applications using the http protocol</li><li>To restore lost data after a power failure</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Allows you to access data on the server and obtain this data in XML or JSON format, Communication between web applications using the http protocol"
+    },
+    {
+      "id": 128,
+      "category": "XML Schema (XSD)",
+      "q": "How do we write the unlimited occurrence of an element in XSD?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li><xs:element name=\"majitel\" type=\"xs:string\" minCount=\"0\" maxCount=\"unbounded\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\" minElement=\"0\" maxElement=\"unbounded\"/></li><li><xs:element name=\"majitel\" type=\"xs:string\"/></li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> <xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>"
+    },
+    {
+      "id": 129,
+      "category": "CSV & Other Formats",
+      "q": "What DocBook is used for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>To check the syntax of web pages</li><li>For creating animations and interactive elements on websites</li><li>For writing technical documentation and books in XML format</li><li>For compiling and packaging software applications</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> For writing technical documentation and books in XML format"
+    },
+    {
+      "id": 130,
+      "category": "XML Basics",
+      "q": "What does W3C stand for?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>World Wide Web Consortium</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> World Wide Web Consortium"
+    },
+    {
+      "id": 131,
+      "category": "XML Basics",
+      "q": "What is schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>A set of rules and restrictions that determine the structure, format, and validity of data in a particular</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> A set of rules and restrictions that determine the structure, format, and validity of data in a particular"
+    },
+    {
+      "id": 132,
+      "category": "HTTP & REST APIs",
+      "q": "What is API?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>This is a standard format for describing a web service.</li><li>Application Programming Interface</li><li>It determines how software components or entire applications can communicate with each other.</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Application Programming Interface, It determines how software components or entire applications can communicate with each other."
+    },
+    {
+      "id": 133,
+      "category": "HTML & Semantics",
+      "q": "HTML5 allows you to use the <aside> tag - for what?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>To insert a block tangentially dependent on the content of the element in which it is located</li><li>To move content to a page</li><li>To embed absolutely independent content</li><li>To align text</li><li>To create alternative content for Responsive design</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> To insert a block tangentially dependent on the content of the element in which it is located"
+    },
+    {
+      "id": 134,
+      "category": "CSV & Other Formats",
+      "q": "Benefits of CSV",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>flexibility and compatibility</li><li>easy editing</li><li>small file size</li><li>simplicity and versatility</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> flexibility and compatibility, easy editing, small file size, simplicity and versatility"
+    },
+    {
+      "id": 135,
+      "category": "XML Schema (XSD)",
+      "q": "What can we define using XML Schema?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Data types of elements and attributes</li><li>XML document encoding</li><li>Restrictions on element and attribute values</li><li>XML document structure</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Data types of elements and attributes, Restrictions on element and attribute values, XML document structure"
+    },
+    {
+      "id": 136,
+      "category": "JSON & Schema",
+      "q": "Acronym JSON",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Java Object Normalization</li><li>JavaScript Over Notation</li><li>JavaScript Object Notation</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> JavaScript Object Notation"
+    },
+    {
+      "id": 137,
+      "category": "JSON & Schema",
+      "q": "How to write an empty field in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>[]</li><li>(\"\")</li><li>{}</li><li>[null]</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> [], {}"
+    },
+    {
+      "id": 138,
+      "category": "HTML & Semantics",
+      "q": "What format can a video be in HTML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Ogg</li><li>WMV</li><li>WebM</li><li>MP4</li><li>AVI</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Ogg, WebM, MP4"
+    },
+    {
+      "id": 139,
+      "category": "JSON & Schema",
+      "q": "Which of the following types can be used in a JSON schema? function?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>array</li><li>string</li><li>integer</li><li>boolean</li><li>object</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> array, string, integer, boolean, object"
+    },
+    {
+      "id": 140,
+      "category": "HTTP & REST APIs",
+      "q": "Short for SOAP",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Smart Object Access Protocol</li><li>Simple Object Access Protocol</li><li>Simple Object Active Protocol</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Simple Object Access Protocol"
+    },
+    {
+      "id": 141,
+      "category": "XML Basics",
+      "q": "Who invented XML?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>W3C (World Wide Web Consortium)</li><li>Not known</li><li>C3W (Consortium Web Wide World)</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> W3C (World Wide Web Consortium)"
+    },
+    {
+      "id": 142,
+      "category": "JSON & Schema",
+      "q": "What can be stored in JSON?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>object</li><li>string</li><li>number</li><li>field</li><li>logical values</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> object, string, number, logical values"
+    },
+    {
+      "id": 143,
+      "category": "CSV & Other Formats",
+      "q": "Which of the following metadata formats can be used for structured data on websites?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>JSON-LD</li><li>RDFa</li><li>JSON-meta</li><li>Microdata</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> JSON-LD, RDFa, Microdata"
+    },
+    {
+      "id": 144,
+      "category": "CSV & Other Formats",
+      "q": "What is the data in the data pyramid?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Stock or quantitative values</li><li>Data interpretation</li><li>Personal experience</li><li>Unprocessed and unorganized values</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Unprocessed and unorganized values"
+    },
+    {
+      "id": 145,
+      "category": "XSLT Transformations",
+      "q": "Elements in XSLT used to define templates and process XML data",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>xsl:apply-teplates</li><li>xsl:value-of</li><li>xsl:for-each</li><li>xsl:template</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> xsl:apply-teplates, xsl:value-of, xsl:for-each, xsl:template"
+    },
+    {
+      "id": 146,
+      "category": "CSV & Other Formats",
+      "q": "Values in CSV files?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Must be in quotation marks</li><li>Must not be in quotes</li><li>They can be in quotes</li><li>Can be without quotes</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> They can be in quotes, Can be without quotes"
+    },
+    {
+      "id": 147,
+      "category": "XML Basics",
+      "q": "What is the URI abbreviation?",
+      "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Universal Remote Informator</li><li>Uniform Resource Identifier</li><li>Universal Resource Identifier</li><li>Uniform Remote Identifier</li></ul>",
+      "ans": "<strong>Correct Answer(s):</strong> Uniform Resource Identifier"
+    }
+  ]
+}
