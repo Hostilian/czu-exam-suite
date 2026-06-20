@@ -1,0 +1,2204 @@
+[
+  {
+    "q": "Which programs can be used to open and edit CSV files?",
+    "options": [
+      "Notepad",
+      "Microsoft Excel",
+      "Adobe Photoshop",
+      "Libre Office Calc"
+    ],
+    "answers": [
+      "Notepad",
+      "Microsoft Excel",
+      "Libre Office Calc"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 1",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which keywords are used to limit the length of a string in JSON schema?",
+    "options": [
+      "max Size",
+      "max Value",
+      "min Length",
+      "max Length",
+      "minLength",
+      "maxLength"
+    ],
+    "answers": [
+      "minLength",
+      "maxLength"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 2",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "In SVG, image data is represented in what format?",
+    "options": [
+      "Binary",
+      "Numerically",
+      "Textually",
+      "Bicubic",
+      "Bitmap"
+    ],
+    "answers": [
+      "Textually"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 3",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following formats are text-based?",
+    "options": [
+      "JSON",
+      "CSV",
+      "XML",
+      "PNG"
+    ],
+    "answers": [
+      "JSON",
+      "CSV",
+      "XML"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 4",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What is the purpose of JSON schema?",
+    "options": [
+      "API serialization",
+      "Describing the structure of JSON data",
+      "Serializing JSON data to XML",
+      "Validating JSON data",
+      "Describing the structure of JSON dat"
+    ],
+    "answers": [
+      "Describing the structure of JSON data",
+      "Validating JSON data",
+      "Describing the structure of JSON dat"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 5",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What is the main difference between a well-formed and a valid XML document?",
+    "options": [
+      "A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements of an XML schema or DTD.",
+      "A well-formed document has correctly nested tags, while a valid document has properly closed tags.",
+      "A well-formed document meets the requirements of an XML schema or DTD, while a valid document adheres to the basic syntax rules.",
+      "A well-formed document contains only ASCII characters, while a valid document contains only Unicode characters.",
+      "A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements"
+    ],
+    "answers": [
+      "A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements of an XML schema or DTD.",
+      "A well-formed document adheres to the basic syntax rules, while a valid document meets the requirements"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 6",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following HTTP methods allow manipulation of data on the server?",
+    "options": [
+      "POST",
+      "DELETE",
+      "GET",
+      "PUT"
+    ],
+    "answers": [
+      "POST",
+      "DELETE",
+      "PUT"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 7",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Which of the following tags are found in the <head> section of an HTML document?",
+    "options": [
+      "<ul>",
+      "<p>",
+      "<title>",
+      "<img>",
+      "<meta>",
+      "<link>"
+    ],
+    "answers": [
+      "<title>",
+      "<meta>",
+      "<link>"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 8",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following are allowed for XML elements?",
+    "options": [
+      "Elements can have attributes",
+      "Elements can contain other elements.",
+      "Elements can have textual content.",
+      "Elements can have multiple root/parent elements.",
+      "Elements can have attributes (if only one then this one)"
+    ],
+    "answers": [
+      "Elements can have attributes",
+      "Elements can contain other elements.",
+      "Elements can have textual content.",
+      "Elements can have attributes (if only one then this one)"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 9",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following elements is used to create a table in HTML5?",
+    "options": [
+      "<grid>",
+      "<table>",
+      "<array>",
+      "<data table>"
+    ],
+    "answers": [
+      "<table>"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 10",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following are true about XML and JSON?",
+    "options": [
+      "XML and JSON can be used for application configuration.",
+      "XML and JSON can be used for serializing objects.",
+      "XML and JSON are formats for storing and transmitting data.",
+      "XML and JSON are styling languages.",
+      "XML and JSON can be used for application configuration",
+      "XML and JSON can be used for serializing objects",
+      "XML and JSON are formats for storing and transmitting data"
+    ],
+    "answers": [
+      "XML and JSON can be used for application configuration.",
+      "XML and JSON can be used for serializing objects.",
+      "XML and JSON are formats for storing and transmitting data.",
+      "XML and JSON can be used for application configuration",
+      "XML and JSON can be used for serializing objects",
+      "XML and JSON are formats for storing and transmitting data"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 11",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What can be used to define custom data types in XML Schema?",
+    "options": [
+      "xs:simpleType",
+      "xs:attribute",
+      "xs:element",
+      "xs:complexType"
+    ],
+    "answers": [
+      "xs:simpleType",
+      "xs:complexType"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 12",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Which of the following elements can be used inside xs:restriction to restrict the value of elements and attributes?",
+    "options": [
+      "xs:minLenght",
+      "xs:maxLenght",
+      "xs:enumeration",
+      "xs:pattern"
+    ],
+    "answers": [
+      "xs:enumeration",
+      "xs:pattern"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Which of the following statement about the HTTP protocol is true?",
+    "options": [
+      "HTTP is the primary protocol of the internet.",
+      "HTTP is a protocol for transferring data between a client and a server.",
+      "HTTP is the leading protocol for the World Wide Web.",
+      "HTTP is a protocol for transferring data to a database.",
+      "HTTP is a protocol for transferring data between a client and a server"
+    ],
+    "answers": [
+      "HTTP is a protocol for transferring data between a client and a server.",
+      "HTTP is a protocol for transferring data between a client and a server"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 14",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "In JSON, which data type cannot be used?",
+    "options": [
+      "Date",
+      "float",
+      "string",
+      "boolean",
+      "null",
+      "date"
+    ],
+    "answers": [
+      "Date",
+      "date"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 15",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "XML can be?",
+    "options": [
+      "strict, well-balanced",
+      "valid, well-balanced",
+      "well-formed, strict",
+      "valid, well-formed"
+    ],
+    "answers": [
+      "valid, well-formed"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 16",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following technologies can use XPath expressions?",
+    "options": [
+      "XPointer",
+      "XSLT",
+      "XML Schema",
+      "XQuery"
+    ],
+    "answers": [
+      "XPointer",
+      "XSLT",
+      "XQuery"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 17",
+    "cat": "XPath & XQuery"
+  },
+  {
+    "q": "What is the true about XML namespaces?",
+    "options": [
+      "XML namespaces limit the validity of an XML schema.",
+      "XML namespaces prevent conflicts between element and attribute names in an XML document.",
+      "XML namespaces group XML elements into logical blocks.",
+      "XML namespaces define shortcuts for elements and attributes.",
+      "XML namespaces prevent conflicts between element and attribute names in an XML document"
+    ],
+    "answers": [
+      "XML namespaces prevent conflicts between element and attribute names in an XML document.",
+      "XML namespaces prevent conflicts between element and attribute names in an XML document"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 18",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which attribute is used to define a CSS file in HTML5?",
+    "options": [
+      "src",
+      "href",
+      "url",
+      "path"
+    ],
+    "answers": [
+      "href"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 19",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What does xs:simpleType allow you to define?",
+    "options": [
+      "Custom data type based on an existing simple data type.",
+      "Element containing child elements.",
+      "Attribute with multiple values.",
+      "Elements with attributes and child elements.",
+      "Custom data type based on an existing simple data type"
+    ],
+    "answers": [
+      "Custom data type based on an existing simple data type.",
+      "Custom data type based on an existing simple data type"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 20",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "What can be defines using xs:complexType in XML Schema?",
+    "options": [
+      "Restrictions on the values of elements.",
+      "Elements with nested child elements.",
+      "Elements with attributes.",
+      "Custom data type based on an existing complex data type.",
+      "Custom data type based on an existing complex data type",
+      "Elements with nested child elements (if only one then this one)",
+      "Elements with attributes"
+    ],
+    "answers": [
+      "Elements with attributes.",
+      "Custom data type based on an existing complex data type.",
+      "Custom data type based on an existing complex data type",
+      "Elements with nested child elements (if only one then this one)",
+      "Elements with attributes"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 21",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Which of the following HTML5 elements are used for semantic tagging of content?",
+    "options": [
+      "<footer>",
+      "<header>",
+      "<aside>",
+      "<span>"
+    ],
+    "answers": [
+      "<footer>",
+      "<header>",
+      "<aside>"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 22",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which organization is responsible for specifying XML?",
+    "options": [
+      "Institute of Electrical and Electronics Engineers (IEEE)",
+      "World Wide Web Consortium (W3C)",
+      "Internet Engineering Task Force (IETF)",
+      "International Organization for Standardization (ISO)",
+      "W3C"
+    ],
+    "answers": [
+      "World Wide Web Consortium (W3C)",
+      "W3C"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 23",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What is true about a valid XML document?",
+    "options": [
+      "XML attributes must have a value.",
+      "A valid XML document complies with requirements defined by an XML schema or DTD.",
+      "A valid XML document is always well-formed.",
+      "A valid XML document does not need to have a root element.",
+      "A valid XML document complies with requirements defined by an XML schema or DTD",
+      "A valid XML document is always well-formed"
+    ],
+    "answers": [
+      "A valid XML document complies with requirements defined by an XML schema or DTD.",
+      "A valid XML document is always well-formed.",
+      "A valid XML document complies with requirements defined by an XML schema or DTD",
+      "A valid XML document is always well-formed"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 24",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What format is used for SVG files?",
+    "options": [
+      "CSV",
+      "XML",
+      "Binary",
+      "JSON"
+    ],
+    "answers": [
+      "XML"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 25",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which languages are used for addressing nodes in XSLT, among other things?",
+    "options": [
+      "XPath",
+      "XAddress",
+      "XQuery",
+      "XLink",
+      "Xpath"
+    ],
+    "answers": [
+      "XPath",
+      "Xpath"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 26",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "What is the main purpose of XSD design patterns?",
+    "options": [
+      "Creating a consistent and maintainable structure for XML Schema;",
+      "Creating a consistent and maintainable structure for XML Schema"
+    ],
+    "answers": [
+      "Creating a consistent and maintainable structure for XML Schema;",
+      "Creating a consistent and maintainable structure for XML Schema"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 27",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "What are the purposes of using XML?",
+    "options": [
+      "a. For defining the structure of documents",
+      "b. For defining custom markup languages",
+      "c. For transferring data between different applications and systems;",
+      "for defining the structue of documents",
+      "for defining custom markup languages",
+      "for transferring data between different aplications and systems"
+    ],
+    "answers": [
+      "b. For defining custom markup languages",
+      "for defining the structue of documents",
+      "for defining custom markup languages",
+      "for transferring data between different aplications and systems"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 45",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following elements are used to apply restrictions on numeric values of elements and attributes within xs:restriction?",
+    "options": [
+      "a. xs:maxInclusive",
+      "b. xs:minInclusive"
+    ],
+    "answers": [
+      "a. xs:maxInclusive",
+      "b. xs:minInclusive"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "What is the symbol for the root tag in Xpath?\n/?",
+    "options": [
+      "/"
+    ],
+    "answers": [
+      "/"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 46",
+    "cat": "XPath & XQuery"
+  },
+  {
+    "q": "What data types are supported in JSON?",
+    "options": [
+      "a.Null",
+      "b.Number",
+      "c.String",
+      "d.Boolean;",
+      "Null",
+      "Number",
+      "String",
+      "Boolean"
+    ],
+    "answers": [
+      "a.Null",
+      "b.Number",
+      "c.String",
+      "d.Boolean;",
+      "Null",
+      "Number",
+      "String",
+      "Boolean"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 47",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following principles of REST architecture are correct?",
+    "options": [
+      "a.Cachability",
+      "b.Client-Server Interface",
+      "c.Unified Interface",
+      "d.Statelessness",
+      "Cachability",
+      "Client-Server interface",
+      "Unified Interface",
+      "Statelesness"
+    ],
+    "answers": [
+      "a.Cachability",
+      "b.Client-Server Interface",
+      "c.Unified Interface",
+      "Cachability",
+      "Client-Server interface",
+      "Unified Interface",
+      "Statelesness"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 49",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "What can be the output of an XSLT transformation?",
+    "options": [
+      "a.XML",
+      "b.CSS",
+      "c.HTML",
+      "d.JSON",
+      "XML",
+      "CSS",
+      "HTML",
+      "JSON (questionable)"
+    ],
+    "answers": [
+      "a.XML",
+      "b.CSS",
+      "c.HTML",
+      "XML",
+      "CSS",
+      "HTML",
+      "JSON (questionable)"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 50",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "How is an empty array written in JSON? \n[]\n{}\n(\"\")?",
+    "options": [
+      "[]"
+    ],
+    "answers": [
+      "[]"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 51",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What are the advantages of CSV format?",
+    "options": [
+      "a.Universality",
+      "b.Space efficiency",
+      "c.Simple syntax",
+      "Universality",
+      "Space efficiency",
+      "Simple syntax"
+    ],
+    "answers": [
+      "a.Universality",
+      "b.Space efficiency",
+      "c.Simple syntax",
+      "Universality",
+      "Space efficiency",
+      "Simple syntax"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 52",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which characters are commonly used as delimiters in CSV files?",
+    "options": [
+      "a.Tabs",
+      "b.Commas",
+      "Tabs",
+      "Commas"
+    ],
+    "answers": [
+      "a.Tabs",
+      "b.Commas",
+      "Tabs",
+      "Commas"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 53",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What are the benefits of semantics and structured data on web pages?",
+    "options": [
+      "a.Improved display of search results",
+      "b.Better indexing for search engines",
+      "c.Improved accessibility for reading devices",
+      "Improved display of search results",
+      "Better indexing for search engines",
+      "Improved accessibility for reading devices"
+    ],
+    "answers": [
+      "a.Improved display of search results",
+      "b.Better indexing for search engines",
+      "c.Improved accessibility for reading devices",
+      "Improved display of search results",
+      "Better indexing for search engines",
+      "Improved accessibility for reading devices"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 54",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What basic structures are supported in JSON?",
+    "options": [
+      "a.Object",
+      "b.Array",
+      "Object",
+      "Array"
+    ],
+    "answers": [
+      "a.Object",
+      "b.Array",
+      "Object",
+      "Array"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 55",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What rules apply to XML element names?",
+    "options": [
+      "a.Element names can include colons when using a namespace",
+      "b.Element names can include hyphens, underscores, and periods",
+      "c.Element names can include spaces",
+      "d.Element names must not start with a number",
+      "Element names can include colons when using a namespace",
+      "Element names can include hyphens, underscores, and periods",
+      "Element names must not start with a number"
+    ],
+    "answers": [
+      "a.Element names can include colons when using a namespace",
+      "b.Element names can include hyphens, underscores, and periods",
+      "d.Element names must not start with a number",
+      "Element names can include colons when using a namespace",
+      "Element names can include hyphens, underscores, and periods",
+      "Element names must not start with a number"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 56",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which HTTP status code signifies an Internal Server Error?",
+    "options": [
+      "301",
+      "500",
+      "200",
+      "204"
+    ],
+    "answers": [
+      "500"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 28",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Ordered list in HTML5 (1 )?",
+    "options": [
+      "<unnumberedlist>",
+      "<numberedlist>",
+      "<li>",
+      "<ol>"
+    ],
+    "answers": [
+      "<ol>"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What must have a well formed XML document contain (1)?",
+    "options": [
+      "… Exactly one root element",
+      "… DTD declaration at least one",
+      "unlimited number",
+      "two root elements",
+      "... Exactly one root element"
+    ],
+    "answers": [
+      "… Exactly one root element",
+      "... Exactly one root element"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 30",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "XML was created by",
+    "options": [
+      "sgml increasing",
+      "simplifying SGML"
+    ],
+    "answers": [
+      "simplifying SGML"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 31",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "XML is a?",
+    "options": [
+      "W3C recommendation",
+      "ISO standard",
+      "de jure standard",
+      "ANSI recommendation"
+    ],
+    "answers": [
+      "W3C recommendation"
+    ],
+    "src": "Markup(TS) only",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which keyword is used to restrict the maximum number of properties in a JSON Schema?",
+    "options": [
+      "maxProperties",
+      "maxItems",
+      "maximum",
+      "maxLength"
+    ],
+    "answers": [
+      "maxProperties"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & Markup_Test1 soru 22",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following statements about XML attributes are true?",
+    "options": [
+      "can be listed in any order",
+      "enclosed in single or double quotes",
+      "must have a value",
+      "can have multiple values"
+    ],
+    "answers": [
+      "can be listed in any order",
+      "enclosed in single or double quotes",
+      "must have a value"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 34",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following HTTP status codes represent a successful communication?",
+    "options": [
+      "200 ok",
+      "201 created",
+      "204 No Content",
+      "404 error"
+    ],
+    "answers": [
+      "200 ok",
+      "201 created",
+      "204 No Content"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 76",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "advantages Web sockets over Traditional HTTP protocol",
+    "options": [
+      "Biderectional communication",
+      "Bidirectional communication"
+    ],
+    "answers": [
+      "Bidirectional communication"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 38",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Which of the following are current HTML standards?",
+    "options": [
+      "HTML 5",
+      "HTML 4.01",
+      "HTML 5.5",
+      "HTML 1.0",
+      "HTML 3.4"
+    ],
+    "answers": [
+      "HTML 5",
+      "HTML 4.01"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 39",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What type of graphics does SVG represent?",
+    "options": [
+      "Vector Graphics",
+      "Raster Graphics",
+      "Bitmap Graphics",
+      "3D Graphics"
+    ],
+    "answers": [
+      "Vector Graphics"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 40",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What is the primary purpose of TeX?",
+    "options": [
+      "Language for publishing and scientific publications that require a precise layout",
+      "For data exchange",
+      "For creating web animations"
+    ],
+    "answers": [
+      "Language for publishing and scientific publications that require a precise layout"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 42",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What is TeX?",
+    "options": [
+      "Language for creating professional text documents",
+      "A database system",
+      "A programming compiler"
+    ],
+    "answers": [
+      "Language for creating professional text documents"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 44",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "HTML5 microdata specific elements and attributes",
+    "options": [
+      "itemtype",
+      "itemscope",
+      "vocap",
+      "pulfi"
+    ],
+    "answers": [
+      "itemtype",
+      "itemscope"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What is the correct DOCTYPE declaration for HTML5?",
+    "options": [
+      "<!DOCTYPE html>",
+      "<!DOCTYPE xml>",
+      "<DOCTYPE html>",
+      "<DOCTYPE xml>"
+    ],
+    "answers": [
+      "<!DOCTYPE html>"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 77",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following are true properties of CSV files?",
+    "options": [
+      "Can be enclosed in quotes",
+      "Can be without quotes",
+      "Must be in quotes",
+      "Mustn't be in quotes"
+    ],
+    "answers": [
+      "Can be enclosed in quotes",
+      "Can be without quotes"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 78",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which element is used to define navigation links in HTML5?",
+    "options": [
+      "nav",
+      "section",
+      "menu",
+      "dl"
+    ],
+    "answers": [
+      "nav"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 79",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following elements can be used inside the HTML5 <header> element?",
+    "options": [
+      "div",
+      "nav",
+      "span",
+      "ol",
+      "ul",
+      "li",
+      "p",
+      "img",
+      "h1 to h6"
+    ],
+    "answers": [
+      "div",
+      "nav",
+      "span",
+      "ol",
+      "ul",
+      "li",
+      "p",
+      "img",
+      "h1 to h6"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 80",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "RelaxNG is a schema language for which format?",
+    "options": [
+      "xml",
+      "json",
+      "csv",
+      "svg"
+    ],
+    "answers": [
+      "xml"
+    ],
+    "src": "Markup(TS) only",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What is the primary purpose of DocBook?",
+    "options": [
+      "For writing technical documentation and books in XML format",
+      "To check the syntax of web pages",
+      "For creating animations on websites"
+    ],
+    "answers": [
+      "For writing technical documentation and books in XML format"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 82",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which of the following elements are used in XSLT for conditional processing?",
+    "options": [
+      "xsl:switch",
+      "xsl:choose",
+      "xsl:otherwise",
+      "xsl:if"
+    ],
+    "answers": [
+      "xsl:choose",
+      "xsl:otherwise",
+      "xsl:if"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 83",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "Syntax XSD to set a number of occurrences unlimited",
+    "options": [
+      "<xs:element name=\"majitel\" type=\"xs:string\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\" minCount=\"0\" maxCount=\"unbounded\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\" minElement=\"0\" maxElement=\"unbounded\"/>"
+    ],
+    "answers": [
+      "<xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 84",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Which of the following keywords can be used to define object properties in JSON Schema?",
+    "options": [
+      "Items",
+      "Attributes",
+      "Pattern properties",
+      "Properties"
+    ],
+    "answers": [
+      "Pattern properties",
+      "Properties"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 85",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following tools does Google offer for working with structured data?",
+    "options": [
+      "Google Structured Data Markup Helper",
+      "Google Structured Data Testing Tool",
+      "Google AdWords",
+      "Google Analytics"
+    ],
+    "answers": [
+      "Google Structured Data Markup Helper",
+      "Google Structured Data Testing Tool"
+    ],
+    "src": "Markup(TS) only & markupexamfinal3 soru 86",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which keyword is used to define unique values in an array within JSON schema?",
+    "options": [
+      "Distinct",
+      "Unique",
+      "uniqueItems",
+      "uniqueIndex"
+    ],
+    "answers": [
+      "Unique",
+      "uniqueItems"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 87",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following elements is correct for embedding video in an HTML 5 pages?",
+    "options": [
+      "<media>",
+      "<object>",
+      "<embed>",
+      "<video>",
+      "<video> Extra questions Who created HTML? HTML was created by Tim Berners-Lee in 1989 while working"
+    ],
+    "answers": [
+      "<video>",
+      "<video> Extra questions Who created HTML? HTML was created by Tim Berners-Lee in 1989 while working"
+    ],
+    "src": "Markup(TS) & markupexamfinal2 & markupexamfinal3 soru 88",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which keywords is used to minimum the value of a … in JSON schema?",
+    "options": [
+      "minLength",
+      "maxLength"
+    ],
+    "answers": [
+      "minLength",
+      "maxLength"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What is a DTD (Document Type Definition)?",
+    "options": [
+      "A set of rules describing elements, attributes, structure, and content of an XML document.",
+      "Data Type Design",
+      "Document Transfer Design"
+    ],
+    "answers": [
+      "A set of rules describing elements, attributes, structure, and content of an XML document."
+    ],
+    "src": "Markup(TS) only",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "How do you define a hyperlink in HTML5?",
+    "options": [
+      "<a href=\"URL\">link text</a>",
+      "<a>\"link text\"</a>",
+      "<href=\"URL\">\"link text\"",
+      "<a> \"link text\" < / a>",
+      "<a href=\"URL\" >link text< / a>",
+      "<a href= link text< / a>",
+      "<href=\"URL\" > \"link text\""
+    ],
+    "answers": [
+      "<a href=\"URL\">link text</a>",
+      "<a href=\"URL\" >link text< / a>"
+    ],
+    "src": "Markup(TS) only & Markup_Test1 soru 30",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "A JSON array looks like this?",
+    "options": [
+      "[ \"apple\", \"banana\", \"cherry\" ]",
+      "XSLT is used to transform XML documents into other formats, such as HTML, plain text, or PDF.",
+      "Absolute XPath specifies the full path to an element from the root of the document, while",
+      "relative XPath specifies the path to an element relative to the current node. For absolute XPath, the root is denoted by a single forward slash (/), while for relative XPath, the root is denoted by a period (.)."
+    ],
+    "answers": [
+      "[ \"apple\", \"banana\", \"cherry\" ]"
+    ],
+    "src": "Markup(TS) & markupexamfinal2",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "How do you define a custom data type in XML Schema?",
+    "options": [
+      "Using xs:simpleType and facets like xs:maxLength",
+      "Using xs:complexType with child elements",
+      "Using xs:element type"
+    ],
+    "answers": [
+      "Using xs:simpleType and facets like xs:maxLength"
+    ],
+    "src": "Markup(TS) only",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Which of the following elements can be used inside xs:restriction to restrict the value?",
+    "options": [
+      "xs:minLength",
+      "xs:maxLength",
+      "xs:enumeration",
+      "xs:pattern"
+    ],
+    "answers": [
+      "xs:minLength",
+      "xs:maxLength",
+      "xs:enumeration",
+      "xs:pattern"
+    ],
+    "src": "markupexamfinal3 soru 13",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Ordered list in HTML5?",
+    "options": [
+      "<ol>"
+    ],
+    "answers": [
+      "<ol>"
+    ],
+    "src": "markupexamfinal3 soru 29",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What are the goals of XSLT design patterns?",
+    "options": [
+      "Creating a consisent and maintainable structure for XML transformations"
+    ],
+    "answers": [
+      "Creating a consisent and maintainable structure for XML transformations"
+    ],
+    "src": "markupexamfinal3 soru 32",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "Key word maximun number of properties in JSON Schema",
+    "options": [
+      "MaxProperties"
+    ],
+    "answers": [
+      "MaxProperties"
+    ],
+    "src": "markupexamfinal3 soru 33",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following elements are used to apply restrictions on numeric values of?",
+    "options": [
+      "xs:maxInclusive",
+      "xs:minInclusive"
+    ],
+    "answers": [
+      "xs:maxInclusive",
+      "xs:minInclusive"
+    ],
+    "src": "markupexamfinal3 soru 35",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Which of these are generally marked as sucessful states?",
+    "options": [
+      "200",
+      "201",
+      "204"
+    ],
+    "answers": [
+      "200",
+      "201",
+      "204"
+    ],
+    "src": "markupexamfinal3 soru 36",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "CSV files are commmonly used for?",
+    "options": [
+      "Data storage and exchange, for large datasets that consist of rows and columns"
+    ],
+    "answers": [
+      "Data storage and exchange, for large datasets that consist of rows and columns"
+    ],
+    "src": "markupexamfinal3 soru 41",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "HTML5 microdata specific elements and attributes",
+    "options": [
+      "itemtype",
+      "itemscope"
+    ],
+    "answers": [
+      "itemtype",
+      "itemscope"
+    ],
+    "src": "markupexamfinal3 soru 43",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Who created HTML?",
+    "options": [
+      "Tim Berners-Lee in CERN"
+    ],
+    "answers": [
+      "Tim Berners-Lee in CERN"
+    ],
+    "src": "markupexamfinal3 soru 57",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "How to put a link in a HTML5 document?",
+    "options": [
+      "using the anchor tag (<a>) with the href attribute"
+    ],
+    "answers": [
+      "using the anchor tag (<a>) with the href attribute"
+    ],
+    "src": "markupexamfinal3 soru 58",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What is the difference between <section> and <article>?",
+    "options": [
+      "Section is a section of a document (doesn't make sense on its own) while article refers directly to a"
+    ],
+    "answers": [
+      "Section is a section of a document (doesn't make sense on its own) while article refers directly to a"
+    ],
+    "src": "markupexamfinal3 soru 59",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What does XSLT do?",
+    "options": [
+      "It transforms XML into other formats like HTML, CSS, PDF and others"
+    ],
+    "answers": [
+      "It transforms XML into other formats like HTML, CSS, PDF and others"
+    ],
+    "src": "markupexamfinal3 soru 60",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "Absolute XPath vs. Relative XPath",
+    "options": [
+      "Absolute uses / while relative uses ."
+    ],
+    "answers": [
+      "Absolute uses / while relative uses ."
+    ],
+    "src": "markupexamfinal3 soru 61",
+    "cat": "XPath & XQuery"
+  },
+  {
+    "q": "What can we use in the <footer>?",
+    "options": [
+      "<p>, <ul>, <li>, <a> and more"
+    ],
+    "answers": [
+      "<p>, <ul>, <li>, <a> and more"
+    ],
+    "src": "markupexamfinal3 soru 62",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What are semantics in HTML?",
+    "options": [
+      "They bring meaning to a piece of code, such as using <article> for an article, they also include metadata"
+    ],
+    "answers": [
+      "They bring meaning to a piece of code, such as using <article> for an article, they also include metadata"
+    ],
+    "src": "markupexamfinal3 soru 63",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which HTML tag do we use for audio?",
+    "options": [
+      "<audio>"
+    ],
+    "answers": [
+      "<audio>"
+    ],
+    "src": "markupexamfinal3 soru 64",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which HTML tag do we use for navigation?",
+    "options": [
+      "<nav>"
+    ],
+    "answers": [
+      "<nav>"
+    ],
+    "src": "markupexamfinal3 soru 65",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What are the RES API processes? (f.e. Post, Delete)?",
+    "options": [
+      "POST, GET, PUT, DELETE, PATCH, they modify/update resources on a server"
+    ],
+    "answers": [
+      "POST, GET, PUT, DELETE, PATCH, they modify/update resources on a server"
+    ],
+    "src": "markupexamfinal3 soru 66",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "What is RelaxNG?",
+    "options": [
+      "Schema language for XML designed to simplify of defining XML document structures and its validation"
+    ],
+    "answers": [
+      "Schema language for XML designed to simplify of defining XML document structures and its validation"
+    ],
+    "src": "markupexamfinal3 soru 67",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Which languages do we use for transforming XML files?",
+    "options": [
+      "XSLT"
+    ],
+    "answers": [
+      "XSLT"
+    ],
+    "src": "markupexamfinal3 soru 68",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Choose examples of structured data",
+    "options": [
+      "Excel table",
+      "Relational data"
+    ],
+    "answers": [
+      "Excel table",
+      "Relational data"
+    ],
+    "src": "markupexamfinal3 soru 69",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Organizational standardizing CSV",
+    "options": [
+      "None"
+    ],
+    "answers": [
+      "None"
+    ],
+    "src": "markupexamfinal3 soru 70",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Defining object properties in Json schema",
+    "options": [
+      "properties",
+      "pattern properties"
+    ],
+    "answers": [
+      "properties",
+      "pattern properties"
+    ],
+    "src": "markupexamfinal3 soru 71",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Latest version of Doc book is defined using?",
+    "options": [
+      "RelaxNG with XSD provided"
+    ],
+    "answers": [
+      "RelaxNG with XSD provided"
+    ],
+    "src": "markupexamfinal3 soru 72",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Can be used within a form in HTML5?",
+    "options": [
+      "Input",
+      "Form"
+    ],
+    "answers": [
+      "Input",
+      "Form"
+    ],
+    "src": "markupexamfinal3 soru 74",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Correct statements about DTD",
+    "options": [
+      "Document Type Definition",
+      "A set of rules describing the elements",
+      "This is how the structure and content of a document in XML are defined",
+      "XML validation"
+    ],
+    "answers": [
+      "Document Type Definition",
+      "A set of rules describing the elements",
+      "This is how the structure and content of a document in XML are defined",
+      "XML validation"
+    ],
+    "src": "Markup_Test1 soru 1",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Semantic elements",
+    "options": [
+      "Aside",
+      "Header",
+      "Article",
+      "Nav",
+      "Main",
+      "Section",
+      "Footer"
+    ],
+    "answers": [
+      "Aside",
+      "Header",
+      "Article",
+      "Nav",
+      "Main",
+      "Section",
+      "Footer"
+    ],
+    "src": "Markup_Test1 soru 2",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Abbreviation REST",
+    "options": [
+      "Representational State Transfer",
+      "Representational Section Translator",
+      "Remote Super Transfer"
+    ],
+    "answers": [
+      "Representational State Transfer"
+    ],
+    "src": "Markup_Test1 soru 3",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Empty object in JSON",
+    "options": [
+      "[]",
+      "{}",
+      "()",
+      "<>"
+    ],
+    "answers": [
+      "{}"
+    ],
+    "src": "Markup_Test1 soru 4",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Definition of XML rules",
+    "options": [
+      "defined using HTML syntax or HTML schemas",
+      "defined using JSON syntax or JSON schemas",
+      "defined using XML syntax or XML Schemas"
+    ],
+    "answers": [
+      "defined using XML syntax or XML Schemas"
+    ],
+    "src": "Markup_Test1 soru 5",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Basic elements in HTML",
+    "options": [
+      "html",
+      "body",
+      "h1",
+      "head",
+      "a",
+      "ol",
+      "p",
+      "li",
+      "img",
+      "title",
+      "ul"
+    ],
+    "answers": [
+      "html",
+      "body",
+      "h1",
+      "head",
+      "a",
+      "ol",
+      "p",
+      "li",
+      "img",
+      "title",
+      "ul"
+    ],
+    "src": "Markup_Test1 soru 6",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What does SGML stand for?",
+    "options": [
+      "Standard Generitic Markup Library",
+      "Standard Generalized Markup Language",
+      "Simple Generalized Markup Library"
+    ],
+    "answers": [
+      "Standard Generalized Markup Language"
+    ],
+    "src": "Markup_Test1 soru 7",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "How many elements are defined by the XML language specification?",
+    "options": [
+      "0",
+      "hundreds",
+      "dozen",
+      "up to 10"
+    ],
+    "answers": [
+      "0"
+    ],
+    "src": "Markup_Test1 soru 9",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Who is behind the HTML language and related technologies?",
+    "options": [
+      "Tim Berners Lee",
+      "Bill Gates",
+      "William Tunnicliffe",
+      "Charles Goldfarb",
+      "Steve Jobs"
+    ],
+    "answers": [
+      "Tim Berners Lee"
+    ],
+    "src": "Markup_Test1 soru 10",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What is the correct syntax for HTML 5?",
+    "options": [
+      "Tags must always be written in lowercase",
+      "Tags must always be written in capital letters.",
+      "Some elements may be without an exit tag.",
+      "Uppercase and lowercase letters are not important in tag names."
+    ],
+    "answers": [
+      "Some elements may be without an exit tag.",
+      "Uppercase and lowercase letters are not important in tag names."
+    ],
+    "src": "Markup_Test1 soru 11",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "A document node in XPath that indicates a tag selection independent of the hierarchy",
+    "options": [
+      "/",
+      "//",
+      ".",
+      "*"
+    ],
+    "answers": [
+      "//"
+    ],
+    "src": "Markup_Test1 soru 13",
+    "cat": "XPath & XQuery"
+  },
+  {
+    "q": "CSV abbreviation",
+    "options": [
+      "Common Section Validator",
+      "Common Separated Values",
+      "Comma Separated Validators",
+      "Comma-separated values"
+    ],
+    "answers": [
+      "Comma-separated values"
+    ],
+    "src": "Markup_Test1 soru 14",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Who manages XML?",
+    "options": [
+      "C4W",
+      "Steve Jobs",
+      "NASA",
+      "W3C"
+    ],
+    "answers": [
+      "W3C"
+    ],
+    "src": "Markup_Test1 soru 15",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Error messages with the number 5XX mean",
+    "options": [
+      "Successful statuses",
+      "Server errors",
+      "Redirection",
+      "Information statuses"
+    ],
+    "answers": [
+      "Server errors"
+    ],
+    "src": "Markup_Test1 soru 17",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Elements in HTML header",
+    "options": [
+      "img",
+      "link",
+      "meta",
+      "style",
+      "script",
+      "title"
+    ],
+    "answers": [
+      "link",
+      "meta",
+      "style",
+      "script",
+      "title"
+    ],
+    "src": "Markup_Test1 soru 18",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Who standardized XML?",
+    "options": [
+      "W3C",
+      "Xavier Martinez",
+      "Steve Jobs"
+    ],
+    "answers": [
+      "W3C"
+    ],
+    "src": "Markup_Test1 soru 19",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following elements is used to define an attribute in an XML Schema?",
+    "options": [
+      "xs:attribute",
+      "xs:simpleType",
+      "xs:complexType",
+      "xs:element"
+    ],
+    "answers": [
+      "xs:attribute"
+    ],
+    "src": "Markup_Test1 soru 20",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "What is the truth about HTTP?",
+    "options": [
+      "HTTP is the primary internet protocol",
+      "HTTP is the leading protocol for WWW",
+      "HTTP is a protocol for transferring data to a database",
+      "HTTP is a protocol for transferring data between a client and a server"
+    ],
+    "answers": [
+      "HTTP is the leading protocol for WWW",
+      "HTTP is a protocol for transferring data between a client and a server"
+    ],
+    "src": "Markup_Test1 soru 21",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "How is doctype written in header?",
+    "options": [
+      "<! DOCTYPE xml>",
+      "<DOCTYPE xml>",
+      "<DOCTYPE html>",
+      "<! DOCTYPE html>"
+    ],
+    "answers": [
+      "<! DOCTYPE html>"
+    ],
+    "src": "Markup_Test1 soru 23",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "The XML language",
+    "options": [
+      "ANSI recommendation",
+      "de jure standard",
+      "W3C recommendation",
+      "ISO standard"
+    ],
+    "answers": [
+      "W3C recommendation"
+    ],
+    "src": "Markup_Test1 soru 24",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What is SVG for?",
+    "options": [
+      "Defines what elements and attributes can be used in XML",
+      "For data exchange",
+      "Displaying vector graphics on a website"
+    ],
+    "answers": [
+      "Displaying vector graphics on a website"
+    ],
+    "src": "Markup_Test1 soru 25",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What do itemscope and itemprop elements mean in HTML5?",
+    "options": [
+      "<itemscope> and <itemprop> are used to indicate microdata (metadata) in the content of a web page",
+      "<itemscope> and <itemprop> are used for optical zoom of the predetermined part of the site"
+    ],
+    "answers": [
+      "<itemscope> and <itemprop> are used to indicate microdata (metadata) in the content of a web page"
+    ],
+    "src": "Markup_Test1 soru 26",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "What types of entities can be represented using a dictionary Schema.org?",
+    "options": [
+      "Place",
+      "Educational organizations",
+      "Book titles",
+      "Recipe"
+    ],
+    "answers": [
+      "Place",
+      "Educational organizations",
+      "Book titles",
+      "Recipe"
+    ],
+    "src": "Markup_Test1 soru 27",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "Which of the following elements should be used to navigate the page?",
+    "options": [
+      "<menu>",
+      "<dl>",
+      "<nav>",
+      "<section>"
+    ],
+    "answers": [
+      "<nav>"
+    ],
+    "src": "Markup_Test1 soru 28",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "How to limit string length in JSON?",
+    "options": [
+      "min_lenght",
+      "fitIn_lenght",
+      "optimal_lenght",
+      "max_lenght"
+    ],
+    "answers": [
+      "max_lenght",
+      "min_lenght"
+    ],
+    "src": "Markup_Test1 soru 31",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "How is sorting done in XSLT?",
+    "options": [
+      "Using the xsl: select function and the\"sort\" parameter",
+      "Using the xsl: sort function and the \"select\"parameter",
+      "Sort by alphabetical order",
+      "They are sorted by how they are written in the code"
+    ],
+    "answers": [
+      "Using the xsl: sort function and the \"select\"parameter"
+    ],
+    "src": "Markup_Test1 soru 33",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "Types of audio files in HTML",
+    "options": [
+      "Ogg",
+      "AAC",
+      "MP3",
+      "WAV"
+    ],
+    "answers": [
+      "Ogg",
+      "AAC",
+      "MP3",
+      "WAV"
+    ],
+    "src": "Markup_Test1 soru 35",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following are allowed for XML attributes?",
+    "options": [
+      "Attributes must have a value",
+      "Attributes can be listed in any order",
+      "Attributes can have multiple values",
+      "Attribute values must be quoted - single or triple"
+    ],
+    "answers": [
+      "Attributes must have a value",
+      "Attributes can be listed in any order"
+    ],
+    "src": "Markup_Test1 soru 36",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "The size of the element length in XSD/JSON is denoted?",
+    "options": [
+      "optimalLenght",
+      "maxLenght",
+      "tooManyLenght",
+      "minLenght"
+    ],
+    "answers": [
+      "maxLenght",
+      "minLenght"
+    ],
+    "src": "Markup_Test1 soru 38",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What is XQuery?",
+    "options": [
+      "XML data manipulation and transformation language",
+      "Language for querying XML data",
+      "XML document validation tool",
+      "XSLT transformation visual design tool"
+    ],
+    "answers": [
+      "Language for querying XML data"
+    ],
+    "src": "Markup_Test1 soru 41",
+    "cat": "XPath & XQuery"
+  },
+  {
+    "q": "Cannot use data type in JSON?",
+    "options": [
+      "string",
+      "null",
+      "date",
+      "boolean",
+      "float"
+    ],
+    "answers": [
+      "date"
+    ],
+    "src": "Markup_Test1 soru 42",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What is the REST API used for?",
+    "options": [
+      "Allows you to access data on the server and obtain this data in XML or JSON format",
+      "Communication between web applications using the http protocol",
+      "To restore lost data after a power failure"
+    ],
+    "answers": [
+      "Allows you to access data on the server and obtain this data in XML or JSON format",
+      "Communication between web applications using the http protocol"
+    ],
+    "src": "Markup_Test1 soru 43",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "How do we write the unlimited occurrence of an element in XSD?",
+    "options": [
+      "<xs:element name=\"majitel\" type=\"xs:string\" minCount=\"0\" maxCount=\"unbounded\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\" minElement=\"0\" maxElement=\"unbounded\"/>",
+      "<xs:element name=\"majitel\" type=\"xs:string\"/>"
+    ],
+    "answers": [
+      "<xs:element name=\"majitel\" type=\"xs:string\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>"
+    ],
+    "src": "Markup_Test1 soru 46",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "What DocBook is used for?",
+    "options": [
+      "To check the syntax of web pages",
+      "For creating animations and interactive elements on websites",
+      "For writing technical documentation and books in XML format",
+      "For compiling and packaging software applications"
+    ],
+    "answers": [
+      "For writing technical documentation and books in XML format"
+    ],
+    "src": "Markup_Test1 soru 47",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What does W3C stand for?",
+    "options": [
+      "World Wide Web Consortium"
+    ],
+    "answers": [
+      "World Wide Web Consortium"
+    ],
+    "src": "Markup_Test1 soru 48",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What is schema?",
+    "options": [
+      "A set of rules and restrictions that determine the structure, format, and validity of data in a particular"
+    ],
+    "answers": [
+      "A set of rules and restrictions that determine the structure, format, and validity of data in a particular"
+    ],
+    "src": "Markup_Test1 soru 49",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What is API?",
+    "options": [
+      "This is a standard format for describing a web service.",
+      "Application Programming Interface",
+      "It determines how software components or entire applications can communicate with each other."
+    ],
+    "answers": [
+      "Application Programming Interface",
+      "It determines how software components or entire applications can communicate with each other."
+    ],
+    "src": "Markup_Test1 soru 50",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "HTML5 allows you to use the <aside> tag - for what?",
+    "options": [
+      "To insert a block tangentially dependent on the content of the element in which it is located",
+      "To move content to a page",
+      "To embed absolutely independent content",
+      "To align text",
+      "To create alternative content for Responsive design"
+    ],
+    "answers": [
+      "To insert a block tangentially dependent on the content of the element in which it is located"
+    ],
+    "src": "Markup_Test1 soru 51",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Benefits of CSV",
+    "options": [
+      "flexibility and compatibility",
+      "easy editing",
+      "small file size",
+      "simplicity and versatility"
+    ],
+    "answers": [
+      "flexibility and compatibility",
+      "easy editing",
+      "small file size",
+      "simplicity and versatility"
+    ],
+    "src": "Markup_Test1 soru 52",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What can we define using XML Schema?",
+    "options": [
+      "Data types of elements and attributes",
+      "XML document encoding",
+      "Restrictions on element and attribute values",
+      "XML document structure"
+    ],
+    "answers": [
+      "Data types of elements and attributes",
+      "Restrictions on element and attribute values",
+      "XML document structure"
+    ],
+    "src": "Markup_Test1 soru 55",
+    "cat": "XML Schema (XSD)"
+  },
+  {
+    "q": "Acronym JSON",
+    "options": [
+      "Java Object Normalization",
+      "JavaScript Over Notation",
+      "JavaScript Object Notation"
+    ],
+    "answers": [
+      "JavaScript Object Notation"
+    ],
+    "src": "Markup_Test1 soru 56",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "How to write an empty field in JSON?",
+    "options": [
+      "[]",
+      "(\"\")",
+      "{}",
+      "[null]"
+    ],
+    "answers": [
+      "[]",
+      "{}"
+    ],
+    "src": "Markup_Test1 soru 57",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "What format can a video be in HTML?",
+    "options": [
+      "Ogg",
+      "WMV",
+      "WebM",
+      "MP4",
+      "AVI"
+    ],
+    "answers": [
+      "Ogg",
+      "WebM",
+      "MP4"
+    ],
+    "src": "Markup_Test1 soru 59",
+    "cat": "HTML & Semantics"
+  },
+  {
+    "q": "Which of the following types can be used in a JSON schema? function?",
+    "options": [
+      "array",
+      "string",
+      "integer",
+      "boolean",
+      "object"
+    ],
+    "answers": [
+      "array",
+      "string",
+      "integer",
+      "boolean",
+      "object"
+    ],
+    "src": "Markup_Test1 soru 60",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Short for SOAP",
+    "options": [
+      "Smart Object Access Protocol",
+      "Simple Object Access Protocol",
+      "Simple Object Active Protocol"
+    ],
+    "answers": [
+      "Simple Object Access Protocol"
+    ],
+    "src": "Markup_Test1 soru 63",
+    "cat": "HTTP & REST APIs"
+  },
+  {
+    "q": "Who invented XML?",
+    "options": [
+      "W3C (World Wide Web Consortium)",
+      "Not known",
+      "C3W (Consortium Web Wide World)"
+    ],
+    "answers": [
+      "W3C (World Wide Web Consortium)"
+    ],
+    "src": "Markup_Test1 soru 64",
+    "cat": "XML Basics"
+  },
+  {
+    "q": "What can be stored in JSON?",
+    "options": [
+      "object",
+      "string",
+      "number",
+      "field",
+      "logical values"
+    ],
+    "answers": [
+      "object",
+      "string",
+      "number",
+      "logical values"
+    ],
+    "src": "Markup_Test1 soru 67",
+    "cat": "JSON & Schema"
+  },
+  {
+    "q": "Which of the following metadata formats can be used for structured data on websites?",
+    "options": [
+      "JSON-LD",
+      "RDFa",
+      "JSON-meta",
+      "Microdata"
+    ],
+    "answers": [
+      "JSON-LD",
+      "RDFa",
+      "Microdata"
+    ],
+    "src": "Markup_Test1 soru 68",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What is the data in the data pyramid?",
+    "options": [
+      "Stock or quantitative values",
+      "Data interpretation",
+      "Personal experience",
+      "Unprocessed and unorganized values"
+    ],
+    "answers": [
+      "Unprocessed and unorganized values"
+    ],
+    "src": "Markup_Test1 soru 69",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "Elements in XSLT used to define templates and process XML data",
+    "options": [
+      "xsl:apply-teplates",
+      "xsl:value-of",
+      "xsl:for-each",
+      "xsl:template"
+    ],
+    "answers": [
+      "xsl:apply-teplates",
+      "xsl:value-of",
+      "xsl:for-each",
+      "xsl:template"
+    ],
+    "src": "Markup_Test1 soru 71",
+    "cat": "XSLT Transformations"
+  },
+  {
+    "q": "Values in CSV files?",
+    "options": [
+      "Must be in quotation marks",
+      "Must not be in quotes",
+      "They can be in quotes",
+      "Can be without quotes"
+    ],
+    "answers": [
+      "They can be in quotes",
+      "Can be without quotes"
+    ],
+    "src": "Markup_Test1 soru 72",
+    "cat": "CSV & Other Formats"
+  },
+  {
+    "q": "What is the URI abbreviation?",
+    "options": [
+      "Universal Remote Informator",
+      "Uniform Resource Identifier",
+      "Universal Resource Identifier",
+      "Uniform Remote Identifier"
+    ],
+    "answers": [
+      "Uniform Resource Identifier"
+    ],
+    "src": "Backup HTML EXAM_MASTER_2H",
+    "cat": "XML Basics"
+  }
+]
