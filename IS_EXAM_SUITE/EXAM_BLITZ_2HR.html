@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📊 Information Systems 2HR Exam Blitz | ETEA7E CZU Prague</title>
+<meta name="description" content="Ultimate 2-hour IS exam prep for ETEA7E at CZU Prague. Data Warehouse, ERP/SAP, DSS, AI, Cloud, BI, CIA Triad, OLTP/OLAP, SDLC, flashcards, mock exam, audio guide and more."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030612;--surface:#0a0d1f;--surface2:#101428;--surface3:#171d33;
+  --violet:#a855f7;--violet-dim:#7c3aed;--violet-glow:rgba(168,85,247,.28);
+  --amber:#f59e0b;--amber-dim:#d97706;--amber-glow:rgba(245,158,11,.28);
+  --cyan:#22d3ee;--cyan-glow:rgba(34,211,238,.2);
+  --green:#4ade80;--red:#f87171;--pink:#f472b6;--blue:#60a5fa;
+  --text:#eef0f8;--text-dim:#8b90b8;--text-muted:#424875;
+  --border:rgba(168,85,247,.12);--border-a:rgba(245,158,11,.14);--border-c:rgba(34,211,238,.12);
+  --radius:20px;--radius-sm:12px;--radius-xs:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* BLUR-REVEAL */
+.blur-reveal{filter:blur(5px);background-color:rgba(168,85,247,.14);border-radius:4px;padding:0 4px;cursor:pointer;transition:filter .2s ease,background-color .2s ease;user-select:none}
+.blur-reveal:hover,.blur-reveal.revealed{filter:blur(0);background-color:transparent}
+
+/* ANIMATED BG */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 85% 65% at 10% 12%,rgba(168,85,247,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 65% 75% at 90% 88%,rgba(245,158,11,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 45% at 55% 50%,rgba(34,211,238,.04) 0%,transparent 55%),var(--bg);
+  animation:bgPulse 20s ease-in-out infinite alternate}
+@keyframes bgPulse{0%{opacity:1}50%{opacity:.9}100%{opacity:1}}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:200;background:rgba(3,6,18,.92);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:62px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,var(--violet) 30%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--violet-dim),var(--amber-dim));display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.nav-pills{display:flex;gap:3px;overflow-x:auto;flex:1;padding:0 .75rem}
+.nav-pills::-webkit-scrollbar{height:0}
+.pill{padding:5px 14px;border-radius:50px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;white-space:nowrap;transition:all .2s;background:transparent;color:var(--text-dim)}
+.pill.active,.pill:hover{background:rgba(168,85,247,.12);color:var(--violet);border:1px solid rgba(168,85,247,.25)}
+.timer-box{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border-a);border-radius:50px;padding:3px 12px 3px 8px;flex-shrink:0}
+#timer{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:var(--amber)}
+.timer-label{font-size:.62rem;color:var(--text-muted)}
+.offline-badge{display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);padding:4px 10px;border-radius:50px;white-space:nowrap}
+.offline-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(74,222,128,.5);animation:blink 1.5s infinite alternate}
+@keyframes blink{0%{opacity:.3}100%{opacity:1}}
+.reveal-all-btn{padding:5px 13px;border-radius:50px;background:rgba(168,85,247,.12);color:var(--violet);border:1px solid rgba(168,85,247,.25);font-weight:700;font-size:.74rem;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;white-space:nowrap}
+.reveal-all-btn:hover{background:rgba(168,85,247,.22)}
+
+/* SECTIONS */
+.section{position:relative;z-index:1;padding:1.75rem 1.5rem;display:none}
+.section.active{display:block;animation:fadeUp .35s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.section-title{font-size:1.5rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.4rem;background:linear-gradient(135deg,var(--violet),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.section-sub{font-size:.82rem;color:var(--text-dim);margin-bottom:1.5rem}
+
+/* GRID & CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1.2rem;margin-bottom:1.5rem}
+.card{background:rgba(10,13,31,.78);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);transition:all .25s}
+.card:hover{border-color:rgba(168,85,247,.3);box-shadow:0 8px 32px rgba(168,85,247,.07);transform:translateY(-2px)}
+.card-a{border-color:var(--border-a)}.card-a:hover{border-color:rgba(245,158,11,.3);box-shadow:0 8px 32px rgba(245,158,11,.07)}
+.card-c{border-color:var(--border-c)}.card-c:hover{border-color:rgba(34,211,238,.3);box-shadow:0 8px 32px rgba(34,211,238,.07)}
+.card-g{border-color:rgba(74,222,128,.15)}.card-g:hover{border-color:rgba(74,222,128,.3);box-shadow:0 8px 32px rgba(74,222,128,.07)}
+.card-r{border-color:rgba(248,113,113,.15)}.card-r:hover{border-color:rgba(248,113,113,.3)}
+.card-b{border-color:rgba(96,165,250,.15)}.card-b:hover{border-color:rgba(96,165,250,.3)}
+.card-full{grid-column:1/-1}
+.card-h{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.iv{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.2)}
+.ia{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2)}
+.ic{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.2)}
+.ig{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.2)}
+.ir{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.2)}
+.ib{background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.2)}
+.ip{background:rgba(244,114,182,.12);border:1px solid rgba(244,114,182,.2)}
+.card-title{font-size:.95rem;font-weight:700}
+.card-sub{font-size:.72rem;color:var(--text-dim);margin-top:2px}
+
+/* TAGS */
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.68rem;font-weight:700;letter-spacing:.04em;font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);color:var(--text-dim);margin:2px}
+.tag-v{background:rgba(168,85,247,.12);color:var(--violet)}
+.tag-a{background:rgba(245,158,11,.12);color:var(--amber)}
+.tag-c{background:rgba(34,211,238,.12);color:var(--cyan)}
+.tag-g{background:rgba(74,222,128,.12);color:var(--green)}
+.tag-r{background:rgba(248,113,113,.12);color:var(--red)}
+.tag-b{background:rgba(96,165,250,.12);color:var(--blue)}
+
+/* TRAPS & NOTES */
+.trap{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.28);border-radius:var(--radius-xs);padding:.6rem .85rem;font-size:.78rem;margin:.45rem 0;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.trap::before{content:'⚠️';flex-shrink:0;margin-top:1px}
+.note{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.18);border-radius:var(--radius-xs);padding:.55rem .85rem;font-size:.76rem;color:var(--text-dim);line-height:1.5;margin:.4rem 0}
+.note b{color:var(--violet);font-weight:700}
+.success-note{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);border-radius:var(--radius-xs);padding:.55rem .85rem;font-size:.76rem;color:var(--text-dim);line-height:1.5;margin:.4rem 0}
+.success-note b{color:var(--green)}
+.info-note{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:var(--radius-xs);padding:.55rem .85rem;font-size:.76rem;color:var(--text-dim);line-height:1.5;margin:.4rem 0}
+.info-note b{color:var(--blue)}
+
+/* KEY POINTS */
+.kp{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.035);font-size:.8rem;line-height:1.5}
+.kp:last-child{border-bottom:none}
+.kp-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.kp-v .kp-dot{background:var(--violet)}.kp-a .kp-dot{background:var(--amber)}
+.kp-c .kp-dot{background:var(--cyan)}.kp-g .kp-dot{background:var(--green)}
+.kp-r .kp-dot{background:var(--red)}.kp-b .kp-dot{background:var(--blue)}
+.kp b{font-weight:700}
+
+/* COMPARE */
+.cmp{display:grid;gap:.45rem}
+.cmp-row{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.cmp-cell{padding:.55rem .85rem;border-radius:var(--radius-xs);font-size:.78rem;line-height:1.5}
+.cmp-head{font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.35rem .85rem;border-radius:var(--radius-xs)}
+.cmp-v{background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.15)}
+.cmp-a{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.15)}
+.cmp-c{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.15)}
+.cmp-g{background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.15)}
+.cmp-r{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.15)}
+.cmp-b{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.15)}
+.cmp-head-v{background:rgba(168,85,247,.18);color:var(--violet);border:1px solid rgba(168,85,247,.3)}
+.cmp-head-a{background:rgba(245,158,11,.18);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.cmp-head-c{background:rgba(34,211,238,.18);color:var(--cyan);border:1px solid rgba(34,211,238,.3)}
+.cmp-head-g{background:rgba(74,222,128,.18);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+.cmp-head-r{background:rgba(248,113,113,.18);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.cmp-head-b{background:rgba(96,165,250,.18);color:var(--blue);border:1px solid rgba(96,165,250,.3)}
+
+/* TABLE */
+.t{width:100%;border-collapse:collapse;font-size:.78rem}
+.t th{padding:7px 10px;text-align:left;font-size:.66rem;font-weight:600;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.t td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top;line-height:1.5}
+.t tr:last-child td{border-bottom:none}
+.t tr:hover td{background:rgba(255,255,255,.02)}
+
+/* MOBILE NAV */
+.mobile-nav{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.4rem}
+.btn-nav{padding:7px 13px;border-radius:50px;border:none;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s;color:#000}
+.bn-v{background:linear-gradient(135deg,var(--violet),var(--violet-dim))}
+.bn-a{background:linear-gradient(135deg,var(--amber),var(--amber-dim))}
+.bn-c{background:linear-gradient(135deg,var(--cyan),#0e7490)}
+.bn-g{background:linear-gradient(135deg,var(--green),#16a34a)}
+.bn-r{background:linear-gradient(135deg,#f87171,#dc2626)}
+.bn-b{background:linear-gradient(135deg,var(--blue),#1d4ed8)}
+.bn-p{background:linear-gradient(135deg,#f472b6,#a21caf)}
+.bn-y{background:linear-gradient(135deg,#fbbf24,#d97706)}
+.bn-ch{background:linear-gradient(135deg,var(--green),#15803d)}
+.btn-nav:hover{transform:translateY(-2px);filter:brightness(1.15)}
+
+/* PODCAST */
+.podcast-panel{background:linear-gradient(135deg,rgba(168,85,247,.05),rgba(245,158,11,.04));border:1px solid rgba(168,85,247,.2);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.podcast-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--amber),var(--cyan))}
+.podcast-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.25rem}
+.podcast-sub{font-size:.8rem;color:var(--text-dim);margin-bottom:.75rem}
+.voice-selector-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+.voice-selector-row label{font-size:.78rem;color:var(--text-dim);font-weight:600}
+.voice-select{background:var(--surface2);border:1px solid rgba(255,255,255,.1);color:#fff;padding:6px 12px;border-radius:7px;font-size:.82rem;outline:none;cursor:pointer;font-family:'Outfit',sans-serif}
+.podcast-audio{width:100%;max-width:420px;outline:none;border-radius:8px;margin-top:.25rem}
+.podcast-download{background:linear-gradient(135deg,var(--violet),var(--violet-dim));color:#fff;padding:8px 18px;border-radius:50px;font-size:.78rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:all .2s;margin-top:.75rem}
+.podcast-download:hover{transform:translateY(-2px);box-shadow:0 4px 16px var(--violet-glow)}
+
+/* AUDIO PANEL */
+.audio-panel{background:linear-gradient(135deg,rgba(168,85,247,.05),rgba(245,158,11,.04));border:1px solid rgba(168,85,247,.18);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.5rem}
+.audio-title{font-size:1.05rem;font-weight:700;color:var(--violet);margin-bottom:.2rem}
+.audio-sub{font-size:.78rem;color:var(--text-dim);margin-bottom:1rem}
+.audio-controls{display:flex;gap:.65rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.audio-btn{padding:8px 16px;border-radius:50px;border:none;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.abtn-play{background:linear-gradient(135deg,var(--violet),var(--violet-dim));color:#fff}
+.abtn-play:hover{transform:translateY(-2px);box-shadow:0 4px 16px var(--violet-glow)}
+.abtn-pause{background:var(--surface3);color:var(--text);border:1px solid var(--border)}
+.abtn-stop{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.22)}
+.audio-now-playing{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.7rem 1rem;font-size:.8rem;line-height:1.6;min-height:48px;border-left:3px solid var(--violet)}
+.audio-playlist{display:flex;flex-direction:column;gap:3px;max-height:300px;overflow-y:auto;margin-top:.7rem}
+.audio-playlist::-webkit-scrollbar{width:3px}
+.audio-playlist::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.playlist-item{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--radius-xs);background:var(--surface2);border:1px solid transparent;cursor:pointer;transition:all .2s;font-size:.78rem}
+.playlist-item:hover{border-color:var(--border)}
+.playlist-item.active-track{border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.07);color:var(--violet)}
+.playlist-num{width:20px;height:20px;border-radius:4px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--text-dim);flex-shrink:0}
+.playlist-item.active-track .playlist-num{background:var(--violet);color:#fff}
+
+/* FLASHCARDS */
+.fc-wrap{width:100%;max-width:580px;perspective:1400px;cursor:pointer}
+.fc{position:relative;width:100%;height:270px;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.2,.2,1)}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;border-radius:22px;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;text-align:center}
+.fc-front{background:linear-gradient(135deg,rgba(10,13,31,.97),rgba(23,29,51,.92));border:1px solid rgba(168,85,247,.22);box-shadow:0 0 40px rgba(168,85,247,.06),inset 0 1px 0 rgba(168,85,247,.1)}
+.fc-back{background:linear-gradient(135deg,rgba(23,29,51,.97),rgba(10,13,31,.92));border:1px solid rgba(245,158,11,.22);box-shadow:0 0 40px rgba(245,158,11,.06);transform:rotateY(180deg)}
+.fc-cat{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);margin-bottom:.5rem}
+.fc-back .fc-cat{color:var(--amber)}
+.fc-q{font-size:1.1rem;font-weight:700;line-height:1.4;color:var(--text)}
+.fc-hint{font-size:.72rem;color:var(--text-muted);margin-top:1rem}
+.fc-a{font-size:.85rem;line-height:1.65;color:var(--text);text-align:left}
+.fc-a b,.fc-a strong{color:var(--violet);font-weight:700}
+.fc-a .fa{color:var(--amber);font-weight:700}
+.fc-a .fc{color:var(--cyan);font-weight:700}
+.fc-a .fg{color:var(--green);font-weight:700}
+.fc-a .fr{color:var(--red);font-weight:700}
+.fc-a .fb{color:var(--blue);font-weight:700}
+.fc-progress{width:100%;max-width:600px;display:flex;align-items:center;gap:12px;margin-bottom:1.2rem}
+.fc-bar-wrap{flex:1;height:5px;background:var(--surface3);border-radius:50px;overflow:hidden}
+.fc-bar{height:100%;background:linear-gradient(90deg,var(--violet),var(--amber));border-radius:50px;transition:width .4s ease}
+.fc-deck-tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem}
+.fc-tab{padding:5px 13px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s}
+.fc-tab.active{background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(245,158,11,.1));color:var(--violet);border-color:rgba(168,85,247,.38)}
+.fc-controls{display:flex;gap:.7rem;margin-top:1.4rem;flex-wrap:wrap;justify-content:center}
+.fc-btn{padding:9px 22px;border-radius:50px;border:none;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-bad{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}.btn-bad:hover{background:rgba(248,113,113,.25)}
+.btn-good{background:rgba(74,222,128,.15);color:var(--green);border:1px solid rgba(74,222,128,.3)}.btn-good:hover{background:rgba(74,222,128,.25)}
+.btn-skip{background:rgba(255,255,255,.06);color:var(--text-dim);border:1px solid var(--border)}.btn-skip:hover{color:var(--text)}
+.btn-flip{background:linear-gradient(135deg,var(--violet),var(--violet-dim));color:#fff;font-weight:800;padding:9px 26px;border-radius:50px;border:none;font-family:'Outfit',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s}
+.btn-flip:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--violet-glow)}
+.fc-counter{font-size:.76rem;color:var(--text-dim);margin-top:.7rem}
+.fc-stats{display:flex;gap:1.2rem;font-size:.78rem;font-weight:600;margin-bottom:1rem}
+.shortcut-hint{margin-top:.85rem;font-size:.68rem;color:var(--text-muted);display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.shortcut-hint kbd{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text-dim)}
+
+/* MASTERY STATS */
+.mastery-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:1.1rem;display:flex;align-items:center;gap:1rem}
+.stat-num{font-size:1.6rem;font-weight:800;line-height:1.2;font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:.72rem;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:.65rem}
+.tl-row{display:flex;gap:10px;align-items:flex-start;font-size:.8rem}
+.tl-time{color:var(--violet);font-family:'JetBrains Mono',monospace;font-size:.7rem;min-width:72px;padding-top:2px;flex-shrink:0}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;border:2px solid}
+.tl-v{background:rgba(168,85,247,.3);border-color:var(--violet)}.tl-a{background:rgba(245,158,11,.3);border-color:var(--amber)}
+.tl-c{background:rgba(34,211,238,.3);border-color:var(--cyan)}.tl-g{background:rgba(74,222,128,.3);border-color:var(--green)}
+.tl-r{background:rgba(248,113,113,.3);border-color:var(--red)}.tl-b{background:rgba(96,165,250,.3);border-color:var(--blue)}
+
+/* QUICK REF */
+.qref{display:flex;gap:.45rem;flex-wrap:wrap;margin:.5rem 0}
+.qref-item{padding:3px 9px;border-radius:4px;font-size:.72rem;font-weight:600;font-family:'JetBrains Mono',monospace;background:var(--surface3);border:1px solid var(--border);color:var(--text-dim)}
+.qref-item .q-key{color:var(--violet)}.qref-item .q-val{color:var(--amber)}
+
+/* IS PYRAMID */
+.pyramid{display:flex;flex-direction:column;gap:4px}
+.py-row{border-radius:10px;padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between;font-size:.82rem;font-weight:700;transition:all .2s}
+.py-row:hover{transform:translateX(4px)}
+.py-eis{background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(168,85,247,.08));border:1px solid rgba(244,114,182,.3);color:#f472b6}
+.py-dss{background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(245,158,11,.06));border:1px solid rgba(168,85,247,.28);color:var(--violet)}
+.py-mis{background:linear-gradient(135deg,rgba(34,211,238,.1),rgba(168,85,247,.04));border:1px solid rgba(34,211,238,.22);color:var(--cyan)}
+.py-tps{background:linear-gradient(135deg,rgba(74,222,128,.1),rgba(34,211,238,.04));border:1px solid rgba(74,222,128,.22);color:var(--green)}
+.py-label{font-size:.68rem;font-weight:700;opacity:.7;text-transform:uppercase;letter-spacing:.04em}
+
+/* CLOUD LAYERS */
+.cloud-layer{border-radius:12px;padding:1rem;margin-bottom:.65rem;border-left:3px solid;transition:all .2s}
+.cloud-layer:hover{transform:translateX(4px)}
+.cl-saas{background:rgba(168,85,247,.06);border-color:var(--violet)}
+.cl-paas{background:rgba(245,158,11,.06);border-color:var(--amber)}
+.cl-iaas{background:rgba(34,211,238,.06);border-color:var(--cyan)}
+.cl-title{font-size:.88rem;font-weight:700;margin-bottom:.25rem}
+.cl-sub{font-size:.76rem;color:var(--text-dim);line-height:1.5}
+
+/* DECISION TYPES */
+.dec-card{border-radius:12px;padding:.85rem 1rem;margin-bottom:.5rem;border-left:3px solid;font-size:.8rem}
+.dc-structured{background:rgba(74,222,128,.06);border-color:var(--green)}
+.dc-unstructured{background:rgba(248,113,113,.06);border-color:var(--red)}
+.dc-semi{background:rgba(245,158,11,.06);border-color:var(--amber)}
+
+/* MOCK EXAM */
+.exam-start-panel{text-align:center;max-width:580px;margin:2rem auto}
+.exam-btn{padding:12px 32px;border-radius:50px;border:none;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.exam-btn-primary{background:linear-gradient(135deg,var(--violet),var(--violet-dim));color:#fff}
+.exam-btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--violet-glow)}
+.exam-q-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem}
+.exam-q-num{font-size:.72rem;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem}
+.exam-q-text{font-size:1rem;font-weight:700;line-height:1.5;margin-bottom:1.25rem}
+.exam-options{display:flex;flex-direction:column;gap:.5rem}
+.exam-opt{padding:.7rem 1rem;border-radius:var(--radius-xs);border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;font-size:.88rem;transition:all .2s;text-align:left}
+.exam-opt:hover{border-color:rgba(168,85,247,.3);background:rgba(168,85,247,.04)}
+.exam-opt.selected{border-color:var(--violet);background:rgba(168,85,247,.1);color:var(--violet)}
+.exam-opt.correct{border-color:var(--green);background:rgba(74,222,128,.12);color:var(--green)}
+.exam-opt.wrong{border-color:var(--red);background:rgba(248,113,113,.1);color:var(--red)}
+.exam-score-big{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,var(--violet),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* MATCH GAME */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.match-item{padding:.55rem .8rem;border-radius:var(--radius-xs);cursor:pointer;font-size:.78rem;font-weight:500;line-height:1.4;border:1px solid transparent;background:var(--surface2);transition:all .2s;user-select:none}
+.match-item:hover{border-color:var(--border)}
+.match-item.sel{border-color:var(--violet);background:rgba(168,85,247,.08);color:var(--violet)}
+.match-item.done{opacity:.4;pointer-events:none}
+.match-item.wrong{animation:shake .4s ease}
+.match-item.glow{border-color:var(--violet)!important;box-shadow:0 0 18px rgba(168,85,247,.32)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.match-score{display:flex;align-items:center;gap:9px;margin-top:1rem;font-size:.78rem;color:var(--text-dim)}
+.msbar-wrap{flex:1;height:4px;background:var(--surface3);border-radius:50px;overflow:hidden}
+.msbar{height:100%;background:linear-gradient(90deg,var(--violet),var(--amber));border-radius:50px;transition:width .4s}
+.btn-small{padding:5px 13px;border-radius:var(--radius-xs);background:var(--surface3);border:1px solid var(--border);color:var(--text-dim);font-size:.74rem;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
+.btn-small:hover{color:var(--violet);border-color:rgba(168,85,247,.28)}
+
+/* CHECKLIST */
+.chk-item{display:flex;align-items:flex-start;gap:9px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.035);cursor:pointer;font-size:.8rem;line-height:1.5;transition:all .2s}
+.chk-item:last-child{border-bottom:none}
+.chk-item:hover{color:var(--violet)}
+.chk-box{width:17px;height:17px;border-radius:4px;border:2px solid var(--text-muted);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.68rem}
+.chk-item.checked .chk-box{background:var(--violet);border-color:var(--violet);color:#fff}
+.chk-item.checked{color:var(--text-muted);text-decoration:line-through}
+.chk-hero{text-align:center;padding:1.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:1.2rem}
+.chk-hero-pct{font-size:3rem;font-weight:900;background:linear-gradient(135deg,var(--violet),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.chk-pbar{height:8px;background:var(--surface3);border-radius:50px;overflow:hidden;margin:.75rem auto;max-width:320px}
+.chk-pbar-fill{height:100%;background:linear-gradient(90deg,var(--violet),var(--amber));border-radius:50px;transition:width .5s ease}
+
+/* SAP T-CODES */
+.tcode-flow{display:flex;flex-direction:column;gap:6px}
+.tcode-step{display:flex;align-items:center;gap:10px;padding:.6rem .9rem;border-radius:10px;font-size:.8rem;background:var(--surface2);border:1px solid var(--border);transition:all .2s}
+.tcode-step:hover{border-color:rgba(168,85,247,.25);transform:translateX(3px)}
+.tcode-step::before{content:'▶';font-size:.6rem;color:var(--violet);flex-shrink:0}
+.tc-code{background:rgba(168,85,247,.12);color:var(--violet);padding:2px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.tc-arrow{color:var(--text-muted);flex-shrink:0}
+.tc-desc{color:var(--text-dim);font-size:.76rem}
+.tcode-arrow{text-align:center;color:var(--violet);font-size:.8rem;padding:2px 0}
+
+/* SINV VISUAL */
+.sinv-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.65rem}
+.sinv-card{padding:.85rem;border-radius:12px;border-left:3px solid;font-size:.8rem}
+.sinv-s{background:rgba(168,85,247,.07);border-color:var(--violet)}
+.sinv-i{background:rgba(245,158,11,.07);border-color:var(--amber)}
+.sinv-n{background:rgba(34,211,238,.07);border-color:var(--cyan)}
+.sinv-v{background:rgba(74,222,128,.07);border-color:var(--green)}
+.sinv-letter{font-size:1.4rem;font-weight:900;margin-bottom:.25rem}
+.sinv-word{font-size:.78rem;font-weight:700;margin-bottom:.2rem}
+.sinv-def{font-size:.72rem;color:var(--text-dim);line-height:1.4}
+
+/* CIA TRIAD */
+.cia-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-top:.65rem}
+.cia-card{padding:.85rem;border-radius:12px;text-align:center;font-size:.8rem}
+.cia-c{background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.25)}
+.cia-i{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25)}
+.cia-a{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25)}
+.cia-letter{font-size:1.6rem;font-weight:900;margin-bottom:.3rem}
+.cia-word{font-size:.82rem;font-weight:700;margin-bottom:.25rem}
+
+/* RESPONSIVE */
+@media(max-width:768px){.mastery-stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.match-grid{grid-template-columns:1fr}.cmp-row{grid-template-columns:1fr}.nav-pills{display:none}.sinv-grid{grid-template-columns:1fr}.cia-row{grid-template-columns:1fr}}
+@media(max-width:500px){.section{padding:1.25rem 1rem}header{padding:0 .9rem}.fc-face{padding:1.5rem}.fc{height:240px}}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(168,85,247,.2);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><div class="logo-icon">📊</div>IS <span style="color:var(--amber);-webkit-text-fill-color:var(--amber)">Blitz</span></div>
+  <nav class="nav-pills" id="nav">
+    <button class="pill active" onclick="goTo('home')">🏠 Home</button>
+    <button class="pill" onclick="goTo('audio')">🎧 Audio</button>
+    <button class="pill" onclick="goTo('cards')">🃏 Flashcards</button>
+    <button class="pill" onclick="goTo('dw')">🗄️ Data Warehouse</button>
+    <button class="pill" onclick="goTo('erp')">🔷 ERP/SAP</button>
+    <button class="pill" onclick="goTo('systems')">📋 IS Theory</button>
+    <button class="pill" onclick="goTo('cloud')">☁️ Cloud & Security</button>
+    <button class="pill" onclick="goTo('match')">🎯 Match</button>
+    <button class="pill" onclick="goTo('mock')">📝 Mock Exam</button>
+    <button class="pill" onclick="goTo('checklist')">✅ Checklist</button>
+  </nav>
+  <div style="display:flex;align-items:center;gap:.5rem;flex-shrink:0">
+    <button class="reveal-all-btn" id="reveal-all-btn" onclick="toggleRevealAll()">👁️ Reveal</button>
+    <div class="offline-badge"><div class="offline-dot"></div>Offline</div>
+    <div class="timer-box"><span style="font-size:.9rem">⏱️</span><div><div id="timer">02:00:00</div><div class="timer-label">Study Timer</div></div></div>
+  </div>
+</header>
+
+<!-- ═══════ HOME ═══════ -->
+<section class="section active" id="sec-home">
+  <div class="section-title">📊 IS 2-Hour Exam Blitz</div>
+  <div class="section-sub">Information Systems ETEA7E · CZU Prague — everything you need to ace the exam</div>
+
+  <div class="mastery-stats">
+    <div class="stat-card card"><div style="font-size:1.8rem">🃏</div><div><div class="stat-num" id="stat-seen">0</div><div class="stat-label">Cards Seen</div></div></div>
+    <div class="stat-card card"><div style="font-size:1.8rem">✅</div><div><div class="stat-num" id="stat-known" style="color:var(--green)">0</div><div class="stat-label">Known</div></div></div>
+    <div class="stat-card card"><div style="font-size:1.8rem">🔥</div><div><div class="stat-num" id="stat-review" style="color:var(--amber)">0</div><div class="stat-label">Review</div></div></div>
+    <div class="stat-card card"><div style="font-size:1.8rem">⏰</div><div><div class="stat-num" id="stat-time" style="color:var(--violet)">0m</div><div class="stat-label">Elapsed</div></div></div>
+  </div>
+
+  <div class="mobile-nav">
+    <button class="btn-nav bn-v" onclick="goTo('audio')">🎧 Audio</button>
+    <button class="btn-nav bn-a" onclick="goTo('cards')">🃏 Flashcards</button>
+    <button class="btn-nav bn-b" onclick="goTo('dw')">🗄️ Data Warehouse</button>
+    <button class="btn-nav bn-v" onclick="goTo('erp')">🔷 ERP/SAP</button>
+    <button class="btn-nav bn-c" onclick="goTo('systems')">📋 IS Theory</button>
+    <button class="btn-nav bn-g" onclick="goTo('cloud')">☁️ Cloud</button>
+    <button class="btn-nav bn-p" onclick="goTo('match')">🎯 Match</button>
+    <button class="btn-nav bn-y" onclick="goTo('mock')">📝 Mock Exam</button>
+    <button class="btn-nav bn-ch" onclick="goTo('checklist')">✅ Checklist</button>
+  </div>
+
+  <div class="grid">
+    <!-- IS LEVELS PYRAMID -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon ip">📐</div><div><div class="card-title">IS Levels — The Pyramid</div><div class="card-sub">Know which level supports which decision</div></div></div>
+      <div class="pyramid">
+        <div class="py-row py-eis"><span>EIS / ESS — Executive</span><span class="py-label">Strategic</span></div>
+        <div class="py-row py-dss"><span>DSS — Decision Support</span><span class="py-label">Tactical</span></div>
+        <div class="py-row py-mis"><span>MIS — Management Info</span><span class="py-label">Managerial</span></div>
+        <div class="py-row py-tps"><span>TPS — Transaction Processing</span><span class="py-label">Operational</span></div>
+      </div>
+      <div class="note" style="margin-top:.75rem"><b>TPS:</b> Daily transactions (POS, ATM) · <b>MIS:</b> Reports for managers · <b>DSS:</b> Interactive decisions · <b>EIS:</b> Executive dashboards</div>
+    </div>
+
+    <!-- 2-HOUR PLAN -->
+    <div class="card card-g">
+      <div class="card-h"><div class="card-icon ig">⏰</div><div><div class="card-title">2-Hour Study Plan</div></div></div>
+      <div class="timeline">
+        <div class="tl-row"><span class="tl-time">0:00–0:20</span><div class="tl-dot tl-v"></div><div>🎧 <b><span class="blur-reveal">Audio Guide</span></b> — pick a voice, absorb IS concepts passively</div></div>
+        <div class="tl-row"><span class="tl-time">0:20–0:40</span><div class="tl-dot tl-a"></div><div>🃏 <b><span class="blur-reveal">Flashcards</span></b> — all 75 cards, mark weak ones</div></div>
+        <div class="tl-row"><span class="tl-time">0:40–0:55</span><div class="tl-dot tl-b"></div><div>🗄️ <b><span class="blur-reveal">Data Warehouse</span></b> — SINV, OLTP vs OLAP, ETL, star schema</div></div>
+        <div class="tl-row"><span class="tl-time">0:55–1:15</span><div class="tl-dot tl-v"></div><div>🔷 <b><span class="blur-reveal">ERP/SAP</span></b> — P2P/O2C T-codes, modules, SAP HANA</div></div>
+        <div class="tl-row"><span class="tl-time">1:15–1:30</span><div class="tl-dot tl-c"></div><div>📋 <b><span class="blur-reveal">IS Theory</span></b> — DSS decision types, AI/ML, BI, competitive intelligence</div></div>
+        <div class="tl-row"><span class="tl-time">1:30–1:45</span><div class="tl-dot tl-g"></div><div>☁️ <b><span class="blur-reveal">Cloud & Security</span></b> — SaaS/PaaS/IaaS, CIA Triad, ACID, GDPR</div></div>
+        <div class="tl-row"><span class="tl-time">1:45–2:00</span><div class="tl-dot tl-r"></div><div>📝 <b><span class="blur-reveal">Mock Exam + Match</span></b> — test yourself, verify weak spots</div></div>
+      </div>
+    </div>
+
+    <!-- HOT TRAPS -->
+    <div class="card card-a">
+      <div class="card-h"><div class="card-icon ia">🔥</div><div><div class="card-title">🔥 Exam Traps — Memorize These!</div></div></div>
+      <div class="trap">IS is <b><span class="blur-reveal">MORE GENERAL</span></b> than ERP — ERP is just one type of IS</div>
+      <div class="trap">DSS should <b><span class="blur-reveal">SUPPORT</span></b> managers, NOT replace them!</div>
+      <div class="trap">Structured decisions = procedure <b><span class="blur-reveal">CAN</span></b> be specified · Unstructured = <b><span class="blur-reveal">CANNOT</span></b> be specified</div>
+      <div class="trap">Data Warehouse is <b><span class="blur-reveal">NON-VOLATILE</span></b> — data is NOT updated like operational OLTP data</div>
+      <div class="trap">TPS = <b><span class="blur-reveal">daily transactions</span></b> (operational) · DW = <b><span class="blur-reveal">strategic analysis</span></b> (historical)</div>
+      <div class="trap">SAP HANA = in-memory database — data lives in <b><span class="blur-reveal">RAM</span></b>, not on disk</div>
+      <div class="trap">Competitive Intelligence uses <b><span class="blur-reveal">public</span></b> sources only — legal, NOT espionage!</div>
+      <div class="trap">PaaS = <b><span class="blur-reveal">IaaS + OS + Application Platform</span></b> (runtime)</div>
+      <div class="trap">ERP biggest disadvantage = <b><span class="blur-reveal">HIGH COSTS</span></b> and vendor lock-in</div>
+      <div class="trap">Deep Learning = closely connected to <b><span class="blur-reveal">multi-layer neural networks</span></b></div>
+    </div>
+
+    <!-- QUICK FIRE -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon iv">⚡</div><div><div class="card-title">Quick Fire Definitions</div><div class="card-sub">Exact answers the exam expects</div></div></div>
+      <div class="qref">
+        <div class="qref-item"><span class="q-key">ERP full name</span> = <span class="q-val">Enterprise Resource Planning</span></div>
+        <div class="qref-item"><span class="q-key">DW SINV</span> = <span class="q-val">Subject·Integrated·Non-volatile·Time-variant</span></div>
+        <div class="qref-item"><span class="q-key">DSS transforms</span> = <span class="q-val">raw data → useful information</span></div>
+        <div class="qref-item"><span class="q-key">BI + Planning</span> = <span class="q-val">BPM</span></div>
+        <div class="qref-item"><span class="q-key">KPI</span> = <span class="q-val">Key Performance Indicator</span></div>
+        <div class="qref-item"><span class="q-key">SaaS</span> = <span class="q-val">Software as a Service</span></div>
+        <div class="qref-item"><span class="q-key">PaaS</span> = <span class="q-val">IaaS + OS + App Platform</span></div>
+        <div class="qref-item"><span class="q-key">IaaS</span> = <span class="q-val">Infrastructure as a Service</span></div>
+        <div class="qref-item"><span class="q-key">CIA Triad</span> = <span class="q-val">Confidentiality·Integrity·Availability</span></div>
+        <div class="qref-item"><span class="q-key">ACID-A</span> = <span class="q-val">Atomicity (all or nothing)</span></div>
+        <div class="qref-item"><span class="q-key">ETL</span> = <span class="q-val">Extract·Transform·Load</span></div>
+        <div class="qref-item"><span class="q-key">OLTP</span> = <span class="q-val">Online Transaction Processing</span></div>
+        <div class="qref-item"><span class="q-key">OLAP</span> = <span class="q-val">Online Analytical Processing</span></div>
+        <div class="qref-item"><span class="q-key">BPR</span> = <span class="q-val">Business Process Reengineering</span></div>
+        <div class="qref-item"><span class="q-key">SDLC phases</span> = <span class="q-val">Plan→Analyze→Design→Implement→Maintain</span></div>
+        <div class="qref-item"><span class="q-key">NLP</span> = <span class="q-val">Natural Language Processing</span></div>
+        <div class="qref-item"><span class="q-key">SAP HANA</span> = <span class="q-val">High-performance Analytic Appliance</span></div>
+        <div class="qref-item"><span class="q-key">ERP leaders</span> = <span class="q-val">SAP · Oracle · Microsoft</span></div>
+      </div>
+    </div>
+
+    <!-- REAL Q&A -->
+    <div class="card card-full" style="border-color:rgba(74,222,128,.2)">
+      <div class="card-h"><div class="card-icon ig">📝</div><div><div class="card-title">Real Exam Q&amp;A — From Verified Answer Sheet ✅</div><div class="card-sub">50 Q MCQ exam — all correct answers shown. Note: In the IS exam source file all correct answers are A — understand the concepts!</div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.5rem">
+        <div class="success-note"><b>Q: DW characteristics?</b> → <span class="blur-reveal">Subject-oriented, Integrated, Non-volatile, Time-variant (SINV)</span></div>
+        <div class="success-note"><b>Q: TPS is for?</b> → <span class="blur-reveal">Daily transactions (operational data processing)</span></div>
+        <div class="success-note"><b>Q: DSS supports?</b> → <span class="blur-reveal">Strategic AND tactical decisions (not just one level)</span></div>
+        <div class="success-note"><b>Q: DSS transforms?</b> → <span class="blur-reveal">Raw data into useful information for decision-making</span></div>
+        <div class="success-note"><b>Q: DSS should?</b> → <span class="blur-reveal">SUPPORT managers, not replace them</span></div>
+        <div class="success-note"><b>Q: Structured decision?</b> → <span class="blur-reveal">Procedure CAN be specified in advance (e.g. payroll)</span></div>
+        <div class="success-note"><b>Q: Unstructured decision?</b> → <span class="blur-reveal">Procedure CANNOT be specified in advance (judgment needed)</span></div>
+        <div class="success-note"><b>Q: Deep Learning connected to?</b> → <span class="blur-reveal">Multi-layer neural networks</span></div>
+        <div class="success-note"><b>Q: ERP vs IS?</b> → <span class="blur-reveal">IS is MORE GENERAL — ERP is a specific type of IS</span></div>
+        <div class="success-note"><b>Q: SAP HANA?</b> → <span class="blur-reveal">In-memory database (High-performance Analytic Appliance)</span></div>
+        <div class="success-note"><b>Q: Cloud = pay for?</b> → <span class="blur-reveal">"Pay for what you use" — on-demand, elastic services</span></div>
+        <div class="success-note"><b>Q: Competitive Intelligence uses?</b> → <span class="blur-reveal">Public sources (press releases, reports, news) — legal!</span></div>
+        <div class="success-note"><b>Q: Non-volatile in DW means?</b> → <span class="blur-reveal">Data is stable/historical — NOT modified like operational data</span></div>
+        <div class="success-note"><b>Q: ERP main disadvantage?</b> → <span class="blur-reveal">HIGH COSTS and vendor lock-in</span></div>
+        <div class="success-note"><b>Q: BI + Planning =?</b> → <span class="blur-reveal">BPM — Business Performance Management</span></div>
+        <div class="success-note"><b>Q: IS & management relationship?</b> → <span class="blur-reveal">They INTERACT with each other — neither controls the other</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ AUDIO ═══════ -->
+<section class="section" id="sec-audio">
+  <div class="section-title">🎧 Audio Memorization</div>
+  <div class="section-sub">4 pre-recorded neural voice variations + live TTS browser reader</div>
+
+  <div class="podcast-panel">
+    <div style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap">
+      <div style="font-size:2rem;flex-shrink:0">🎙️</div>
+      <div style="flex:1;min-width:200px">
+        <div class="podcast-title">Full IS Audio Guide (Podcast) — 4 Voice Variations</div>
+        <div class="podcast-sub">Pre-recorded with Microsoft edge-tts neural voices. Choose your preferred voice and hit play — works on locked phone screen.</div>
+        <div class="voice-selector-row">
+          <label>🎙️ Voice:</label>
+          <select id="is-voice-sel" class="voice-select" onchange="changeISVoice()">
+            <option value="is_audio_guide_us_male.mp3" selected>🇺🇸 US Male — Steffan Neural</option>
+            <option value="is_audio_guide_us_female.mp3">🇺🇸 US Female — Jenny Neural</option>
+            <option value="is_audio_guide_uk_male.mp3">🇬🇧 UK Male — Ryan Neural</option>
+            <option value="is_audio_guide_uk_female.mp3">🇬🇧 UK Female — Sonia Neural</option>
+          </select>
+        </div>
+        <audio id="is-audio-player" controls preload="none" class="podcast-audio">
+          <source id="is-audio-src" src="is_audio_guide_us_male.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+      <a id="is-audio-dl" href="is_audio_guide_us_male.mp3" download class="podcast-download">⬇️ Download</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.65rem;margin-top:1rem">
+      <div class="card" style="padding:1rem;cursor:pointer" onclick="setISVoice('is_audio_guide_us_male.mp3')"><div style="font-size:1.5rem">🇺🇸</div><div style="font-weight:700;font-size:.88rem">US Male</div><div style="font-size:.75rem;color:var(--text-dim)">Steffan Neural</div><div class="tag tag-v" style="margin-top:.5rem">American EN</div></div>
+      <div class="card" style="padding:1rem;cursor:pointer" onclick="setISVoice('is_audio_guide_us_female.mp3')"><div style="font-size:1.5rem">🇺🇸</div><div style="font-weight:700;font-size:.88rem">US Female</div><div style="font-size:.75rem;color:var(--text-dim)">Jenny Neural</div><div class="tag tag-g" style="margin-top:.5rem">American EN</div></div>
+      <div class="card" style="padding:1rem;cursor:pointer" onclick="setISVoice('is_audio_guide_uk_male.mp3')"><div style="font-size:1.5rem">🇬🇧</div><div style="font-weight:700;font-size:.88rem">UK Male</div><div style="font-size:.75rem;color:var(--text-dim)">Ryan Neural</div><div class="tag tag-c" style="margin-top:.5rem">British EN</div></div>
+      <div class="card" style="padding:1rem;cursor:pointer" onclick="setISVoice('is_audio_guide_uk_female.mp3')"><div style="font-size:1.5rem">🇬🇧</div><div style="font-weight:700;font-size:.88rem">UK Female</div><div style="font-size:.75rem;color:var(--text-dim)">Sonia Neural</div><div class="tag tag-a" style="margin-top:.5rem">British EN</div></div>
+    </div>
+  </div>
+
+  <div class="audio-panel">
+    <div class="audio-title">🔊 Live TTS — Auto-Read Playlist</div>
+    <div class="audio-sub">Browser TTS. Press ▶ to begin. Auto-advances through all IS topics.</div>
+    <div class="audio-controls">
+      <button class="audio-btn abtn-play" id="btn-play" onclick="audioPlay()">▶ Play All</button>
+      <button class="audio-btn abtn-pause" id="btn-pause" onclick="audioPause()" disabled>⏸ Pause</button>
+      <button class="audio-btn abtn-stop" onclick="audioStop()">⏹ Stop</button>
+      <div style="display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--text-dim)">Speed: <select id="tts-speed" onchange="updateTTSSpeed()" style="background:var(--surface3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:4px 8px;font-family:'Outfit',sans-serif;font-size:.78rem;outline:none;cursor:pointer"><option value="0.7">0.7×</option><option value="0.85" selected>0.85×</option><option value="1.0">1.0×</option><option value="1.2">1.2×</option><option value="1.5">1.5×</option></select></div>
+    </div>
+    <div class="audio-now-playing" id="now-playing-text"><span style="color:var(--text-muted)">Press ▶ Play All to start...</span></div>
+    <div class="audio-playlist" id="audio-playlist"></div>
+  </div>
+</section>
+
+<!-- ═══════ FLASHCARDS ═══════ -->
+<section class="section" id="sec-cards" style="padding:1.75rem 1.5rem">
+  <div class="section-title">🃏 Flashcards</div>
+  <div class="section-sub">75+ cards across all IS topics. Flip, rate, track mastery.</div>
+  <div style="display:flex;flex-direction:column;align-items:center">
+    <div class="fc-deck-tabs" id="fc-deck-tabs">
+      <button class="fc-tab active" onclick="switchDeck('all',event)">⚡ All</button>
+      <button class="fc-tab" onclick="switchDeck('is',event)">📋 IS Theory</button>
+      <button class="fc-tab" onclick="switchDeck('dw',event)">🗄️ Data Warehouse</button>
+      <button class="fc-tab" onclick="switchDeck('erp',event)">🔷 ERP/SAP</button>
+      <button class="fc-tab" onclick="switchDeck('cloud',event)">☁️ Cloud</button>
+      <button class="fc-tab" onclick="switchDeck('security',event)">🔒 Security</button>
+      <button class="fc-tab" onclick="switchDeck('ai',event)">🤖 AI/Tech</button>
+      <button class="fc-tab" onclick="switchDeck('weak',event)">🔥 Weak</button>
+    </div>
+    <div class="fc-progress">
+      <div class="fc-bar-wrap"><div class="fc-bar" id="fc-bar"></div></div>
+      <span style="font-size:.76rem;color:var(--text-dim)" id="fc-pct-text">0%</span>
+    </div>
+    <div class="fc-stats">
+      <div style="color:var(--green)">✅ <span id="fc-known">0</span> Known</div>
+      <div style="color:var(--red)">✗ <span id="fc-review">0</span> Review</div>
+    </div>
+    <div class="fc-wrap" onclick="flipCard()">
+      <div class="fc" id="fc-card">
+        <div class="fc-face fc-front">
+          <div class="fc-cat" id="fc-front-cat">IS THEORY</div>
+          <div class="fc-q" id="fc-front-q">Select a deck above to start studying!</div>
+          <div class="fc-hint">Tap or press Space to flip</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-cat" id="fc-back-cat">ANSWER</div>
+          <div class="fc-a" id="fc-back-a"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-counter" id="fc-counter">Card 0 / 0</div>
+    <div class="fc-controls">
+      <button class="fc-btn btn-bad" onclick="rateCard('bad')">✗ Still Learning</button>
+      <button class="fc-btn btn-flip" onclick="flipCard()">↺ Flip</button>
+      <button class="fc-btn btn-good" onclick="rateCard('good')">✓ Know It!</button>
+      <button class="fc-btn btn-skip" onclick="nextCard()">⏭ Skip</button>
+      <button class="fc-btn btn-skip" onclick="shuffleDeck()">🔀 Shuffle</button>
+    </div>
+    <div class="shortcut-hint"><span><kbd>Space</kbd> Flip</span><span><kbd>←</kbd><kbd>→</kbd> Navigate</span><span><kbd>1</kbd> Learning</span><span><kbd>2</kbd> Know it</span><span><kbd>R</kbd> Shuffle</span></div>
+  </div>
+</section>
+
+<!-- ═══════ DATA WAREHOUSE ═══════ -->
+<section class="section" id="sec-dw">
+  <div class="section-title">🗄️ Data Warehouse</div>
+  <div class="section-sub">Most heavily tested topic (8+ questions) — SINV, OLTP vs OLAP, ETL, schemas</div>
+
+  <div class="grid">
+    <!-- SINV -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon ia">📦</div><div><div class="card-title">DW SINV Properties — Core Exam Topic</div><div class="card-sub">Remember "Subject·Integrated·Non-volatile·Time-variant"</div></div></div>
+      <div class="sinv-grid">
+        <div class="sinv-card sinv-s">
+          <div class="sinv-letter" style="color:var(--violet)">S</div>
+          <div class="sinv-word">Subject-Oriented</div>
+          <div class="sinv-def">Organized around subjects (sales, products, customers) — NOT around applications or processes</div>
+        </div>
+        <div class="sinv-card sinv-i">
+          <div class="sinv-letter" style="color:var(--amber)">I</div>
+          <div class="sinv-word">Integrated</div>
+          <div class="sinv-def">Combines data from multiple sources consistently — one unified format/naming</div>
+        </div>
+        <div class="sinv-card sinv-n">
+          <div class="sinv-letter" style="color:var(--cyan)">N</div>
+          <div class="sinv-word">Non-Volatile</div>
+          <div class="sinv-def"><span class="blur-reveal">Data is stable and historical — NOT updated/deleted like operational OLTP data</span></div>
+        </div>
+        <div class="sinv-card sinv-v">
+          <div class="sinv-letter" style="color:var(--green)">V</div>
+          <div class="sinv-word">Time-Variant</div>
+          <div class="sinv-def"><span class="blur-reveal">Connected with time — every record has a timestamp; tracks historical changes over time</span></div>
+        </div>
+      </div>
+      <div class="trap">DW purpose = <b><span class="blur-reveal">STRATEGIC ANALYSIS</span></b> and decision-making. NOT daily operations!</div>
+    </div>
+
+    <!-- OLTP vs OLAP -->
+    <div class="card card-a">
+      <div class="card-h"><div class="card-icon ia">⚡</div><div><div class="card-title">OLTP vs OLAP</div><div class="card-sub">Fundamental IS distinction</div></div></div>
+      <div class="cmp">
+        <div class="cmp-row"><div class="cmp-head cmp-head-g">OLTP — Online Transaction Processing</div><div class="cmp-head cmp-head-v">OLAP — Online Analytical Processing</div></div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-g" style="font-size:.75rem"><span class="blur-reveal"><b>Operational</b> (day-to-day)<br>INSERT, UPDATE, DELETE<br>Real-time, high volume<br>Used by: TPS<br>Example: ATM, POS system<br>Many small transactions<br>Current data only</span></div>
+          <div class="cmp-cell cmp-v" style="font-size:.75rem"><span class="blur-reveal"><b>Analytical</b> (reporting/decisions)<br>SELECT, aggregate queries<br>Batch processing, historical<br>Used by: DW, BI tools<br>Example: Sales reports, KPIs<br>Few large complex queries<br>Historical + current data</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETL & SCHEMAS -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon ic">🔄</div><div><div class="card-title">ETL Process &amp; DW Schemas</div></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Extract:</b> Pull data from source systems (CRM, ERP, CSV files)</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Transform:</b> Clean, standardize, aggregate (fix formats, remove duplicates)</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Load:</b> Write transformed data into the Data Warehouse</div></div>
+      <div style="margin-top:.85rem">
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-v" style="font-size:.75rem"><b>Star Schema</b><br><span class="blur-reveal">One central fact table surrounded by dimension tables. Simple, fast queries. Denormalized.</span></div>
+          <div class="cmp-cell cmp-a" style="font-size:.75rem"><b>Snowflake Schema</b><br><span class="blur-reveal">Fact table + dimension tables + sub-dimensions. Normalized, saves space but slower.</span></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:.65rem"><b>Data Mart:</b> A subset of DW focused on one department (Sales DW → Sales Data Mart)</div>
+    </div>
+
+    <!-- DATA MINING -->
+    <div class="card card-c">
+      <div class="card-h"><div class="card-icon ic">⛏️</div><div><div class="card-title">Data Mining &amp; Big Data</div></div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Data Mining:</b> Discovering hidden patterns and relationships in large datasets</div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Classification:</b> Assigning data to categories (spam/not spam)</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Clustering:</b> Grouping similar data without predefined labels</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Association:</b> Finding co-occurrence rules (beer → diapers)</div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>Big Data 3Vs:</b> <span class="blur-reveal">Volume, Velocity, Variety</span></div></div>
+      <div class="note"><b>Modern IS technologies:</b> <span class="blur-reveal">Cloud, Virtualization, Big Data, AI, Security</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ERP/SAP ═══════ -->
+<section class="section" id="sec-erp">
+  <div class="section-title">🔷 ERP Systems &amp; SAP</div>
+  <div class="section-sub">SAP organizational levels, modules, T-codes, P2P/O2C flows, SAP HANA</div>
+
+  <div class="grid">
+    <!-- ERP OVERVIEW -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon iv">🏢</div><div><div class="card-title">ERP Overview</div><div class="card-sub">Enterprise Resource Planning</div></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Definition:</b> Integrated software system managing all core business processes</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Main goal:</b> <span class="blur-reveal">Support decision-making process</span> and centralize business data</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Main advantage:</b> <span class="blur-reveal">Centralized data and real-time visibility</span> across all departments</div></div>
+      <div class="kp kp-r"><div class="kp-dot"></div><div><b>Main disadvantage:</b> <span class="blur-reveal">HIGH COSTS</span> + vendor lock-in</div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>Vendor lock-in:</b> Company becomes dependent on a single vendor (hard/expensive to switch)</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Leaders:</b> <span class="blur-reveal">SAP, Oracle, Microsoft</span></div></div>
+      <div class="trap">IS is MORE GENERAL than ERP — ERP is a specific TYPE of IS!</div>
+    </div>
+
+    <!-- SAP ORG LEVELS -->
+    <div class="card card-v">
+      <div class="card-h"><div class="card-icon iv">🗂️</div><div><div class="card-title">SAP Organizational Levels</div><div class="card-sub">Hierarchy — must know for exam</div></div></div>
+      <div class="pyramid">
+        <div class="py-row" style="background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.3);color:#f472b6"><span>🌐 Client</span><span class="py-label">Top level — entire SAP system</span></div>
+        <div class="py-row" style="background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);color:var(--violet)"><span>🏛️ Company Code</span><span class="py-label">Legal entity (one company)</span></div>
+        <div class="py-row" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:var(--amber)"><span>🏭 Plant</span><span class="py-label">Production/service location</span></div>
+        <div class="py-row" style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);color:var(--cyan)"><span>📦 Storage Location</span><span class="py-label">Physical storage within plant</span></div>
+      </div>
+      <div class="note" style="margin-top:.75rem">Hierarchy: <b><span class="blur-reveal">Client > Company Code > Plant > Storage Location</span></b></div>
+    </div>
+
+    <!-- SAP MODULES -->
+    <div class="card card-a">
+      <div class="card-h"><div class="card-icon ia">🔧</div><div><div class="card-title">SAP Modules</div><div class="card-sub">Know which module handles which function</div></div></div>
+      <table class="t">
+        <tr><th>Module</th><th>Name</th><th>Function</th></tr>
+        <tr><td><span class="tag-v">FI</span></td><td>Financial Accounting</td><td>General ledger, balance sheets, reporting</td></tr>
+        <tr><td><span class="tag-a">CO</span></td><td>Controlling</td><td>Cost center accounting, internal reporting</td></tr>
+        <tr><td><span class="tag-c">MM</span></td><td>Materials Management</td><td>Procurement, inventory, goods receipt</td></tr>
+        <tr><td><span class="tag-g">SD</span></td><td>Sales &amp; Distribution</td><td>Order-to-cash, sales orders, shipping</td></tr>
+        <tr><td><span class="tag-b">HR/HCM</span></td><td>Human Resources</td><td>Payroll, employee management</td></tr>
+        <tr><td><span class="tag-r">PP</span></td><td>Production Planning</td><td>Manufacturing, production orders</td></tr>
+      </table>
+    </div>
+
+    <!-- P2P PROCESS -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon ig">🔄</div><div><div class="card-title">Procure-to-Pay (P2P) T-Codes</div><div class="card-sub">Memorize this exact sequence!</div></div></div>
+      <div class="tcode-flow">
+        <div class="tcode-step"><span class="tc-code">ME51N</span><div class="tc-desc">Purchase Requisition — internal request to buy something</div></div>
+        <div class="tcode-arrow">↓ Approved</div>
+        <div class="tcode-step"><span class="tc-code">ME21N</span><div class="tc-desc">Purchase Order — formal order sent to vendor</div></div>
+        <div class="tcode-arrow">↓ Goods arrive</div>
+        <div class="tcode-step"><span class="tc-code">MIGO</span><div class="tc-desc">Goods Receipt — record arrival of goods in warehouse</div></div>
+        <div class="tcode-arrow">↓ Invoice arrives</div>
+        <div class="tcode-step"><span class="tc-code">MIRO</span><div class="tc-desc">Invoice Verification — 3-way match: PO + GR + Invoice</div></div>
+        <div class="tcode-arrow">↓ Payment</div>
+        <div class="tcode-step"><span class="tc-code">F110</span><div class="tc-desc">Automatic Payment Program — pay the vendor</div></div>
+      </div>
+    </div>
+
+    <!-- O2C PROCESS -->
+    <div class="card card-c">
+      <div class="card-h"><div class="card-icon ic">💰</div><div><div class="card-title">Order-to-Cash (O2C) T-Codes</div><div class="card-sub">Sales side — customer pays you</div></div></div>
+      <div class="tcode-flow">
+        <div class="tcode-step"><span class="tc-code">VA01</span><div class="tc-desc">Sales Order — customer places order</div></div>
+        <div class="tcode-arrow">↓ Pick & pack goods</div>
+        <div class="tcode-step"><span class="tc-code">VL01N</span><div class="tc-desc">Delivery — create outbound delivery, ship goods</div></div>
+        <div class="tcode-arrow">↓ Goods shipped</div>
+        <div class="tcode-step"><span class="tc-code">VF01</span><div class="tc-desc">Billing — create invoice for customer</div></div>
+      </div>
+      <div class="note" style="margin-top:.75rem"><b>Master Data</b> = permanent data (customers, materials) · <b>Transactional Data</b> = created for each transaction (POs, invoices)</div>
+    </div>
+
+    <!-- SAP HANA -->
+    <div class="card card-v">
+      <div class="card-h"><div class="card-icon iv">⚡</div><div><div class="card-title">SAP HANA</div><div class="card-sub">High-performance Analytic Appliance</div></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Type:</b> <span class="blur-reveal">In-memory database</span> — all data stored in RAM, not on disk</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Why faster:</b> RAM access (nanoseconds) vs disk access (milliseconds) = 1000× faster</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Enables:</b> Real-time analytics on live transactional data (no separate DW needed)</div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>S/4HANA:</b> Next-gen ERP built exclusively on SAP HANA</div></div>
+      <div class="trap">SAP HANA = <b><span class="blur-reveal">in-memory</span></b> — data in RAM! NOT a disk-based traditional database.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ IS THEORY ═══════ -->
+<section class="section" id="sec-systems">
+  <div class="section-title">📋 IS Theory &amp; Decision Systems</div>
+  <div class="section-sub">DSS, decision types, AI/ML, BI, BPM, competitive intelligence, SDLC</div>
+
+  <div class="grid">
+    <!-- DSS -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon iv">🧠</div><div><div class="card-title">Decision Support System (DSS)</div><div class="card-sub">7 questions on exam — know all of it</div></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Definition:</b> Interactive computer-based system that <span class="blur-reveal">supports decision-making</span></div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Transforms:</b> <span class="blur-reveal">raw data → useful information</span></div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Supports:</b> <span class="blur-reveal">Strategic AND tactical decisions</span> (not just one)</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Role:</b> Should <span class="blur-reveal">SUPPORT managers</span>, NOT replace them</div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>Computers good at:</b> <span class="blur-reveal">Processing large amounts of data quickly</span></div></div>
+      <div class="kp kp-r"><div class="kp-dot"></div><div><b>Humans good at:</b> <span class="blur-reveal">Flexibility, intuition, adaptation, contextual judgment</span></div></div>
+
+      <div style="margin-top:.75rem;font-size:.78rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em">3 Decision Types:</div>
+      <div class="dec-card dc-structured" style="margin-top:.4rem">
+        <b style="color:var(--green)">Structured</b> — procedure <span class="blur-reveal">CAN</span> be specified in advance<br>
+        <span style="font-size:.74rem;color:var(--text-dim)">Example: payroll calculation, reorder quantity</span>
+      </div>
+      <div class="dec-card dc-unstructured">
+        <b style="color:var(--red)">Unstructured</b> — procedure <span class="blur-reveal">CANNOT</span> be specified in advance<br>
+        <span style="font-size:.74rem;color:var(--text-dim)">Example: CEO strategy, hiring a new executive</span>
+      </div>
+      <div class="dec-card dc-semi">
+        <b style="color:var(--amber)">Semi-structured</b> — <span class="blur-reveal">SOME</span> procedures can be specified, but NOT enough for a definite decision<br>
+        <span style="font-size:.74rem;color:var(--text-dim)">Example: investment portfolio, product launch</span>
+      </div>
+    </div>
+
+    <!-- AI & ML -->
+    <div class="card card-c">
+      <div class="card-h"><div class="card-icon ic">🤖</div><div><div class="card-title">AI, ML, Deep Learning</div><div class="card-sub">7 questions on exam</div></div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>AI areas:</b> <span class="blur-reveal">NLP, Machine Learning, Computer Vision, Deep Learning</span></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>NLP:</b> <span class="blur-reveal">Natural Language Processing</span> — human language understanding by machines</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>Machine Learning:</b> <span class="blur-reveal">Learning patterns from data</span> without being explicitly programmed</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Computer Vision:</b> <span class="blur-reveal">Interpreting visual/image data</span> (self-driving cars, face recognition)</div></div>
+      <div class="kp kp-r"><div class="kp-dot"></div><div><b>Deep Learning:</b> Closely connected to <span class="blur-reveal">multi-layer neural networks</span></div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>Neural network:</b> Inspired by <span class="blur-reveal">human brain structure</span></div></div>
+      <div class="trap">Deep Learning = <b><span class="blur-reveal">multi-layer neural networks</span></b> — layers are the key differentiator from basic ML!</div>
+    </div>
+
+    <!-- BI & BPM -->
+    <div class="card card-a">
+      <div class="card-h"><div class="card-icon ia">📈</div><div><div class="card-title">BI &amp; BPM</div></div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>BI (Business Intelligence):</b> <span class="blur-reveal">Analyzes data and creates business insight</span> for better decisions</div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>BPM (Business Performance Management):</b> <span class="blur-reveal">BI + Planning</span></div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>KPI (Key Performance Indicator):</b> Measurable value showing how effectively goals are achieved</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Dashboard:</b> <span class="blur-reveal">Visual display of important business information</span> (KPIs, charts)</div></div>
+      <div class="note"><b>BPR (Business Process Reengineering):</b> Radical redesign of business processes for dramatic improvement</div>
+    </div>
+
+    <!-- COMPETITIVE INTELLIGENCE -->
+    <div class="card card-g">
+      <div class="card-h"><div class="card-icon ig">🔍</div><div><div class="card-title">Competitive Intelligence (CI)</div></div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Definition:</b> <span class="blur-reveal">Legal and ethical</span> gathering of information about competitors</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Purpose:</b> <span class="blur-reveal">Improving understanding of competitive environment</span></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Sources:</b> <span class="blur-reveal">PUBLIC sources</span> — press releases, reports, news, filings</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>NOT CI:</b> Hacking, bribery, corporate espionage — those are illegal!</div></div>
+      <div class="trap">CI = <b><span class="blur-reveal">LEGAL and ethical</span></b>. Uses ONLY public information. NOT espionage!</div>
+    </div>
+
+    <!-- SDLC -->
+    <div class="card card-b">
+      <div class="card-h"><div class="card-icon ib">🔁</div><div><div class="card-title">SDLC &amp; Agile vs Waterfall</div></div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>SDLC Phases:</b> <span class="blur-reveal">Planning → Analysis → Design → Implementation → Maintenance</span></div></div>
+      <div class="cmp" style="margin-top:.75rem">
+        <div class="cmp-row"><div class="cmp-head cmp-head-b">Waterfall</div><div class="cmp-head cmp-head-g">Agile</div></div>
+        <div class="cmp-row">
+          <div class="cmp-cell cmp-b" style="font-size:.74rem"><span class="blur-reveal">Sequential phases<br>Fixed requirements upfront<br>Customer sees product at end<br>Good for: clear, stable requirements</span></div>
+          <div class="cmp-cell cmp-g" style="font-size:.74rem"><span class="blur-reveal">Iterative sprints (2-4 weeks)<br>Flexible, evolving requirements<br>Customer involved throughout<br>Good for: changing requirements</span></div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:.5rem"><b>SCRUM roles:</b> <span class="blur-reveal">Product Owner</span> (priorities) · <span class="blur-reveal">Scrum Master</span> (process) · <span class="blur-reveal">Dev Team</span> (building)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CLOUD & SECURITY ═══════ -->
+<section class="section" id="sec-cloud">
+  <div class="section-title">☁️ Cloud &amp; IS Security</div>
+  <div class="section-sub">SaaS/PaaS/IaaS, CIA Triad, ACID properties, authentication, GDPR</div>
+
+  <div class="grid">
+    <!-- CLOUD LAYERS -->
+    <div class="card">
+      <div class="card-h"><div class="card-icon ic">☁️</div><div><div class="card-title">Cloud Service Models</div><div class="card-sub">SaaS / PaaS / IaaS — know who manages what</div></div></div>
+      <div class="cloud-layer cl-saas">
+        <div class="cl-title" style="color:var(--violet)">SaaS — Software as a Service</div>
+        <div class="cl-sub"><span class="blur-reveal">Provider manages everything including the application. You just use it.<br>Examples: Gmail, Salesforce, Microsoft 365, SAP ByDesign</span></div>
+      </div>
+      <div class="cloud-layer cl-paas">
+        <div class="cl-title" style="color:var(--amber)">PaaS — Platform as a Service = IaaS + OS + App Platform</div>
+        <div class="cl-sub"><span class="blur-reveal">Provider manages infrastructure + OS + runtime. You manage application code.<br>Examples: Heroku, Google App Engine, Azure App Service</span></div>
+      </div>
+      <div class="cloud-layer cl-iaas">
+        <div class="cl-title" style="color:var(--cyan)">IaaS — Infrastructure as a Service</div>
+        <div class="cl-sub"><span class="blur-reveal">Provider manages hardware/network only. You manage OS, middleware, and apps.<br>Examples: AWS EC2, Azure VMs, Google Compute Engine</span></div>
+      </div>
+      <div class="trap">PaaS = <b><span class="blur-reveal">IaaS + OS + Application Platform (runtime)</span></b></div>
+      <div class="note"><b>Cloud deployment:</b> Public cloud · Private cloud (GDPR data) · Hybrid cloud</div>
+    </div>
+
+    <!-- CIA TRIAD -->
+    <div class="card card-v">
+      <div class="card-h"><div class="card-icon iv">🔒</div><div><div class="card-title">CIA Security Triad</div><div class="card-sub">Core IS Security framework</div></div></div>
+      <div class="cia-row">
+        <div class="cia-card cia-c">
+          <div class="cia-letter" style="color:var(--blue)">C</div>
+          <div class="cia-word" style="color:var(--blue)">Confidentiality</div>
+          <div style="font-size:.74rem;color:var(--text-dim);line-height:1.4"><span class="blur-reveal">Only authorized users can access data. Encryption, passwords, MFA.</span></div>
+        </div>
+        <div class="cia-card cia-i">
+          <div class="cia-letter" style="color:var(--green)">I</div>
+          <div class="cia-word" style="color:var(--green)">Integrity</div>
+          <div style="font-size:.74rem;color:var(--text-dim);line-height:1.4"><span class="blur-reveal">Data is accurate and has not been tampered with. Checksums, digital signatures.</span></div>
+        </div>
+        <div class="cia-card cia-a">
+          <div class="cia-letter" style="color:var(--amber)">A</div>
+          <div class="cia-word" style="color:var(--amber)">Availability</div>
+          <div style="font-size:.74rem;color:var(--text-dim);line-height:1.4"><span class="blur-reveal">Systems and data are accessible when needed. Backups, redundancy, uptime.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACID PROPERTIES -->
+    <div class="card card-a">
+      <div class="card-h"><div class="card-icon ia">🔬</div><div><div class="card-title">ACID Database Properties</div></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>A — Atomicity:</b> <span class="blur-reveal">All or nothing — entire transaction completes or fully rolls back</span></div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>C — Consistency:</b> <span class="blur-reveal">Transaction brings DB from one valid state to another</span></div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>I — Isolation:</b> <span class="blur-reveal">Concurrent transactions don't interfere with each other</span></div></div>
+      <div class="kp kp-r"><div class="kp-dot"></div><div><b>D — Durability:</b> <span class="blur-reveal">Committed transactions survive system failures (written to disk)</span></div></div>
+      <div class="note"><b>Example:</b> Bank transfer: debit account A AND credit account B. If system crashes mid-way, Atomicity ensures both or neither happen.</div>
+    </div>
+
+    <!-- AUTH & ENCRYPTION -->
+    <div class="card card-c">
+      <div class="card-h"><div class="card-icon ic">🛡️</div><div><div class="card-title">Authentication &amp; Encryption</div></div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>Authentication:</b> <span class="blur-reveal">Verifying WHO you are</span> (login, password)</div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Authorization:</b> <span class="blur-reveal">Verifying WHAT you can do</span> (access rights, roles)</div></div>
+      <div class="kp kp-a"><div class="kp-dot"></div><div><b>MFA:</b> <span class="blur-reveal">Multi-Factor Authentication</span> — something you know + have + are</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>Symmetric encryption:</b> Same key for encrypt &amp; decrypt (fast, AES)</div></div>
+      <div class="kp kp-b"><div class="kp-dot"></div><div><b>Asymmetric encryption:</b> Public key (encrypt) + Private key (decrypt) — RSA, TLS</div></div>
+      <div class="kp kp-r"><div class="kp-dot"></div><div><b>GDPR-sensitive data:</b> Must stay in <span class="blur-reveal">private cloud</span> (EU data protection law)</div></div>
+      <div class="note"><b>Backup types:</b> Full (everything) · Incremental (changes since last backup) · Differential (changes since last FULL)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MATCH GAME ═══════ -->
+<section class="section" id="sec-match">
+  <div class="section-title">🎯 IS Concept Match Game</div>
+  <div class="section-sub">Match each IS concept to its definition. Click two items to pair them.</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+      <span style="font-size:.88rem;font-weight:700">Match Round <span id="match-round">1</span> &nbsp; <span style="font-size:.78rem;color:var(--text-dim)">Score: <span id="match-correct">0</span>/<span id="match-total">8</span></span></span>
+      <button class="btn-small" onclick="initMatch()">🔀 New Round</button>
+    </div>
+    <div class="match-grid" id="match-grid"></div>
+    <div class="match-score"><div class="msbar-wrap"><div class="msbar" id="msbar"></div></div><span id="match-msg" style="font-size:.76rem;color:var(--text-dim)">Match concepts to definitions</span></div>
+  </div>
+</section>
+
+<!-- ═══════ MOCK EXAM ═══════ -->
+<section class="section" id="sec-mock">
+  <div class="section-title">📝 Mock Exam</div>
+  <div class="section-sub">20 questions from the IS exam (all correct answers verified)</div>
+
+  <div id="exam-start" class="exam-start-panel">
+    <div style="font-size:3rem;margin-bottom:1rem">📝</div>
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:.5rem">IS Mock Exam</h2>
+    <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:1.5rem">20 MCQ from the CZU IS exam. Note: In the real exam nearly all correct answers are option A — but understand WHY, don't just memorize "A".</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem">
+      <div class="card" style="padding:.75rem 1.25rem;text-align:center;min-width:100px"><div style="font-size:1.5rem;font-weight:800;color:var(--violet)">20</div><div style="font-size:.72rem;color:var(--text-dim)">Questions</div></div>
+      <div class="card" style="padding:.75rem 1.25rem;text-align:center;min-width:100px"><div style="font-size:1.5rem;font-weight:800;color:var(--amber)">25m</div><div style="font-size:.72rem;color:var(--text-dim)">Suggested</div></div>
+      <div class="card" style="padding:.75rem 1.25rem;text-align:center;min-width:100px"><div style="font-size:1.5rem;font-weight:800;color:var(--green)">100%</div><div style="font-size:.72rem;color:var(--text-dim)">Real Qs</div></div>
+    </div>
+    <button class="exam-btn exam-btn-primary" onclick="startExam()">🚀 Begin Mock Exam</button>
+  </div>
+
+  <div id="exam-running" style="display:none">
+    <div style="max-width:680px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem">
+        <div class="fc-progress" style="flex:1;min-width:200px;margin:0">
+          <div class="fc-bar-wrap"><div class="fc-bar" id="exam-bar"></div></div>
+          <span style="font-size:.76rem;color:var(--text-dim)" id="exam-progress">Q 1/20</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.88rem;font-weight:700;color:var(--amber)" id="exam-timer-display">25:00</div>
+      </div>
+      <div class="exam-q-card" id="exam-q-card">
+        <div class="exam-q-num" id="exam-q-num">Question 1 of 20</div>
+        <div class="exam-q-text" id="exam-q-text"></div>
+        <div class="exam-options" id="exam-options"></div>
+        <div id="exam-explanation" style="display:none;margin-top:1rem;padding:.75rem;border-radius:var(--radius-xs);font-size:.82rem;line-height:1.5"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;flex-wrap:wrap;gap:.75rem">
+        <button class="btn-small" onclick="prevExamQ()" id="exam-prev">← Previous</button>
+        <button class="exam-btn exam-btn-primary" onclick="nextExamQ()" style="font-size:.82rem;padding:8px 22px">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="exam-results" style="display:none;text-align:center;padding:2rem">
+    <div class="exam-score-big" id="exam-score-display">0/20</div>
+    <p style="font-size:1rem;color:var(--text-dim);margin:.5rem 0 1.5rem">You answered <span id="exam-correct-count">0</span> out of 20 correctly</p>
+    <div id="exam-result-breakdown" style="max-width:600px;margin:0 auto 1.5rem;text-align:left"></div>
+    <button class="exam-btn exam-btn-primary" onclick="restartExam()">🔄 Try Again</button>
+  </div>
+</section>
+
+<!-- ═══════ CHECKLIST ═══════ -->
+<section class="section" id="sec-checklist">
+  <div class="section-title">✅ Mastery Checklist</div>
+  <div class="section-sub">Track every IS topic — click to tick off. Progress saved locally.</div>
+  <div class="chk-hero">
+    <div class="chk-hero-pct" id="chk-pct">0%</div>
+    <div style="font-size:.88rem;color:var(--text-dim)" id="chk-label">0 / 40 topics mastered</div>
+    <div class="chk-pbar"><div class="chk-pbar-fill" id="chk-pbar-fill"></div></div>
+    <button class="btn-small" onclick="resetChecklist()" style="margin-top:.5rem">↺ Reset All</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem">
+    <div class="card"><div style="font-size:.82rem;font-weight:700;color:var(--violet);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">📋 IS Theory & DSS</div><div id="chk-is"></div></div>
+    <div class="card"><div style="font-size:.82rem;font-weight:700;color:var(--amber);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">🗄️ Data Warehouse</div><div id="chk-dw"></div></div>
+    <div class="card"><div style="font-size:.82rem;font-weight:700;color:var(--blue);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">🔷 ERP & SAP</div><div id="chk-erp"></div></div>
+    <div class="card"><div style="font-size:.82rem;font-weight:700;color:var(--green);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em">☁️ Cloud & Security</div><div id="chk-cloud"></div></div>
+  </div>
+</section>
+
+<footer style="text-align:center;padding:2rem;font-size:.78rem;color:var(--text-muted);position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.04)">
+  <p>CZU Prague | Information Systems ETEA7E — Built for exam success 📊 | Fully offline-ready</p>
+</footer>
+
+<script>
+// ═══ DATA ═══
+const allCards = [
+  // IS THEORY
+  {deck:'is',cat:'IS Theory',q:'What are the 4 IS levels (pyramid)?',a:'<b>TPS</b> (Operational) → <b>MIS</b> (Managerial) → <b>DSS</b> (Tactical/Strategic) → <b>EIS/ESS</b> (Executive)<br><span class="fg">TPS</span> = daily transactions · <span class="fb">MIS</span> = management reports · <span class="fa">DSS</span> = decisions · <b>EIS</b> = executive dashboards'},
+  {deck:'is',cat:'IS Theory',q:'What is a Decision Support System (DSS)?',a:'An <b>interactive computer-based system</b> that supports decision-making. Transforms <span class="fa">raw data → useful information</span>. Supports STRATEGIC and TACTICAL decisions. Should <b>SUPPORT managers, NOT replace them</b>.'},
+  {deck:'is',cat:'IS Theory',q:'What are the 3 decision types?',a:'<b style="color:#4ade80">Structured:</b> Procedure CAN be specified in advance (payroll, reorder)<br><b style="color:#f87171">Unstructured:</b> Procedure CANNOT be specified (CEO strategy, hiring)<br><b style="color:#f59e0b">Semi-structured:</b> SOME procedures specifiable, but not enough for definite decision'},
+  {deck:'is',cat:'IS Theory',q:'IS vs ERP — which is more general?',a:'<b>IS (Information Systems)</b> is MORE GENERAL. ERP is a specific TYPE of IS. Every ERP is an IS, but NOT every IS is an ERP.'},
+  {deck:'is',cat:'IS Theory',q:'What is BI and BPM?',a:'<b>BI (Business Intelligence):</b> Analyzes data to create business insight<br><b>BPM (Business Performance Management):</b> <span class="fa">BI + Planning</span><br><b>KPI:</b> Key Performance Indicator — measurable value of goal achievement<br><b>Dashboard:</b> Visual display of important business KPIs'},
+  {deck:'is',cat:'IS Theory',q:'What is Competitive Intelligence (CI)?',a:'<b>Legal and ethical</b> gathering of information about competitors. Uses PUBLIC sources only (press releases, reports, news). Goal: improve understanding of competitive environment. CI ≠ espionage!'},
+  {deck:'is',cat:'IS Theory',q:'What are SDLC phases?',a:'<b>Planning</b> → <b>Analysis</b> → <b>Design</b> → <b>Implementation</b> → <b>Maintenance</b><br>Waterfall: sequential. Agile: iterative sprints (2-4 weeks).<br>SCRUM roles: Product Owner · Scrum Master · Development Team'},
+  {deck:'is',cat:'IS Theory',q:'What is BPR?',a:'<b>Business Process Reengineering</b> — Radical redesign of business processes to achieve dramatic improvements in performance, cost, quality, and speed. Not incremental improvement — RADICAL redesign!'},
+  {deck:'is',cat:'IS Theory',q:'What are IS rules set by?',a:'Rules in IS are set by <b>humans (managers)</b> through parameters and settings. The system does NOT set its own rules. Goal of IS = SUPPORT management, not replace it.'},
+  {deck:'is',cat:'IS Theory',q:'What is an automatic tool example in IS?',a:'<b>Automatic stock reordering</b> — when inventory drops below a set level, the system automatically generates a purchase order. The HUMAN sets the threshold; the IS executes automatically.'},
+
+  // DATA WAREHOUSE
+  {deck:'dw',cat:'Data Warehouse',q:'What are the 4 DW characteristics (SINV)?',a:'<b>S — Subject-Oriented:</b> Organized around subjects (sales, products)<br><b>I — Integrated:</b> Combines data from multiple sources consistently<br><b>N — Non-Volatile:</b> Data is stable/historical, NOT updated like OLTP<br><b>V — Time-Variant:</b> Every record has timestamp; tracks historical changes'},
+  {deck:'dw',cat:'Data Warehouse',q:'What is Non-Volatile in a Data Warehouse?',a:'Data in a DW is <b>stable and historical</b> — it is NOT deleted or changed like operational OLTP data. Once loaded, DW data is permanent. This is different from TPS/OLTP where data changes constantly.'},
+  {deck:'dw',cat:'Data Warehouse',q:'What is Time-Variant in a Data Warehouse?',a:'DW data is <b>connected with time</b> — every record has a timestamp or time period. The DW tracks HISTORICAL changes over time (e.g., sales trends over 5 years), unlike OLTP which only stores current state.'},
+  {deck:'dw',cat:'Data Warehouse',q:'TPS vs Data Warehouse — what is each for?',a:'<b>TPS (Transaction Processing System):</b> Daily operational transactions (current data, OLTP)<br><b>Data Warehouse:</b> <span class="fa">Strategic analysis</span> and decision-making (historical data, OLAP)'},
+  {deck:'dw',cat:'Data Warehouse',q:'What is ETL?',a:'<b>Extract</b> — pull data from source systems (ERP, CRM, CSV)<br><b>Transform</b> — clean, standardize, aggregate, fix formats<br><b>Load</b> — write transformed data into the Data Warehouse'},
+  {deck:'dw',cat:'Data Warehouse',q:'Star Schema vs Snowflake Schema?',a:'<b>Star Schema:</b> Central fact table + surrounding dimension tables. Denormalized, fast queries, simple.<br><b>Snowflake Schema:</b> Fact + dimension + sub-dimension tables. Normalized, saves space, more complex queries.'},
+  {deck:'dw',cat:'Data Warehouse',q:'What is OLTP vs OLAP?',a:'<b>OLTP</b> (Online Transaction Processing): operational, INSERT/UPDATE/DELETE, real-time, high volume, TPS<br><b>OLAP</b> (Online Analytical Processing): analytical, SELECT/aggregate, historical, DW/BI tools, reports'},
+  {deck:'dw',cat:'Data Warehouse',q:'What is a Data Mart?',a:'A <b>subset of a Data Warehouse</b> focused on one specific department or business area. E.g., a Sales Data Mart contains only sales-related data from the larger DW.'},
+  {deck:'dw',cat:'Data Warehouse',q:'Big Data 3Vs?',a:'<b>Volume</b> — huge amount of data<br><b>Velocity</b> — data generated and processed at high speed<br><b>Variety</b> — structured, unstructured, semi-structured data types'},
+
+  // ERP & SAP
+  {deck:'erp',cat:'ERP & SAP',q:'What is ERP?',a:'<b>Enterprise Resource Planning</b> — Integrated software managing ALL core business processes (finance, HR, sales, manufacturing) in one system with a shared database. Leaders: <b>SAP, Oracle, Microsoft</b>.'},
+  {deck:'erp',cat:'ERP & SAP',q:'ERP main advantage vs main disadvantage?',a:'<b>Advantage:</b> Centralized data + real-time visibility across all departments<br><b>Disadvantage:</b> <span class="fa">HIGH COSTS</span> and vendor lock-in (dependency on one vendor, hard to switch)'},
+  {deck:'erp',cat:'ERP & SAP',q:'SAP Organizational Hierarchy?',a:'<b>Client</b> (top, entire SAP system)<br>→ <b>Company Code</b> (legal entity)<br>→ → <b>Plant</b> (production/service location)<br>→ → → <b>Storage Location</b> (physical storage within plant)'},
+  {deck:'erp',cat:'ERP & SAP',q:'What are the 6 main SAP modules?',a:'<b>FI</b> — Financial Accounting (general ledger, reporting)<br><b>CO</b> — Controlling (cost centers, internal reporting)<br><b>MM</b> — Materials Management (procurement, inventory)<br><b>SD</b> — Sales & Distribution (order-to-cash)<br><b>HR/HCM</b> — Human Resources (payroll)<br><b>PP</b> — Production Planning (manufacturing)'},
+  {deck:'erp',cat:'ERP & SAP',q:'P2P T-code sequence?',a:'<b>ME51N</b> (Purchase Requisition)<br>→ <b>ME21N</b> (Purchase Order)<br>→ <b>MIGO</b> (Goods Receipt)<br>→ <b>MIRO</b> (Invoice Verification — 3-way match)<br>→ <b>F110</b> (Automatic Payment)'},
+  {deck:'erp',cat:'ERP & SAP',q:'O2C T-code sequence?',a:'<b>VA01</b> (Sales Order — customer places order)<br>→ <b>VL01N</b> (Delivery — ship goods)<br>→ <b>VF01</b> (Billing — create customer invoice)'},
+  {deck:'erp',cat:'ERP & SAP',q:'What is SAP HANA?',a:'<b>High-performance Analytic Appliance</b> — an <span class="fg">in-memory database</span>. All data stored in RAM (not disk). Enables real-time analytics. 1000× faster than disk-based databases. S/4HANA is the next-gen ERP built exclusively on SAP HANA.'},
+  {deck:'erp',cat:'ERP & SAP',q:'Master Data vs Transactional Data in SAP?',a:'<b>Master Data:</b> Permanent data used repeatedly — customers, materials, vendors (rarely changes)<br><b>Transactional Data:</b> Created for each transaction — purchase orders, invoices, sales orders (changes constantly)'},
+
+  // CLOUD
+  {deck:'cloud',cat:'Cloud & Architecture',q:'SaaS vs PaaS vs IaaS — who manages what?',a:'<b>IaaS:</b> Provider manages hardware/network. You manage OS + middleware + apps. (AWS EC2, Azure VMs)<br><b>PaaS:</b> IaaS + OS + App Platform managed. You manage code only. (Heroku, GAE)<br><b>SaaS:</b> Provider manages everything. You just use the app. (Gmail, Salesforce)'},
+  {deck:'cloud',cat:'Cloud & Architecture',q:'PaaS = ?',a:'PaaS = <b>IaaS + OS + Application Platform (runtime)</b>. You manage only the application code. Provider manages everything below (hardware, network, OS, runtime environment).'},
+  {deck:'cloud',cat:'Cloud & Architecture',q:'Cloud computing core concept?',a:'Provision of IT services via the internet. Core idea: <b>"pay for what you use"</b> — on-demand, elastic, measured service. Three service models: IaaS, PaaS, SaaS.'},
+  {deck:'cloud',cat:'Cloud & Architecture',q:'GDPR data — which cloud?',a:'GDPR-sensitive data (personal data of EU citizens) should stay in a <b>private cloud</b> to maintain control and compliance. Public cloud for general web applications.'},
+  {deck:'cloud',cat:'Cloud & Architecture',q:'SOA vs Microservices?',a:'<b>SOA (Service-Oriented Architecture):</b> Large services communicating via enterprise service bus (ESB). More tightly coupled.<br><b>Microservices:</b> Small independent services communicating via REST APIs. Loosely coupled, independently deployable.'},
+  {deck:'cloud',cat:'Cloud & Architecture',q:'Three-tier architecture?',a:'<b>Presentation tier</b> (UI — browser/client)<br><b>Application/Logic tier</b> (business logic — web server)<br><b>Data tier</b> (database)<br>Separates concerns for scalability and maintainability.'},
+
+  // SECURITY
+  {deck:'security',cat:'Security',q:'CIA Triad?',a:'<b>C — Confidentiality:</b> Only authorized users can access data (encryption, passwords, MFA)<br><b>I — Integrity:</b> Data is accurate and untampered (checksums, digital signatures)<br><b>A — Availability:</b> Systems accessible when needed (backups, redundancy, uptime)'},
+  {deck:'security',cat:'Security',q:'ACID database properties?',a:'<b>A — Atomicity:</b> All or nothing (full commit or full rollback)<br><b>C — Consistency:</b> DB moves from one valid state to another<br><b>I — Isolation:</b> Concurrent transactions don\'t interfere<br><b>D — Durability:</b> Committed data survives system failures'},
+  {deck:'security',cat:'Security',q:'Authentication vs Authorization?',a:'<b>Authentication:</b> Verifying WHO you are (identity) — username + password, biometrics<br><b>Authorization:</b> Verifying WHAT you can do (permissions) — roles, access rights<br>Authentication ALWAYS happens before authorization.'},
+  {deck:'security',cat:'Security',q:'Symmetric vs Asymmetric Encryption?',a:'<b>Symmetric:</b> Same key for encrypt and decrypt. Fast. Problem: how to share the key securely? Examples: AES, DES<br><b>Asymmetric:</b> Public key (encrypt) + Private key (decrypt). Solves key exchange. Examples: RSA, used in TLS/HTTPS'},
+  {deck:'security',cat:'Security',q:'3 backup types?',a:'<b>Full:</b> Complete copy of everything. Slow to create, fast to restore.<br><b>Incremental:</b> Changes since last backup (any type). Fast to create, slow to restore.<br><b>Differential:</b> Changes since last FULL backup. Medium speed both ways.'},
+
+  // AI & TECH
+  {deck:'ai',cat:'AI & Modern Tech',q:'4 areas of AI?',a:'<b>NLP (Natural Language Processing):</b> Human language understanding<br><b>Machine Learning:</b> Learning patterns from data<br><b>Computer Vision:</b> Interpreting visual/image data<br><b>Deep Learning:</b> Multi-layer neural networks (subset of ML)'},
+  {deck:'ai',cat:'AI & Modern Tech',q:'Deep Learning vs Machine Learning?',a:'<b>Machine Learning:</b> Algorithms learn from data. Feature engineering by humans.<br><b>Deep Learning:</b> Subset of ML using <span class="fg">multi-layer neural networks</span>. Automatic feature extraction. Inspired by human brain structure. Needs more data and compute.'},
+  {deck:'ai',cat:'AI & Modern Tech',q:'Modern IS technologies?',a:'<b>Cloud computing</b> (scalable, on-demand)<br><b>Virtualization</b> (virtual machines)<br><b>Big Data</b> (volume, velocity, variety)<br><b>AI</b> (ML, NLP, Computer Vision)<br><b>Security</b> (CIA, encryption, GDPR)'},
+  {deck:'ai',cat:'AI & Modern Tech',q:'Application architecture evolved toward?',a:'<b>Service-Oriented Architecture (SOA)</b> and then <b>Microservices</b> + <b>REST APIs</b>. Moving from monolithic applications to independently deployable small services.'},
+];
+
+// MATCH DATA
+const matchData = [
+  {term:'TPS',def:'Daily transactions — operational level IS'},
+  {term:'DSS',def:'Transforms raw data → useful info for decisions'},
+  {term:'SINV',def:'Subject·Integrated·Non-volatile·Time-variant (DW)'},
+  {term:'Non-volatile',def:'DW data is stable/historical — NOT updated like OLTP'},
+  {term:'ERP vs IS',def:'IS is MORE GENERAL — ERP is a specific type of IS'},
+  {term:'SAP HANA',def:'In-memory database — data in RAM, not disk'},
+  {term:'PaaS',def:'IaaS + OS + Application Platform (runtime)'},
+  {term:'CIA Triad',def:'Confidentiality · Integrity · Availability'},
+  {term:'ETL',def:'Extract · Transform · Load (data into DW)'},
+  {term:'Competitive Intel',def:'Legal, ethical info gathering using PUBLIC sources'},
+  {term:'P2P first step',def:'ME51N — Purchase Requisition'},
+  {term:'Deep Learning',def:'Closely connected to multi-layer neural networks'},
+  {term:'BPM',def:'BI + Planning = Business Performance Management'},
+  {term:'Structured decision',def:'Procedure CAN be specified in advance'},
+  {term:'OLAP',def:'Online Analytical Processing — for DW/BI reports'},
+  {term:'Star Schema',def:'Central fact table surrounded by dimension tables'},
+];
+
+// EXAM QUESTIONS
+const examQs = [
+  {q:'What are the 4 characteristics of a Data Warehouse (DW)?',opts:['Subject-oriented, Integrated, Non-volatile, Time-variant (SINV)','Flexible, Integrated, Normalized, Transactional','Subject-oriented, Isolated, Non-volatile, Time-variant','Structured, Integrated, Non-volatile, Time-based'],ans:0,exp:'DW characteristics: SINV — Subject-oriented (around subjects), Integrated (from multiple sources), Non-volatile (stable/historical), Time-variant (timestamp on every record).'},
+  {q:'What is the purpose of a Data Warehouse?',opts:['Strategic analysis and decision support','Daily transaction processing','Real-time operational data management','Replacing the ERP system'],ans:0,exp:'DW is for STRATEGIC ANALYSIS and decision-making. Daily transactions = TPS (Transaction Processing System).'},
+  {q:'What does a DSS do?',opts:['Transforms raw data into useful information for decision-making','Replaces human decision-makers','Processes daily operational transactions','Manages employee payroll only'],ans:0,exp:'DSS (Decision Support System) transforms raw data → useful information. It SUPPORTS managers in making decisions — it does NOT replace them.'},
+  {q:'Which type of decision has a procedure that CANNOT mostly be specified in advance?',opts:['Unstructured decision','Structured decision','Semi-structured decision','Programmatic decision'],ans:0,exp:'UNSTRUCTURED decisions cannot be specified in advance — they require human judgment and intuition (e.g., CEO hiring a new executive). STRUCTURED decisions CAN be programmed (e.g., payroll calculation).'},
+  {q:'Deep Learning is closely connected to?',opts:['Multi-layer neural networks','Simple linear regression models','Rule-based expert systems','Natural language APIs only'],ans:0,exp:'Deep Learning uses MULTI-LAYER neural networks (deep neural networks). This is the key feature that distinguishes it from basic machine learning — multiple hidden layers allow automatic feature extraction.'},
+  {q:'IS vs ERP — which is more general?',opts:['IS (Information Systems) is more general','ERP is more general than IS','They are equal in scope','ERP contains IS as a subset'],ans:0,exp:'IS is MORE GENERAL. ERP is a specific type of IS. Every ERP is an IS, but not every IS is an ERP. IS includes ERP, CRM, BI tools, TPS, DSS, and many more systems.'},
+  {q:'What is the main disadvantage of ERP?',opts:['High costs and vendor lock-in','Limited data integration','Requires manual data entry','Cannot support multiple departments'],ans:0,exp:'ERP main disadvantage: HIGH COSTS (implementation + licensing + training) and vendor lock-in (dependency on one vendor, hard/expensive to switch).'},
+  {q:'SAP HANA is best described as?',opts:['An in-memory database (data stored in RAM)','A disk-based relational database','A cloud-only service platform','A programming language for enterprise'],ans:0,exp:'SAP HANA = High-performance Analytic Appliance. It is an IN-MEMORY database — all data stored in RAM, enabling real-time analytics. 1000× faster than traditional disk-based databases.'},
+  {q:'What is PaaS?',opts:['IaaS + OS + Application Platform (runtime)','Only hardware infrastructure in the cloud','A complete software application delivered online','A private data center management tool'],ans:0,exp:'PaaS = IaaS + OS + Application Platform. You manage only the application code; the provider manages infrastructure, OS, and runtime environment. Examples: Heroku, Google App Engine.'},
+  {q:'Cloud computing core concept?',opts:['Pay for what you use — on-demand services','Fixed monthly fee for unlimited resources','Only for large enterprises','Replaces all local infrastructure immediately'],ans:0,exp:'Cloud computing = "pay for what you use" (measured service). On-demand, elastic, broad network access, resource pooling — provision IT services via the internet.'},
+  {q:'Competitive Intelligence (CI) uses which sources?',opts:['Public sources (press releases, reports, news)','Hacking and corporate espionage','Insider information from competitors','Private investigator reports'],ans:0,exp:'CI is LEGAL and ETHICAL — uses only PUBLIC sources (press releases, annual reports, news, patent filings). It is NOT espionage, hacking, or bribery!'},
+  {q:'What does Non-Volatile mean in a Data Warehouse?',opts:['Data is stable and historical — NOT updated like OLTP data','Data can be deleted and modified daily','Data is encrypted and non-readable','Data is stored without any timestamps'],ans:0,exp:'NON-VOLATILE = data in the DW is stable and historical. Once loaded, it stays. Unlike OLTP (operational databases) where data is constantly inserted, updated, and deleted.'},
+  {q:'CIA Triad stands for?',opts:['Confidentiality, Integrity, Availability','Control, Integration, Authentication','Cybersecurity, Integrity, Availability','Confidentiality, Integration, Access'],ans:0,exp:'CIA Triad: CONFIDENTIALITY (only authorized access), INTEGRITY (data is accurate/untampered), AVAILABILITY (systems accessible when needed). Core information security framework.'},
+  {q:'ACID property — Atomicity means?',opts:['All or nothing — entire transaction completes or fully rolls back','Data moves from one valid state to another','Concurrent transactions do not interfere','Committed data survives system failures'],ans:0,exp:'ATOMICITY = all or nothing. In a bank transfer, BOTH debit and credit must succeed. If system crashes mid-transaction, BOTH are rolled back. No partial transactions.'},
+  {q:'What is ETL in the context of Data Warehousing?',opts:['Extract, Transform, Load — process for moving data into DW','Enterprise Technology Layer','Error, Test, Launch process','Electronic Transfer Language'],ans:0,exp:'ETL: EXTRACT data from source systems (ERP, CRM) → TRANSFORM (clean, standardize, aggregate) → LOAD into the Data Warehouse.'},
+  {q:'What is the IS pyramid from bottom to top?',opts:['TPS → MIS → DSS → EIS/ESS','EIS → DSS → MIS → TPS','MIS → TPS → EIS → DSS','DSS → TPS → MIS → EIS'],ans:0,exp:'IS Pyramid from bottom (operational) to top (strategic): TPS (Transaction Processing) → MIS (Management Information) → DSS (Decision Support) → EIS/ESS (Executive Information System).'},
+  {q:'OLTP vs OLAP — which is used for analytics?',opts:['OLAP (Online Analytical Processing)','OLTP (Online Transaction Processing)','Both are identical in purpose','Neither — analytics requires custom tools only'],ans:0,exp:'OLAP = Online Analytical Processing — used for complex queries, reporting, and analytics in Data Warehouses. OLTP = operational day-to-day transactions (INSERT/UPDATE/DELETE).'},
+  {q:'SAP P2P process — which T-code creates the Purchase Order?',opts:['ME21N','ME51N','MIGO','F110'],ans:0,exp:'ME21N creates the Purchase Order (formal order to vendor). P2P sequence: ME51N (requisition) → ME21N (PO) → MIGO (goods receipt) → MIRO (invoice verification) → F110 (payment).'},
+  {q:'Which AI area processes human language?',opts:['NLP — Natural Language Processing','Computer Vision','Deep Learning','Supervised Machine Learning'],ans:0,exp:'NLP (Natural Language Processing) handles human language — text analysis, speech recognition, translation, chatbots. Computer Vision handles images. Deep Learning uses multi-layer neural networks.'},
+  {q:'DSS should do what with human decision-makers?',opts:['Support them, not replace them','Replace them with automated decisions','Only provide historical data','Eliminate the need for human judgment entirely'],ans:0,exp:'DSS should SUPPORT (not replace) managers! Computers are good at processing large amounts of data quickly. Humans are good at flexibility, intuition, and contextual judgment. They complement each other.'},
+];
+
+// CHECKLISTS
+const chkIS = ['IS pyramid: TPS → MIS → DSS → EIS','DSS definition and what it transforms','3 decision types (Structured/Unstructured/Semi)','IS vs ERP — IS is more general','BI = analyzes data · BPM = BI + Planning','KPI and Dashboard purpose','Competitive Intelligence = legal + public sources','SDLC phases (5 steps)','Agile vs Waterfall differences','SCRUM roles (PO/SM/Dev Team)','BPR = radical redesign of business processes'];
+const chkDW = ['DW SINV characteristics (all 4)','Non-volatile = stable historical data','Time-variant = every record has timestamp','TPS = operations · DW = strategic analysis','OLTP vs OLAP differences','ETL process (Extract/Transform/Load)','Star Schema vs Snowflake Schema','Data Mart = subset of DW','Big Data 3Vs (Volume/Velocity/Variety)'];
+const chkERP = ['ERP = Enterprise Resource Planning','ERP main advantage (centralized data)','ERP main disadvantage (high costs/vendor lock-in)','ERP leaders: SAP, Oracle, Microsoft','SAP org hierarchy: Client>Company Code>Plant>Storage','SAP modules: FI,CO,MM,SD,HR,PP','P2P T-codes: ME51N→ME21N→MIGO→MIRO→F110','O2C T-codes: VA01→VL01N→VF01','SAP HANA = in-memory database','Master Data vs Transactional Data'];
+const chkCloud = ['SaaS/PaaS/IaaS definitions','PaaS = IaaS + OS + App Platform','Cloud = pay for what you use','GDPR data → private cloud','CIA Triad (C/I/A)','ACID properties (A/C/I/D)','Authentication vs Authorization','Symmetric vs Asymmetric encryption','3 backup types (Full/Incremental/Differential)','MFA = Multi-Factor Authentication'];
+
+// TTS TRACKS
+const tracks = [
+  {title:'IS Pyramid & Levels',text:'Welcome to the Information Systems exam audio guide for ETEA7E at CZU Prague. The IS pyramid has 4 levels from bottom to top: TPS, Transaction Processing System, handles daily operational transactions like ATM withdrawals and point-of-sale payments. MIS, Management Information System, provides reports to middle management. DSS, Decision Support System, supports strategic and tactical decisions by transforming raw data into useful information. EIS or ESS, Executive Information System, provides dashboards for top-level executives.'},
+  {title:'Data Warehouse — SINV',text:'Data Warehouse characteristics are remembered with SINV. S for Subject-Oriented: the DW is organized around subjects like sales, products, and customers, not around applications. I for Integrated: data from multiple sources is combined consistently into one unified format. N for Non-Volatile: data is stable and historical, it is NOT updated or deleted like operational OLTP data. V for Time-Variant: every record has a timestamp, and the DW tracks historical changes over time. Remember: the DW is for STRATEGIC ANALYSIS, not daily operations.'},
+  {title:'OLTP vs OLAP',text:'OLTP stands for Online Transaction Processing and is used for daily operational work like inserts, updates, and deletes in real-time. It is the backbone of TPS systems. OLAP stands for Online Analytical Processing and is used for complex reporting and analytics queries in Data Warehouses. OLTP handles many small fast transactions. OLAP handles few large complex queries. ETL, which stands for Extract Transform Load, is the process of moving data from OLTP systems into the Data Warehouse.'},
+  {title:'DSS & Decision Types',text:'A Decision Support System is an interactive computer-based system that supports decision-making. It transforms raw data into useful information. DSS supports BOTH strategic and tactical decisions. Critically: DSS should SUPPORT managers, not replace them! Computers are good at processing large amounts of data quickly. Humans are good at flexibility, intuition, and contextual judgment. There are 3 decision types. Structured decisions: procedure CAN be specified in advance, like payroll calculation. Unstructured decisions: procedure CANNOT be specified, like CEO hiring decisions. Semi-structured: some procedures can be specified but not enough for a definite decision.'},
+  {title:'ERP & SAP Basics',text:'ERP stands for Enterprise Resource Planning. It is an integrated software system managing all core business processes. IS is MORE GENERAL than ERP — ERP is a specific type of IS! The main advantage of ERP is centralized data and real-time visibility. The main disadvantage is HIGH COSTS and vendor lock-in. ERP leaders are SAP, Oracle, and Microsoft. SAP organizational hierarchy from top to bottom: Client, then Company Code, then Plant, then Storage Location. Main SAP modules: FI for Financial Accounting, CO for Controlling, MM for Materials Management, SD for Sales and Distribution, HR for Human Resources, and PP for Production Planning.'},
+  {title:'SAP P2P & O2C Flows',text:'The Procure-to-Pay process in SAP uses these T-codes in order: ME51N to create a Purchase Requisition, then ME21N to create the Purchase Order sent to the vendor, then MIGO for Goods Receipt when items arrive, then MIRO for Invoice Verification doing a 3-way match of PO, goods receipt, and invoice, then F110 for the Automatic Payment. The Order-to-Cash process is: VA01 to create the Sales Order, then VL01N for Delivery, then VF01 for Billing the customer. Master Data is permanent data like customers and materials. Transactional Data is created per transaction like purchase orders and invoices.'},
+  {title:'SAP HANA & Cloud Models',text:'SAP HANA stands for High-performance Analytic Appliance. It is an IN-MEMORY database where all data is stored in RAM, not on disk. This makes it approximately 1000 times faster than disk-based databases. S/4HANA is the next-generation ERP built exclusively on SAP HANA. For cloud service models: IaaS, Infrastructure as a Service, is just hardware managed by the provider. PaaS, Platform as a Service, equals IaaS plus OS plus Application Platform. SaaS, Software as a Service, means the provider manages everything and you just use the application. The core cloud concept is: pay for what you use.'},
+  {title:'AI, ML & Deep Learning',text:'AI includes 4 main areas: NLP which is Natural Language Processing for human language, Machine Learning for learning patterns from data, Computer Vision for interpreting images, and Deep Learning which is closely connected to multi-layer neural networks. Neural networks are inspired by the human brain structure. Deep Learning is a subset of Machine Learning but uses multiple hidden layers for automatic feature extraction. Modern IS technologies include Cloud, Virtualization, Big Data, AI, and Security. Big Data is characterized by the 3Vs: Volume, Velocity, and Variety.'},
+  {title:'BI, BPM & Competitive Intelligence',text:'Business Intelligence or BI analyzes data and creates business insight for decision-making. BPM, Business Performance Management, equals BI plus Planning. A KPI is a Key Performance Indicator, a measurable value showing goal achievement. A Dashboard visually displays important business KPIs. Competitive Intelligence, or CI, is the LEGAL and ETHICAL gathering of information about competitors using only PUBLIC sources like press releases, annual reports, and news. CI is NOT espionage or hacking!'},
+  {title:'CIA Triad & ACID Properties',text:'The CIA Security Triad has 3 components. Confidentiality: only authorized users can access data, protected by encryption and passwords. Integrity: data is accurate and has not been tampered with, verified by checksums and digital signatures. Availability: systems and data are accessible when needed, maintained by backups and redundancy. ACID database properties: Atomicity means all or nothing, entire transaction commits or rolls back. Consistency means the database moves from one valid state to another. Isolation means concurrent transactions do not interfere. Durability means committed data survives system failures.'},
+  {title:'Exam Traps Summary',text:'Critical IS exam traps to memorize: IS is MORE GENERAL than ERP. DSS should SUPPORT managers, not replace them. Non-volatile in DW means data is stable and historical, not updated like OLTP. TPS is for daily transactions, DW is for strategic analysis. SAP HANA is an IN-MEMORY database with data in RAM. PaaS equals IaaS plus OS plus Application Platform. Competitive Intelligence uses ONLY public sources and is 100 percent legal. ERP biggest disadvantage is HIGH COSTS and vendor lock-in. Deep Learning is closely connected to multi-layer neural networks. The IS pyramid from bottom to top is TPS, MIS, DSS, EIS.'},
+];
+
+// ═══ NAVIGATION ═══
+let currentSection='home';
+const sectionMap={home:'sec-home',audio:'sec-audio',cards:'sec-cards',dw:'sec-dw',erp:'sec-erp',systems:'sec-systems',cloud:'sec-cloud',match:'sec-match',mock:'sec-mock',checklist:'sec-checklist'};
+function goTo(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  const sec=document.getElementById(sectionMap[id]);
+  if(sec)sec.classList.add('active');
+  document.querySelectorAll('.pill').forEach(p=>{if(p.getAttribute('onclick')&&p.getAttribute('onclick').includes("'"+id+"'"))p.classList.add('active')});
+  currentSection=id;window.scrollTo(0,0);
+}
+
+// ═══ TIMER ═══
+let studyStart=Date.now();
+setInterval(()=>{
+  const e=Math.floor((Date.now()-studyStart)/1000);
+  const h=Math.floor(e/3600),m=Math.floor((e%3600)/60),s=e%60;
+  document.getElementById('timer').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  document.getElementById('stat-time').textContent=`${m+h*60}m`;
+},1000);
+
+// ═══ REVEAL ALL ═══
+let revealed=false;
+function toggleRevealAll(){
+  revealed=!revealed;
+  document.querySelectorAll('.blur-reveal').forEach(el=>revealed?el.classList.add('revealed'):el.classList.remove('revealed'));
+  document.getElementById('reveal-all-btn').textContent=revealed?'🙈 Hide':'👁️ Reveal';
+}
+
+// ═══ AUDIO PODCAST ═══
+function changeISVoice(){const s=document.getElementById('is-voice-sel');setISVoice(s.value)}
+function setISVoice(file){
+  const s=document.getElementById('is-audio-src');
+  const p=document.getElementById('is-audio-player');
+  const d=document.getElementById('is-audio-dl');
+  const sel=document.getElementById('is-voice-sel');
+  s.src=file;p.load();d.href=file;
+  for(let i=0;i<sel.options.length;i++){if(sel.options[i].value===file){sel.selectedIndex=i;break}}
+}
+
+// ═══ TTS PLAYER ═══
+let ttsIdx=0,ttsPaused=false,ttsUtterance=null,wakeLock=null;
+async function requestWakeLock(){try{if('wakeLock' in navigator)wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}
+function releaseWakeLock(){if(wakeLock){wakeLock.release();wakeLock=null}}
+document.addEventListener('visibilitychange',async()=>{if(wakeLock&&document.visibilityState==='visible'){try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}}});
+
+function buildPlaylist(){
+  const pl=document.getElementById('audio-playlist');
+  if(!pl)return;
+  pl.innerHTML=tracks.map((t,i)=>`<div class="playlist-item${i===ttsIdx?' active-track':''}" id="plt-${i}" onclick="jumpTrack(${i})"><div class="playlist-num">${i+1}</div><div>${t.title}</div></div>`).join('');
+}
+function jumpTrack(i){ttsIdx=i;audioStop();audioPlay()}
+function audioPlay(){
+  if(!('speechSynthesis' in window))return;
+  if(ttsPaused&&ttsUtterance){speechSynthesis.resume();ttsPaused=false;document.getElementById('btn-pause').disabled=false;document.getElementById('btn-play').disabled=true;return}
+  if(ttsIdx>=tracks.length)ttsIdx=0;
+  playTrack(ttsIdx);requestWakeLock();
+}
+function playTrack(idx){
+  speechSynthesis.cancel();ttsIdx=idx;
+  const t=tracks[idx];
+  document.getElementById('now-playing-text').innerHTML=`<span style="color:var(--violet);font-weight:700">▶ Track ${idx+1}/${tracks.length}:</span> ${t.title}<br><span style="color:var(--text-muted);font-size:.75rem">${t.text.substring(0,120)}...</span>`;
+  document.querySelectorAll('.playlist-item').forEach((el,i)=>el.classList.toggle('active-track',i===idx));
+  document.getElementById('btn-play').disabled=true;document.getElementById('btn-pause').disabled=false;
+  ttsUtterance=new SpeechSynthesisUtterance(t.text);
+  ttsUtterance.rate=parseFloat(document.getElementById('tts-speed').value)||0.85;
+  ttsUtterance.onend=()=>{if(ttsIdx<tracks.length-1)setTimeout(()=>playTrack(ttsIdx+1),800);else audioStop()};
+  speechSynthesis.speak(ttsUtterance);ttsPaused=false;
+}
+function audioPause(){if(speechSynthesis.speaking&&!speechSynthesis.paused){speechSynthesis.pause();ttsPaused=true;document.getElementById('btn-pause').disabled=true;document.getElementById('btn-play').disabled=false}}
+function audioStop(){speechSynthesis.cancel();ttsPaused=false;document.getElementById('btn-play').disabled=false;document.getElementById('btn-pause').disabled=true;releaseWakeLock()}
+function updateTTSSpeed(){if(speechSynthesis.speaking){const i=ttsIdx;audioStop();setTimeout(()=>{ttsIdx=i;audioPlay()},100)}}
+buildPlaylist();
+
+// ═══ FLASHCARDS ═══
+let currentDeck='all',deckCards=[],fcIdx=0,fcKnown=0,fcReview=0,cardFlipped=false;
+const fcRatings={};
+function switchDeck(deck,e){
+  currentDeck=deck;
+  document.querySelectorAll('.fc-tab').forEach(t=>t.classList.remove('active'));
+  if(e)e.target.classList.add('active');
+  if(deck==='weak'){deckCards=allCards.filter(c=>fcRatings[c.q]==='bad');if(!deckCards.length){alert('No weak cards yet! Rate cards first.');return}}
+  else if(deck==='all')deckCards=[...allCards];
+  else deckCards=allCards.filter(c=>c.deck===deck);
+  fcIdx=0;fcKnown=0;fcReview=0;updateFCDisplay();
+}
+function updateFCDisplay(){
+  if(!deckCards.length)return;
+  const c=deckCards[fcIdx];
+  document.getElementById('fc-front-cat').textContent=c.cat;
+  document.getElementById('fc-front-q').textContent=c.q;
+  document.getElementById('fc-back-cat').textContent='ANSWER';
+  document.getElementById('fc-back-a').innerHTML=c.a;
+  document.getElementById('fc-counter').textContent=`Card ${fcIdx+1} / ${deckCards.length}`;
+  document.getElementById('fc-known').textContent=fcKnown;
+  document.getElementById('fc-review').textContent=fcReview;
+  const pct=Math.round((fcIdx/deckCards.length)*100);
+  document.getElementById('fc-bar').style.width=pct+'%';
+  document.getElementById('fc-pct-text').textContent=pct+'%';
+  document.getElementById('fc-card').classList.remove('flipped');
+  cardFlipped=false;
+  document.getElementById('stat-seen').textContent=Math.max(parseInt(document.getElementById('stat-seen').textContent||0),fcIdx+1);
+  document.getElementById('stat-known').textContent=fcKnown;
+  document.getElementById('stat-review').textContent=fcReview;
+}
+function flipCard(){cardFlipped=!cardFlipped;document.getElementById('fc-card').classList.toggle('flipped',cardFlipped)}
+function rateCard(r){const c=deckCards[fcIdx];fcRatings[c.q]=r;if(r==='good')fcKnown++;else fcReview++;nextCard()}
+function nextCard(){if(fcIdx<deckCards.length-1){fcIdx++;updateFCDisplay()}else{document.getElementById('fc-front-q').textContent='🎉 Deck complete!'}}
+function shuffleDeck(){for(let i=deckCards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deckCards[i],deckCards[j]]=[deckCards[j],deckCards[i]]}fcIdx=0;updateFCDisplay()}
+document.addEventListener('keydown',e=>{
+  if(currentSection!=='cards')return;
+  if(e.code==='Space'){e.preventDefault();flipCard()}
+  else if(e.code==='ArrowRight')nextCard();
+  else if(e.code==='ArrowLeft'){if(fcIdx>0){fcIdx--;updateFCDisplay()}}
+  else if(e.key==='1')rateCard('bad');
+  else if(e.key==='2')rateCard('good');
+  else if(e.key==='r'||e.key==='R')shuffleDeck();
+});
+switchDeck('all',null);
+
+// ═══ MATCH GAME ═══
+let matchSel=null,matchCorrect=0,matchTotal=0,matchRound=1;
+function initMatch(){
+  const shuffled=[...matchData].sort(()=>Math.random()-.5).slice(0,8);
+  matchTotal=shuffled.length;matchCorrect=0;matchSel=null;
+  document.getElementById('match-total').textContent=matchTotal;
+  document.getElementById('match-correct').textContent=0;
+  document.getElementById('match-msg').textContent='Match concepts to definitions';
+  document.getElementById('msbar').style.width='0%';
+  const all=[...shuffled.map(d=>({id:d.term,text:d.term,type:'term'})),...shuffled.map(d=>({id:d.term,text:d.def,type:'def'}))].sort(()=>Math.random()-.5);
+  const grid=document.getElementById('match-grid');
+  grid.innerHTML='';
+  all.forEach(item=>{
+    const el=document.createElement('div');
+    el.className='match-item';el.dataset.id=item.id;el.dataset.type=item.type;el.textContent=item.text;
+    el.onclick=()=>matchClick(el);grid.appendChild(el);
+  });
+}
+function matchClick(el){
+  if(el.classList.contains('done'))return;
+  if(!matchSel){matchSel=el;el.classList.add('sel');return}
+  if(matchSel===el){matchSel.classList.remove('sel');matchSel=null;return}
+  if(matchSel.dataset.type===el.dataset.type){matchSel.classList.remove('sel');matchSel=el;el.classList.add('sel');return}
+  if(matchSel.dataset.id===el.dataset.id){
+    [matchSel,el].forEach(e=>{e.classList.remove('sel');e.classList.add('done','glow')});
+    matchCorrect++;document.getElementById('match-correct').textContent=matchCorrect;
+    document.getElementById('msbar').style.width=(matchCorrect/matchTotal*100)+'%';
+    document.getElementById('match-msg').textContent=matchCorrect===matchTotal?'🎉 Perfect! All matched!':matchCorrect+' / '+matchTotal+' matched';
+    if(matchCorrect===matchTotal){matchRound++;document.getElementById('match-round').textContent=matchRound}
+  } else {
+    [matchSel,el].forEach(e=>{e.classList.add('wrong');setTimeout(()=>e.classList.remove('wrong'),500)});
+    matchSel.classList.remove('sel');
+    document.getElementById('match-msg').textContent='❌ Not a match — try again';
+  }
+  matchSel=null;
+}
+initMatch();
+
+// ═══ MOCK EXAM ═══
+let examQuestions=[],examAnswers=[],examCurrent=0,examInterval=null;
+function startExam(){
+  examQuestions=[...examQs].sort(()=>Math.random()-.5);
+  examAnswers=new Array(examQuestions.length).fill(null);
+  examCurrent=0;
+  document.getElementById('exam-start').style.display='none';
+  document.getElementById('exam-running').style.display='block';
+  document.getElementById('exam-results').style.display='none';
+  let secs=1500;
+  examInterval=setInterval(()=>{
+    secs--;const m=Math.floor(secs/60),s=secs%60;
+    document.getElementById('exam-timer-display').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if(secs<=0){clearInterval(examInterval);finishExam()}
+  },1000);
+  showExamQ();
+}
+function showExamQ(){
+  const q=examQuestions[examCurrent];
+  document.getElementById('exam-q-num').textContent=`Question ${examCurrent+1} of ${examQuestions.length}`;
+  document.getElementById('exam-q-text').textContent=q.q;
+  document.getElementById('exam-bar').style.width=((examCurrent/examQuestions.length)*100)+'%';
+  document.getElementById('exam-progress').textContent=`Q ${examCurrent+1}/${examQuestions.length}`;
+  const opts=document.getElementById('exam-options');opts.innerHTML='';
+  const exp=document.getElementById('exam-explanation');exp.style.display='none';
+  q.opts.forEach((o,i)=>{
+    const el=document.createElement('div');el.className='exam-opt';
+    if(examAnswers[examCurrent]!==null){if(i===q.ans)el.classList.add('correct');else if(i===examAnswers[examCurrent])el.classList.add('wrong')}
+    el.textContent=String.fromCharCode(65+i)+'. '+o;el.onclick=()=>selectAnswer(i);opts.appendChild(el);
+  });
+  if(examAnswers[examCurrent]!==null){
+    exp.style.display='block';
+    exp.style.background=examAnswers[examCurrent]===q.ans?'rgba(74,222,128,.08)':'rgba(248,113,113,.08)';
+    exp.style.border=examAnswers[examCurrent]===q.ans?'1px solid rgba(74,222,128,.25)':'1px solid rgba(248,113,113,.25)';
+    exp.innerHTML='<b>'+(examAnswers[examCurrent]===q.ans?'✅ Correct!':'❌ Wrong')+'</b> '+q.exp;
+  }
+}
+function selectAnswer(i){if(examAnswers[examCurrent]!==null)return;examAnswers[examCurrent]=i;showExamQ()}
+function nextExamQ(){if(examCurrent<examQuestions.length-1){examCurrent++;showExamQ()}else finishExam()}
+function prevExamQ(){if(examCurrent>0){examCurrent--;showExamQ()}}
+function finishExam(){
+  clearInterval(examInterval);
+  document.getElementById('exam-running').style.display='none';document.getElementById('exam-results').style.display='block';
+  const correct=examAnswers.filter((a,i)=>a===examQuestions[i].ans).length;
+  document.getElementById('exam-score-display').textContent=`${correct}/${examQuestions.length}`;
+  document.getElementById('exam-correct-count').textContent=correct;
+  let html='';
+  examQuestions.forEach((q,i)=>{const ok=examAnswers[i]===q.ans;html+=`<div style="padding:.6rem .85rem;border-radius:8px;margin-bottom:.4rem;font-size:.8rem;border:1px solid ${ok?'rgba(74,222,128,.2)':'rgba(248,113,113,.2)'};background:${ok?'rgba(74,222,128,.06)':'rgba(248,113,113,.06)'}"><b>${ok?'✅':'❌'} Q${i+1}:</b> ${q.q.substring(0,60)}...</div>`});
+  document.getElementById('exam-result-breakdown').innerHTML=html;
+}
+function restartExam(){clearInterval(examInterval);document.getElementById('exam-start').style.display='block';document.getElementById('exam-running').style.display='none';document.getElementById('exam-results').style.display='none'}
+
+// ═══ CHECKLIST ═══
+let chkState={};
+function loadChk(){try{chkState=JSON.parse(localStorage.getItem('is-chk')||'{}')}catch(e){chkState={}}}
+function saveChk(){try{localStorage.setItem('is-chk',JSON.stringify(chkState))}catch(e){}}
+function buildChkSection(items,id){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML=items.map((t,i)=>{const k=id+'-'+i,c=chkState[k];return`<div class="chk-item${c?' checked':''}" onclick="toggleChk('${k}',this)"><div class="chk-box">${c?'✓':''}</div><div>${t}</div></div>`}).join('');
+}
+function toggleChk(k,el){chkState[k]=!chkState[k];el.classList.toggle('checked',chkState[k]);el.querySelector('.chk-box').textContent=chkState[k]?'✓':'';saveChk();updateChkProgress()}
+function updateChkProgress(){
+  const total=chkIS.length+chkDW.length+chkERP.length+chkCloud.length;
+  const done=Object.values(chkState).filter(Boolean).length;
+  const pct=Math.round((done/total)*100);
+  document.getElementById('chk-pct').textContent=pct+'%';
+  document.getElementById('chk-label').textContent=`${done} / ${total} topics mastered`;
+  document.getElementById('chk-pbar-fill').style.width=pct+'%';
+}
+function resetChecklist(){chkState={};saveChk();buildChecklist()}
+function buildChecklist(){loadChk();buildChkSection(chkIS,'chk-is');buildChkSection(chkDW,'chk-dw');buildChkSection(chkERP,'chk-erp');buildChkSection(chkCloud,'chk-cloud');updateChkProgress()}
+buildChecklist();
+
+document.getElementById('btn-pause').disabled=true;
+</script>
+</body>
+</html>
