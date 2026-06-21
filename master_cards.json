@@ -2225,5 +2225,639 @@
       "desc": "<ul style='margin-top:5px;padding-left:20px;text-align:left;'><li>Universal Remote Informator</li><li>Uniform Resource Identifier</li><li>Universal Resource Identifier</li><li>Uniform Remote Identifier</li></ul>",
       "ans": "<strong>Correct Answer(s):</strong> Uniform Resource Identifier"
     }
+  ],
+  "math": [
+    {
+      "id": 1,
+      "category": "Integrals",
+      "q": "∫ xⁿ dx  (n ≠ -1)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "xⁿ⁺¹/(n+1) + C\n\nPower Rule for integration.\nAdd 1 to exponent, divide by new exponent."
+    },
+    {
+      "id": 2,
+      "category": "Integrals",
+      "q": "∫ eˣ dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "eˣ + C\n\nThe exponential function is its own antiderivative."
+    },
+    {
+      "id": 3,
+      "category": "Integrals",
+      "q": "∫ sin(x) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "-cos(x) + C\n\nNegative cosine — remember the sign!"
+    },
+    {
+      "id": 4,
+      "category": "Integrals",
+      "q": "∫ cos(x) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "sin(x) + C\n\nPositive sine."
+    },
+    {
+      "id": 5,
+      "category": "Integrals",
+      "q": "∫ 1/x dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "ln|x| + C\n\nValid for x ≠ 0. Absolute value is required."
+    },
+    {
+      "id": 6,
+      "category": "Integrals",
+      "q": "∫ tan(x) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "-ln|cos(x)| + C  =  ln|sec(x)| + C\n\nUse substitution u = cos(x)."
+    },
+    {
+      "id": 7,
+      "category": "Integrals",
+      "q": "∫ sec²(x) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "tan(x) + C\n\nDerivative of tan(x) = sec²(x), so ∫sec²dx = tan + C."
+    },
+    {
+      "id": 8,
+      "category": "Integrals",
+      "q": "Integration by Parts (IBP) formula",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "∫ u dv = uv − ∫ v du\n\nChoose u = LIATE order:\nLogarithm → Inverse trig → Algebraic → Trig → Exponential"
+    },
+    {
+      "id": 9,
+      "category": "Integrals",
+      "q": "∫ x·eˣ dx  (IBP example)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "u = x,  dv = eˣ dx\ndu = dx,  v = eˣ\n\n∫ x·eˣ dx = x·eˣ − ∫eˣ dx = xeˣ − eˣ + C = eˣ(x−1) + C"
+    },
+    {
+      "id": 10,
+      "category": "Integrals",
+      "q": "Partial fractions: (2x+1) / [(x+1)(x-2)]",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Write: A/(x+1) + B/(x-2)\n\nMultiply both sides by (x+1)(x-2):\nA(x-2) + B(x+1) = 2x+1\n\nx=2: 3B=5 → B=5/3\nx=-1: -3A=-1 → A=1/3"
+    },
+    {
+      "id": 11,
+      "category": "Integrals",
+      "q": "Substitution: ∫ 2x·cos(x²) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Let u = x²,  du = 2x dx\n\n∫ cos(u) du = sin(u) + C\n\n= sin(x²) + C"
+    },
+    {
+      "id": 12,
+      "category": "Integrals",
+      "q": "∫ 1/(1+x²) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "arctan(x) + C\n\nStandard inverse trig result."
+    },
+    {
+      "id": 13,
+      "category": "Integrals",
+      "q": "∫ 1/√(1-x²) dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "arcsin(x) + C\n\nValid for -1 < x < 1."
+    },
+    {
+      "id": 14,
+      "category": "Integrals",
+      "q": "Fundamental Theorem of Calculus",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "∫ₐᵇ f(x) dx = F(b) − F(a)\n\nwhere F'(x) = f(x).\n\nLinks differentiation and integration.\nGives signed area under curve."
+    },
+    {
+      "id": 15,
+      "category": "Odes",
+      "q": "Separation of Variables method",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Rewrite dy/dx = f(x)·g(y) as:\n\ndy/g(y) = f(x) dx\n\nThen integrate both sides separately:\n∫ dy/g(y) = ∫ f(x) dx"
+    },
+    {
+      "id": 16,
+      "category": "Odes",
+      "q": "Solve: dy/dx = 3y",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Separate: dy/y = 3 dx\nIntegrate: ln|y| = 3x + C₀\nSolve: y = Ae^(3x)\n\nwhere A = e^C₀ = arbitrary constant."
+    },
+    {
+      "id": 17,
+      "category": "Odes",
+      "q": "Solve: dy/dx = x/y",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Separate: y dy = x dx\nIntegrate: y²/2 = x²/2 + C\n\nGeneral solution: y² − x² = K\n(family of hyperbolas)"
+    },
+    {
+      "id": 18,
+      "category": "Odes",
+      "q": "1st order linear ODE — standard form",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "dy/dx + P(x)·y = Q(x)\n\nSolution method:\n1. Find integrating factor μ(x) = e^(∫P dx)\n2. Multiply through: d/dx[μy] = μQ\n3. Integrate both sides"
+    },
+    {
+      "id": 19,
+      "category": "Odes",
+      "q": "Integrating factor μ(x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "μ(x) = e^(∫P(x) dx)\n\nMultiplying the ODE by μ makes the left side\na perfect derivative: d/dx[μ(x)·y] = μ(x)·Q(x)"
+    },
+    {
+      "id": 20,
+      "category": "Odes",
+      "q": "Characteristic equation for y'' + py' + qy = 0",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "r² + pr + q = 0\n\nSolve for roots r₁, r₂:\n• 2 distinct real → C₁e^(r₁x) + C₂e^(r₂x)\n• Repeated root  → (C₁+C₂x)e^(rx)\n• Complex α±βi  → e^(αx)[C₁cos(βx)+C₂sin(βx)]"
+    },
+    {
+      "id": 21,
+      "category": "Odes",
+      "q": "Two distinct real roots r₁, r₂",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "y = C₁e^(r₁x) + C₂e^(r₂x)\n\nC₁, C₂ determined by initial conditions.\nThe two exponentials are linearly independent."
+    },
+    {
+      "id": 22,
+      "category": "Odes",
+      "q": "Repeated root r (multiplicity 2)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "y = (C₁ + C₂x)·e^(rx)\n\nThe extra factor of x ensures linear independence\nwhen we only have one root."
+    },
+    {
+      "id": 23,
+      "category": "Odes",
+      "q": "Complex roots r = α ± βi",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "y = e^(αx)[C₁·cos(βx) + C₂·sin(βx)]\n\nEuler's formula: e^(iβx) = cos(βx) + i·sin(βx).\nReal solution uses cos & sin enveloped by e^(αx)."
+    },
+    {
+      "id": 24,
+      "category": "Odes",
+      "q": "Variation of Parameters formula (y_p)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "y_p = y₁·∫(−y₂·g / W) dx  +  y₂·∫(y₁·g / W) dx\n\nwhere W = Wronskian of y₁, y₂\ng(x) = right-hand side of non-hom. ODE"
+    },
+    {
+      "id": 25,
+      "category": "Odes",
+      "q": "Wronskian W(y₁, y₂)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "W = y₁y₂' − y₂y₁'\n\nIf W ≠ 0 on interval → y₁, y₂ are\nlinearly independent → valid fundamental set."
+    },
+    {
+      "id": 26,
+      "category": "Odes",
+      "q": "Non-homogeneous ODE — general solution",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "y = y_h + y_p\n\ny_h = homogeneous (complementary) solution\ny_p = particular solution\n\nSuperposition principle."
+    },
+    {
+      "id": 27,
+      "category": "Multivariable",
+      "q": "Partial derivative ∂f/∂x",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Differentiate f(x,y,...) with respect to x,\nTREATING all other variables (y, z, ...) as constants.\n\nExample: f=x²y³ → ∂f/∂x = 2xy³"
+    },
+    {
+      "id": 28,
+      "category": "Multivariable",
+      "q": "Gradient ∇f  (2 variables)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "∇f = (∂f/∂x,  ∂f/∂y)\n\nPoints in direction of steepest ascent.\n|∇f| = magnitude of steepest slope.\n∇f ⊥ level curves."
+    },
+    {
+      "id": 29,
+      "category": "Multivariable",
+      "q": "Critical point conditions",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "∂f/∂x = 0  AND  ∂f/∂y = 0  simultaneously.\n\nSolve the system of equations to find\ncritical points (x₀, y₀)."
+    },
+    {
+      "id": 30,
+      "category": "Multivariable",
+      "q": "Hessian determinant D",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "D = f_xx·f_yy − (f_xy)²\n\nD > 0, f_xx > 0  →  Local MINIMUM\nD > 0, f_xx < 0  →  Local MAXIMUM\nD < 0             →  SADDLE POINT\nD = 0             →  Inconclusive"
+    },
+    {
+      "id": 31,
+      "category": "Multivariable",
+      "q": "Chain rule for z=f(x,y), x=x(t), y=y(t)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt)\n\nSum of partial derivatives times rates of change.\nChain rule extends naturally to more variables."
+    },
+    {
+      "id": 32,
+      "category": "Multivariable",
+      "q": "Clairaut's Theorem (mixed partials)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "If f_xy and f_yx are continuous at (a,b), then:\n\nf_xy(a,b) = f_yx(a,b)\n\nOrder of differentiation doesn't matter."
+    },
+    {
+      "id": 33,
+      "category": "Multivariable",
+      "q": "Find critical points of f(x,y) = x² + y² − 2x",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "f_x = 2x − 2 = 0  →  x = 1\nf_y = 2y = 0       →  y = 0\nCritical point: (1, 0)\n\nD = (2)(2) − 0² = 4 > 0, f_xx=2 > 0\n→ LOCAL MINIMUM at (1,0)."
+    },
+    {
+      "id": 34,
+      "category": "Multivariable",
+      "q": "Directional derivative formula",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "D_u f = ∇f · u\n\nwhere u is a unit vector (|u|=1).\n\nMeasures rate of change of f in direction u.\nMaximum rate = |∇f| in direction of ∇f."
+    },
+    {
+      "id": 35,
+      "category": "Multivariable",
+      "q": "Level curves of f(x,y)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Curves f(x,y) = c (constant) in xy-plane.\n\n∇f is always perpendicular to level curves.\nClosely-spaced curves → steep gradient."
+    },
+    {
+      "id": 36,
+      "category": "Multivariable",
+      "q": "Second-order test: D > 0 and f_xx < 0",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "LOCAL MAXIMUM at that critical point.\n\nThe surface is concave DOWN in all directions\n(like an upside-down bowl)."
+    },
+    {
+      "id": 37,
+      "category": "Series",
+      "q": "Taylor series formula (centered at a)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "f(x) = Σ_{n=0}^∞  f⁽ⁿ⁾(a)/n! · (x−a)ⁿ\n\n= f(a) + f'(a)(x-a) + f''(a)(x-a)²/2! + ..."
+    },
+    {
+      "id": 38,
+      "category": "Series",
+      "q": "Maclaurin series for eˣ",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "eˣ = Σ_{n=0}^∞  xⁿ/n!\n\n= 1 + x + x²/2! + x³/3! + x⁴/4! + ...\n\nConverges for ALL x (radius R = ∞)."
+    },
+    {
+      "id": 39,
+      "category": "Series",
+      "q": "Maclaurin series for sin(x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "sin(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n+1)/(2n+1)!\n\n= x − x³/3! + x⁵/5! − x⁷/7! + ...\n\nOnly odd powers. R = ∞."
+    },
+    {
+      "id": 40,
+      "category": "Series",
+      "q": "Maclaurin series for cos(x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "cos(x) = Σ_{n=0}^∞  (-1)ⁿ·x^(2n)/(2n)!\n\n= 1 − x²/2! + x⁴/4! − x⁶/6! + ...\n\nOnly even powers. R = ∞."
+    },
+    {
+      "id": 41,
+      "category": "Series",
+      "q": "Maclaurin series for ln(1+x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "ln(1+x) = Σ_{n=1}^∞  (-1)^(n+1)·xⁿ/n\n\n= x − x²/2 + x³/3 − x⁴/4 + ...\n\nConverges for -1 < x ≤ 1."
+    },
+    {
+      "id": 42,
+      "category": "Series",
+      "q": "Ratio Test for series Σaₙ",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "L = lim_{n→∞} |a_{n+1}/a_n|\n\nL < 1  →  Converges ABSOLUTELY\nL > 1  →  DIVERGES\nL = 1  →  INCONCLUSIVE\n\nBest for factorials or exponentials."
+    },
+    {
+      "id": 43,
+      "category": "Series",
+      "q": "Root Test for series Σaₙ",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "L = lim_{n→∞} (|aₙ|)^(1/n)\n\nL < 1  →  Converges\nL > 1  →  Diverges\nL = 1  →  Inconclusive\n\nBest when aₙ = [g(n)]ⁿ."
+    },
+    {
+      "id": 44,
+      "category": "Series",
+      "q": "Geometric series Σ arⁿ  (n=0 to ∞)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Converges to  a/(1−r)  if |r| < 1\n\nDiverges if |r| ≥ 1\n\nPartial sum S_n = a(1−rⁿ)/(1−r)"
+    },
+    {
+      "id": 45,
+      "category": "Series",
+      "q": "Comparison Test",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "If 0 ≤ aₙ ≤ bₙ for all n:\n• Σbₙ converges  →  Σaₙ converges\n• Σaₙ diverges   →  Σbₙ diverges\n\nCompare to known series (geometric, p-series)."
+    },
+    {
+      "id": 46,
+      "category": "Series",
+      "q": "Alternating Series Test (Leibniz)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Σ(-1)ⁿ·aₙ converges if:\n1. aₙ > 0\n2. aₙ decreases monotonically\n3. lim aₙ = 0\n\nError ≤ first omitted term."
+    },
+    {
+      "id": 47,
+      "category": "Series",
+      "q": "p-series:  Σ 1/nᵖ  (n=1 to ∞)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Converges if p > 1\nDiverges  if p ≤ 1\n\nExamples:\nΣ 1/n² → converges (p=2 > 1)\nΣ 1/n  → diverges (harmonic, p=1)"
+    },
+    {
+      "id": 48,
+      "category": "Series",
+      "q": "Radius of convergence R",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "R = 1 / limsup_{n→∞} |aₙ|^(1/n)\n\nOr via Ratio Test: R = lim|aₙ/a_{n+1}|\n\nSeries Σaₙ(x−a)ⁿ converges for |x−a| < R.\nCheck endpoints separately!"
+    },
+    {
+      "id": 49,
+      "category": "Applications",
+      "q": "Area between two curves y=f(x) and y=g(x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "A = ∫_a^b |f(x) − g(x)| dx\n\nf(x) must be the UPPER curve.\nFind intersection points for limits a, b."
+    },
+    {
+      "id": 50,
+      "category": "Applications",
+      "q": "Volume by disk method (rotation about x-axis)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "V = π ∫_a^b [f(x)]² dx\n\nImagine stacking infinitely thin circular disks.\nEach disk has radius = f(x) and thickness dx."
+    },
+    {
+      "id": 51,
+      "category": "Applications",
+      "q": "Volume by washer method (hollow solid)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "V = π ∫_a^b ([R(x)]² − [r(x)]²) dx\n\nR(x) = outer radius,  r(x) = inner radius.\nWasher = disk with a hole."
+    },
+    {
+      "id": 52,
+      "category": "Applications",
+      "q": "Volume by shell method (rotation about y-axis)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "V = 2π ∫_a^b x·f(x) dx\n\nShell circumference = 2πx\nShell height = f(x)\nShell thickness = dx"
+    },
+    {
+      "id": 53,
+      "category": "Applications",
+      "q": "Arc length formula",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "L = ∫_a^b √(1 + [f'(x)]²) dx\n\nDerive via Pythagoras: ds = √(dx²+dy²)\nds = √(1+(dy/dx)²) dx"
+    },
+    {
+      "id": 54,
+      "category": "Applications",
+      "q": "Surface area of revolution (about x-axis)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "S = 2π ∫_a^b f(x)·√(1 + [f'(x)]²) dx\n\nCircumference 2πf(x) times arc length element ds."
+    },
+    {
+      "id": 55,
+      "category": "Applications",
+      "q": "Average value of f on [a, b]",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "f_avg = 1/(b−a) · ∫_a^b f(x) dx\n\nMean Value Theorem for Integrals:\n∃ c ∈ [a,b] such that f(c) = f_avg."
+    },
+    {
+      "id": 56,
+      "category": "Applications",
+      "q": "Work done by variable force F(x)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "W = ∫_a^b F(x) dx\n\nUnits: Joules (if F in Newtons, x in metres).\nExample: Hooke's Law F = kx → W = kx²/2 |_a^b"
+    },
+    {
+      "id": 57,
+      "category": "Applications",
+      "q": "Improper integral  ∫₁^∞ 1/xᵖ dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "= lim_{t→∞} ∫₁^t x^{-p} dx\n\n= [x^{1-p}/(1-p)]₁^∞  (p≠1)\n\nConverges to 1/(p−1)  if p > 1\nDiverges                if p ≤ 1"
+    },
+    {
+      "id": 58,
+      "category": "Applications",
+      "q": "Evaluate  ∫₀² x² dx",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "Antiderivative: F(x) = x³/3\n\n∫₀² x² dx = F(2) − F(0)\n= 8/3 − 0\n= 8/3 ≈ 2.6667"
+    },
+    {
+      "id": 59,
+      "category": "Integrals",
+      "q": "∫ aˣ dx  (a > 0, a ≠ 1)",
+      "desc": "Solve or define the following mathematical concept.",
+      "ans": "aˣ / ln(a) + C\n\nDerived from d/dx[aˣ] = aˣ·ln(a).\nNote: when a=e, ln(e)=1, giving eˣ + C."
+    }
+  ],
+  "stats": [
+    {
+      "id": 1,
+      "category": "Descriptive",
+      "q": "Best Graph for Group Comparisons",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "<strong>Boxplot</strong>. Highly useful for comparing the distribution of a numerical variable across different categorical groups."
+    },
+    {
+      "id": 2,
+      "category": "Descriptive",
+      "q": "Range Calculation & Limitation",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Formula: <code>Range = Max - Min</code>. Disadvantage: It is <strong>easily influenced by outliers</strong> (not robust) and ignores all middle data points."
+    },
+    {
+      "id": 3,
+      "category": "Descriptive",
+      "q": "Quartile Definitions",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Q1</strong>: The median of the lower half of the sorted data (25th percentile).<br>• <strong>Q3</strong>: The median of the upper half of the sorted data (75th percentile).<br>• <strong>IQR</strong>: Interquartile Range = <code>Q3 - Q1</code>."
+    },
+    {
+      "id": 4,
+      "category": "Descriptive",
+      "q": "Linear Parameter Scale Changes",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "If each data point in a dataset is multiplied by a constant C, the new mean is <code>C × Old Mean</code>, and the new Standard Deviation is <code>C × Old SD</code>. Example: multiply by 3 gives Mean = 150, SD = 30."
+    },
+    {
+      "id": 5,
+      "category": "Descriptive",
+      "q": "Qualitative vs Quantitative Data",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Qualitative (Categorical)</strong>: Colors, names, yes/no responses.<br>• <strong>Quantitative (Numerical)</strong>: Heights, temperatures, salaries."
+    },
+    {
+      "id": 6,
+      "category": "Descriptive",
+      "q": "Continuous vs Discrete Variables",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Continuous</strong>: Can take any real value in an interval (e.g., Temperature, Height).<br>• <strong>Discrete</strong>: Countable values only (e.g., number of applicants, population of a state)."
+    },
+    {
+      "id": 7,
+      "category": "Descriptive",
+      "q": "Variable Skewness",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Right-skewed</strong>: Tail extends to the right (Mean > Median). Common in housing prices, incomes.<br>• <strong>Left-skewed</strong>: Tail extends to the left (Mean < Median).<br>• <strong>Symmetric</strong>: Tail is balanced (Mean ≈ Median)."
+    },
+    {
+      "id": 8,
+      "category": "Descriptive",
+      "q": "Symmetric Z-score of Median",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "For a symmetric distribution, the Z-score for the median is approximately <strong>0</strong>. For left-skewed, it is typically negative."
+    },
+    {
+      "id": 9,
+      "category": "Descriptive",
+      "q": "Mode definition",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "The **most common value** in a variable. It is appropriate for all scales of measurement (nominal, ordinal, interval, ratio)."
+    },
+    {
+      "id": 10,
+      "category": "Descriptive",
+      "q": "Relative Frequency calculation",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "To convert frequency to relative frequency, <strong>divide the frequency by the total sample size (n)</strong>."
+    },
+    {
+      "id": 11,
+      "category": "Probability",
+      "q": "Law of Large Numbers (LLN)",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "As the number of trials increases, the sample proportion of an outcome converges to the **theoretical probability** (e.g. coin flips)."
+    },
+    {
+      "id": 12,
+      "category": "Probability",
+      "q": "Sample Space",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "The set of <strong>all possible outcomes</strong> of a probability experiment."
+    },
+    {
+      "id": 13,
+      "category": "Probability",
+      "q": "At least one success formula",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "To find probability of at least one success in n independent trials: <code>P(at least one) = 1 - P(no successes) = 1 - (1 - p)ⁿ</code>. Example: 3 coin flips gives 7/8."
+    },
+    {
+      "id": 14,
+      "category": "Probability",
+      "q": "Mutually Exclusive vs Independent",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "If two events are mutually exclusive (cannot happen together), they **cannot be independent** (if A happens, P(B) becomes 0)."
+    },
+    {
+      "id": 15,
+      "category": "Distributions",
+      "q": "Standard Normal Percentile Z = 0.675",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "The Z-score corresponding to the <strong>75th percentile</strong> of the Standard Normal variable is <code>0.675</code>."
+    },
+    {
+      "id": 16,
+      "category": "Distributions",
+      "q": "Normal Probability Plot",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "A normal probability plot of a nearly normal sample should show a <strong>fairly straight line</strong>. Curved lines indicate skewness."
+    },
+    {
+      "id": 17,
+      "category": "Distributions",
+      "q": "Unusual Data Z-score rule",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "An observation is considered unusual if its Z-score is <strong>beyond ±3 standard deviations</strong> from the mean (Z-score calculation: <code>Z = (x - μ)/σ</code>)."
+    },
+    {
+      "id": 18,
+      "category": "Distributions",
+      "q": "Binomial Distribution criteria",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Requires: 1. Fixed number of trials (n).<br>2. Independent trials.<br>3. Only two outcomes (success/failure).<br>4. Constant success probability (p)."
+    },
+    {
+      "id": 19,
+      "category": "Distributions",
+      "q": "Standard Z Critical values",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• 90% Confidence: **1.645**<br>• 95% Confidence: **1.96**<br>• 98% Confidence: **2.33**<br>• 99% Confidence: **2.576**"
+    },
+    {
+      "id": 20,
+      "category": "Hypothesis",
+      "q": "p-value interpretation",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "A p-value measures the probability of obtaining data as extreme as observed assuming H₀ is true. A small p-value (e.g., 0.003) means **the data are inconsistent with H₀** (reject H₀)."
+    },
+    {
+      "id": 21,
+      "category": "Hypothesis",
+      "q": "Type I vs Type II errors",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Type I</strong>: Rejecting a true H₀ (False Positive, alpha).<br>• <strong>Type II</strong>: Failing to reject a false H₀ (False Negative, beta)."
+    },
+    {
+      "id": 22,
+      "category": "Hypothesis",
+      "q": "One-tailed vs Two-tailed tests",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Use **one-tailed** when you have a specific directional hypothesis in advance. Use **two-tailed** when you test for any difference."
+    },
+    {
+      "id": 23,
+      "category": "Hypothesis",
+      "q": "Independent vs Paired t-test",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "• <strong>Independent</strong>: Compares two unrelated groups (e.g., employees of Branch A vs Branch B).<br>• <strong>Paired</strong>: Compares related measurements on same subjects (e.g., pre- and post-training)."
+    },
+    {
+      "id": 24,
+      "category": "Hypothesis",
+      "q": "One-way ANOVA purpose",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Used to <strong>compare the means of three or more independent groups</strong> to see if at least one differs."
+    },
+    {
+      "id": 25,
+      "category": "Hypothesis",
+      "q": "ANOVA eta-squared (η²)",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Represents the **proportion of variation in the dependent variable** explained by the categorical independent variable (ranges from 0 to 1)."
+    },
+    {
+      "id": 26,
+      "category": "Hypothesis",
+      "q": "Within-groups variation (W)",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Represents the variation in the dependent variable due to **chance or random fluctuations** (residual variance)."
+    },
+    {
+      "id": 27,
+      "category": "Hypothesis",
+      "q": "Between-groups variation (B)",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Represents the variation in the dependent variable due to the **factor/group differences**. If B is much larger than W, reject H₀."
+    },
+    {
+      "id": 28,
+      "category": "Hypothesis",
+      "q": "ANOVA required conditions",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "1. Normality within groups.<br>2. Independence of observations.<br>3. Homoscedasticity (equal variances). (Note: equal group means is NOT an assumption!)."
+    },
+    {
+      "id": 29,
+      "category": "Hypothesis",
+      "q": "t-test and ANOVA equivalence",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "For two independent groups, a one-way ANOVA F-test and a two-sample t-test yield the <strong>exact same p-value</strong>, with <code>F = t²</code>."
+    },
+    {
+      "id": 30,
+      "category": "Regression",
+      "q": "Confidence Interval Width",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "Increasing the confidence level **increases the width** of the interval. Increasing sample size **decreases the width**."
+    },
+    {
+      "id": 31,
+      "category": "Descriptive",
+      "q": "Standard Deviation Approximation",
+      "desc": "Explain or define the following statistical concept.",
+      "ans": "A standard rule of thumb for standard deviation approximation: <strong>Approximate SD ≈ Range / 6</strong>. Example: range = 90 gives SD ≈ 15."
+    }
   ]
 }

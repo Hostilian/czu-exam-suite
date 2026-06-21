@@ -28,6 +28,8 @@
       --glow-cyan: rgba(34, 211, 238, 0.25);
       --radius: 20px;
       --radius-sm: 12px;
+      --yellow: #eab308;
+      --blue: #3b82f6;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -115,6 +117,12 @@
     .hub-card.card-is::before { background: linear-gradient(90deg, var(--purple), transparent); }
     .hub-card.card-markup::before { background: linear-gradient(90deg, var(--orange), transparent); }
     .hub-card.card-orsa::before { background: linear-gradient(90deg, var(--green), transparent); }
+    .hub-card.card-math::before { background: linear-gradient(90deg, var(--yellow), transparent); }
+    .hub-card.card-stats::before { background: linear-gradient(90deg, var(--blue), transparent); }
+    .card-math .card-icon { background: rgba(234, 179, 8, 0.1); color: var(--yellow); }
+    .card-stats .card-icon { background: rgba(59, 130, 246, 0.1); color: var(--blue); }
+    .card-math .btn-primary:hover { background: var(--yellow); color: #000; box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
+    .card-stats .btn-primary:hover { background: var(--blue); color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
     
     .card-header {
       display: flex; align-items: center; gap: 1rem;
@@ -304,6 +312,8 @@
     .subj-badge.is { background: rgba(168, 85, 247, 0.15); color: var(--purple); }
     .subj-badge.markup { background: rgba(249, 115, 22, 0.15); color: var(--orange); }
     .subj-badge.orsa { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+    .subj-badge.math { background: rgba(234, 179, 8, 0.15); color: var(--yellow); }
+    .subj-badge.stats { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
     
     .cat-badge {
       font-size: 0.72rem;
@@ -479,6 +489,8 @@
             <option value="markup">🌐 Markup Languages</option>
             <option value="is">📊 Information Systems</option>
             <option value="orsa">📈 Operations Research</option>
+            <option value="math">📐 Mathematics</option>
+            <option value="stats">📊 Statistics</option>
           </select>
         </div>
         <div class="control-group">
@@ -642,6 +654,56 @@
           <a href="ORSA_EXAM_SUITE/anki_decks/ORSA_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
         </div>
       </div>
+      <!-- MATH CARD -->
+      <div class="hub-card card-math">
+        <div class="card-header">
+          <div class="card-icon">📐</div>
+          <div class="card-title-group">
+            <span class="card-subject">Mathematics</span>
+            <span class="card-code">EAE57E Exam Prep</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Interactive mathematical dashboard covering integrals, derivatives, matrix systems, differential equations, and active recall cram cards.
+          <div class="card-topics">
+            <span class="topic-pill">Integrals</span>
+            <span class="topic-pill">Matrices</span>
+            <span class="topic-pill">Diff Equations</span>
+            <span class="topic-pill">Limits</span>
+            <span class="topic-pill">Cram Decks</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="MATH_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="MATH_EXAM_SUITE/anki_decks/math_exam_cards.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
+      <!-- STATS CARD -->
+      <div class="hub-card card-stats">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <div class="card-title-group">
+            <span class="card-subject">Statistics</span>
+            <span class="card-code">ESE48E Exam Prep</span>
+          </div>
+        </div>
+        <div class="card-body">
+          Statistical analysis and study suites covering descriptive statistics, probability theory, hypothesis testing, ANOVA, and regression.
+          <div class="card-topics">
+            <span class="topic-pill">Descriptive</span>
+            <span class="topic-pill">Probability</span>
+            <span class="topic-pill">Testing</span>
+            <span class="topic-pill">ANOVA</span>
+            <span class="topic-pill">Regression</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a href="STATS_EXAM_SUITE/index.html" class="btn-primary">Open Study Tool ➔</a>
+          <a href="STATS_EXAM_SUITE/anki_decks/stats_exam_suite_cards.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        </div>
+      </div>
+
 
     </div>
   </main>
@@ -756,7 +818,7 @@
         }
       } else {
         // Sort by subject first, then id
-        const order = { os: 1, markup: 2, is: 3, orsa: 4 };
+        const order = { os: 1, markup: 2, is: 3, orsa: 4, math: 5, stats: 6 };
         rawList.sort((a, b) => {
           if (a.subject !== b.subject) {
             return (order[a.subject] || 99) - (order[b.subject] || 99);
