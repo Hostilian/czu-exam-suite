@@ -38,6 +38,18 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.blur-reveal {
+  filter: blur(5px);
+  background-color: rgba(244, 63, 94, 0.15); /* pink accent */
+  border-radius: 4px;
+  padding: 0 4px;
+  cursor: pointer;
+  transition: filter 0.2s ease, background-color 0.2s ease;
+}
+.blur-reveal:hover, .blur-reveal.revealed {
+  filter: blur(0);
+  background-color: transparent;
+}
 
 /* ═══ ANIMATED BG ═══ */
 .bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -314,7 +326,8 @@ header{position:sticky;top:0;z-index:200;background:rgba(3,6,16,.9);backdrop-fil
     <button class="pill" onclick="goTo('match')">🎯 Match</button>
     <button class="pill" onclick="goTo('checklist')">✅ Checklist</button>
   </nav>
-  <div class="timer-box">
+  <button class="pill" id="reveal-all-btn" onclick="toggleRevealAll()" style="background: rgba(244,63,94,0.12); color: #f43f5e; border: 1px solid rgba(244,63,94,0.22); font-weight:700; margin-right: 8px;">👁️ Reveal Answers</button>
+    <div class="timer-box">
     <span style="font-size:.9rem">⏱️</span>
     <div><div id="timer">02:00:00</div><div class="timer-label">Study Timer</div></div>
   </div>
@@ -433,6 +446,33 @@ header{position:sticky;top:0;z-index:200;background:rgba(3,6,16,.9);backdrop-fil
   <div class="section-title">🎧 Audio Memorization</div>
   <div class="section-sub">All key exam facts read aloud — uses your browser's text-to-speech. Works on phone! Lock screen = audio keeps playing.</div>
 
+    <!-- High-Quality Audio Podcast Guide Variations -->
+  <div class="glass-panel" style="margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.2); border-radius: var(--radius); position: relative; z-index: 1;">
+    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+      <div style="font-size: 2rem; flex-shrink: 0;">🎙️</div>
+      <div style="flex: 1; min-width: 250px;">
+        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">Full OSCN Audio Guide (Podcast)</h3>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.75rem;">Download or listen to the pre-recorded audio guide. 100% reliable for locked screen listening on your phone. Select your voice:</p>
+        
+        <div style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <label for="oscn-audio-voice" style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">Voice: </label>
+          <select id="oscn-audio-voice" onchange="changeOSCNAudioVoice()" style="background: var(--surface2); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer;">
+            <option value="oscn_audio_guide_us_male.mp3" selected>🇺🇸 US Male Voice (Steffan)</option>
+            <option value="oscn_audio_guide_us_female.mp3">🇺🇸 US Female Voice (Jenny)</option>
+            <option value="oscn_audio_guide_uk_male.mp3">🇬🇧 UK Male Voice (Ryan)</option>
+            <option value="oscn_audio_guide_uk_female.mp3">🇬🇧 UK Female Voice (Sonia)</option>
+          </select>
+        </div>
+
+        <audio id="oscn-audio-player" controls preload="none" style="width: 100%; max-width: 400px; outline: none;">
+          <source id="oscn-audio-source" src="oscn_audio_guide_us_male.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      <a id="oscn-audio-download" href="oscn_audio_guide_us_male.mp3" download class="audio-btn abtn-play" style="text-decoration: none; font-weight: 600; min-width: 150px; text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 38px;">⬇️ Download MP3</a>
+    </div>
+  </div>
+
   <div class="audio-panel">
     <div class="audio-title">🔊 20 Auto-Read Tracks</div>
     <div class="audio-sub">Press ▶ Play All to start — all 20 topics read continuously. Tap any track to jump to it.</div>
@@ -459,12 +499,12 @@ header{position:sticky;top:0;z-index:200;background:rgba(3,6,16,.9);backdrop-fil
   <div class="grid">
     <div class="card">
       <div class="card-h"><div class="card-icon ic">🖥️</div><div><div class="card-title">OS Core Facts</div></div></div>
-      <div class="kp kp-c"><div class="kp-dot"></div><div><b>OS controls:</b> CPU time + Operating memory (RAM)</div></div>
-      <div class="kp kp-o"><div class="kp-dot"></div><div><b>NOT OS function:</b> Defragmentation (disk utility)</div></div>
-      <div class="kp kp-c"><div class="kp-dot"></div><div><b>OS built with:</b> C, C++, C#, Assembly language</div></div>
-      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Linux:</b> Open-source OS kernel by Torvalds, 1991, NOT from Unix</div></div>
-      <div class="kp kp-g"><div class="kp-dot"></div><div><b>BIOS:</b> In EEPROM or NAND flash memory on motherboard</div></div>
-      <div class="kp kp-o"><div class="kp-dot"></div><div><b>FAT16 max:</b> 4 GB (16-bit cluster addressing limit)</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>OS controls:</b> <span class="blur-reveal">CPU time + Operating memory (RAM)</span></div></div>
+      <div class="kp kp-o"><div class="kp-dot"></div><div><b>NOT OS function:</b> <span class="blur-reveal">Defragmentation</span> (disk utility)</div></div>
+      <div class="kp kp-c"><div class="kp-dot"></div><div><b>OS built with:</b> <span class="blur-reveal">C, C++, C#, Assembly language</span></div></div>
+      <div class="kp kp-v"><div class="kp-dot"></div><div><b>Linux:</b> <span class="blur-reveal">Open-source OS kernel</span> by Torvalds, <span class="blur-reveal">1991</span>, NOT from Unix</div></div>
+      <div class="kp kp-g"><div class="kp-dot"></div><div><b>BIOS:</b> In <span class="blur-reveal">EEPROM or NAND flash</span> memory on motherboard</div></div>
+      <div class="kp kp-o"><div class="kp-dot"></div><div><b>FAT16 max:</b> <span class="blur-reveal">4 GB</span> (<span class="blur-reveal">16-bit</span> cluster addressing limit)</div></div>
     </div>
     <div class="card">
       <div class="card-h"><div class="card-icon io">💾</div><div><div class="card-title">Virtual Memory</div></div></div>
@@ -1276,6 +1316,51 @@ document.addEventListener('keydown', e => {
 
 renderCard();
 updateFcStats();
+
+// ══════════════════════════════════════════════════════════
+// MULTI-VOICE AND BLUR-REVEAL JS HANDLERS
+// ══════════════════════════════════════════════════════════
+let revealState = false;
+function toggleRevealAll() {
+  revealState = !revealState;
+  document.querySelectorAll('.blur-reveal').forEach(el => {
+    if (revealState) el.classList.add('revealed');
+    else el.classList.remove('revealed');
+  });
+  document.getElementById('reveal-all-btn').textContent = revealState ? '🙈 Hide Answers' : '👁️ Reveal Answers';
+}
+
+function changeOSCNAudioVoice() {
+  const select = document.getElementById('oscn-audio-voice');
+  const player = document.getElementById('oscn-audio-player');
+  const source = document.getElementById('oscn-audio-source');
+  const download = document.getElementById('oscn-audio-download');
+  
+  const val = select.value;
+  source.src = val;
+  download.href = val;
+  player.load();
+}
+
+// Support visibility change lock
+let oscnWakeLock = null;
+async function requestOSCNWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      oscnWakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch (err) {}
+}
+function releaseOSCNWakeLock() {
+  if (oscnWakeLock !== null) {
+    oscnWakeLock.release();
+    oscnWakeLock = null;
+  }
+}
+document.getElementById('oscn-audio-player')?.addEventListener('play', requestOSCNWakeLock);
+document.getElementById('oscn-audio-player')?.addEventListener('pause', releaseOSCNWakeLock);
+document.getElementById('oscn-audio-player')?.addEventListener('ended', releaseOSCNWakeLock);
+
 
 // ══════════════════════════════════════════════════════════
 // AUDIO TTS — 20 TRACKS
