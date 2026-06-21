@@ -2244,16 +2244,41 @@
         <div class="glass-panel" style="margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
           <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
             <div style="font-size: 2rem; flex-shrink: 0;">🎧</div>
-            <div style="flex: 1;">
+            <div style="flex: 1; min-width: 250px;">
               <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">Full Audio Guide (Podcast)</h3>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Listen to all the cards clearly together. Great for locking your screen and listening on the go.</p>
-              <audio controls preload="none" style="width: 100%; max-width: 400px; outline: none; border-radius: 99px;">
-                <source src="markup_audio_guide.mp3" type="audio/mpeg">
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">Listen to all the cards clearly together. Select your preferred voice variation below:</p>
+              
+              <div style="margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <label for="markup-audio-voice" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Voice: </label>
+                <select id="markup-audio-voice" onchange="changeMarkupAudioVoice()" style="background: #111520; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; outline: none; cursor: pointer;">
+                  <option value="markup_audio_guide_us_male.mp3" selected>🇺🇸 US Male Voice (Steffan)</option>
+                  <option value="markup_audio_guide_us_female.mp3">🇺🇸 US Female Voice (Jenny)</option>
+                  <option value="markup_audio_guide_uk_male.mp3">🇬🇧 UK Male Voice (Ryan)</option>
+                  <option value="markup_audio_guide_uk_female.mp3">🇬🇧 UK Female Voice (Sonia)</option>
+                </select>
+              </div>
+
+              <audio id="markup-audio-player" controls preload="none" style="width: 100%; max-width: 400px; outline: none; border-radius: 99px;">
+                <source id="markup-audio-source" src="markup_audio_guide_us_male.mp3" type="audio/mpeg">
                 Your browser does not support the audio element.
               </audio>
             </div>
-            <a href="markup_audio_guide.mp3" download class="fc-btn review-btn" style="background: rgba(16, 185, 129, 0.15); color: var(--accent2); border-color: var(--accent2); text-decoration: none; font-weight: 600;">⬇️ Download MP3</a>
+            <a id="markup-audio-download" href="markup_audio_guide_us_male.mp3" download class="fc-btn review-btn" style="background: rgba(16, 185, 129, 0.15); color: var(--accent2); border-color: var(--accent2); text-decoration: none; font-weight: 600; min-width: 150px; text-align: center;">⬇️ Download MP3</a>
           </div>
+          <script>
+            function changeMarkupAudioVoice() {
+              const select = document.getElementById('markup-audio-voice');
+              const player = document.getElementById('markup-audio-player');
+              const source = document.getElementById('markup-audio-source');
+              const download = document.getElementById('markup-audio-download');
+              
+              const val = select.value;
+              source.src = val;
+              download.href = val;
+              
+              player.load();
+            }
+          </script>
         </div>
 
         <div class="memorize-grid">
