@@ -1434,6 +1434,14 @@ function stopTTS() {
 }
 
 // ========== INIT ==========
+function handleHash() {
+  const hash = window.location.hash.substring(1);
+  if (['memorize', 'practice', 'recall', 'voice', 'youtube'].includes(hash)) {
+    switchMainTab(hash);
+  }
+}
+window.addEventListener('hashchange', handleHash);
+
 document.addEventListener('DOMContentLoaded', () => {
   buildAcronymGrid();
   renderDrill(0);
@@ -1444,6 +1452,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open first topic by default
   const first = document.querySelector('.topic-item');
   if (first) first.classList.add('open');
+  // Handle initial hash routing
+  handleHash();
 });
 </script>
 </body>
