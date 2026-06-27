@@ -506,6 +506,167 @@
       border-radius: 10px;
       transition: width 0.3s ease;
     }
+
+    /* --- SUBJECT FOCUS CONTROL & STUDY PLANNER --- */
+    .focus-control-card {
+      background: rgba(13, 16, 26, 0.65);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(6, 8, 16, 0.4);
+    }
+    .focus-control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .focus-control-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .focus-btn-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .focus-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .focus-btn:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .focus-btn.active {
+      background: linear-gradient(135deg, var(--cyan), var(--cyan-dim));
+      border-color: transparent;
+      color: #000;
+      box-shadow: 0 0 12px var(--glow-cyan);
+    }
+    .show-completed-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+    }
+    .show-completed-wrapper input {
+      cursor: pointer;
+    }
+
+    /* Learning Pathway Planner Grid */
+    .pathway-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.5rem;
+    }
+    .pathway-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .pathway-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .pathway-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .pathway-card {
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .pathway-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
+      box-shadow: 0 4px 12px rgba(34, 211, 238, 0.05);
+    }
+    .pathway-tag {
+      align-self: flex-start;
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .pathway-tag.high-yield {
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      color: #fdba74;
+    }
+    .pathway-tag.comprehensive {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: #d8b4fe;
+    }
+    .pathway-tag.interactive {
+      background: rgba(34, 211, 238, 0.15);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      color: #99f6e4;
+    }
+    .pathway-tag.offline {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #a7f3d0;
+    }
+    .pathway-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .pathway-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.35;
+    }
+    .pathway-link {
+      margin-top: auto;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-top: 0.5rem;
+    }
+    .pathway-link:hover {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -599,6 +760,35 @@
         <div class="player-progress-bar" id="player-progress-bar"></div>
       </div>
     </section>
+
+    <!-- 🎯 SUBJECT FOCUS & STUDY PLANNER PANEL -->
+    <section class="focus-control-card">
+      <div class="focus-control-header">
+        <div class="focus-control-title">
+          <span>🎯</span> Subject Active Focus
+        </div>
+        <div class="show-completed-wrapper" onclick="toggleShowPassedSubjects()">
+          <input type="checkbox" id="show-passed-chk" onchange="toggleShowPassedSubjects(true)" />
+          <label for="show-passed-chk" style="cursor: pointer;">Show Passed/Completed Subjects (OS, Markup, etc.)</label>
+        </div>
+      </div>
+
+      <div class="focus-btn-group">
+        <button class="focus-btn active" id="fbtn-is" onclick="setFocusedSubject('is')">📊 Information Systems</button>
+        <button class="focus-btn" id="fbtn-os" onclick="setFocusedSubject('os')">🖥️ Operating Systems</button>
+        <button class="focus-btn" id="fbtn-markup" onclick="setFocusedSubject('markup')">🌐 Markup Languages</button>
+        <button class="focus-btn" id="fbtn-orsa" onclick="setFocusedSubject('orsa')">📈 Operations Research</button>
+        <button class="focus-btn" id="fbtn-math" onclick="setFocusedSubject('math')">📐 Mathematics</button>
+        <button class="focus-btn" id="fbtn-stats" onclick="setFocusedSubject('stats')">📊 Statistics</button>
+        <button class="focus-btn" id="fbtn-all" onclick="setFocusedSubject('all')">✨ Show All</button>
+      </div>
+
+      <div class="pathway-title" id="pathway-section-title">📚 Study Pathways for Information Systems</div>
+      <div class="pathway-grid" id="pathway-cards-grid">
+        <!-- Rendered dynamically by javascript -->
+      </div>
+    </section>
+
     <div class="grid-container">
       
       <!-- OS CARD -->
@@ -1079,8 +1269,159 @@
       }
     }
 
+    // Subject focus state management
+    let focusedSubject = 'is';
+    let showPassedSubjects = false;
+
+    const SUBJECT_PATHWAYS = {
+      is: [
+        { name: "2-Hour Rapid Blitz Guide", tag: "high-yield", desc: "Short on time? Review core high-yield exam concepts and acronyms (SINV).", url: "IS_EXAM_SUITE/EXAM_BLITZ_2HR.html", linkText: "Open Blitz Guide" },
+        { name: "Comprehensive Master Reference", tag: "comprehensive", desc: "Deep dive study companion containing full explanations, categories, and definitions.", url: "IS_EXAM_SUITE/EXAM_MASTER_2H.html", linkText: "Open Master Reference" },
+        { name: "Interactive Study Playground", tag: "interactive", desc: "Test yourself with IS type classifiers, P2P SAP process matchers, and practice quizzes.", url: "IS_EXAM_SUITE/index.html", linkText: "Open Interactive Suite" },
+        { name: "3D Flashcards & Active Recall", tag: "interactive", desc: "Spatial 3D flip card trainer to memorize core Moodle questions with click-to-reveal.", url: "IS_EXAM_SUITE/smart_cram_cards.html", linkText: "Open 3D Flashcards" },
+        { name: "Anki Mobile Flashcards (Moodle Dump)", tag: "offline", desc: "Import our verified Anki text file containing 50 questions directly into Anki.", url: "IS_EXAM_SUITE/anki_decks/IS_Anki_Deck.txt", download: true, linkText: "Download Anki File" },
+        { name: "Anki Mobile Flashcards (High-Yield Blitz)", tag: "offline", desc: "Import the curated 42 high-yield blitz deck for active recall testing on the go.", url: "IS_EXAM_SUITE/anki_decks/IS_High_Yield_Blitz_Anki_Deck.txt", download: true, linkText: "Download Blitz Anki" }
+      ],
+      os: [
+        { name: "2-Hour Rapid Blitz Guide", tag: "high-yield", desc: "Accelerated review covering scheduling algorithms, virtual memory paging, and IP subnetting.", url: "OS_EXAM_SUITE/EXAM_BLITZ_2HR.html", linkText: "Open Blitz Guide" },
+        { name: "Comprehensive Study Portal", tag: "comprehensive", desc: "Access the full operating systems study modules, Gantt chart calculators, and calculators.", url: "OS_EXAM_SUITE/EXAM_MASTER_2H.html", linkText: "Open OSCN Suite" },
+        { name: "Anki Mobile Flashcards", tag: "offline", desc: "Exportable flashcard file containing all operating system and computer network cards.", url: "OS_EXAM_SUITE/anki_decks/OSCN_Anki_Deck.txt", download: true, linkText: "Download Anki File" }
+      ],
+      markup: [
+        { name: "Interactive Learning Suite", tag: "interactive", desc: "Calculators and validators covering HTML5 layouts, specificity values, and XPath queries.", url: "MARKUP_EXAM_SUITE/index.html", linkText: "Open Markup Portal" },
+        { name: "Anki Mobile Flashcards", tag: "offline", desc: "Synchronized flashcard decks containing all CSS specificity, HTML5, and XML study guides.", url: "MARKUP_EXAM_SUITE/anki_decks/Markup_Anki_Deck.txt", download: true, linkText: "Download Anki File" }
+      ],
+      orsa: [
+        { name: "Interactive Study Dashboard", tag: "interactive", desc: "Active recall math dashboard with simplex solvers, queueing theories, and Markov analysis.", url: "ORSA_EXAM_SUITE/index.html", linkText: "Open ORSA Suite" },
+        { name: "Anki Mobile Flashcards", tag: "offline", desc: "Import operations research study definitions and simplex algorithms directly into Anki.", url: "ORSA_EXAM_SUITE/anki_decks/ORSA_Anki_Deck.txt", download: true, linkText: "Download Anki File" }
+      ],
+      math: [
+        { name: "Mathematical Study Tools", tag: "interactive", desc: "Solvers and planners covering integrals, differential equations, limits, and matrix layouts.", url: "MATH_EXAM_SUITE/index.html", linkText: "Open Math Portal" },
+        { name: "Anki Mobile Flashcards", tag: "offline", desc: "Memorize mathematical rules, derivative tables, and integrals via exportable flashcards.", url: "MATH_EXAM_SUITE/anki_decks/math_exam_cards.txt", download: true, linkText: "Download Anki File" }
+      ],
+      stats: [
+        { name: "Statistical Study Suite", tag: "interactive", desc: "Study modules and recall checkers covering hypothesis testing, descriptive statistics, and probability.", url: "STATS_EXAM_SUITE/index.html", linkText: "Open Stats Portal" },
+        { name: "Anki Mobile Flashcards", tag: "offline", desc: "Import statistics terms, probability formulas, and testing rules directly into Anki.", url: "STATS_EXAM_SUITE/anki_decks/stats_exam_suite_cards.txt", download: true, linkText: "Download Anki File" }
+      ]
+    };
+
+    function setFocusedSubject(subj) {
+      focusedSubject = subj;
+      
+      // Highlight active button
+      document.querySelectorAll('.focus-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.id === `fbtn-${subj}`);
+      });
+      
+      // Update pathway planner content
+      renderStudyPathways(subj);
+      
+      // Sync global player filter dropdown
+      const playerSelect = document.getElementById('player-subject');
+      if (playerSelect) {
+        playerSelect.value = subj;
+        // Trigger playlist reload
+        changePlaylistSubject();
+      }
+
+      // Update card visibility
+      updateCardsVisibility();
+    }
+
+    function toggleShowPassedSubjects(checkboxTriggered) {
+      const chk = document.getElementById('show-passed-chk');
+      if (!chk) return;
+      if (checkboxTriggered) {
+        showPassedSubjects = chk.checked;
+      } else {
+        showPassedSubjects = !showPassedSubjects;
+        chk.checked = showPassedSubjects;
+      }
+      updateCardsVisibility();
+    }
+
+    function updateCardsVisibility() {
+      const cards = {
+        is: document.querySelector('.card-is'),
+        os: document.querySelector('.card-os'),
+        markup: document.querySelector('.card-markup'),
+        orsa: document.querySelector('.card-orsa'),
+        math: document.querySelector('.card-math'),
+        stats: document.querySelector('.card-stats')
+      };
+
+      const passedSubjects = ['os', 'markup', 'orsa', 'math', 'stats'];
+
+      for (const s in cards) {
+        const card = cards[s];
+        if (!card) continue;
+        
+        let shouldShow = true;
+        
+        // Subject focus filter
+        if (focusedSubject !== 'all' && focusedSubject !== s) {
+          shouldShow = false;
+        }
+        
+        // Show/Hide completed subjects filter
+        if (passedSubjects.includes(s) && !showPassedSubjects && focusedSubject === 'all') {
+          shouldShow = false;
+        }
+        
+        card.style.display = shouldShow ? '' : 'none';
+      }
+    }
+
+    function renderStudyPathways(subj) {
+      const titleEl = document.getElementById('pathway-section-title');
+      const gridEl = document.getElementById('pathway-cards-grid');
+      if (!gridEl) return;
+      
+      gridEl.innerHTML = '';
+      
+      if (subj === 'all') {
+        titleEl.textContent = "📚 Select a subject to view recommended study pathways";
+        gridEl.innerHTML = '<p style="color:var(--text-dim);font-size:0.88rem;grid-column:span 3;text-align:center;padding:1.5rem 0;">Select an active subject above to view learning pathways, download Anki decks, and open exam resources.</p>';
+        return;
+      }
+      
+      const subjNameMap = {
+        is: "Information Systems",
+        os: "Operating Systems",
+        markup: "Markup Languages",
+        orsa: "Operations Research",
+        math: "Mathematics",
+        stats: "Statistics"
+      };
+      
+      titleEl.textContent = `📚 Study Pathways for ${subjNameMap[subj] || subj}`;
+      
+      const pathways = SUBJECT_PATHWAYS[subj] || [];
+      pathways.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'pathway-card';
+        
+        let tagClass = 'interactive';
+        if (p.tag === 'high-yield') tagClass = 'high-yield';
+        else if (p.tag === 'comprehensive') tagClass = 'comprehensive';
+        else if (p.tag === 'offline') tagClass = 'offline';
+        
+        card.innerHTML = `
+          <span class="pathway-tag ${tagClass}">${p.tag}</span>
+          <div class="pathway-name">${p.name}</div>
+          <div class="pathway-desc">${p.desc}</div>
+          <a href="${p.url}" ${p.download ? 'download' : ''} class="pathway-link">
+            ${p.linkText} ➔
+          </a>
+        `;
+        gridEl.appendChild(card);
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       initPlayerTTS();
+      // Initialize default subject focus to 'is'
+      setFocusedSubject('is');
     });
   </script>
 </body>
