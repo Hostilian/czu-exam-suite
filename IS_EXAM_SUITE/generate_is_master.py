@@ -2106,9 +2106,83 @@ def generate_html():
       outline: none;
       resize: none;
     }
+
+    /* Unified Global Navigation Bar */
+    .global-nav-bar {{
+      background: rgba(13, 16, 26, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 24px;
+      position: relative;
+      z-index: 9999;
+      font-family: 'Outfit', sans-serif;
+    }}
+    .global-nav-inner {{
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }}
+    .global-nav-inner::-webkit-scrollbar {{
+      height: 0px;
+    }}
+    .global-nav-inner a {{
+      color: #8b90b8;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }}
+    .global-nav-inner a:hover {{
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+    }}
+    .global-nav-inner a.active {{
+      color: var(--accent);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+    }}
+    .global-nav-home {{
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }}
+    .global-nav-divider {{
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
+    }}
+    .global-nav-download {{
+      color: var(--accent2) !important;
+    }}
+    .global-nav-download:hover {{
+      background: rgba(245, 158, 11, 0.12) !important;
+    }}
   </style>
 </head>
 <body>
+  <!-- Unified Global Navigation Bar -->
+  <div class="global-nav-bar">
+    <div class="global-nav-inner">
+      <a href="../index.html" class="global-nav-home">🌐 Hub</a>
+      <a href="index.html" id="gnav-index">📊 Full Dashboard</a>
+      <a href="EXAM_MASTER_2H.html" id="gnav-master" class="active">🚀 2-Hour Master Guide</a>
+      <a href="EXAM_BLITZ_2HR.html" id="gnav-blitz">⚡ 2-Hour Blitz</a>
+      <a href="smart_cram_cards.html" id="gnav-cram">🃏 3D Flashcards</a>
+      <span class="global-nav-divider">|</span>
+      <a href="anki_decks/IS_Anki_Deck.txt" download class="global-nav-download">📥 Moodle Anki</a>
+      <a href="anki_decks/IS_High_Yield_Blitz_Anki_Deck.txt" download class="global-nav-download">📥 Blitz Anki</a>
+      <a href="is_audio_guide_us_male.mp3" download class="global-nav-download">🎧 Audio Guide</a>
+    </div>
+  </div>
 
   <!-- Ambient Blobs -->
   <div class="bg-blobs">
@@ -2915,7 +2989,7 @@ def generate_html():
         // Wrap words in answer to support active recall blur (look for words with specific symbols, or key words)
         let formattedAns = q.answers[0];
         // Format terms to support blur-reveal: wrap key bold segments
-        formattedAns = formattedAns.replace(/<b>(.*?)<\/b>/g, '<span class="blur-reveal" onclick="event.stopPropagation(); this.classList.toggle(\'revealed\')">$1</span>');
+        formattedAns = formattedAns.replace(/<b>(.*?)<\\/b>/g, '<span class="blur-reveal" onclick="event.stopPropagation(); this.classList.toggle(\'revealed\')">$1</span>');
         
         const itemHtml = `
           <div class="chk-item ${{isMastered}} ${{isReview}}" data-hash="${{hash}}">

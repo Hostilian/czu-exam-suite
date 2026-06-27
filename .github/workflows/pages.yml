@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate Master Study Guide
+        run: |
+          python IS_EXAM_SUITE/generate_is_master.py
+
+      - name: Rebuild & Synchronize Anki Decks
+        run: |
+          python IS_EXAM_SUITE/anki_decks/generate_anki_decks.py
+
+      - name: Run Integrity & Validation Checks
+        run: |
+          python IS_EXAM_SUITE/validate_is_suite.py
+
+      - name: Setup GitHub Pages Configuration
+        uses: actions/configure-pages@v4
+
+      - name: Upload Static Website Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

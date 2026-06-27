@@ -124,6 +124,52 @@
     .card-math .btn-primary:hover { background: var(--yellow); color: #000; box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
     .card-stats .btn-primary:hover { background: var(--blue); color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
     
+    /* --- Passed and Active Subjects Styles --- */
+    .hub-card.card-passed {
+      opacity: 0.55;
+      filter: grayscale(40%);
+      transition: all 0.3s ease;
+    }
+    .hub-card.card-passed:hover {
+      opacity: 0.95;
+      filter: grayscale(0%);
+    }
+    .hub-card.card-passed::after {
+      content: 'PASSED \2705';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--green);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .hub-card.card-active-target {
+      border-color: var(--purple) !important;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.22) !important;
+      transform: scale(1.02);
+      position: relative;
+    }
+    .hub-card.card-active-target::after {
+      content: 'ACTIVE TARGET \1F3AF';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: var(--green);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    }
+    
     .card-header {
       display: flex; align-items: center; gap: 1rem;
     }
@@ -484,13 +530,13 @@
         <div class="control-group">
           <label for="player-subject">Subject Filter</label>
           <select id="player-subject" onchange="changePlaylistSubject()">
-            <option value="all">⚡ All Subjects Combined</option>
-            <option value="os">🖥️ Operating Systems</option>
-            <option value="markup">🌐 Markup Languages</option>
-            <option value="is">📊 Information Systems</option>
-            <option value="orsa">📈 Operations Research</option>
-            <option value="math">📐 Mathematics</option>
-            <option value="stats">📊 Statistics</option>
+            <option value="is" selected>\uD83D\uDCCA Information Systems (Active Target \uD83C\uDFAF)</option>
+            <option value="all">\u26A1 All Subjects Combined</option>
+            <option value="os">\uD83D\uDDA5 Operating Systems (Passed \u2705)</option>
+            <option value="markup">\uD83C\uDF10 Markup Languages (Passed \u2705)</option>
+            <option value="orsa">\uD83D\uDCC8 Operations Research (Passed \u2705)</option>
+            <option value="math">\uD83D\uDCD0 Mathematics (Passed \u2705)</option>
+            <option value="stats">\uD83D\uDCCA Statistics (Passed \u2705)</option>
           </select>
         </div>
         <div class="control-group">
@@ -556,7 +602,7 @@
     <div class="grid-container">
       
       <!-- OS CARD -->
-      <div class="hub-card card-os">
+      <div class="hub-card card-os card-passed">
         <div class="card-header">
           <div class="card-icon">🖥️</div>
           <div class="card-title-group">
@@ -582,7 +628,7 @@
       </div>
 
       <!-- MARKUP CARD -->
-      <div class="hub-card card-markup">
+      <div class="hub-card card-markup card-passed">
         <div class="card-header">
           <div class="card-icon">🌐</div>
           <div class="card-title-group">
@@ -607,7 +653,7 @@
       </div>
 
       <!-- IS CARD -->
-      <div class="hub-card card-is">
+      <div class="hub-card card-is card-active-target">
         <div class="card-header">
           <div class="card-icon">📊</div>
           <div class="card-title-group">
@@ -625,15 +671,19 @@
             <span class="topic-pill">TTS Player</span>
           </div>
         </div>
-        <div class="card-actions">
-          <a href="IS_EXAM_SUITE/EXAM_MASTER_2H.html" class="btn-primary" style="background:linear-gradient(135deg,#a855f7,#7c3aed)">⚡ 2-Hour Study Guide</a>
-          <a href="IS_EXAM_SUITE/index.html" class="btn-secondary">Full Suite ➔</a>
-          <a href="IS_EXAM_SUITE/anki_decks/IS_Anki_Deck.txt" download class="btn-secondary" title="Download Anki deck">Anki Deck</a>
+        <div class="card-actions" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; width: 100%;">
+          <a href="IS_EXAM_SUITE/EXAM_MASTER_2H.html" class="btn-primary" style="grid-column: span 2; background: linear-gradient(135deg, var(--purple), var(--purple-dim)); box-shadow: 0 0 15px rgba(168, 85, 247, 0.4); text-align: center; color: #fff;">🚀 2-Hour Master Guide</a>
+          <a href="IS_EXAM_SUITE/EXAM_BLITZ_2HR.html" class="btn-primary" style="background: var(--surface2); border-color: var(--orange); text-align: center; color: #fff;">⚡ 2-Hour Blitz</a>
+          <a href="IS_EXAM_SUITE/index.html" class="btn-secondary" style="text-align: center;">📊 Dashboard</a>
+          <a href="IS_EXAM_SUITE/smart_cram_cards.html" class="btn-secondary" style="text-align: center;">🃏 3D Flashcards</a>
+          <a href="IS_EXAM_SUITE/anki_decks/IS_Anki_Deck.txt" download class="btn-secondary" style="text-align: center;" title="Download Moodle Dump Anki deck">📥 Moodle Anki</a>
+          <a href="IS_EXAM_SUITE/anki_decks/IS_High_Yield_Blitz_Anki_Deck.txt" download class="btn-secondary" style="text-align: center; color: var(--orange);" title="Download High-Yield Blitz Anki deck">📥 Blitz Anki</a>
+          <a href="IS_EXAM_SUITE/is_audio_guide_us_male.mp3" download class="btn-secondary" style="grid-column: span 2; text-align: center; color: var(--cyan);" title="Download Audio Guide MP3">🎧 Download Audio Guide</a>
         </div>
       </div>
 
       <!-- ORSA CARD -->
-      <div class="hub-card card-orsa">
+      <div class="hub-card card-orsa card-passed">
         <div class="card-header">
           <div class="card-icon">📈</div>
           <div class="card-title-group">
@@ -657,7 +707,7 @@
         </div>
       </div>
       <!-- MATH CARD -->
-      <div class="hub-card card-math">
+      <div class="hub-card card-math card-passed">
         <div class="card-header">
           <div class="card-icon">📐</div>
           <div class="card-title-group">
@@ -682,7 +732,7 @@
       </div>
 
       <!-- STATS CARD -->
-      <div class="hub-card card-stats">
+      <div class="hub-card card-stats card-passed">
         <div class="card-header">
           <div class="card-icon">📊</div>
           <div class="card-title-group">

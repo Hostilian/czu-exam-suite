@@ -3,56 +3,54 @@
 # DW/SINV | ERP | DSS | BI/BPM | AI/ML | Cloud | CI — 50 exam-targeted cards
 # Format: Front[TAB]Back[TAB]Tag
 # Import in Anki: File > Import > select this file
-# Fields: Front | Back | Tag (3 fields, tab-separated)
 # ============================================================
-
-Data Warehouse — 4 characteristics (acronym SINV)	<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time	dw
-What does 'Non-volatile' mean in a Data Warehouse?	Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly.	dw
-What does 'Time-variant' mean in a Data Warehouse?	Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state).	dw
-Main purpose of a Data Warehouse	To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions.	dw
-Which system is for DAILY TRANSACTIONS?	<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP.	dw
-Which system is for STRATEGIC ANALYSIS?	<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP.	dw
-OLTP vs OLAP	<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse	dw
-ERP stands for?	<b>Enterprise Resource Planning</b>	erp
-ERPS stands for?	<b>Enterprise Resource Planning System</b>	erp
-IS vs ERP — which is more general?	<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS.	erp
-ERP main goal	<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments.	erp
-ERP advantage	<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos.	erp
-ERP disadvantage	<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>.	erp
-Vendor lock-in — definition	A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch.	erp
-Leading ERP vendors — 3 examples	<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders.	erp
-SAP HANA — what is it?	SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk.	erp
-In-memory database — meaning	Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics.	erp
-DSS stands for?	<b>Decision Support System</b>	dss
-What is a DSS?	An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information.	dss
-DSS transforms what into what?	<b>Raw data → useful information</b> for decision-making.	dss
-What decisions does DSS support?	<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS).	dss
+Data Warehouse — 4 characteristics (acronym SINV)	<b>S</b>ubject-oriented — organized around business subjects (sales, customers)<br><b>I</b>ntegrated — consistent data from multiple sources<br><b>N</b>on-volatile — stable, not changed like live data<br><b>V</b>ariant-time — tracks historical changes over time	data_warehousing_bi
+What does 'Non-volatile' mean in a Data Warehouse? — Explain or define the following concept.	Data is <b>stable and not changed</b>. Historical records are permanent — unlike OLTP databases where records are updated constantly.	data_warehousing_bi
+What does 'Time-variant' mean in a Data Warehouse? — Explain or define the following concept.	Data is <b>connected with time/history</b>. The DW stores snapshots and tracks changes over time (unlike a live system that only shows current state).	data_warehousing_bi
+Main purpose of a Data Warehouse — Explain or define the following concept.	To <b>support analysis and decision-making</b> (strategic/analytical use), NOT daily transactions.	data_warehousing_bi
+Which system is for DAILY TRANSACTIONS? — Explain or define the following concept.	<b>Transaction Processing System (TPS)</b> — handles routine operational tasks: sales, orders, payments. TPS = OLTP.	data_warehousing_bi
+Which system is for STRATEGIC ANALYSIS? — Explain or define the following concept.	<b>Data Warehouse</b> — stores integrated historical data for BI queries, analytics, and decision support. DW = OLAP.	data_warehousing_bi
+OLTP vs OLAP — Explain or define the following concept.	<b>OLTP</b> (Online Transaction Processing) = daily operations → TPS<br><b>OLAP</b> (Online Analytical Processing) = strategic analysis → Data Warehouse	data_warehousing_bi
+ERP stands for? — Explain or define the following concept.	<b>Enterprise Resource Planning</b>	enterprise_resource_planning
+ERPS stands for? — Explain or define the following concept.	<b>Enterprise Resource Planning System</b>	enterprise_resource_planning
+IS vs ERP — which is more general?	<b>IS (Information System)</b> is MORE GENERAL than ERP. ERP is a specific type of IS.	enterprise_resource_planning
+ERP main goal — Explain or define the following concept.	<b>Support the decision-making process</b> by centralizing and standardizing business data across all departments.	enterprise_resource_planning
+ERP advantage — Explain or define the following concept.	<b>Centralized data and visibility</b> — all departments share one system, eliminating data silos.	enterprise_resource_planning
+ERP disadvantage — Explain or define the following concept.	<b>High costs</b> — expensive to buy, implement, customize, and train. Also: <b>vendor lock-in</b>.	enterprise_resource_planning
+Vendor lock-in — definition	A company becomes <b>dependent on one specific vendor</b> for software, making it very difficult or expensive to switch.	enterprise_resource_planning
+Leading ERP vendors — 3 examples	<b>SAP</b>, <b>Oracle</b>, and <b>Microsoft</b> — the three dominant ERP/ERPS market leaders.	enterprise_resource_planning
+SAP HANA — what is it?	SAP's next-gen ERP platform. Uses an <b>in-memory database</b> (HANA = High-performance ANalytic Appliance).<br>Data processed in fast RAM instead of disk.	enterprise_resource_planning
+In-memory database — meaning	Data is processed in <b>high-speed RAM memory</b> (not on disk). Enables extremely fast analytics.	enterprise_resource_planning
+DSS stands for? — Explain or define the following concept.	<b>Decision Support System</b>	dss
+What is a DSS? — Explain or define the following concept.	An <b>interactive computer-based system</b> that supports managers in making decisions by transforming raw data into useful information.	dss
+DSS transforms what into what? — Explain or define the following concept.	<b>Raw data → useful information</b> for decision-making.	dss
+What decisions does DSS support? — Explain or define the following concept.	<b>Strategic and tactical decisions</b> — not routine operational ones (those are TPS).	dss
 DSS role — should it replace managers?	NO. DSS should <b>SUPPORT, not REPLACE, managers</b>. Human judgment remains essential.	dss
 STRUCTURED decision — definition	A decision where <b>the procedure CAN be specified in advance</b>.<br>Examples: payroll calculation, stock reorder level.	dss
 UNSTRUCTURED decision — definition	A decision where <b>the procedure CANNOT mostly be specified in advance</b>.<br>Requires human judgment, intuition, and evaluation.	dss
 SEMI-STRUCTURED decision — definition	<b>Some procedures can be specified</b>, but not enough for a definite automatic decision. Partial human judgment needed.	dss
-Computers vs humans in decision-making	<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment.	dss
+Computers vs humans in decision-making — Explain or define the following concept.	<b>Computers</b>: strong at processing large data quickly, consistent.<br><b>Humans</b>: flexible, adaptable, use intuition, context, qualitative judgment.	dss
 BI — what does it stand for and do?	<b>Business Intelligence</b> — helps companies <b>analyze data and create business insights</b>.	bi
 BPM — definition and formula	<b>Business Performance Management</b> = <b>BI + Planning</b>. Uses KPIs to monitor and improve performance.	bi
-KPI stands for?	<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives.	bi
+KPI stands for? — Explain or define the following concept.	<b>Key Performance Indicator</b> — a measurable value showing how effectively an organization achieves objectives.	bi
 Dashboard — what is it used for?	Visualizes <b>important business information and KPIs</b> in real-time for decision-makers.	bi
-4 main AI areas tested on exam	1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks	ai
+4 main AI areas tested on exam — Explain or define the following concept.	1. <b>Natural Language Processing (NLP)</b> — human language<br>2. <b>Machine Learning</b> — learning patterns from data<br>3. <b>Computer Vision</b> — visual/image data interpretation<br>4. <b>Deep Learning</b> — multi-layer neural networks	ai
 Machine Learning — definition	AI that involves <b>learning patterns from data</b> without being explicitly programmed for each task.	ai
 Neural network — what inspired it?	Inspired by the structure of the <b>human brain</b> — neurons connected in layers.	ai
 Deep Learning — what is it connected to?	<b>Multi-layer neural networks</b> — 'deep' = many hidden layers of neurons.	ai
 Computer Vision — definition	AI field focused on <b>interpreting visual/image data</b> — enabling machines to 'see' and understand images and video.	ai
 NLP — definition	<b>Natural Language Processing</b> — AI field focused on <b>human language processing</b> (text, speech understanding and generation).	ai
-Modern IS phenomena (current trends)	<b>Cloud computing, virtualization, big data, AI, security</b>	ai
-Cloud computing — definition	Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable).	cloud
-SaaS — definition and example	<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365).	cloud
-IaaS — definition and example	<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2).	cloud
-PaaS — definition	<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku).	cloud
-Cloud core idea / model	<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware.	cloud
-Application architecture evolution	Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services.	cloud
+Modern IS phenomena (current trends) — Explain or define the following concept.	<b>Cloud computing, virtualization, big data, AI, security</b>	ai
+Cloud computing — definition	Provision of <b>IT services via the Internet</b>. Core idea: <b>pay for what you use</b> (on-demand, scalable).	cloud_computing_services
+SaaS — definition and example	<b>Software as a Service</b> — application/software delivered over the internet (e.g. Gmail, Salesforce, Office 365).	cloud_computing_services
+IaaS — definition and example	<b>Infrastructure as a Service</b> — provides hardware/infrastructure: servers, storage, networking as a service (e.g. AWS EC2).	cloud_computing_services
+PaaS — definition	<b>Platform as a Service</b> = IaaS + OS + Application Platform. Runtime environment for developers (e.g. Heroku).	cloud_computing_services
+Cloud core idea / model — Explain or define the following concept.	<b>Pay for what you use</b> — scalable, on-demand IT resources without purchasing hardware.	cloud_computing_services
+Application architecture evolution — Explain or define the following concept.	Evolved toward <b>service-oriented architecture (SOA) / API</b> — loosely coupled interoperable services.	cloud_computing_services
 Competitive Intelligence (CI) — definition	<b>Legal and ethical</b> gathering of information about competitors using <b>public sources</b>. NOT espionage.	ci
-CI helps decision-makers by?	Improving understanding of the <b>competitive environment</b> to support strategic planning.	ci
+CI helps decision-makers by? — Explain or define the following concept.	Improving understanding of the <b>competitive environment</b> to support strategic planning.	ci
 CI sources — what kind?	<b>Public/legal sources only</b>: press releases, news, government records, public databases. Never hacking.	ci
 IS and management — how do they relate?	Information systems and management <b>interact with each other</b>. IS supports managers; managers set IS parameters.	is_basics
-Who sets the rules in an IS?	<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules.	is_basics
-Goal of IS in management	To <b>support management</b> — never to replace decision makers.	is_basics
-Example of automatic IS tool	<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold.	is_basics
+Who sets the rules in an IS? — Explain or define the following concept.	<b>Humans/managers</b> through parameters and settings. The system executes but humans define the rules.	is_basics
+Goal of IS in management — Explain or define the following concept.	To <b>support management</b> — never to replace decision makers.	is_basics
+Example of automatic IS tool — Explain or define the following concept.	<b>Automatic stock ordering</b> — triggered when inventory falls below a human-set threshold.	is_basics

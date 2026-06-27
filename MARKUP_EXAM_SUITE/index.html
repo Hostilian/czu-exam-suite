@@ -1941,6 +1941,30 @@
 .search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
 .search-input:focus { border-color: var(--cyan); }
 .filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
+
+/* --- STYLES FOR CRAM STUDY SHEET --- */
+.cram-list-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.cram-sheet-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.25s ease;
+}
+.cram-sheet-item:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
 </style>
 </head>
 <body>
@@ -1960,9 +1984,10 @@
         <button class="nav-btn" id="nav-checklist" onclick="switchView('checklist')">📋 Checklist</button>
         <button class="nav-btn" id="nav-flashcards" onclick="switchView('flashcards')">⚡ Flashcards</button>
         <button class="nav-btn" id="nav-memorize" onclick="switchView('memorize')">🧠 Memorize</button>
+        <button class="nav-btn active" id="nav-audio-cram" onclick="switchView('audio-cram')">🔊 Audio Cram</button>
         <button class="nav-btn" id="nav-exam" onclick="switchView('exam')">📝 Mock Exam</button>
         <button class="nav-btn" id="nav-tools" onclick="switchView('tools')">🛠️ Sandboxes</button>
-        <button class="nav-btn" id="nav-cram" onclick="switchView('cram')">📚 Cram Material</button>
+        <button class="nav-btn" id="nav-cram" onclick="switchView('cram')">📚 Matcher & Snippets</button>
       </nav>
       
       <div class="offline-badge">
@@ -2038,7 +2063,7 @@
 
     <!-- ─── PANE 1: CHECKLIST ───────────────────────── -->
         <!-- VIEW PANE: 2-Hour Audio Cram -->
-    <div class="view-pane active" id="pane-cram">
+    <div class="view-pane active" id="pane-audio-cram">
       <div class="cram-container">
         
         <!-- PLAYER PANEL -->
@@ -2112,6 +2137,9 @@
             <option value="XPath & XSLT">XPath & XSLT</option>
             <option value="Web Protocols & APIs">Web Protocols & APIs</option>
           </select>
+          <button class="filter-select" onclick="toggleCramViewMode()" id="toggle-cram-view-btn" style="border:1px solid var(--border); background:var(--surface3); font-weight:600;">
+            📖 Study Sheet Mode
+          </button>
           <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
             👁️ Show All Answers
           </button>
@@ -2238,6 +2266,16 @@
             </p>
           </div>
           <button class="fc-btn" id="reveal-all-btn" onclick="toggleRevealAll()" style="min-width: 190px;">👁️ Reveal All Answers</button>
+        </div>
+        
+        <!-- Memorize Mode Tabs -->
+        <div style="display:flex; gap:10px; margin-bottom:1.5rem; border-bottom:1px solid var(--border-light); padding-bottom:1rem;">
+          <button class="filter-btn active" id="btn-mem-summary" onclick="showMemorizeType('summary')" style="font-weight:600; padding:8px 16px; border-radius:6px; background:var(--surface3); border:1px solid var(--border);">
+            📋 Syllabus Summaries (9 Cards)
+          </button>
+          <button class="filter-btn" id="btn-mem-all" onclick="showMemorizeType('all')" style="font-weight:600; padding:8px 16px; border-radius:6px; background:var(--surface3); border:1px solid var(--border);">
+            🎯 All 147 Exam Questions (Active Recall)
+          </button>
         </div>
 
         <!-- Audio Podcast Player -->
@@ -4148,8 +4186,7 @@
   {
     "q": "Which HTML tag do we use for navigation?",
     "options": [
-      "<nav>
-      <button class="nav-btn active" id="nav-cram" onclick="switchView('cram')">🧠 2-Hour Audio Cram</button>"
+      "<nav>"
     ],
     "answers": [
       "<nav>"
@@ -5121,6 +5158,9 @@
         allRevealed = false;
         document.getElementById('reveal-all-btn').innerHTML = '👁️ Reveal All Answers';
         document.querySelectorAll('.blur-reveal').forEach(el => el.classList.remove('revealed'));
+        showMemorizeType(currentMemorizeType);
+      } else if (viewName === 'audio-cram') {
+        // Audio cram pane
       } else if (viewName === 'cram') {
         initMatcher();
         buildSnippets();
@@ -6608,7 +6648,13 @@
     // ══════════════════════════════════════════════════════════════════════════
     // 11. INITIALIZATION ON LOAD
     // ══════════════════════════════════════════════════════════════════════════
+    let originalMemorizeGridHtml = '';
     window.addEventListener('load', () => {
+      // Save the original 9 syllabus summary cards HTML
+      const grid = document.querySelector('#pane-memorize .memorize-grid');
+      if (grid) {
+        originalMemorizeGridHtml = grid.innerHTML;
+      }
       updateOverallStats();
       renderChecklist();
       initXPathSandbox();
@@ -6697,10 +6743,28 @@ function voicesChanged() {
   }
 }
 
+let cramViewMode = 'cards'; // 'cards' or 'sheet'
+
+function toggleCramViewMode() {
+  cramViewMode = cramViewMode === 'cards' ? 'sheet' : 'cards';
+  const btn = document.getElementById('toggle-cram-view-btn');
+  if (btn) {
+    btn.innerHTML = cramViewMode === 'cards' ? '📖 Study Sheet Mode' : '🃏 Interactive Cards';
+  }
+  renderCramCards();
+}
+
 function renderCramCards() {
   const grid = document.getElementById('cram-cards-list');
   if (!grid) return;
   grid.innerHTML = '';
+  
+  if (cramViewMode === 'sheet') {
+    grid.className = 'cram-list-sheet';
+  } else {
+    grid.className = 'cram-list-grid';
+  }
+  
   cramCardsData.forEach((card, idx) => {
     let catClass = 'card-cat-csv';
     if (card.category.includes('JSON')) catClass = 'card-cat-json';
@@ -6710,23 +6774,99 @@ function renderCramCards() {
     else if (card.category.includes('HTTP') || card.category.includes('Protocols')) catClass = 'card-cat-http';
     
     const cardEl = document.createElement('div');
-    cardEl.className = 'cram-card-item';
-    cardEl.id = `cram-card-${card.id}`;
-    cardEl.onclick = (e) => {
-      if (e.target.closest('.card-play-btn')) return;
-      cardEl.classList.toggle('show-ans');
-    };
-    cardEl.innerHTML = `
-      <div class="card-header-row">
-        <span class="card-cat-badge ${catClass}">${card.category}</span>
-        <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
-      </div>
-      <div class="card-question-title">${card.q}</div>
-      <div class="card-desc-text">${card.desc}</div>
-      <div class="card-answer-box">${card.ans}</div>
-    `;
+    
+    // Add active recall support
+    let ansHtml = card.ans;
+    if (ansHtml.includes("Correct Answer(s):")) {
+      const parts = ansHtml.split("Correct Answer(s):");
+      ansHtml = `${parts[0]}Correct Answer(s): <span class="blur-reveal">${parts[1]}</span>`;
+    }
+    
+    if (cramViewMode === 'sheet') {
+      cardEl.className = 'cram-sheet-item';
+      cardEl.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.04); padding-bottom:0.5rem; margin-bottom:0.5rem;">
+          <span class="card-cat-badge ${catClass}">${card.category}</span>
+          <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card" style="background:none; border:none; color:var(--accent2); cursor:pointer;">🔊 Play Audio</button>
+        </div>
+        <div style="font-weight:700; font-size:1.05rem; color:var(--text); margin-bottom:0.5rem;">Q${card.id}: ${card.q}</div>
+        <div style="margin-left:0.5rem; font-size:0.9rem; color:var(--text-muted); margin-bottom:0.75rem;">${card.desc}</div>
+        <div style="background:rgba(255,255,255,0.02); border-left:3px solid var(--accent); padding:8px 12px; border-radius:4px; font-size:0.9rem; color:#86efac;">
+          ${ansHtml}
+        </div>
+      `;
+    } else {
+      cardEl.className = 'cram-card-item' + (allAnswersVisible ? ' show-ans' : '');
+      cardEl.id = `cram-card-${card.id}`;
+      cardEl.onclick = (e) => {
+        if (e.target.closest('.card-play-btn') || e.target.closest('.blur-reveal')) return;
+        cardEl.classList.toggle('show-ans');
+      };
+      cardEl.innerHTML = `
+        <div class="card-header-row">
+          <span class="card-cat-badge ${catClass}">${card.category}</span>
+          <button class="card-play-btn" onclick="playCramCardSingle(${idx})" title="Listen to this card">🔊</button>
+        </div>
+        <div class="card-question-title">${card.q}</div>
+        <div class="card-desc-text">${card.desc}</div>
+        <div class="card-answer-box" style="${allAnswersVisible ? 'display:block;' : ''}">${ansHtml}</div>
+      `;
+    }
     grid.appendChild(cardEl);
   });
+  
+  if (allAnswersVisible) {
+    document.querySelectorAll('#cram-cards-list .blur-reveal').forEach(el => el.classList.add('revealed'));
+  }
+}
+
+let currentMemorizeType = 'summary';
+
+function showMemorizeType(type) {
+  currentMemorizeType = type;
+  const btnSummary = document.getElementById('btn-mem-summary');
+  const btnAll = document.getElementById('btn-mem-all');
+  if (btnSummary) btnSummary.classList.toggle('active', type === 'summary');
+  if (btnAll) btnAll.classList.toggle('active', type === 'all');
+  
+  const grid = document.querySelector('#pane-memorize .memorize-grid');
+  if (!grid) return;
+  
+  if (type === 'summary') {
+    grid.innerHTML = originalMemorizeGridHtml;
+  } else {
+    grid.innerHTML = '';
+    cramCardsData.forEach(card => {
+      let badgeColor = 'HTML';
+      if (card.category.includes('JSON')) badgeColor = 'JSON';
+      else if (card.category.includes('XML')) badgeColor = 'XML';
+      else if (card.category.includes('XPath') || card.category.includes('XSLT')) badgeColor = 'XPath/XSLT';
+      else if (card.category.includes('HTTP') || card.category.includes('Protocols')) badgeColor = 'HTTP/REST';
+      else if (card.category.includes('CSV')) badgeColor = 'CSV';
+      
+      const cardEl = document.createElement('div');
+      cardEl.className = 'memorize-card';
+      let ansClean = card.ans.replace(/<strong>Correct Answer\(s\):<\/strong>/i, '').trim();
+      
+      cardEl.innerHTML = `
+        <div class="memorize-card-header">
+          <span class="memorize-card-title">Q${card.id}: ${card.category}</span>
+          <span class="memorize-card-badge">${badgeColor}</span>
+        </div>
+        <div class="memorize-content-group">
+          <p style="font-weight:700; font-size:0.95rem; margin-bottom:0.75rem; color:var(--text); line-height:1.4;">${card.q}</p>
+          <div style="font-size:0.88rem; color:var(--text-muted); margin-left:0.5rem;">
+            ${card.desc}
+          </div>
+        </div>
+        <div class="memorize-content-group" style="margin-top:auto; border-top:1px solid rgba(255,255,255,0.06); padding-top:0.75rem;">
+          <strong style="color:var(--text-muted); font-size:0.85rem;">Answer (Tap to reveal):</strong> 
+          <div style="margin-top:0.25rem;"><span class="blur-reveal">${ansClean}</span></div>
+        </div>
+      `;
+      grid.appendChild(cardEl);
+    });
+  }
 }
 
 function filterCramCards() {
@@ -6744,10 +6884,17 @@ function filterCramCards() {
 function toggleAllAnswers() {
   allAnswersVisible = !allAnswersVisible;
   const btn = document.getElementById('toggle-all-answers-btn');
-  btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
+  if (btn) {
+    btn.innerHTML = allAnswersVisible ? '🙈 Hide All Answers' : '👁️ Show All Answers';
+  }
   document.querySelectorAll('.cram-card-item').forEach(el => {
     if (allAnswersVisible) el.classList.add('show-ans');
     else el.classList.remove('show-ans');
+  });
+  // Toggle blur-reveal classes
+  document.querySelectorAll('#cram-cards-list .blur-reveal').forEach(el => {
+    if (allAnswersVisible) el.classList.add('revealed');
+    else el.classList.remove('revealed');
   });
 }
 
