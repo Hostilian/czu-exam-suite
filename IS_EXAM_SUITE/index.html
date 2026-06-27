@@ -637,95 +637,343 @@
     .classifier-grid { grid-template-columns: 1fr; }
   }
 
-/* ─── 2-HOUR AUDIO CRAM STYLES ─── */
+/* ─── ACTIVE RECALL CRAM WORKSPACE & VOICE SIDE DRAWER ─── */
 .cram-container { display: flex; flex-direction: column; gap: 1.5rem; padding: 0.5rem 0; }
-.player-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 32px rgba(6, 8, 16, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 1.25rem; }
-.player-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-.player-title { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
-.player-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.play-btn-main { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); border: none; color: #000; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 0 15px var(--glow-cyan); }
-.play-btn-main:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan); }
-.play-btn-main.paused { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); box-shadow: 0 0 15px var(--glow-orange); }
-.ctrl-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
-.ctrl-btn:hover { background: var(--border); color: var(--cyan); transform: translateY(-2px); }
-.player-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.04); }
-.setting-item { display: flex; flex-direction: column; gap: 0.5rem; }
-.setting-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; }
-.setting-select, .setting-slider { background: var(--surface3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 0.85rem; outline: none; cursor: pointer; }
-.setting-slider { -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--surface3); padding: 0; }
-.setting-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 10px var(--glow-cyan); }
-.player-progress-bar { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; position: relative; }
-.player-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--orange)); transition: width 0.3s; }
-.anki-deck-btn { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); border: none; color: #fff; padding: 10px 20px; border-radius: 50px; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none; }
-.anki-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-orange); }
-.cram-list-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 768px) { .cram-list-grid { grid-template-columns: repeat(2, 1fr); } }
-.cram-card-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer; }
-.cram-card-item:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.3); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05); }
-.cram-card-item.active-speaking { border-color: var(--cyan); box-shadow: 0 0 20px var(--glow-cyan); background: var(--surface2); }
-.card-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
-.card-cat-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
+
+/* Collapsible side-narrator panel */
+.side-narrator-panel {
+  position: fixed;
+  top: 80px;
+  right: -340px;
+  width: 320px;
+  height: calc(100vh - 120px);
+  background: rgba(13, 16, 26, 0.96);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) 0 0 var(--radius);
+  box-shadow: -10px 0 30px rgba(6, 8, 16, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.side-narrator-panel.open {
+  right: 0;
+}
+.play-btn-main {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--cyan-dim));
+  border: none;
+  color: #000;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 0 15px var(--glow-cyan);
+}
+.play-btn-main:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--cyan);
+}
+.play-btn-main.paused {
+  background: linear-gradient(135deg, var(--orange), var(--orange-dim));
+  box-shadow: 0 0 15px var(--glow-orange);
+}
+.ctrl-btn {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover {
+  background: var(--border);
+  color: var(--cyan);
+  transform: translateY(-2px);
+}
+.player-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.setting-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.setting-select, .setting-slider {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+}
+.setting-slider {
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface3);
+  padding: 0;
+}
+.setting-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--glow-cyan);
+}
+.player-progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+.player-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cyan), var(--orange));
+  transition: width 0.3s;
+}
+.anki-deck-btn {
+  background: linear-gradient(135deg, var(--orange), var(--orange-dim));
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.anki-deck-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--glow-orange);
+}
+
+/* Study Workspace & Recall Card design */
+.study-progress-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.progress-text {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.progress-bar-container {
+  flex: 1;
+  min-width: 250px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  transition: width 0.4s ease;
+}
+.card-self-grade-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+}
+.grade-btn {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.grade-btn.btn-redo {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.2);
+  color: #fda4af;
+}
+.grade-btn.btn-redo:hover {
+  background: rgba(244, 63, 94, 0.15);
+}
+.grade-btn.btn-master {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+}
+.grade-btn.btn-master:hover {
+  background: rgba(16, 185, 129, 0.15);
+}
+.cram-card-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+}
+.cram-card-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(34, 211, 238, 0.3);
+  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05);
+}
+.cram-card-item.active-speaking {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px var(--glow-cyan);
+  background: var(--surface2);
+}
+.cram-card-item.mastered {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  background: rgba(16, 185, 129, 0.02) !important;
+}
+.cram-card-item.mastered .card-question-title {
+  color: #6ee7b7;
+}
+.cram-card-item.mastered::after {
+  content: 'MASTERED \2705';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: var(--green);
+  font-size: 0.55rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.card-cat-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
 .card-cat-dw { color: var(--cyan); border-color: rgba(34, 211, 238, 0.2); }
 .card-cat-sys { color: #a78bfa; border-color: rgba(167, 139, 250, 0.2); }
 .card-cat-cloud { color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
 .card-cat-erp { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
 .card-cat-sdlc { color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
 .card-cat-sec { color: #fbbf24; border-color: rgba(251, 191, 36, 0.2); }
-.card-play-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text-dim); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.card-play-btn:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
+
+.card-play-btn {
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.card-play-btn:hover {
+  background: var(--cyan);
+  color: #000;
+  border-color: var(--cyan);
+}
 .card-question-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
 .card-desc-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.4; }
-.card-answer-box { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.75rem; margin-top: auto; font-size: 0.88rem; line-height: 1.5; color: #86efac; display: none; }
+.card-answer-box {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+  margin-top: auto;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #86efac;
+  display: none;
+}
 .cram-card-item.show-ans .card-answer-box { display: block; }
 .search-filter-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
 .search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
 .search-input:focus { border-color: var(--cyan); }
 .filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
 
-/* ─── 2-HOUR AUDIO CRAM STYLES ─── */
-.cram-container { display: flex; flex-direction: column; gap: 1.5rem; padding: 0.5rem 0; }
-.player-panel { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 8px 32px rgba(6, 8, 16, 0.5); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; flex-direction: column; gap: 1.25rem; }
-.player-title-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-.player-title { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
-.player-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.play-btn-main { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); border: none; color: #000; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 0 15px var(--glow-cyan); }
-.play-btn-main:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--cyan); }
-.play-btn-main.paused { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); box-shadow: 0 0 15px var(--glow-orange); }
-.ctrl-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; }
-.ctrl-btn:hover { background: var(--border); color: var(--cyan); transform: translateY(-2px); }
-.player-settings { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.04); }
-.setting-item { display: flex; flex-direction: column; gap: 0.5rem; }
-.setting-label { font-size: 0.72rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; }
-.setting-select, .setting-slider { background: var(--surface3); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit; font-size: 0.85rem; outline: none; cursor: pointer; }
-.setting-slider { -webkit-appearance: none; height: 6px; border-radius: 3px; background: var(--surface3); padding: 0; }
-.setting-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--cyan); cursor: pointer; box-shadow: 0 0 10px var(--glow-cyan); }
-.player-progress-bar { height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: 3px; overflow: hidden; position: relative; }
-.player-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--orange)); transition: width 0.3s; }
-.anki-deck-btn { background: linear-gradient(135deg, var(--orange), var(--orange-dim)); border: none; color: #fff; padding: 10px 20px; border-radius: 50px; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; text-decoration: none; }
-.anki-deck-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-orange); }
-.cram-list-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-@media (min-width: 768px) { .cram-list-grid { grid-template-columns: repeat(2, 1fr); } }
-.cram-card-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer; }
-.cram-card-item:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.3); box-shadow: 0 8px 24px rgba(34, 211, 238, 0.05); }
-.cram-card-item.active-speaking { border-color: var(--cyan); box-shadow: 0 0 20px var(--glow-cyan); background: var(--surface2); }
-.card-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
-.card-cat-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); }
-.card-cat-dw { color: var(--cyan); border-color: rgba(34, 211, 238, 0.2); }
-.card-cat-sys { color: #a78bfa; border-color: rgba(167, 139, 250, 0.2); }
-.card-cat-cloud { color: #f97316; border-color: rgba(249, 115, 22, 0.2); }
-.card-cat-erp { color: #f43f5e; border-color: rgba(244, 63, 94, 0.2); }
-.card-cat-sdlc { color: #10b981; border-color: rgba(16, 185, 129, 0.2); }
-.card-cat-sec { color: #fbbf24; border-color: rgba(251, 191, 36, 0.2); }
-.card-play-btn { background: var(--surface3); border: 1px solid var(--border); color: var(--text-dim); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.card-play-btn:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
-.card-question-title { font-size: 1.05rem; font-weight: 700; color: var(--text); }
-.card-desc-text { font-size: 0.88rem; color: var(--text-dim); line-height: 1.4; }
-.card-answer-box { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.75rem; margin-top: auto; font-size: 0.88rem; line-height: 1.5; color: #86efac; display: none; }
-.cram-card-item.show-ans .card-answer-box { display: block; }
-.search-filter-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.search-input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; font-family: inherit; transition: border-color 0.2s; }
-.search-input:focus { border-color: var(--cyan); }
-.filter-select { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 16px; outline: none; cursor: pointer; }
+/* Active Recall Blur Reveal */
+.blur-reveal {
+  filter: blur(5px);
+  background: rgba(255, 255, 255, 0.06);
+  color: transparent;
+  cursor: pointer;
+  transition: filter 0.3s, color 0.3s, background 0.3s;
+  padding: 0 4px;
+  border-radius: 4px;
+  user-select: none;
+  display: inline-block;
+}
+.blur-reveal.revealed {
+  filter: blur(0);
+  color: inherit;
+  background: transparent;
+  user-select: text;
+}
 
 /* Unified Global Navigation Bar */
 .global-nav-bar {
@@ -916,6 +1164,121 @@
 
   </div><!-- end grid row 1 -->
 
+  <!-- ===== CRAM MODE STUDY WORKSPACE ===== -->
+  <div id="cramModeContainer" class="glass-card card-12" style="grid-column: span 12; margin-bottom: 24px; display: none;">
+    <div class="card-header">
+      <div class="card-icon">⚡</div>
+      <div>
+        <div class="card-title">Moodle Active Recall Workspace</div>
+        <div class="card-subtitle">Memorize key exam sentences, aspects, and notes from Moodle dumps with interactive self-grading</div>
+      </div>
+      <div style="margin-left: auto;">
+        <button class="anki-deck-btn" onclick="toggleSideNarrator()" style="background: linear-gradient(135deg, var(--cyan), var(--cyan-dim)); color: #000; border: none; font-weight: 700; padding: 8px 16px;">
+          🔊 Narrator Drawer
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Recall Progress & Stats -->
+    <div class="study-progress-card">
+      <div>
+        <span class="progress-text">Study Progress: <strong id="mastered-count-text">0</strong> / 50 Mastered</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="study-progress-fill"></div>
+      </div>
+      <div>
+        <button class="matcher-reset-btn" onclick="resetStudyProgress()" style="padding: 6px 12px; font-size: 0.75rem;">
+          ↺ Reset Progress
+        </button>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="search-filter-row">
+      <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
+      <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
+        <option value="all">All Categories</option>
+        <option value="Data Warehousing & BI">Data Warehousing & BI</option>
+        <option value="Systems Theory & Evolution">Systems Theory & Evolution</option>
+        <option value="Cloud Computing Services">Cloud Computing Services</option>
+        <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
+        <option value="Systems Development Lifecycle">Systems Development Lifecycle</option>
+        <option value="Information Security">Information Security</option>
+        <option value="Decision Making & Systems">Decision Making & Systems</option>
+      </select>
+      <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
+        👁️ Show All Answers
+      </button>
+    </div>
+
+    <!-- Active Recall Study Grid -->
+    <div class="cram-list-grid" id="cram-cards-list">
+      <!-- Populated dynamically via JS -->
+    </div>
+  </div>
+
+  <!-- Collapsible Side Narrator Drawer -->
+  <div class="side-narrator-panel" id="sideNarrator">
+    <div class="player-title-row" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.75rem; margin-bottom: 0.5rem;">
+      <div class="player-title" style="font-size: 1.05rem;">
+        <span>🔊</span> Voice Narrator
+      </div>
+      <button onclick="toggleSideNarrator()" style="background: transparent; border: none; color: var(--text-dim); cursor: pointer; font-size: 1.2rem; font-weight: 700;">×</button>
+    </div>
+
+    <div class="player-controls" style="justify-content: center; gap: 0.75rem; margin-top: 0.5rem;">
+      <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
+      <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
+      <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
+      <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio">⏹</button>
+    </div>
+
+    <div style="text-align: center; margin: 0.5rem 0;">
+      <span id="player-status-text" style="font-size:0.78rem; color:var(--text-dim); display: block; word-wrap: break-word;">Ready to narrate.</span>
+      <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan); margin-top: 4px; display: inline-block;">0 / 50</span>
+    </div>
+
+    <div class="player-progress-bar" style="margin-bottom: 0.5rem;">
+      <div class="player-progress-fill" id="player-progress-fill"></div>
+    </div>
+
+    <div class="player-settings" style="grid-template-columns: 1fr; gap: 0.75rem; padding: 0.75rem; font-size: 0.8rem;">
+      <div class="setting-item">
+        <label class="setting-label" style="font-size: 0.65rem;">Voice Narrator</label>
+        <select class="setting-select" id="tts-voice" onchange="voicesChanged()" style="font-size: 0.78rem; padding: 6px;"></select>
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label" style="font-size: 0.65rem;">Speed (<span id="speed-val">1.25x</span>)</label>
+        <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
+      </div>
+
+      <div class="setting-item">
+        <label class="setting-label" style="font-size: 0.65rem;">Reading Mode</label>
+        <select class="setting-select" id="tts-mode" style="font-size: 0.78rem; padding: 6px;">
+          <option value="qa">Read Question & Answer</option>
+          <option value="q">Read Question Only</option>
+          <option value="a">Read Answer Only</option>
+        </select>
+      </div>
+
+      <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
+        <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:14px; height:14px;">
+        <label for="auto-advance-chk" class="setting-label" style="cursor:pointer; font-size: 0.72rem;">Auto-Advance Playlist</label>
+      </div>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+      <button class="anki-deck-btn" onclick="copyAnkiImportText()" style="font-size: 0.75rem; justify-content: center; padding: 8px 12px; width: 100%;">
+        📦 Copy Anki TSV
+      </button>
+      <a href="anki_decks/IS_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3); border:1px solid var(--border); font-size: 0.75rem; justify-content: center; padding: 8px 12px; width: 100%;">
+        💾 Download Anki File
+      </a>
+    </div>
+  </div>
+
   <!-- ROW 2: Tabbed Solvers (Normal mode only) -->
   <div id="tabbedCard" class="glass-card card-12 cram-hidden" style="grid-column: span 12; margin-bottom: 24px;">
     <div class="card-header">
@@ -936,188 +1299,8 @@
       </div>
     </div>
 
-    <!-- TAB 1: IS Type Classifier -->
-        <!-- TAB 0: 2-Hour Audio Cram -->
-        <!-- TAB 0: 2-Hour Audio Cram -->
-    <div class="tab-pane active">
-      <div class="cram-container">
-        
-        <!-- PLAYER PANEL -->
-        <div class="player-panel">
-          <div class="player-title-row">
-            <div class="player-title">
-              <span>🧠</span> IS 2-Hour Audio Cram Narrator
-            </div>
-            <div style="display:flex;gap:0.75rem;align-items:center;">
-              <button class="anki-deck-btn" onclick="copyAnkiImportText()">
-                📦 Copy Anki Import TSV
-              </button>
-              <a href="anki_decks/IS_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3);border:1px solid var(--border);">
-                💾 Download Anki File
-              </a>
-            </div>
-          </div>
-          
-          <div class="player-controls">
-            <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
-            <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
-            <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
-            <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio" style="margin-left:0.5rem;">⏹</button>
-            
-            <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-              <span id="player-status-text" style="font-size:0.82rem; color:var(--text-dim);">Ready to cram! Click play to listen.</span>
-              <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan);">0 / 50</span>
-            </div>
-          </div>
-          
-          <div class="player-progress-bar">
-            <div class="player-progress-fill" id="player-progress-fill"></div>
-          </div>
-          
-          <div class="player-settings">
-            <div class="setting-item">
-              <label class="setting-label">Voice Narrator</label>
-              <select class="setting-select" id="tts-voice" onchange="voicesChanged()"></select>
-            </div>
-            
-            <div class="setting-item">
-              <label class="setting-label">Cram Speed (<span id="speed-val">1.25x</span>)</label>
-              <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
-            </div>
-            
-            <div class="setting-item">
-              <label class="setting-label">Reading Mode</label>
-              <select class="setting-select" id="tts-mode">
-                <option value="qa">Read Question & Answer</option>
-                <option value="q">Read Question Only</option>
-                <option value="a">Read Answer Only</option>
-              </select>
-            </div>
-            
-            <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
-              <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:16px; height:16px;">
-              <label for="auto-advance-chk" class="setting-label" style="cursor:pointer;">Auto-Advance Playlist</label>
-            </div>
-          </div>
-        </div>
-        
-        <!-- SEARCH & FILTERS -->
-        <div class="search-filter-row">
-          <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
-          <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
-            <option value="all">All Categories</option>
-            <option value="Data Warehousing & BI">Data Warehousing & BI</option>
-            <option value="Systems Theory & Evolution">Systems Theory & Evolution</option>
-            <option value="Cloud Computing Services">Cloud Computing Services</option>
-            <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
-            <option value="Systems Development Lifecycle">Systems Development Lifecycle</option>
-            <option value="Information Security">Information Security</option>
-            <option value="Decision Making & Systems">Decision Making & Systems</option>
-          </select>
-          <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
-            👁️ Show All Answers
-          </button>
-        </div>
-        
-        <!-- CARDS GRID -->
-        <div class="cram-list-grid" id="cram-cards-list">
-          <!-- Populated by JavaScript -->
-        </div>
-        
-      </div>
-    </div>
-
-
-<div class="tab-pane">
-      <div class="cram-container">
-        
-        <!-- PLAYER PANEL -->
-        <div class="player-panel">
-          <div class="player-title-row">
-            <div class="player-title">
-              <span>🧠</span> IS 2-Hour Audio Cram Narrator
-            </div>
-            <div style="display:flex;gap:0.75rem;align-items:center;">
-              <button class="anki-deck-btn" onclick="copyAnkiImportText()">
-                📦 Copy Anki Import TSV
-              </button>
-              <a href="anki_decks/IS_Anki_Deck.txt" download class="anki-deck-btn" style="background:var(--surface3);border:1px solid var(--border);">
-                💾 Download Anki File
-              </a>
-            </div>
-          </div>
-          
-          <div class="player-controls">
-            <button class="ctrl-btn" onclick="prevTTSCard()" title="Previous Card">⏮</button>
-            <button class="play-btn-main" id="main-play-btn" onclick="togglePlayPlaylist()" title="Play Playlist">▶</button>
-            <button class="ctrl-btn" onclick="nextTTSCard()" title="Next Card">⏭</button>
-            <button class="ctrl-btn" onclick="stopTTS()" title="Stop Audio" style="margin-left:0.5rem;">⏹</button>
-            
-            <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-              <span id="player-status-text" style="font-size:0.82rem; color:var(--text-dim);">Ready to cram! Click play to listen.</span>
-              <span id="player-progress-counter" style="font-size:0.82rem; font-weight:700; color:var(--cyan);">0 / 0</span>
-            </div>
-          </div>
-          
-          <div class="player-progress-bar">
-            <div class="player-progress-fill" id="player-progress-fill"></div>
-          </div>
-          
-          <div class="player-settings">
-            <div class="setting-item">
-              <label class="setting-label">Voice Narrator</label>
-              <select class="setting-select" id="tts-voice" onchange="voicesChanged()"></select>
-            </div>
-            
-            <div class="setting-item">
-              <label class="setting-label">Cram Speed (<span id="speed-val">1.25x</span>)</label>
-              <input type="range" class="setting-slider" id="tts-speed" min="0.8" max="2" step="0.1" value="1.25" oninput="document.getElementById('speed-val').textContent = this.value + 'x';">
-            </div>
-            
-            <div class="setting-item">
-              <label class="setting-label">Reading Mode</label>
-              <select class="setting-select" id="tts-mode">
-                <option value="qa">Read Question & Answer</option>
-                <option value="q">Read Question Only</option>
-                <option value="a">Read Answer Only</option>
-              </select>
-            </div>
-            
-            <div class="setting-item" style="flex-direction:row; align-items:center; gap:0.5rem; justify-content:flex-start;">
-              <input type="checkbox" id="auto-advance-chk" checked style="cursor:pointer; width:16px; height:16px;">
-              <label for="auto-advance-chk" class="setting-label" style="cursor:pointer;">Auto-Advance Playlist</label>
-            </div>
-          </div>
-        </div>
-        
-        <!-- SEARCH & FILTERS -->
-        <div class="search-filter-row">
-          <input type="text" class="search-input" id="cram-search" placeholder="Search questions, categories, concepts..." oninput="filterCramCards()">
-          <select class="filter-select" id="cram-filter-cat" onchange="filterCramCards()">
-            <option value="all">All Categories</option>
-            <option value="Data Warehousing & BI">Data Warehousing & BI</option>
-            <option value="Systems Theory & Evolution">Systems Theory & Evolution</option>
-            <option value="Cloud Computing Services">Cloud Computing Services</option>
-            <option value="Enterprise Resource Planning">Enterprise Resource Planning</option>
-            <option value="Systems Development Lifecycle">Systems Development Lifecycle</option>
-            <option value="Information Security">Information Security</option>
-            <option value="Decision Making & Systems">Decision Making & Systems</option>
-          </select>
-          <button class="filter-select" onclick="toggleAllAnswers()" id="toggle-all-answers-btn" style="border:1px solid var(--border); background:var(--surface3);">
-            👁️ Show All Answers
-          </button>
-        </div>
-        
-        <!-- CARDS GRID -->
-        <div class="cram-list-grid" id="cram-cards-list">
-          <!-- Populated by JavaScript -->
-        </div>
-        
-      </div>
-    </div>
-
-
-<div class="tab-pane" id="tab0">
+    <!-- TAB 0: IS Type Classifier -->
+    <div class="tab-pane active" id="tab0">
       <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Click a business scenario to identify which type of IS it represents.</p>
       <div class="classifier-grid">
         <button class="scenario-btn" onclick="classify(this, 'TPS', 'Transaction Processing System — handles routine, high-volume business transactions. Real-time operational data. Very structured.')">
@@ -1324,12 +1507,26 @@ function setMode(mode) {
   currentMode = mode;
   document.getElementById('btnNormal').classList.toggle('active', mode === 'normal');
   document.getElementById('btnCram').classList.toggle('active', mode === 'cram');
+  
   const cramHidden = document.querySelectorAll('.cram-hidden');
   cramHidden.forEach(el => {
     if (mode === 'cram') el.style.display = 'none';
     else el.style.display = '';
   });
+
+  const cramContainer = document.getElementById('cramModeContainer');
+  if (cramContainer) {
+    if (mode === 'cram') {
+      cramContainer.style.display = '';
+      renderCramCards(); // Render cards inside active recall grid
+    } else {
+      cramContainer.style.display = 'none';
+      const narrator = document.getElementById('sideNarrator');
+      if (narrator) narrator.classList.remove('open');
+    }
+  }
 }
+
 // On load — tabbed card visible by default
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('tabbedCard').style.display = '';
@@ -1652,6 +1849,7 @@ let isCramPlaying = false;
 let isCramPaused = false;
 let voices = [];
 let allAnswersVisible = false;
+let masteredCardIds = new Set();
 
 function initTTS() {
   if (typeof speechSynthesis === 'undefined') return;
@@ -1659,7 +1857,6 @@ function initTTS() {
   if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = populateCramVoices;
   }
-  renderCramCards();
 }
 
 function populateCramVoices() {
@@ -1674,19 +1871,90 @@ function populateCramVoices() {
     const opt = document.createElement('option');
     opt.value = voice.name;
     opt.textContent = `${voice.name} (${voice.lang})`;
-    if (voice.name === currentVal) {
-      opt.selected = true;
-    } else if (!currentVal && (voice.lang.includes('US') || voice.lang.includes('GB') || voice.default)) {
-      opt.selected = true;
-    }
     select.appendChild(opt);
   });
+  if (currentVal) select.value = currentVal;
+  else {
+    const def = filtered.find(v => v.lang.includes('US') || v.lang.includes('GB') || v.default);
+    if (def) select.value = def.name;
+  }
 }
 
 function voicesChanged() {
   if (isCramPlaying) {
-    playCramCard(currentCramIndex);
+    const wasPlaying = isCramPlaying;
+    stopTTS();
+    if (wasPlaying) playCramCard(currentCramIndex);
   }
+}
+
+function toggleSideNarrator() {
+  const panel = document.getElementById('sideNarrator');
+  if (panel) {
+    panel.classList.toggle('open');
+  }
+}
+
+function loadMasteredState() {
+  try {
+    const saved = localStorage.getItem('czu_is_mastered_cards');
+    if (saved) {
+      masteredCardIds = new Set(JSON.parse(saved));
+    }
+  } catch (err) {
+    console.error("Failed to load mastered state:", err);
+  }
+  updateStudyProgressUI();
+}
+
+function saveMasteredState() {
+  try {
+    localStorage.setItem('czu_is_mastered_cards', JSON.stringify(Array.from(masteredCardIds)));
+  } catch (err) {
+    console.error("Failed to save mastered state:", err);
+  }
+}
+
+function toggleCardMastery(cardId) {
+  if (masteredCardIds.has(cardId)) {
+    masteredCardIds.delete(cardId);
+  } else {
+    masteredCardIds.add(cardId);
+  }
+  saveMasteredState();
+  updateStudyProgressUI();
+  
+  const cardEl = document.getElementById(`cram-card-${cardId}`);
+  if (cardEl) {
+    cardEl.classList.toggle('mastered', masteredCardIds.has(cardId));
+  }
+}
+
+function updateStudyProgressUI() {
+  const total = cramCardsData.length;
+  const count = masteredCardIds.size;
+  const counterText = document.getElementById('mastered-count-text');
+  if (counterText) counterText.textContent = count;
+  const fillEl = document.getElementById('study-progress-fill');
+  if (fillEl) {
+    const percentage = total > 0 ? (count / total) * 100 : 0;
+    fillEl.style.width = `${percentage}%`;
+  }
+}
+
+function resetStudyProgress() {
+  if (confirm("Are you sure you want to reset your study progress?")) {
+    masteredCardIds.clear();
+    saveMasteredState();
+    updateStudyProgressUI();
+    document.querySelectorAll('.cram-card-item').forEach(el => {
+      el.classList.remove('mastered');
+    });
+  }
+}
+
+function convertBoldToBlurReveal(htmlStr) {
+  return htmlStr.replace(/<b>(.*?)<\/b>/g, '<span class="blur-reveal" onclick="event.stopPropagation(); this.classList.toggle(\'revealed\')">$1</span>');
 }
 
 function renderCramCards() {
@@ -1694,20 +1962,32 @@ function renderCramCards() {
   if (!grid) return;
   grid.innerHTML = '';
   cramCardsData.forEach((card, idx) => {
-    let catClass = 'card-cat-dw';
-    if (card.category.includes('Systems Theory')) catClass = 'card-cat-sys';
-    else if (card.category.includes('Cloud')) catClass = 'card-cat-cloud';
-    else if (card.category.includes('Enterprise')) catClass = 'card-cat-erp';
-    else if (card.category.includes('Development')) catClass = 'card-cat-sdlc';
-    else if (card.category.includes('Security')) catClass = 'card-cat-sec';
-    
+    const isMastered = masteredCardIds.has(card.id);
     const cardEl = document.createElement('div');
-    cardEl.className = 'cram-card-item';
+    cardEl.className = 'cram-card-item' + (isMastered ? ' mastered' : '');
     cardEl.id = `cram-card-${card.id}`;
     cardEl.onclick = (e) => {
-      if (e.target.closest('.card-play-btn')) return;
+      if (e.target.closest('.card-play-btn') || e.target.closest('.grade-btn') || e.target.closest('.blur-reveal')) return;
       cardEl.classList.toggle('show-ans');
     };
+    
+    const catClassMap = {
+      "Data Warehousing & BI": "card-cat-dw",
+      "Systems Theory & Evolution": "card-cat-sys",
+      "Cloud Computing Services": "card-cat-cloud",
+      "Enterprise Resource Planning": "card-cat-erp",
+      "Systems Development Lifecycle": "card-cat-sdlc",
+      "Information Security": "card-cat-sec",
+      "Decision Making & Systems": "card-cat-sys",
+      "BI": "card-cat-dw",
+      "AI": "card-cat-sys",
+      "CI": "card-cat-sec",
+      "IS_BASICS": "card-cat-sdlc"
+    };
+    const catClass = catClassMap[card.category] || "card-cat-sys";
+    
+    const activeRecallAns = convertBoldToBlurReveal(card.ans);
+    
     cardEl.innerHTML = `
       <div class="card-header-row">
         <span class="card-cat-badge ${catClass}">${card.category}</span>
@@ -1715,7 +1995,17 @@ function renderCramCards() {
       </div>
       <div class="card-question-title">${card.q}</div>
       <div class="card-desc-text">${card.desc}</div>
-      <div class="card-answer-box">${card.ans}</div>
+      <div class="card-answer-box">
+        <div style="margin-bottom: 0.75rem;">${activeRecallAns}</div>
+        <div class="card-self-grade-row">
+          <button class="grade-btn btn-redo" onclick="event.stopPropagation(); if(masteredCardIds.has(${card.id})) toggleCardMastery(${card.id});">
+            ❌ Redo (Hard)
+          </button>
+          <button class="grade-btn btn-master" onclick="event.stopPropagation(); if(!masteredCardIds.has(${card.id})) toggleCardMastery(${card.id});">
+            ✅ Mastered (Easy)
+          </button>
+        </div>
+      </div>
     `;
     grid.appendChild(cardEl);
   });
@@ -1870,6 +2160,7 @@ function copyAnkiImportText() {
 
 window.addEventListener('DOMContentLoaded', () => {
   initTTS();
+  loadMasteredState();
 });
 </script>
 </body>
