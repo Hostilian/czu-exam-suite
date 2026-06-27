@@ -108,6 +108,25 @@
     .deck-tab:hover:not(.active) { border-color:color-mix(in srgb, #60a5fa 40%, transparent); color:var(--text); }
 
     .card-stage { perspective:1200px; width:100%; max-width:760px; margin:0 auto 2rem; min-height:340px; }
+    /* BLUR-REVEAL FOR BLANK MODE */
+    .blur-reveal {
+      filter: blur(5px);
+      background: rgba(255, 255, 255, 0.06);
+      color: transparent;
+      cursor: pointer;
+      transition: filter 0.3s, color 0.3s, background 0.3s;
+      padding: 0 4px;
+      border-radius: 4px;
+      user-select: none;
+      display: inline-block;
+    }
+    .blur-reveal.revealed {
+      filter: blur(0);
+      color: inherit;
+      background: transparent;
+      user-select: text;
+    }
+    
     .flash-card {
       position:relative; width:100%; min-height:340px;
       cursor:pointer; transform-style:preserve-3d;
@@ -288,7 +307,7 @@
     <a class="logo" href="index.html">Info Systems <span>Exam Prep</span></a>
     <span class="badge">IS Exam</span>
     <div class="header-spacer"></div>
-    <span class="card-count-badge">50 Cards</span>
+    <span class="card-count-badge">50 Cards</span><div style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:50px;padding:3px 12px 3px 8px;font-size:0.72rem;margin-left:8px;"><span style="font-size:0.9rem">⏱️</span><span id="session-timer" style="font-family:var(--mono);font-weight:700;color:var(--accent)">00:00</span></div>
     <div class="shortcuts-pill">
       <span><span class="sc-key">Space</span> flip</span>
       <span><span class="sc-key">←→</span> navigate</span>
@@ -310,6 +329,7 @@
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <button onclick="resetAll()" style="padding:6px 18px;border-radius:999px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171;cursor:pointer;font-family:var(--font);font-size:.78rem;font-weight:600;transition:all .2s;">Reset All</button>
+    <button id="btn-blank-mode" onclick="toggleBlankMode()" style="padding:6px 18px;border-radius:999px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);color:var(--accent);cursor:pointer;font-family:var(--font);font-size:.78rem;font-weight:600;transition:all .2s;margin-left:8px;">✏️ Switch to Fill-in-Blank</button>
   </div>
 
   <!-- DECK TABS -->
@@ -448,6 +468,39 @@ let idx = 0;
 let isFlipped = false;
 let ratings = JSON.parse(localStorage.getItem('is_ratings') || '{}');
 let currentDeck = 'all';
+let isBlankMode = false;
+let sessionSeconds = 0;
+let timerInterval = null;
+
+// Start session timer
+function startSessionTimer() {
+  timerInterval = setInterval(() => {
+    sessionSeconds++;
+    const m = Math.floor(sessionSeconds / 60);
+    const s = sessionSeconds % 60;
+    document.getElementById('session-timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
+function toggleBlankMode() {
+  isBlankMode = !isBlankMode;
+  const btn = document.getElementById('btn-blank-mode');
+  btn.textContent = isBlankMode ? '🃏 Switch to Flip Card' : '✏️ Switch to Fill-in-Blank';
+  btn.style.background = isBlankMode ? 'rgba(52,211,153,.1)' : 'rgba(96,165,250,.1)';
+  btn.style.borderColor = isBlankMode ? '#34d399' : '#60a5fa';
+  btn.style.color = isBlankMode ? '#34d399' : '#60a5fa';
+  
+  const indicator = document.getElementById('flip-indicator');
+  indicator.innerHTML = isBlankMode ? 
+    '✏️ <strong>Fill-in-Blank Mode</strong>: Click blurred words to reveal' : 
+    '👆 Click card or press <strong>Space</strong> to reveal answer';
+    
+  renderCard();
+}
+
+function convertBoldToBlur(htmlStr) {
+  return htmlStr.replace(/<b>(.*?)<\/b>/g, '<span class="blur-reveal" onclick="event.stopPropagation(); this.classList.toggle(\'revealed\')">$1</span>');
+}
 
 function saveDeckIdx() { localStorage.setItem('is_ratings_idx', JSON.stringify({deck:currentDeck,idx})); }
 function loadDeckIdx() {
@@ -485,8 +538,15 @@ function renderCard() {
   const catClass = `cat-${card.cat}`;
   const catText = `${catEmoji[card.cat] || '📝'} ${catLabel[card.cat] || card.cat}`;
 
-  document.getElementById('card-q').innerHTML = card.q;
-  document.getElementById('card-a').innerHTML = card.a;
+  if (isBlankMode) {
+    // Show question title + sentence completion preview on the front
+    const recallAns = convertBoldToBlur(card.a);
+    document.getElementById('card-q').innerHTML = `<div style="font-size:1rem;color:var(--text-muted);margin-bottom:12px;">Q: ${card.q}</div><div style="font-size:1.1rem;line-height:1.6;color:#fff;">${recallAns}</div>`;
+    document.getElementById('card-a').innerHTML = card.a;
+  } else {
+    document.getElementById('card-q').innerHTML = card.q;
+    document.getElementById('card-a').innerHTML = card.a;
+  }
   document.getElementById('card-num-front').textContent = num;
   document.getElementById('card-num-back').textContent = num;
   document.getElementById('card-counter').textContent = num;
@@ -645,6 +705,7 @@ loadDeckIdx();
 renderCard();
 updateStats();
 updateWeakPanel();
+startSessionTimer();
 </script>
 </body>
 </html>
