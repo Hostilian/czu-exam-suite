@@ -660,7 +660,8 @@ DATABASE = [
 def generate_html():
     # Read the raw Anki TSV file if it exists, otherwise use empty string
     anki_tsv_content = ""
-    anki_path = "d:/CZUU/IS_EXAM_SUITE/anki_decks/IS_Anki_Deck.txt"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    anki_path = os.path.join(script_dir, "anki_decks", "IS_Anki_Deck.txt")
     if os.path.exists(anki_path):
         with open(anki_path, 'r', encoding='utf-8') as f:
             anki_tsv_content = f.read()
@@ -3870,10 +3871,11 @@ def generate_html():
     full_html = full_html.replace('{anki_tsv}', escaped_anki_tsv)
     
     # Save the file
-    out_path = "d:/CZUU/IS_EXAM_SUITE/EXAM_MASTER_2H.html"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    out_path = os.path.join(script_dir, "EXAM_MASTER_2H.html")
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(full_html)
-    print("Successfully generated IS Master Guide at d:/CZUU/IS_EXAM_SUITE/EXAM_MASTER_2H.html")
+    print(f"Successfully generated IS Master Guide at {out_path}")
 
 if __name__ == '__main__':
     generate_html()
